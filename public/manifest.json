@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "VITE",
+  "version": "1.0.0",
+  "description": "VITE CHECKS",
+  "action": {
+    "default_title": "Click to open panel"
+  },
+  "background": {
+    "service_worker": "scripts/serviceworker.js"
+  },
+  
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["sidePanel", "activeTab", "scripting", "storage"],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "mac": "Command+B"
+      }
+    }
+  }
+}
