@@ -148,21 +148,24 @@ function getElementStyles(element: HTMLElement): ElementStyles {
               element.matches(selector) &&
               !isDescendantSelector(selector)
             ) {
-              if (!styles.external.attribute[selector]) {
-                styles.external.attribute[selector] = {};
-              }
-              for (let i = 0; i < rule.style.length; i++) {
-                const propertyName = rule.style[i];
-                styles.external.attribute[selector][propertyName] =
-                  rule.style.getPropertyValue(propertyName);
+              if (
+                !isPseudoElementSelector(selector) &&
+                !isPseudoClassSelector(selector)
+              ) {
+                if (!styles.external.attribute[selector]) {
+                  styles.external.attribute[selector] = {};
+                }
+                for (let i = 0; i < rule.style.length; i++) {
+                  const propertyName = rule.style[i];
+                  styles.external.attribute[selector][propertyName] =
+                    rule.style.getPropertyValue(propertyName);
+                }
               }
             }
 
             // Check if the selector is a pseudo-element selector
             if (isPseudoElementSelector(selector)) {
-              
               const baseSelector = selector.split("::")[0];
-
               if (element.matches(baseSelector)) {
                 if (!styles.external.pseudoElementStyles[selector]) {
                   styles.external.pseudoElementStyles[selector] = {};
@@ -177,9 +180,7 @@ function getElementStyles(element: HTMLElement): ElementStyles {
 
             // Check if the selector is a pseudo-class selector
             if (isPseudoClassSelector(selector)) {
-              
               const baseSelector = selector.split(":")[0];
-
               if (element.matches(baseSelector)) {
                 if (!styles.external.pseudoClassStyles[selector]) {
                   styles.external.pseudoClassStyles[selector] = {};

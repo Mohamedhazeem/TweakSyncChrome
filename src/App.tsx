@@ -16,7 +16,6 @@ function App() {
       setTag(undefined);
       setTag(message.details);
       //setSelectedTemporaryId(message.details.temporaryId);
-
       msg.current!.innerText = JSON.stringify(message.details.styles, null, 2);
     }
   };
@@ -75,9 +74,3 @@ function App() {
 }
 
 export default App;
-//"content_scripts": [
-//   {
-//     "matches": ["<all_urls>"],
-//     "js": ["scripts/content.js"]
-//   }
-// ],
