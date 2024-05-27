@@ -20,5 +20,7 @@ export interface ElementStyles {
     tags: { [tagName: string]: { [property: string]: string } };
     attribute: { [attributeSelector: string]: { [property: string]: string } };
     descendant: { [selector: string]: { [property: string]: string } };
+    pseudoElementStyles: { [selector: string]: { [property: string]: string } };
+    pseudoClassStyles: { [selector: string]: { [property: string]: string } };
   };
 }

@@ -1,6 +1,6 @@
 import { ElementDetails, ElementStyles } from "../types/ElementDetailTypes";
-let clickedElement : HTMLElement | null = null;
-let currentElement : HTMLElement | null = null;
+let clickedElement: HTMLElement | null = null;
+let currentElement: HTMLElement | null = null;
 
 function getElementDetails(element: HTMLElement): Promise<ElementDetails> {
   return new Promise((resolve, reject) => {
@@ -35,8 +35,10 @@ function getElementStyles(element: HTMLElement): ElementStyles {
       ids: {},
       tags: {},
       attribute: {},
-      descendant: {}
-    }
+      descendant: {},
+      pseudoElementStyles: {},
+      pseudoClassStyles: {},
+    },
   };
 
   const classList = Array.from(element.classList);
@@ -60,6 +62,16 @@ function getElementStyles(element: HTMLElement): ElementStyles {
     );
   };
 
+  // Helper function to determine if a selector is a pseudo-element selector
+  const isPseudoElementSelector = (selector: string): boolean => {
+    return selector.includes("::");
+  };
+
+  // Helper function to determine if a selector is a pseudo-class selector
+  const isPseudoClassSelector = (selector: string): boolean => {
+    return selector.includes(":") && !isPseudoElementSelector(selector);
+  };
+
   // Collect external styles
   for (const sheet of document.styleSheets) {
     try {
@@ -75,33 +87,45 @@ function getElementStyles(element: HTMLElement): ElementStyles {
               }
               for (let i = 0; i < rule.style.length; i++) {
                 const propertyName = rule.style[i];
-                styles.external.descendant[selector][propertyName] = rule.style.getPropertyValue(propertyName);
+                styles.external.descendant[selector][propertyName] =
+                  rule.style.getPropertyValue(propertyName);
               }
             }
 
             // Check if the selector matches any class of the element
-            classList.forEach(className => {
+            classList.forEach((className) => {
               const classSelector = `.${className}`;
-              if (selector.includes(classSelector) && element.matches(selector) && !isDescendantSelector(selector)) {
+              if (
+                selector.includes(classSelector) &&
+                element.matches(selector) &&
+                !isDescendantSelector(selector)
+              ) {
                 if (!styles.external.classes[className]) {
                   styles.external.classes[className] = {};
                 }
                 for (let i = 0; i < rule.style.length; i++) {
                   const propertyName = rule.style[i];
-                  styles.external.classes[className][propertyName] = rule.style.getPropertyValue(propertyName);
+                  styles.external.classes[className][propertyName] =
+                    rule.style.getPropertyValue(propertyName);
                 }
               }
             });
 
             // Check if the selector matches the element's ID
             const idSelector = `#${elementId}`;
-            if (elementId && selector.includes(idSelector) && element.matches(selector) && !isDescendantSelector(selector)) {
+            if (
+              elementId &&
+              selector.includes(idSelector) &&
+              element.matches(selector) &&
+              !isDescendantSelector(selector)
+            ) {
               if (!styles.external.ids[elementId]) {
                 styles.external.ids[elementId] = {};
               }
               for (let i = 0; i < rule.style.length; i++) {
                 const propertyName = rule.style[i];
-                styles.external.ids[elementId][propertyName] = rule.style.getPropertyValue(propertyName);
+                styles.external.ids[elementId][propertyName] =
+                  rule.style.getPropertyValue(propertyName);
               }
             }
 
@@ -112,86 +136,71 @@ function getElementStyles(element: HTMLElement): ElementStyles {
               }
               for (let i = 0; i < rule.style.length; i++) {
                 const propertyName = rule.style[i];
-                styles.external.tags[tagName][propertyName] = rule.style.getPropertyValue(propertyName);
+                styles.external.tags[tagName][propertyName] =
+                  rule.style.getPropertyValue(propertyName);
               }
             }
 
             // Check if the selector is an attribute selector
-            if (selector.includes("[") && selector.includes("]") && element.matches(selector) && !isDescendantSelector(selector)) {
+            if (
+              selector.includes("[") &&
+              selector.includes("]") &&
+              element.matches(selector) &&
+              !isDescendantSelector(selector)
+            ) {
               if (!styles.external.attribute[selector]) {
                 styles.external.attribute[selector] = {};
               }
               for (let i = 0; i < rule.style.length; i++) {
                 const propertyName = rule.style[i];
-                styles.external.attribute[selector][propertyName] = rule.style.getPropertyValue(propertyName);
+                styles.external.attribute[selector][propertyName] =
+                  rule.style.getPropertyValue(propertyName);
               }
             }
-            
+
+            // Check if the selector is a pseudo-element selector
+            if (isPseudoElementSelector(selector)) {
+              
+              const baseSelector = selector.split("::")[0];
+
+              if (element.matches(baseSelector)) {
+                if (!styles.external.pseudoElementStyles[selector]) {
+                  styles.external.pseudoElementStyles[selector] = {};
+                }
+                for (let i = 0; i < rule.style.length; i++) {
+                  const propertyName = rule.style[i];
+                  styles.external.pseudoElementStyles[selector][propertyName] =
+                    rule.style.getPropertyValue(propertyName);
+                }
+              }
+            }
+
+            // Check if the selector is a pseudo-class selector
+            if (isPseudoClassSelector(selector)) {
+              
+              const baseSelector = selector.split(":")[0];
+
+              if (element.matches(baseSelector)) {
+                if (!styles.external.pseudoClassStyles[selector]) {
+                  styles.external.pseudoClassStyles[selector] = {};
+                }
+                for (let i = 0; i < rule.style.length; i++) {
+                  const propertyName = rule.style[i];
+                  styles.external.pseudoClassStyles[selector][propertyName] =
+                    rule.style.getPropertyValue(propertyName);
+                }
+              }
+            }
           }
         }
       }
     } catch (e) {
-      console.warn('Could not access stylesheet rules:', e);
+      console.warn("Could not access stylesheet rules:", e);
     }
   }
 
   return styles;
 }
-
-// function getElementStyles(element: HTMLElement): {
-//   [className: string]: { [property: string]: string };
-// } {
-//   const stylesByClass: { [className: string]: { [property: string]: string } } =
-//     {};
-
-//   // Get all classes applied to the element
-//   const classList = Array.from(element.classList);
-
-//   // Iterate over all stylesheets
-//   for (const sheet of document.styleSheets) {
-//     try {
-//       // Some stylesheets might be cross-origin, and accessing their rules will throw an error
-//       for (const rule of (sheet as CSSStyleSheet).cssRules) {
-//         if (rule instanceof CSSStyleRule) {
-//           const selector = rule.selectorText;
-
-//           // Check if the selector matches any class of the element
-//           for (const className of classList) {
-//             const classSelector = `.${className}`;
-//             if (selector.includes(classSelector)) {
-//               if (!stylesByClass[className]) {
-//                 stylesByClass[className] = {};
-//               }
-
-//               // Add styles from CSS rules to the specific class entry
-//               for (let i = 0; i < rule.style.length; i++) {
-//                 const propertyName = rule.style[i];
-//                 stylesByClass[className][propertyName] =
-//                   rule.style.getPropertyValue(propertyName);
-//               }
-//             }
-//           }
-//         }
-//       }
-//     } catch (e) {
-//       console.warn("Could not access stylesheet rules:", e);
-//     }
-//   }
-
-//   // Collect inline styles
-//   const inlineStyles = element.style;
-//   if (inlineStyles.length > 0) {
-//     const inlineClass = "inline";
-//     stylesByClass[inlineClass] = {};
-//     for (let i = 0; i < inlineStyles.length; i++) {
-//       const propertyName = inlineStyles[i];
-//       stylesByClass[inlineClass][propertyName] =
-//         inlineStyles.getPropertyValue(propertyName);
-//     }
-//   }
-
-//   return stylesByClass;
-// }
 let lastClickedElement: HTMLElement;
 
 function isValidChromeRuntime() {

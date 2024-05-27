@@ -16,7 +16,8 @@ function App() {
       setTag(undefined);
       setTag(message.details);
       //setSelectedTemporaryId(message.details.temporaryId);
-      msg.current!.innerText = message.details.tagName;
+
+      msg.current!.innerText = JSON.stringify(message.details.styles, null, 2);
     }
   };
 
