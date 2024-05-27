@@ -14,5 +14,11 @@ export interface StyleData {
 
 export interface ElementStyles {
   inline: { [property: string]: string };
-  external: { [selector: string]: { [property: string]: string } };
+  external: {
+    classes: { [className: string]: { [property: string]: string } };
+    ids: { [idName: string]: { [property: string]: string } };
+    tags: { [tagName: string]: { [property: string]: string } };
+    attribute: { [attributeSelector: string]: { [property: string]: string } };
+    descendant: { [selector: string]: { [property: string]: string } };
+  };
 }
