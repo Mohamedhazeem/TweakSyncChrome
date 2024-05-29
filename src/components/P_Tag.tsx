@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { ElementDetails } from "../types/ElementDetailTypes";
+import { ElementDetails } from "../types/ElementTypes";
 
 type PTagTypes = {
   tag?: ElementDetails;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function PTag({ tag }: PTagTypes) {
   const [textContent, setTextContent] = useState<string | undefined | null>("");
   useEffect(() => {

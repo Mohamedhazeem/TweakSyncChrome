@@ -211,5 +211,16 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       });
     });
     return true;
+  } else if (message.action === "updateStyles") {
+    // Handle the message to update styles
+
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0]?.id) {
+        chrome.tabs.sendMessage(tabs[0].id, message, (response) => {
+          sendResponse(response);
+        });
+      }
+    });
+    return true;
   }
 })

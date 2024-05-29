@@ -1,4 +1,4 @@
-import { ElementDetails, ElementStyles } from "../types/ElementDetailTypes";
+import { ElementDetails, ElementStyles } from "../types/ElementTypes";
 let clickedElement: HTMLElement | null = null;
 let currentElement: HTMLElement | null = null;
 
@@ -52,148 +52,268 @@ function getElementStyles(element: HTMLElement): ElementStyles {
     styles.inline[propertyName] = inlineStyles.getPropertyValue(propertyName);
   }
 
-  // Helper function to determine if a selector is a descendant selector
+  // Helper functions to determine selector types
   const isDescendantSelector = (selector: string): boolean => {
     return (
-      selector.includes(" ") || // Descendant
-      selector.includes(">") || // Direct child
-      selector.includes("+") || // Adjacent sibling
-      selector.includes("~") // General sibling
+      selector.includes(" ") ||
+      selector.includes(">") ||
+      selector.includes("+") ||
+      selector.includes("~")
     );
   };
 
-  // Helper function to determine if a selector is a pseudo-element selector
   const isPseudoElementSelector = (selector: string): boolean => {
     return selector.includes("::");
   };
 
-  // Helper function to determine if a selector is a pseudo-class selector
   const isPseudoClassSelector = (selector: string): boolean => {
     return selector.includes(":") && !isPseudoElementSelector(selector);
   };
+  // const isComplexSelector = (selector: string): boolean => {
+  //   const complexSelectors = [
+  //     ":first-child",
+  //     ":last-child",
+  //     ":nth-child(n)",
+  //     ":nth-last-child(n)",
+  //     ":first-of-type",
+  //     ":last-of-type",
+  //     ":nth-of-type(n)",
+  //     ":nth-last-of-type(n)",
+  //     ":only-child",
+  //     ":only-of-type",
+  //     ":empty",
+  //     ":root",
+  //     ":target",
+  //     ":hover",
+  //     ":active",
+  //     ":focus",
+  //     ":focus-visible",
+  //     ":focus-within",
+  //     ":checked",
+  //     ":enabled",
+  //     ":disabled",
+  //     ":not(selector)",
+  //     "::before",
+  //     "::after",
+  //     "::first-line",
+  //     "::first-letter",
+  //     "::selection",
+  //     " :hover",
+  //     ":focus",
+  //     ":active",
+  //     ":visited",
+  //     ":link",
+  //     ":target",
+  //     ":enabled",
+  //     ":disabled",
+  //     ":checked",
+  //     ":indeterminate",
+  //     ":valid",
+  //     ":invalid",
+  //     ":optional",
+  //     ":required",
+  //     ":read-only",
+  //     ":read-write",
+  //     ":default",
+  //     ":placeholder",
+  //     ":checked",
+  //     ":default",
+  //     ":only-child",
+  //     ":only-of-type",
+  //     ":nth-child()",
+  //     ":nth-last-child()",
+  //     ":nth-of-type()",
+  //     ":nth-last-of-type()",
+  //     ":root",
+  //     ":empty",
+  //     ":fullscreen",
+  //     ":first-child",
+  //     ":last-child",
+  //     ":first-of-type",
+  //     ":last-of-type",
+  //     ":focus-within",
+  //     ":lang()",
+  //     ":dir()",
+  //     ":matches()",
+  //     ":any()",
+  //     ":not()",
+  //     // Add additional complex selectors here
+  //   ];
 
-  // Collect external styles
-  for (const sheet of document.styleSheets) {
+  //   return complexSelectors.some((complexSelector) =>
+  //     selector.includes(complexSelector)
+  //   );
+  // };
+
+  // const isValidSelector = (selector: string): boolean => {
+  //   try {
+  //     document.querySelector(selector);
+  //     return true;
+  //   } catch {
+  //     return false;
+  //   }
+  // };
+  const isValidSelector = (selector: string): boolean => {
+    const pseudoSelectorRegex = /::?[\w-]+/g;
+    const cleanedSelector = selector.replace(pseudoSelectorRegex, "");
     try {
-      if (sheet instanceof CSSStyleSheet) {
-        for (const rule of sheet.cssRules) {
-          if (rule instanceof CSSStyleRule) {
-            const selector = rule.selectorText;
+      document.querySelector(cleanedSelector);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+  for (const sheet of Array.from(document.styleSheets)) {
+    try {
+      if (
+        !sheet.href ||
+        new URL(sheet.href).origin === window.location.origin
+      ) {
+        if (sheet instanceof CSSStyleSheet) {
+          for (const rule of Array.from(sheet.cssRules)) {
+            if (rule instanceof CSSStyleRule) {
+              const selector = rule.selectorText;
 
-            // Check if the selector matches the element as a descendant
-            if (element.matches(selector) && isDescendantSelector(selector)) {
-              if (!styles.external.descendant[selector]) {
-                styles.external.descendant[selector] = {};
-              }
-              for (let i = 0; i < rule.style.length; i++) {
-                const propertyName = rule.style[i];
-                styles.external.descendant[selector][propertyName] =
-                  rule.style.getPropertyValue(propertyName);
-              }
-            }
-
-            // Check if the selector matches any class of the element
-            classList.forEach((className) => {
-              const classSelector = `.${className}`;
               if (
-                selector.includes(classSelector) &&
-                element.matches(selector) &&
-                !isDescendantSelector(selector)
+                !selector ||
+                selector.trim() === "" ||
+                !isValidSelector(selector)
+                //  ||
+                // isComplexSelector(selector)
               ) {
-                if (!styles.external.classes[className]) {
-                  styles.external.classes[className] = {};
-                }
-                for (let i = 0; i < rule.style.length; i++) {
-                  const propertyName = rule.style[i];
-                  styles.external.classes[className][propertyName] =
-                    rule.style.getPropertyValue(propertyName);
-                }
+                continue;
               }
-            });
 
-            // Check if the selector matches the element's ID
-            const idSelector = `#${elementId}`;
-            if (
-              elementId &&
-              selector.includes(idSelector) &&
-              element.matches(selector) &&
-              !isDescendantSelector(selector)
-            ) {
-              if (!styles.external.ids[elementId]) {
-                styles.external.ids[elementId] = {};
-              }
-              for (let i = 0; i < rule.style.length; i++) {
-                const propertyName = rule.style[i];
-                styles.external.ids[elementId][propertyName] =
-                  rule.style.getPropertyValue(propertyName);
-              }
-            }
+              try {
+                // Handle descendant selectors
+                if (
+                  element.matches(selector) &&
+                  isDescendantSelector(selector)
+                ) {
+                  if (!styles.external.descendant[selector]) {
+                    styles.external.descendant[selector] = {};
+                  }
+                  for (let i = 0; i < rule.style.length; i++) {
+                    const propertyName = rule.style[i];
+                    styles.external.descendant[selector][propertyName] =
+                      rule.style.getPropertyValue(propertyName);
+                  }
+                  continue;
+                }
 
-            // Check if the selector matches the element's tag
-            if (selector === tagName && !isDescendantSelector(selector)) {
-              if (!styles.external.tags[tagName]) {
-                styles.external.tags[tagName] = {};
-              }
-              for (let i = 0; i < rule.style.length; i++) {
-                const propertyName = rule.style[i];
-                styles.external.tags[tagName][propertyName] =
-                  rule.style.getPropertyValue(propertyName);
-              }
-            }
+                // Handle class selectors
+                classList.forEach((className) => {
+                  const classSelector = `.${className}`;
+                  if (
+                    selector.includes(classSelector) &&
+                    element.matches(selector) &&
+                    !isDescendantSelector(selector)
+                  ) {
+                    if (!styles.external.classes[className]) {
+                      styles.external.classes[className] = {};
+                    }
+                    for (let i = 0; i < rule.style.length; i++) {
+                      const propertyName = rule.style[i];
+                      styles.external.classes[className][propertyName] =
+                        rule.style.getPropertyValue(propertyName);
+                    }
+                  }
+                });
 
-            // Check if the selector is an attribute selector
-            if (
-              selector.includes("[") &&
-              selector.includes("]") &&
-              element.matches(selector) &&
-              !isDescendantSelector(selector)
-            ) {
-              if (
-                !isPseudoElementSelector(selector) &&
-                !isPseudoClassSelector(selector)
-              ) {
-                if (!styles.external.attribute[selector]) {
-                  styles.external.attribute[selector] = {};
+                // Handle ID selectors
+                const idSelector = `#${elementId}`;
+                if (
+                  elementId &&
+                  selector.includes(idSelector) &&
+                  element.matches(selector) &&
+                  !isDescendantSelector(selector)
+                ) {
+                  if (!styles.external.ids[elementId]) {
+                    styles.external.ids[elementId] = {};
+                  }
+                  for (let i = 0; i < rule.style.length; i++) {
+                    const propertyName = rule.style[i];
+                    styles.external.ids[elementId][propertyName] =
+                      rule.style.getPropertyValue(propertyName);
+                  }
                 }
-                for (let i = 0; i < rule.style.length; i++) {
-                  const propertyName = rule.style[i];
-                  styles.external.attribute[selector][propertyName] =
-                    rule.style.getPropertyValue(propertyName);
-                }
-              }
-            }
 
-            // Check if the selector is a pseudo-element selector
-            if (isPseudoElementSelector(selector)) {
-              const baseSelector = selector.split("::")[0];
-              if (element.matches(baseSelector)) {
-                if (!styles.external.pseudoElementStyles[selector]) {
-                  styles.external.pseudoElementStyles[selector] = {};
+                // Handle tag selectors
+                if (selector === tagName && !isDescendantSelector(selector)) {
+                  if (!styles.external.tags[tagName]) {
+                    styles.external.tags[tagName] = {};
+                  }
+                  for (let i = 0; i < rule.style.length; i++) {
+                    const propertyName = rule.style[i];
+                    styles.external.tags[tagName][propertyName] =
+                      rule.style.getPropertyValue(propertyName);
+                  }
                 }
-                for (let i = 0; i < rule.style.length; i++) {
-                  const propertyName = rule.style[i];
-                  styles.external.pseudoElementStyles[selector][propertyName] =
-                    rule.style.getPropertyValue(propertyName);
-                }
-              }
-            }
 
-            // Check if the selector is a pseudo-class selector
-            if (isPseudoClassSelector(selector)) {
-              const baseSelector = selector.split(":")[0];
-              if (element.matches(baseSelector)) {
-                if (!styles.external.pseudoClassStyles[selector]) {
-                  styles.external.pseudoClassStyles[selector] = {};
+                // Handle attribute selectors
+                if (
+                  selector.includes("[") &&
+                  selector.includes("]") &&
+                  element.matches(selector) &&
+                  !isDescendantSelector(selector)
+                ) {
+                  if (
+                    !isPseudoElementSelector(selector) &&
+                    !isPseudoClassSelector(selector)
+                  ) {
+                    if (!styles.external.attribute[selector]) {
+                      styles.external.attribute[selector] = {};
+                    }
+                    for (let i = 0; i < rule.style.length; i++) {
+                      const propertyName = rule.style[i];
+                      styles.external.attribute[selector][propertyName] =
+                        rule.style.getPropertyValue(propertyName);
+                    }
+                  }
                 }
-                for (let i = 0; i < rule.style.length; i++) {
-                  const propertyName = rule.style[i];
-                  styles.external.pseudoClassStyles[selector][propertyName] =
-                    rule.style.getPropertyValue(propertyName);
+
+                // Handle pseudo-element selectors
+                if (isPseudoElementSelector(selector)) {
+                  const baseSelector = selector.split("::")[0];
+                  if (element.matches(baseSelector)) {
+                    if (!styles.external.pseudoElementStyles[selector]) {
+                      styles.external.pseudoElementStyles[selector] = {};
+                    }
+                    for (let i = 0; i < rule.style.length; i++) {
+                      const propertyName = rule.style[i];
+                      styles.external.pseudoElementStyles[selector][
+                        propertyName
+                      ] = rule.style.getPropertyValue(propertyName);
+                    }
+                  }
                 }
+
+                // Handle pseudo-class selectors
+                if (isPseudoClassSelector(selector)) {
+                  const baseSelector = selector.split(":")[0];
+                  if (element.matches(baseSelector)) {
+                    if (!styles.external.pseudoClassStyles[selector]) {
+                      styles.external.pseudoClassStyles[selector] = {};
+                    }
+                    for (let i = 0; i < rule.style.length; i++) {
+                      const propertyName = rule.style[i];
+                      styles.external.pseudoClassStyles[selector][
+                        propertyName
+                      ] = rule.style.getPropertyValue(propertyName);
+                    }
+                  }
+                }
+              } catch (e) {
+                console.warn(
+                  `Error processing rule for selector '${selector}':`,
+                  e
+                );
               }
             }
           }
         }
+      } else {
+        console.warn("Skipping cross-origin stylesheet:", sheet.href);
       }
     } catch (e) {
       console.warn("Could not access stylesheet rules:", e);
@@ -202,6 +322,7 @@ function getElementStyles(element: HTMLElement): ElementStyles {
 
   return styles;
 }
+
 let lastClickedElement: HTMLElement;
 
 function isValidChromeRuntime() {
@@ -240,17 +361,14 @@ document.addEventListener("click", (event) => {
   // }
   const targetElement = event.target as HTMLElement;
 
-  // If the clicked element is different from the last one, reset the current element
   if (targetElement !== clickedElement) {
     currentElement = null;
     clickedElement = targetElement;
   }
 
   if (!currentElement) {
-    // If currentElement is null, set it to the clicked element
     currentElement = targetElement;
   } else {
-    // If currentElement is not null, set it to the parent element
     currentElement = currentElement.parentElement;
   }
 
@@ -260,7 +378,6 @@ document.addEventListener("click", (event) => {
     clickedElement.setAttribute("data-temporaryid", temporaryId);
   }
   if (currentElement) {
-    // If there's a current element, get its details and send them
     getElementDetails(currentElement).then((details) => {
       if (isValidChromeRuntime()) {
         chrome.runtime.sendMessage(
@@ -284,10 +401,25 @@ function generateTemporaryId() {
     Math.random().toString(36).substring(2, 15)
   );
 }
-function updateText() {
+// const { property, value, temporaryId } = message;
+
+// // Update styles based on the received data
+// // Example: Find the element with temporaryId and update its styles
+// const element = document.querySelector(`[data-temporaryid="${temporaryId}"]`) as HTMLElement;
+// if (element) {
+//   element.style.setProperty(property, value);
+// }
+type getElementTypes = {
+  temporaryId: string;
+  text?: string;
+  selector?: string;
+  property?: string;
+  newColor?: string;
+};
+function getElement({ temporaryId }: getElementTypes) {
   const elementCache: { [key: string]: HTMLElement | null } = {};
 
-  return (text: string, temporaryId: string) => {
+  return () => {
     if (!(temporaryId in elementCache)) {
       console.log("Caching element");
       elementCache[temporaryId] = document.querySelector(
@@ -299,17 +431,38 @@ function updateText() {
     if (!element) {
       console.error(`Element with id ${temporaryId} not found`);
       return;
+    } else {
+      return element;
     }
-
-    console.log("Updating text content");
-    setCurrentElementText(element, text);
-    // element.textContent = text;
   };
 }
+function updateText({ text, temporaryId }: getElementTypes) {
+  const getElementFunction = getElement({ temporaryId });
+  const element = getElementFunction(); // Call the function to get the element
+  if (element) {
+    setCurrentElementText(element, text!);
+  } else {
+    console.error(`Element with temporary ID ${temporaryId} not found`);
+  }
+}
+function updateColor({ newColor, property, temporaryId }: getElementTypes) {
+  const getElementFunction = getElement({ temporaryId });
+  const element = getElementFunction();
+  if (element) {
+    element.style.setProperty(property!, newColor!);
+    // }
+  } else {
+    console.error(`Element with temporary ID ${temporaryId} not found`);
+  }
+}
+
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   console.log(message.action);
   if (message.action === "updateTextContent") {
-    updateText()(message.text, message.temporaryId);
+    updateText({ text: message.text, temporaryId: message.temporaryId });
+    sendResponse({ status: "success" });
+  } else if (message.action === "updateStyles") {
+    updateColor({newColor: message.value, property:message.property, temporaryId: message.temporaryId });
     sendResponse({ status: "success" });
   } else if (message.action === "getUpdatedDetails") {
     getElementDetails(lastClickedElement)
@@ -327,8 +480,6 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 });
 function getCurrentElementText(element: HTMLElement): string {
   let currentText = "";
-
-  // Iterate through the child nodes of the element
   element.childNodes.forEach((node) => {
     if (node.nodeType === Node.TEXT_NODE) {
       currentText += node.textContent?.trim() ?? "";
@@ -337,8 +488,11 @@ function getCurrentElementText(element: HTMLElement): string {
 
   return currentText;
 }
-function setCurrentElementText(element: HTMLElement, text: string): void {
-  element.childNodes.forEach((node) => {
+function setCurrentElementText(
+  element: HTMLElement | undefined,
+  text: string
+): void {
+  element?.childNodes.forEach((node) => {
     if (node.nodeType === Node.TEXT_NODE) {
       node.textContent = text;
     }

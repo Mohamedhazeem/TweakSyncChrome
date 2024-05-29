@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
-import { ElementDetails } from "./types/ElementDetailTypes";
+import { ElementDetails } from "./types/ElementTypes";
 import PTag from "./components/P_Tag";
+import ColorStyle from "./components/ColorStyle";
 
 function App() {
   const [receivedMessage, setReceivedMessage] = useState("");
@@ -68,6 +69,7 @@ function App() {
       </button>
       {/* <div>{tag?.textContent}</div> */}
       <PTag tag={tag} />
+      <ColorStyle tag={tag} />
       <div ref={msg}></div>
     </div>
   );
