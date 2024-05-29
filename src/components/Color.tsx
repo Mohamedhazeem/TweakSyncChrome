@@ -19,6 +19,7 @@ const Color: React.FC<ColorProps> = ({
     <div>
       <span key={`${selector}-${property}`}>
         {property} : {value}
+        {selector}
         <input
           type="color"
           value={convertToHex(value)}

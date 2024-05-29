@@ -56,6 +56,7 @@ function ColorStyle({ tag }: PTagTypes) {
       }
       chrome.runtime.sendMessage({
         action: "updateStyles",
+        selector,
         property,
         value: newColor,
         temporaryId: tag?.temporaryId,

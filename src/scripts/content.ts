@@ -414,7 +414,7 @@ type getElementTypes = {
   text?: string;
   selector?: string;
   property?: string;
-  newColor?: string;
+  newStyleValue?: string;
 };
 function getElement({ temporaryId }: getElementTypes) {
   const elementCache: { [key: string]: HTMLElement | null } = {};
@@ -445,16 +445,67 @@ function updateText({ text, temporaryId }: getElementTypes) {
     console.error(`Element with temporary ID ${temporaryId} not found`);
   }
 }
-function updateColor({ newColor, property, temporaryId }: getElementTypes) {
-  const getElementFunction = getElement({ temporaryId });
-  const element = getElementFunction();
-  if (element) {
-    element.style.setProperty(property!, newColor!);
-    // }
-  } else {
-    console.error(`Element with temporary ID ${temporaryId} not found`);
+const cachedRules: Record<string, CSSStyleRule[]> = {};
+
+function getCachedRules(): Record<string, CSSStyleRule[]> {
+  if (Object.keys(cachedRules).length === 0) {
+    // Cache the rules if the cache is empty
+    const styleSheets = document.styleSheets;
+    for (let i = 0; i < styleSheets.length; i++) {
+      const styleSheet = styleSheets[i] as CSSStyleSheet;
+      const rules = styleSheet.cssRules;
+      for (let j = 0; j < rules.length; j++) {
+        const rule = rules[j] as CSSStyleRule;
+        const selector = rule.selectorText;
+        if (!cachedRules[selector]) {
+          cachedRules[selector] = [];
+        }
+        cachedRules[selector].push(rule);
+      }
+    }
+  }
+  return cachedRules;
+}
+function updateStyles({ newStyleValue, selector, property }: getElementTypes) {
+  if (!selector || !property) {
+    console.error("Selector or property not provided");
+    return;
+  }
+
+  const rules = getCachedRules()[selector];
+  if (!rules) {
+    console.error(`No cached rules found for selector: ${selector}`);
+    return;
+  }
+
+  for (const rule of rules) {
+    // Update the property for each matching rule
+    rule.style.setProperty(property, newStyleValue!);
   }
 }
+// function updateColor({ newColor, selector, property }: getElementTypes) {
+//   if (!selector || !property) {
+//     console.error("Selector or property not provided");
+//     return;
+//   }
+
+//   const styleSheets = document.styleSheets;
+//   for (let i = 0; i < styleSheets.length; i++) {
+//     const styleSheet = styleSheets[i] as CSSStyleSheet;
+//     const rules = styleSheet.cssRules;
+//     for (let j = 0; j < rules.length; j++) {
+//       const rule = rules[j] as CSSStyleRule;
+//       if (rule.selectorText === selector) {
+//         // Found a matching rule with the specified selector, update the property
+//         rule.style.setProperty(property, newColor!);
+//         return; // Exit the function after updating the color
+//       }
+//     }
+//   }
+
+//   console.error(`No matching rule found for selector: ${selector}`);
+// }
+
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   console.log(message.action);
@@ -462,7 +513,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     updateText({ text: message.text, temporaryId: message.temporaryId });
     sendResponse({ status: "success" });
   } else if (message.action === "updateStyles") {
-    updateColor({newColor: message.value, property:message.property, temporaryId: message.temporaryId });
+    updateStyles({newStyleValue: message.value,selector:message.selector, property:message.property, temporaryId: message.temporaryId });
     sendResponse({ status: "success" });
   } else if (message.action === "getUpdatedDetails") {
     getElementDetails(lastClickedElement)
