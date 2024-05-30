@@ -1,23 +1,31 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
-import { ElementDetails } from "./types/ElementTypes";
+import { ElementDetails, ElementStyles } from "./types/ElementTypes";
 import PTag from "./components/P_Tag";
 import ColorStyle from "./components/ColorStyle";
 
 function App() {
   const [receivedMessage, setReceivedMessage] = useState("");
-  const [tag, setTag] = useState<ElementDetails>();
+  const [element, setTag] = useState<ElementDetails>();
+  const [style, setStyle] = useState<ElementStyles>();
   const msg = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMessage = (message: any) => {
     if (message.action === "receivedMessage") {
       setReceivedMessage(message.data);
       msg.current!.innerText = message.data;
-    } else if (message.action === "showElementDetails") {
+    }
+    if (message.action === "showElementDetails") {
       setTag(undefined);
       setTag(message.details);
       //setSelectedTemporaryId(message.details.temporaryId);
-      msg.current!.innerText = JSON.stringify(message.details.styles, null, 2);
+      //msg.current!.innerText = JSON.stringify(message.details, null, 2);
+    }
+    if (message.action === "showElementStyles") {
+      setStyle(undefined);
+      setStyle(message.styles);
+      //setSelectedTemporaryId(message.details.temporaryId);
+      //msg.current!.innerText = JSON.stringify(message.styles, null, 2);
     }
   };
 
@@ -45,8 +53,11 @@ function App() {
   function removeInject() {
     chrome.runtime.sendMessage({ action: "resetContentScriptInjected" });
   }
-  function apply() {
-    chrome.runtime.sendMessage({ action: "apply" });
+  function applyElement() {
+    chrome.runtime.sendMessage({ action: "apply", apply: "element" });
+  }
+  function applyStyles() {
+    chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
   }
 
   return (
@@ -64,12 +75,15 @@ function App() {
       <button type="button" id="remove_inject" onClick={removeInject}>
         Remove Inject
       </button>
-      <button type="button" id="apply" onClick={apply}>
-        Apply
+      <button type="button" id="applyElement" onClick={applyElement}>
+        Apply Element
+      </button>
+      <button type="button" id="applyStyles" onClick={applyStyles}>
+        Apply styles
       </button>
       {/* <div>{tag?.textContent}</div> */}
-      <PTag tag={tag} />
-      <ColorStyle tag={tag} />
+      <PTag tag={element} />
+      <ColorStyle tag={element} style={style} />
       <div ref={msg}></div>
     </div>
   );

@@ -6,7 +6,7 @@ export interface ElementDetails {
   attributes?: { [key: string]: string };
   temporaryId?: string | null;
   path?: string;
-  styles: ElementStyles;
+  // styles: ElementStyles;
 }
 export interface StyleData {
   [selector: string]: { [property: string]: string };

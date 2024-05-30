@@ -4,9 +4,10 @@ import Color from "./Color";
 
 type PTagTypes = {
   tag?: ElementDetails;
+  style?: ElementStyles;
 };
 
-function ColorStyle({ tag }: PTagTypes) {
+function ColorStyle({ tag, style }: PTagTypes) {
   const initialStyles: ElementStyles = {
     inline: {},
     external: {
@@ -23,10 +24,13 @@ function ColorStyle({ tag }: PTagTypes) {
   const [styles, setStyles] = useState<ElementStyles>(initialStyles);
 
   useEffect(() => {
-    if (tag?.styles) {
-      setStyles(tag.styles);
+    if (style) {
+      console.log("Received style:", style);
+      setStyles(style);
     }
-  }, [tag]);
+  }, [tag?.path, style]); // Check if style needs to be updated when tag.path changes
+
+  console.log("Rendering ColorStyle with styles:", styles);
 
   const handleColorChange = (
     selector: string,
@@ -112,12 +116,13 @@ function ColorStyle({ tag }: PTagTypes) {
     );
   };
 
-  if (!tag || !tag.styles) {
+  if (!tag || !style) {
     return null;
   }
 
   return (
     <div>
+      <div>checking</div>
       {styles.inline &&
         Object.entries(styles.inline).map(([property, value]) =>
           property === "color" ? (

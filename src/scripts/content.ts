@@ -20,14 +20,14 @@ function getElementDetails(element: HTMLElement): Promise<ElementDetails> {
       ),
       temporaryId: element.getAttribute("data-temporaryid") || null,
       path: getElementPath(element),
-      styles: getElementStyles(element),
     };
 
     console.log("Element details resolved:", details);
     resolve(details);
   });
 }
-function getElementStyles(element: HTMLElement): ElementStyles {
+function getElementStyles(element: HTMLElement):Promise<ElementStyles> {
+  return new Promise((resolve, reject) => {
   const styles: ElementStyles = {
     inline: {},
     external: {
@@ -308,6 +308,7 @@ function getElementStyles(element: HTMLElement): ElementStyles {
                   `Error processing rule for selector '${selector}':`,
                   e
                 );
+                reject(new Error("Style Error"));
               }
             }
           }
@@ -320,7 +321,8 @@ function getElementStyles(element: HTMLElement): ElementStyles {
     }
   }
 
-  return styles;
+  resolve(styles);
+});
 }
 
 let lastClickedElement: HTMLElement;
@@ -392,6 +394,20 @@ document.addEventListener("click", (event) => {
         );
       }
     });
+    getElementStyles(currentElement).then((styles) => {
+      if(isValidChromeRuntime()) {
+        chrome.runtime.sendMessage(
+          { action: "styleClicked", styles },
+          (response) => {
+            if (chrome.runtime.lastError) {
+              console.error("Error sending message:", chrome.runtime.lastError);
+            } else {
+              console.log("Message sent successfully", response);
+            }
+          }
+        );
+      }
+    })
   }
 });
 
@@ -515,7 +531,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   } else if (message.action === "updateStyles") {
     updateStyles({newStyleValue: message.value,selector:message.selector, property:message.property, temporaryId: message.temporaryId });
     sendResponse({ status: "success" });
-  } else if (message.action === "getUpdatedDetails") {
+  } else if (message.action === "getUpdatedElement") {
     getElementDetails(lastClickedElement)
       .then((details) => {
         console.log("Sending details:", details);
@@ -526,6 +542,13 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         sendResponse({ status: "error", message: error.message });
       });
     return true;
+  }else if(message.action === "getUpdatedStyle"){
+    getElementStyles(lastClickedElement).then((styles) => {
+      sendResponse(styles);
+    }).catch((error) => {
+      console.error("Error getting element style :", error);
+      sendResponse({ status: "error", message: error.message });
+    });
   }
   return true;
 });
