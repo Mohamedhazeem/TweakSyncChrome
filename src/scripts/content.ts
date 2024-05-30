@@ -39,12 +39,13 @@ function getElementStyles(element: HTMLElement):Promise<ElementStyles> {
       pseudoElementStyles: {},
       pseudoClassStyles: {},
     },
+    temporaryId: "",
   };
 
   const classList = Array.from(element.classList);
   const elementId = element.id;
   const tagName = element.tagName.toLowerCase();
-
+  styles.temporaryId = element.getAttribute("data-temporaryid") || null;
   // Collect inline styles
   const inlineStyles = element.style;
   for (let i = 0; i < inlineStyles.length; i++) {
@@ -543,6 +544,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       });
     return true;
   }else if(message.action === "getUpdatedStyle"){
+    
     getElementStyles(lastClickedElement).then((styles) => {
       sendResponse(styles);
     }).catch((error) => {

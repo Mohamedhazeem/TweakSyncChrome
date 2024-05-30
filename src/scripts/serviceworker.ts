@@ -249,7 +249,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
               ws.send(
                 JSON.stringify({
                   action: "applyStylesToVscode",
-                  details: response,
+                  styles: response,
                 })
               );
               sendResponse({ status: "success" });
