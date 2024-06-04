@@ -112,11 +112,14 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
             if (!styles.external.atRules[atRuleName][selector]) {
               styles.external.atRules[atRuleName][selector] = {};
             }
-            processRule(
-              subRule,
-              selector,
-              styles.external.atRules[atRuleName][selector]
-            );
+            if (element.matches(selector)) {
+              //only show elements styles that match the selector
+              processRule(
+                subRule,
+                selector,
+                styles.external.atRules[atRuleName][selector]
+              );
+            }
           }
         }
       } else if (rule instanceof CSSKeyframesRule) {
