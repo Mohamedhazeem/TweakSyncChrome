@@ -18,6 +18,7 @@ function ColorStyle({ tag, style }: PTagTypes) {
       descendant: {},
       pseudoElementStyles: {},
       pseudoClassStyles: {},
+      atRules: {},
     },
   };
 

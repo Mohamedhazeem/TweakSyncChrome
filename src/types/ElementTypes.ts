@@ -24,10 +24,17 @@ interface ExternalStyles {
   descendant: { [key: string]: { [key: string]: string } };
   pseudoElementStyles: { [key: string]: { [key: string]: string } };
   pseudoClassStyles: { [key: string]: { [key: string]: string } };
+  atRules: {
+    [key: string]: {
+      [key: string]: {
+        [key: string]: string;
+      };
+    };
+  };
 }
 
 export interface ElementStyles {
   inline: InlineStyles;
   external: ExternalStyles;
-  temporaryId?: string|null;
+  temporaryId?: string | null;
 }
