@@ -98,7 +98,7 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
     };
 
     const processAtRule = (
-      rule: CSSMediaRule | CSSKeyframesRule,
+      rule: CSSMediaRule | CSSKeyframesRule | CSSFontFaceRule | CSSSupportsRule,
       atRuleName: string
     ) => {
       if (!styles.external.atRules[atRuleName]) {
@@ -112,14 +112,14 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
             if (!styles.external.atRules[atRuleName][selector]) {
               styles.external.atRules[atRuleName][selector] = {};
             }
-            if (element.matches(selector)) {
-              //only show elements styles that match the selector
-              processRule(
-                subRule,
-                selector,
-                styles.external.atRules[atRuleName][selector]
-              );
-            }
+            // if (element.matches(selector)) {
+            //only show elements styles that match the selector
+            processRule(
+              subRule,
+              selector,
+              styles.external.atRules[atRuleName][selector]
+            );
+            // }
           }
         }
       } else if (rule instanceof CSSKeyframesRule) {
@@ -136,6 +136,30 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
             styles.external.atRules[atRuleName][keyframe]
           );
         }
+      } else if (rule instanceof CSSSupportsRule) {
+        for (const subRule of Array.from(rule.cssRules)) {
+          if (subRule instanceof CSSStyleRule) {
+            const selector = subRule.selectorText;
+            if (!styles.external.atRules[atRuleName][selector]) {
+              styles.external.atRules[atRuleName][selector] = {};
+            }
+            processRule(
+              subRule,
+              selector,
+              styles.external.atRules[atRuleName][selector]
+            );
+          }
+        }
+      } else if (rule instanceof CSSFontFaceRule) {
+        const fontFaceName = rule.style.getPropertyValue("font-family");
+        if (!styles.external.atRules[atRuleName][fontFaceName]) {
+          styles.external.atRules[atRuleName][fontFaceName] = {};
+        }
+        processRule(
+          rule as CSSStyleRule,
+          fontFaceName,
+          styles.external.atRules[atRuleName][fontFaceName]
+        );
       }
     };
 
@@ -283,12 +307,18 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
               // Handle at-rules
               if (
                 rule instanceof CSSMediaRule ||
-                rule instanceof CSSKeyframesRule
+                rule instanceof CSSKeyframesRule ||
+                rule instanceof CSSSupportsRule ||
+                rule instanceof CSSFontFaceRule
               ) {
                 const atRuleName =
                   rule instanceof CSSMediaRule
                     ? `@media ${rule.media.mediaText}`
-                    : `@keyframes ${rule.name}`;
+                    : rule instanceof CSSKeyframesRule
+                    ? `@keyframes ${rule.name}`
+                    : rule instanceof CSSSupportsRule
+                    ? `@supports ${rule.conditionText}`
+                    : "@font-face";
                 processAtRule(rule, atRuleName);
               }
             }
