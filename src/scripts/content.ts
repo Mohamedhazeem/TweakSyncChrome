@@ -26,6 +26,7 @@ function getElementDetails(element: HTMLElement): Promise<ElementDetails> {
     resolve(details);
   });
 }
+
 function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
   return new Promise((resolve, reject) => {
     const styles: ElementStyles = {
@@ -98,13 +99,17 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
     };
 
     const processAtRule = (
-      rule: CSSMediaRule | CSSKeyframesRule | CSSFontFaceRule | CSSSupportsRule,
+      rule:
+        | CSSMediaRule
+        | CSSKeyframesRule
+        | CSSFontFaceRule
+        | CSSSupportsRule
+        | CSSContainerRule,
       atRuleName: string
     ) => {
       if (!styles.external.atRules[atRuleName]) {
         styles.external.atRules[atRuleName] = {};
       }
-
       if (rule instanceof CSSMediaRule) {
         for (const subRule of Array.from(rule.cssRules)) {
           if (subRule instanceof CSSStyleRule) {
@@ -150,16 +155,21 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
             );
           }
         }
-      } else if (rule instanceof CSSFontFaceRule) {
-        const fontFaceName = rule.style.getPropertyValue("font-family");
-        if (!styles.external.atRules[atRuleName][fontFaceName]) {
-          styles.external.atRules[atRuleName][fontFaceName] = {};
+      } else if (rule instanceof CSSContainerRule) {
+        // Handle @container rules
+        const containerRules: { [key: string]: { [key: string]: string } } = {};
+        for (const subRule of Array.from(rule.cssRules)) {
+          // Process each sub-rule inside the @container rule
+          // Assuming each sub-rule is a CSSStyleRule
+          if (subRule instanceof CSSStyleRule) {
+            const selector = subRule.selectorText;
+            if (!containerRules[selector]) {
+              containerRules[selector] = {};
+            }
+            processRule(subRule, selector, containerRules[selector]);
+          }
+          styles.external.atRules[atRuleName] = containerRules;
         }
-        processRule(
-          rule as CSSStyleRule,
-          fontFaceName,
-          styles.external.atRules[atRuleName][fontFaceName]
-        );
       }
     };
 
@@ -309,7 +319,8 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
                 rule instanceof CSSMediaRule ||
                 rule instanceof CSSKeyframesRule ||
                 rule instanceof CSSSupportsRule ||
-                rule instanceof CSSFontFaceRule
+                rule instanceof CSSFontFaceRule ||
+                rule instanceof CSSContainerRule
               ) {
                 const atRuleName =
                   rule instanceof CSSMediaRule
@@ -318,6 +329,8 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
                     ? `@keyframes ${rule.name}`
                     : rule instanceof CSSSupportsRule
                     ? `@supports ${rule.conditionText}`
+                    : rule instanceof CSSContainerRule
+                    ? `@container ${rule.conditionText}`
                     : "@font-face";
                 processAtRule(rule, atRuleName);
               }
@@ -427,14 +440,6 @@ function generateTemporaryId() {
     Math.random().toString(36).substring(2, 15)
   );
 }
-// const { property, value, temporaryId } = message;
-
-// // Update styles based on the received data
-// // Example: Find the element with temporaryId and update its styles
-// const element = document.querySelector(`[data-temporaryid="${temporaryId}"]`) as HTMLElement;
-// if (element) {
-//   element.style.setProperty(property, value);
-// }
 type getElementTypes = {
   temporaryId: string;
   text?: string;
@@ -509,28 +514,6 @@ function updateStyles({ newStyleValue, selector, property }: getElementTypes) {
     rule.style.setProperty(property, newStyleValue!);
   }
 }
-// function updateColor({ newColor, selector, property }: getElementTypes) {
-//   if (!selector || !property) {
-//     console.error("Selector or property not provided");
-//     return;
-//   }
-
-//   const styleSheets = document.styleSheets;
-//   for (let i = 0; i < styleSheets.length; i++) {
-//     const styleSheet = styleSheets[i] as CSSStyleSheet;
-//     const rules = styleSheet.cssRules;
-//     for (let j = 0; j < rules.length; j++) {
-//       const rule = rules[j] as CSSStyleRule;
-//       if (rule.selectorText === selector) {
-//         // Found a matching rule with the specified selector, update the property
-//         rule.style.setProperty(property, newColor!);
-//         return; // Exit the function after updating the color
-//       }
-//     }
-//   }
-
-//   console.error(`No matching rule found for selector: ${selector}`);
-// }
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   console.log(message.action);
