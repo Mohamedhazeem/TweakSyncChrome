@@ -15,7 +15,13 @@ export interface StyleData {
 interface InlineStyles {
   [key: string]: string;
 }
-
+export interface AtRules {
+  [atRule: string]: {
+    [selector: string]: {
+      [property: string]: string;
+    };
+  };
+}
 interface ExternalStyles {
   classes: { [key: string]: { [key: string]: string } };
   ids: { [key: string]: { [key: string]: string } };
@@ -24,13 +30,7 @@ interface ExternalStyles {
   descendant: { [key: string]: { [key: string]: string } };
   pseudoElementStyles: { [key: string]: { [key: string]: string } };
   pseudoClassStyles: { [key: string]: { [key: string]: string } };
-  atRules: {
-    [key: string]: {
-      [key: string]: {
-        [key: string]: string;
-      };
-    };
-  };
+  atRules: AtRules;
 }
 
 export interface ElementStyles {

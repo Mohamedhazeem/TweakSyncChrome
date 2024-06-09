@@ -110,6 +110,7 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
       if (!styles.external.atRules[atRuleName]) {
         styles.external.atRules[atRuleName] = {};
       }
+      console.log(rule);
       if (rule instanceof CSSMediaRule) {
         for (const subRule of Array.from(rule.cssRules)) {
           if (subRule instanceof CSSStyleRule) {
@@ -118,7 +119,6 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
               styles.external.atRules[atRuleName][selector] = {};
             }
             // if (element.matches(selector)) {
-            //only show elements styles that match the selector
             processRule(
               subRule,
               selector,
@@ -476,42 +476,99 @@ function updateText({ text, temporaryId }: getElementTypes) {
     console.error(`Element with temporary ID ${temporaryId} not found`);
   }
 }
+//const cachedRules: Record<string, CSSStyleRule[]> = {};
+
+// function getCachedRules(): Record<string, CSSStyleRule[]> {
+//   if (Object.keys(cachedRules).length === 0) {
+//     // Cache the rules if the cache is empty
+//     const styleSheets = document.styleSheets;
+//     for (let i = 0; i < styleSheets.length; i++) {
+//       const styleSheet = styleSheets[i] as CSSStyleSheet;
+//       const rules = styleSheet.cssRules;
+//       for (let j = 0; j < rules.length; j++) {
+//         const rule = rules[j] as CSSStyleRule;
+//         const selector = rule.selectorText;
+//         if (!cachedRules[selector]) {
+//           cachedRules[selector] = [];
+//         }
+//         cachedRules[selector].push(rule);
+//       }
+//     }
+//   }
+//   return cachedRules;
+// }
 const cachedRules: Record<string, CSSStyleRule[]> = {};
 
-function getCachedRules(): Record<string, CSSStyleRule[]> {
+function getCachedRules() {
   if (Object.keys(cachedRules).length === 0) {
     // Cache the rules if the cache is empty
     const styleSheets = document.styleSheets;
     for (let i = 0; i < styleSheets.length; i++) {
-      const styleSheet = styleSheets[i] as CSSStyleSheet;
-      const rules = styleSheet.cssRules;
-      for (let j = 0; j < rules.length; j++) {
-        const rule = rules[j] as CSSStyleRule;
-        const selector = rule.selectorText;
-        if (!cachedRules[selector]) {
-          cachedRules[selector] = [];
+      const styleSheet = styleSheets[i];
+      try {
+        const rules = styleSheet.cssRules;
+        for (let j = 0; j < rules.length; j++) {
+          cacheRule(rules[j]);
         }
-        cachedRules[selector].push(rule);
+      } catch (e) {
+        console.error(`Error accessing stylesheet: ${styleSheet.href}`, e);
       }
     }
   }
   return cachedRules;
 }
-function updateStyles({ newStyleValue, selector, property }: getElementTypes) {
+
+function cacheRule(rule: CSSRule) {
+  if (rule instanceof CSSStyleRule) {
+    const selector = rule.selectorText;
+    if (!cachedRules[selector]) {
+      cachedRules[selector] = [];
+    }
+    cachedRules[selector].push(rule);
+  } else if (
+    rule instanceof CSSMediaRule ||
+    rule instanceof CSSSupportsRule ||
+    rule instanceof CSSKeyframesRule
+  ) {
+    const cssRules = rule.cssRules;
+    for (let k = 0; k < cssRules.length; k++) {
+      cacheRule(cssRules[k]);
+    }
+  }
+}
+
+function updateStyles({
+  newStyleValue,
+  selector,
+  property,
+  temporaryId,
+}: getElementTypes) {
   if (!selector || !property) {
     console.error("Selector or property not provided");
     return;
   }
+  if (selector === "inline") {
+    // Update the style directly on the element with the provided temporaryId
+    const element = document.querySelector(
+      `[data-temporaryid="${temporaryId}"]`
+    ) as HTMLElement;
+    if (element) {
+      const previousStyle = element.style.cssText; // Get existing styles
 
-  const rules = getCachedRules()[selector];
-  if (!rules) {
-    console.error(`No cached rules found for selector: ${selector}`);
-    return;
-  }
+      element.style.cssText = `${previousStyle}; ${property}: ${newStyleValue}`;
+    } else {
+      console.error(`No element found with temporary ID: ${temporaryId}`);
+    }
+  } else {
+    const rules = getCachedRules()[selector];
+    if (!rules) {
+      console.error(`No cached rules found for selector: ${selector}`);
+      return;
+    }
 
-  for (const rule of rules) {
-    // Update the property for each matching rule
-    rule.style.setProperty(property, newStyleValue!);
+    for (const rule of rules) {
+      rule.style.setProperty(property, newStyleValue!);
+    }
   }
 }
 

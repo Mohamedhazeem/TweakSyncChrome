@@ -40,24 +40,34 @@ function ColorStyle({ tag, style }: PTagTypes) {
   ) => {
     setStyles((prevStyles) => {
       const updatedStyles = { ...prevStyles };
-
-      if (updatedStyles.inline[selector]) {
-        updatedStyles.inline[selector] = newColor;
-      } else if (updatedStyles.external.classes[selector]) {
-        updatedStyles.external.classes[selector][property] = newColor;
-      } else if (updatedStyles.external.ids[selector]) {
-        updatedStyles.external.ids[selector][property] = newColor;
-      } else if (updatedStyles.external.tags[selector]) {
-        updatedStyles.external.tags[selector][property] = newColor;
-      } else if (updatedStyles.external.attribute[selector]) {
-        updatedStyles.external.attribute[selector][property] = newColor;
-      } else if (updatedStyles.external.descendant[selector]) {
-        updatedStyles.external.descendant[selector][property] = newColor;
-      } else if (updatedStyles.external.pseudoElementStyles[selector]) {
-        updatedStyles.external.pseudoElementStyles[selector][property] =
-          newColor;
-      } else if (updatedStyles.external.pseudoClassStyles[selector]) {
-        updatedStyles.external.pseudoClassStyles[selector][property] = newColor;
+      if (selector === "inline") {
+        // Update the color property directly in the inline styles
+        updatedStyles.inline[property] = newColor;
+      } else {
+        if (updatedStyles.inline[selector]) {
+          updatedStyles.inline[selector] = newColor;
+        } else if (updatedStyles.external.classes[selector]) {
+          updatedStyles.external.classes[selector][property] = newColor;
+        } else if (updatedStyles.external.ids[selector]) {
+          updatedStyles.external.ids[selector][property] = newColor;
+        } else if (updatedStyles.external.tags[selector]) {
+          updatedStyles.external.tags[selector][property] = newColor;
+        } else if (updatedStyles.external.attribute[selector]) {
+          updatedStyles.external.attribute[selector][property] = newColor;
+        } else if (updatedStyles.external.descendant[selector]) {
+          updatedStyles.external.descendant[selector][property] = newColor;
+        } else if (updatedStyles.external.pseudoElementStyles[selector]) {
+          updatedStyles.external.pseudoElementStyles[selector][property] =
+            newColor;
+        } else if (updatedStyles.external.pseudoClassStyles[selector]) {
+          updatedStyles.external.pseudoClassStyles[selector][property] =
+            newColor;
+        } else if (updatedStyles.external.atRules[selector]) {
+          for (const subSelector in updatedStyles.external.atRules[selector]) {
+            updatedStyles.external.atRules[selector][subSelector][property] =
+              newColor;
+          }
+        }
       }
       chrome.runtime.sendMessage({
         action: "updateStyles",
@@ -146,6 +156,15 @@ function ColorStyle({ tag, style }: PTagTypes) {
           {renderColorStyles(styles.external.descendant)}
           {renderColorStyles(styles.external.pseudoElementStyles)}
           {renderColorStyles(styles.external.pseudoClassStyles)}
+          {/* {renderAtRules(styles.external.atRules)} */}
+          {styles.external.atRules &&
+            Object.entries(styles.external.atRules).map(
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              ([, nestedSelectors]) =>
+                Object.entries(nestedSelectors).map(([selector, properties]) =>
+                  renderColorStyles({ [selector]: properties })
+                )
+            )}
         </>
       )}
     </div>

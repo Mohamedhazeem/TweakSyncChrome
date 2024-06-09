@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 type ColorProps = {
   selector: string;
@@ -15,15 +15,22 @@ const Color: React.FC<ColorProps> = ({
   convertToHex,
   onColorChange,
 }) => {
+  const [color, setColor] = useState<string | number>();
+  useEffect(() => {
+    setColor(convertToHex(value));
+  }, []);
   return (
     <div>
       <span key={`${selector}-${property}`}>
-        {property} : {value}
+        {property} : {color}
         {selector}
         <input
           type="color"
-          value={convertToHex(value)}
-          onChange={(e) => onColorChange(selector, property, e.target.value)}
+          value={color}
+          onChange={(e) => {
+            onColorChange(selector, property, e.target.value);
+            setColor(e.target.value);
+          }}
         />
       </span>
     </div>
