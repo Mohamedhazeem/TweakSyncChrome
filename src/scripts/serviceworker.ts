@@ -3,7 +3,12 @@ import {
   reinjectContentScript,
   removeContentScript,
 } from "./contentScriptInjectAndRemove";
-import { initWebSocket, ws } from "./websocket";
+import {
+  applyElementToVscode,
+  applyStylesToVscode,
+  initWebSocket,
+  isSocketOpen,
+} from "./websocket";
 
 chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
@@ -50,14 +55,71 @@ chrome.action.onClicked.addListener(() => {
     }
   });
 });
+function update(message: object, sendResponse: (response?: unknown) => void) {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs[0]?.id) {
+      chrome.tabs.sendMessage(tabs[0].id, message, (response) => {
+        sendResponse(response);
+      });
+    }
+  });
+  return true;
+}
+function apply(
+  tabId: number,
+  sendResponse: (response?: unknown) => void,
+  applyFor: string
+) {
+  chrome.tabs.sendMessage(
+    tabId,
+    { action: applyFor === "styles" ? "getUpdatedStyle" : "getUpdatedElement" },
+    (response) => {
+      if (chrome.runtime.lastError) {
+        console.error(
+          "Error sending message to content script:",
+          chrome.runtime.lastError.message
+        );
+        sendResponse({
+          status: "error",
+          message: chrome.runtime.lastError.message,
+        });
+        return;
+      }
 
+      console.log("Response from content script:", response);
+
+      if (response && response.status !== "error") {
+        if (isSocketOpen()) {
+          console.log("Sending applyStylesToVscode");
+          console.log(response);
+          applyFor === "styles"
+            ? applyStylesToVscode(response)
+            : applyElementToVscode(response);
+          sendResponse({ status: "success" });
+        } else {
+          console.error("WebSocket is not open");
+          sendResponse({
+            status: "error",
+            message: "WebSocket is not open",
+          });
+        }
+      } else {
+        console.error(
+          "No response received for apply or an error occurred:",
+          response
+        );
+        sendResponse({
+          status: "error",
+          message: "No response received or an error occurred",
+        });
+      }
+    }
+  );
+}
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.action === "connect") {
     initWebSocket();
     console.log("Web socket connected");
-    ws.onopen = () => {
-      ws.send(JSON.stringify({ hello: "hello" }));
-    };
   } else if (message.action === "elementClicked") {
     console.log("Clicked element details:", message.details);
 
@@ -78,127 +140,17 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     injectContentScript();
   } else if (message.action === "resetContentScriptInjected") {
     removeContentScript();
-  } else if (message.action === "updateTextContent") {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0]?.id) {
-        chrome.tabs.sendMessage(tabs[0].id, message, (response) => {
-          sendResponse(response);
-        });
-      }
-    });
-    return true;
-  } else if (message.action === "updateStyles") {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (tabs[0]?.id) {
-        chrome.tabs.sendMessage(tabs[0].id, message, (response) => {
-          sendResponse(response);
-        });
-      }
-    });
-    return true;
+  } else if (
+    message.action === "updateTextContent" ||
+    message.action === "updateStyles"
+  ) {
+    update(message, sendResponse);
   } else if (message.action === "apply") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs.length === 0) {
         return;
       }
-      if (message.apply === "element") {
-        chrome.tabs.sendMessage(
-          tabs[0].id!,
-          { action: "getUpdatedElement" },
-          (response) => {
-            if (chrome.runtime.lastError) {
-              console.error(
-                "Error sending message to content script:",
-                chrome.runtime.lastError.message
-              );
-              sendResponse({
-                status: "error",
-                message: chrome.runtime.lastError.message,
-              });
-              return;
-            }
-
-            console.log("Response from content script:", response);
-
-            if (response && response.status !== "error") {
-              if (ws && ws.readyState === WebSocket.OPEN) {
-                console.log("Sending applyElementToVscode");
-                ws.send(
-                  JSON.stringify({
-                    action: "applyElementToVscode",
-                    details: response,
-                  })
-                );
-                sendResponse({ status: "success" });
-              } else {
-                console.error("WebSocket is not open");
-                sendResponse({
-                  status: "error",
-                  message: "WebSocket is not open",
-                });
-              }
-            } else {
-              console.error(
-                "No response received for getUpdatedDetails or an error occurred:",
-                response
-              );
-              sendResponse({
-                status: "error",
-                message: "No response received or an error occurred",
-              });
-            }
-          }
-        );
-      } else if (message.apply === "styles") {
-        chrome.tabs.sendMessage(
-          tabs[0].id!,
-          { action: "getUpdatedStyle" },
-          (response) => {
-            if (chrome.runtime.lastError) {
-              console.error(
-                "Error sending message to content script:",
-                chrome.runtime.lastError.message
-              );
-              sendResponse({
-                status: "error",
-                message: chrome.runtime.lastError.message,
-              });
-              return;
-            }
-
-            console.log("Response from content script:", response);
-
-            if (response && response.status !== "error") {
-              if (ws && ws.readyState === WebSocket.OPEN) {
-                console.log("Sending applyStylesToVscode");
-                console.log(response);
-                ws.send(
-                  JSON.stringify({
-                    action: "applyStylesToVscode",
-                    styles: response,
-                  })
-                );
-                sendResponse({ status: "success" });
-              } else {
-                console.error("WebSocket is not open");
-                sendResponse({
-                  status: "error",
-                  message: "WebSocket is not open",
-                });
-              }
-            } else {
-              console.error(
-                "No response received for getUpdatedDetails or an error occurred:",
-                response
-              );
-              sendResponse({
-                status: "error",
-                message: "No response received or an error occurred",
-              });
-            }
-          }
-        );
-      }
+      apply(tabs[0].id!, sendResponse, message.apply);
     });
     return true;
   }

@@ -21,3 +21,25 @@ export function initWebSocket() {
     });
   }
 }
+export function isSocketOpen() {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    return true;
+  }
+  return false;
+}
+export function applyElementToVscode(response: object) {
+  ws.send(
+    JSON.stringify({
+      action: "applyElementToVscode",
+      details: response,
+    })
+  );
+}
+export function applyStylesToVscode(response: object) {
+  ws.send(
+    JSON.stringify({
+      action: "applyStylesToVscode",
+      styles: response,
+    })
+  );
+}
