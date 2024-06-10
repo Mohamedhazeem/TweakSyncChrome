@@ -8,6 +8,13 @@ export interface ElementDetails {
   path?: string;
   // styles: ElementStyles;
 }
+export type getElementTypes = {
+  temporaryId: string;
+  text?: string;
+  selector?: string;
+  property?: string;
+  newStyleValue?: string;
+};
 export interface StyleData {
   [selector: string]: { [property: string]: string };
 }

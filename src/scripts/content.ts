@@ -1,4 +1,10 @@
 import { ElementDetails, ElementStyles } from "../types/ElementTypes";
+import { generateTemporaryId } from "../utils/generateTemporaryId";
+import { updateStyles } from "../utils/updateStyles";
+import { getCurrentElementText, updateText } from "../utils/elementTextContent";
+import { resetStyles, styles } from "../utils/constants";
+import { getElementPath } from "../utils/getElementPath";
+import { handleAtrules } from "../utils/styleHandlers";
 let clickedElement: HTMLElement | null = null;
 let currentElement: HTMLElement | null = null;
 
@@ -29,21 +35,7 @@ function getElementDetails(element: HTMLElement): Promise<ElementDetails> {
 
 function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
   return new Promise((resolve, reject) => {
-    const styles: ElementStyles = {
-      inline: {},
-      external: {
-        classes: {},
-        ids: {},
-        tags: {},
-        attribute: {},
-        descendant: {},
-        pseudoElementStyles: {},
-        pseudoClassStyles: {},
-        atRules: {},
-      },
-      temporaryId: "",
-    };
-
+    resetStyles();
     const classList = Array.from(element.classList);
     const elementId = element.id;
     const tagName = element.tagName.toLowerCase();
@@ -313,27 +305,7 @@ function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
                   reject(new Error("Style Error"));
                 }
               }
-
-              // Handle at-rules
-              if (
-                rule instanceof CSSMediaRule ||
-                rule instanceof CSSKeyframesRule ||
-                rule instanceof CSSSupportsRule ||
-                rule instanceof CSSFontFaceRule ||
-                rule instanceof CSSContainerRule
-              ) {
-                const atRuleName =
-                  rule instanceof CSSMediaRule
-                    ? `@media ${rule.media.mediaText}`
-                    : rule instanceof CSSKeyframesRule
-                    ? `@keyframes ${rule.name}`
-                    : rule instanceof CSSSupportsRule
-                    ? `@supports ${rule.conditionText}`
-                    : rule instanceof CSSContainerRule
-                    ? `@container ${rule.conditionText}`
-                    : "@font-face";
-                processAtRule(rule, atRuleName);
-              }
+              handleAtrules(rule, processAtRule);
             }
           }
         } else {
@@ -354,36 +326,8 @@ function isValidChromeRuntime() {
   return chrome.runtime && !!chrome.runtime.getManifest();
 }
 
-function getElementPath(element: HTMLElement) {
-  const path = [];
-  while (element) {
-    let tagName = element.tagName.toLowerCase();
-    if (element.id) {
-      tagName += `#${element.id}`;
-    } else if (element.className) {
-      const classes = element.className.split(" ").filter(Boolean);
-      if (classes.length > 0) {
-        tagName += `.${classes.join(".")}`;
-      }
-    } else {
-      const siblingIndex =
-        Array.from(element.parentNode?.children || []).indexOf(element) + 1;
-      tagName += `:nth-child(${siblingIndex})`;
-    }
-    path.unshift(tagName);
-    element = element.parentElement as HTMLElement;
-  }
-  return path.join(" > ");
-}
-
 document.addEventListener("click", (event) => {
   event.preventDefault();
-
-  //const clickedElement = event.target as HTMLElement;
-  // remove previous temporaryId
-  //   if (lastClickedElement && lastClickedElement !== clickedElement && !clickedElement.classList.contains('noTemporaryId')) {
-  //     lastClickedElement.removeAttribute('data-temporaryid');
-  // }
   const targetElement = event.target as HTMLElement;
 
   if (targetElement !== clickedElement) {
@@ -434,144 +378,6 @@ document.addEventListener("click", (event) => {
   }
 });
 
-function generateTemporaryId() {
-  return (
-    Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15)
-  );
-}
-type getElementTypes = {
-  temporaryId: string;
-  text?: string;
-  selector?: string;
-  property?: string;
-  newStyleValue?: string;
-};
-function getElement({ temporaryId }: getElementTypes) {
-  const elementCache: { [key: string]: HTMLElement | null } = {};
-
-  return () => {
-    if (!(temporaryId in elementCache)) {
-      console.log("Caching element");
-      elementCache[temporaryId] = document.querySelector(
-        `[data-temporaryid="${temporaryId}"]`
-      );
-    }
-
-    const element = elementCache[temporaryId];
-    if (!element) {
-      console.error(`Element with id ${temporaryId} not found`);
-      return;
-    } else {
-      return element;
-    }
-  };
-}
-function updateText({ text, temporaryId }: getElementTypes) {
-  const getElementFunction = getElement({ temporaryId });
-  const element = getElementFunction(); // Call the function to get the element
-  if (element) {
-    setCurrentElementText(element, text!);
-  } else {
-    console.error(`Element with temporary ID ${temporaryId} not found`);
-  }
-}
-//const cachedRules: Record<string, CSSStyleRule[]> = {};
-
-// function getCachedRules(): Record<string, CSSStyleRule[]> {
-//   if (Object.keys(cachedRules).length === 0) {
-//     // Cache the rules if the cache is empty
-//     const styleSheets = document.styleSheets;
-//     for (let i = 0; i < styleSheets.length; i++) {
-//       const styleSheet = styleSheets[i] as CSSStyleSheet;
-//       const rules = styleSheet.cssRules;
-//       for (let j = 0; j < rules.length; j++) {
-//         const rule = rules[j] as CSSStyleRule;
-//         const selector = rule.selectorText;
-//         if (!cachedRules[selector]) {
-//           cachedRules[selector] = [];
-//         }
-//         cachedRules[selector].push(rule);
-//       }
-//     }
-//   }
-//   return cachedRules;
-// }
-const cachedRules: Record<string, CSSStyleRule[]> = {};
-
-function getCachedRules() {
-  if (Object.keys(cachedRules).length === 0) {
-    // Cache the rules if the cache is empty
-    const styleSheets = document.styleSheets;
-    for (let i = 0; i < styleSheets.length; i++) {
-      const styleSheet = styleSheets[i];
-      try {
-        const rules = styleSheet.cssRules;
-        for (let j = 0; j < rules.length; j++) {
-          cacheRule(rules[j]);
-        }
-      } catch (e) {
-        console.error(`Error accessing stylesheet: ${styleSheet.href}`, e);
-      }
-    }
-  }
-  return cachedRules;
-}
-
-function cacheRule(rule: CSSRule) {
-  if (rule instanceof CSSStyleRule) {
-    const selector = rule.selectorText;
-    if (!cachedRules[selector]) {
-      cachedRules[selector] = [];
-    }
-    cachedRules[selector].push(rule);
-  } else if (
-    rule instanceof CSSMediaRule ||
-    rule instanceof CSSSupportsRule ||
-    rule instanceof CSSKeyframesRule
-  ) {
-    const cssRules = rule.cssRules;
-    for (let k = 0; k < cssRules.length; k++) {
-      cacheRule(cssRules[k]);
-    }
-  }
-}
-
-function updateStyles({
-  newStyleValue,
-  selector,
-  property,
-  temporaryId,
-}: getElementTypes) {
-  if (!selector || !property) {
-    console.error("Selector or property not provided");
-    return;
-  }
-  if (selector === "inline") {
-    // Update the style directly on the element with the provided temporaryId
-    const element = document.querySelector(
-      `[data-temporaryid="${temporaryId}"]`
-    ) as HTMLElement;
-    if (element) {
-      const previousStyle = element.style.cssText; // Get existing styles
-
-      element.style.cssText = `${previousStyle}; ${property}: ${newStyleValue}`;
-    } else {
-      console.error(`No element found with temporary ID: ${temporaryId}`);
-    }
-  } else {
-    const rules = getCachedRules()[selector];
-    if (!rules) {
-      console.error(`No cached rules found for selector: ${selector}`);
-      return;
-    }
-
-    for (const rule of rules) {
-      rule.style.setProperty(property, newStyleValue!);
-    }
-  }
-}
-
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   console.log(message.action);
   if (message.action === "updateTextContent") {
@@ -608,23 +414,3 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   }
   return true;
 });
-function getCurrentElementText(element: HTMLElement): string {
-  let currentText = "";
-  element.childNodes.forEach((node) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      currentText += node.textContent?.trim() ?? "";
-    }
-  });
-
-  return currentText;
-}
-function setCurrentElementText(
-  element: HTMLElement | undefined,
-  text: string
-): void {
-  element?.childNodes.forEach((node) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      node.textContent = text;
-    }
-  });
-}
