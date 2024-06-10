@@ -5,16 +5,11 @@ import PTag from "./components/P_Tag";
 import ColorStyle from "./components/ColorStyle";
 
 function App() {
-  const [receivedMessage, setReceivedMessage] = useState("");
   const [element, setTag] = useState<ElementDetails>();
   const [style, setStyle] = useState<ElementStyles>();
   const msg = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMessage = (message: any) => {
-    if (message.action === "receivedMessage") {
-      setReceivedMessage(message.data);
-      msg.current!.innerText = message.data;
-    }
     if (message.action === "showElementDetails") {
       setTag(undefined);
       setTag(message.details);
@@ -43,10 +38,6 @@ function App() {
     console.log("initWebSocket");
     await chrome.runtime.sendMessage({ action: "connect" });
   }
-  async function refresh() {
-    await chrome.runtime.sendMessage({ action: "refresh" });
-    console.log(receivedMessage);
-  }
   function inject() {
     chrome.runtime.sendMessage({ action: "injectContent" });
   }
@@ -65,10 +56,6 @@ function App() {
       <button type="button" id="connect" onClick={connected}>
         Connect
       </button>
-      <button type="button" id="refresh" onClick={refresh}>
-        Refresh
-      </button>
-
       <button type="button" id="inject" onClick={inject}>
         Inject
       </button>
