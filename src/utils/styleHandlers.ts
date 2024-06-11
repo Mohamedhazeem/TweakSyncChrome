@@ -1,32 +1,231 @@
+import { ProcessAtRulesType, ProcessRules } from "../types/AtRulesTypes";
+import { ElementStyles } from "../types/ElementTypes";
+
 export function handleAtrules(
-  rule: CSSRule,
-  processAtRule: (
-    rule:
-      | CSSMediaRule
-      | CSSKeyframesRule
-      | CSSFontFaceRule
-      | CSSSupportsRule
-      | CSSContainerRule,
-    atRuleName: string
-  ) => void
+  atRule: CSSRule,
+  processAtRule: ({ atRule, atRuleName }: ProcessAtRulesType) => void
 ) {
   if (
-    rule instanceof CSSMediaRule ||
-    rule instanceof CSSKeyframesRule ||
-    rule instanceof CSSSupportsRule ||
-    rule instanceof CSSFontFaceRule ||
-    rule instanceof CSSContainerRule
+    atRule instanceof CSSMediaRule ||
+    atRule instanceof CSSKeyframesRule ||
+    atRule instanceof CSSSupportsRule ||
+    atRule instanceof CSSFontFaceRule ||
+    atRule instanceof CSSContainerRule
   ) {
     const atRuleName =
-      rule instanceof CSSMediaRule
-        ? `@media ${rule.media.mediaText}`
-        : rule instanceof CSSKeyframesRule
-        ? `@keyframes ${rule.name}`
-        : rule instanceof CSSSupportsRule
-        ? `@supports ${rule.conditionText}`
-        : rule instanceof CSSContainerRule
-        ? `@container ${rule.conditionText}`
+      atRule instanceof CSSMediaRule
+        ? `@media ${atRule.media.mediaText}`
+        : atRule instanceof CSSKeyframesRule
+        ? `@keyframes ${atRule.name}`
+        : atRule instanceof CSSSupportsRule
+        ? `@supports ${atRule.conditionText}`
+        : atRule instanceof CSSContainerRule
+        ? `@container ${atRule.conditionText}`
         : "@font-face";
-    processAtRule(rule, atRuleName);
+    processAtRule({ atRule, atRuleName });
   }
 }
+export function handleValidSelector(
+  selector: string,
+  isValidSelector: (selector: string) => boolean
+) {
+  if (!selector || selector.trim() === "" || !isValidSelector(selector)) {
+    return true;
+  }
+  return false;
+}
+
+export function handleDescendant(
+  element: HTMLElement,
+  selector: string,
+  isDescendantSelector: (selector: string) => boolean,
+  processRule: ({ rule, context }: ProcessRules) => void,
+  rule: CSSStyleRule,
+  styles: ElementStyles
+) {
+  if (element.matches(selector) && isDescendantSelector(selector)) {
+    if (!styles.external.descendant[selector]) {
+      styles.external.descendant[selector] = {};
+    }
+    processRule({
+      rule,
+      selector,
+      context: styles.external.descendant[selector],
+    });
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export function handleClass(
+  classList: string[],
+  classSelector: string,
+  element: HTMLElement,
+  isDescendantSelector: (selector: string) => boolean,
+  processRule: ({ rule, selector, context }: ProcessRules) => void,
+  rule: CSSStyleRule,
+  styles: ElementStyles
+) {
+  classList.forEach((className) => {
+    const selector = `.${className}`;
+    if (
+      classSelector.includes(selector) &&
+      element.matches(classSelector) &&
+      !isDescendantSelector(classSelector)
+    ) {
+      if (!styles.external.classes[className]) {
+        styles.external.classes[className] = {};
+      }
+      processRule({
+        rule,
+        selector,
+        context: styles.external.classes[className],
+      });
+    }
+  });
+}
+
+export function handleId(
+  elementId: string,
+  idSelector: string,
+  element: HTMLElement,
+  isDescendantSelector: (selector: string) => boolean,
+  processRule: ({ rule, selector, context }: ProcessRules) => void,
+  rule: CSSStyleRule,
+  styles: ElementStyles
+) {
+  const selector = `#${elementId}`;
+  if (
+    elementId &&
+    idSelector.includes(selector) &&
+    element.matches(idSelector) &&
+    !isDescendantSelector(idSelector)
+  ) {
+    if (!styles.external.ids[elementId]) {
+      styles.external.ids[elementId] = {};
+    }
+    processRule({ rule, selector, context: styles.external.ids[elementId] });
+  }
+}
+
+export function handleTag(
+  tagSelector: string,
+  selector: string,
+  isDescendantSelector: (selector: string) => boolean,
+  processRule: ({ rule, selector, context }: ProcessRules) => void,
+  rule: CSSStyleRule,
+  styles: ElementStyles
+) {
+  if (tagSelector === selector && !isDescendantSelector(tagSelector)) {
+    if (!styles.external.tags[selector]) {
+      styles.external.tags[selector] = {};
+    }
+    processRule({ rule, selector, context: styles.external.tags[selector] });
+  }
+}
+
+export function handleAttribute(
+  selector: string,
+  element: HTMLElement,
+  isDescendantSelector: (selector: string) => boolean,
+  isPseudoElementSelector: (selector: string) => boolean,
+  isPseudoClassSelector: (selector: string) => boolean,
+  processRule: ({ rule, context }: ProcessRules) => void,
+  rule: CSSStyleRule,
+  styles: ElementStyles
+) {
+  if (
+    selector.includes("[") &&
+    selector.includes("]") &&
+    element.matches(selector) &&
+    !isDescendantSelector(selector)
+  ) {
+    if (
+      !isPseudoElementSelector(selector) &&
+      !isPseudoClassSelector(selector)
+    ) {
+      if (!styles.external.attribute[selector]) {
+        styles.external.attribute[selector] = {};
+      }
+      processRule({
+        rule,
+        selector,
+        context: styles.external.attribute[selector],
+      });
+    }
+  }
+}
+
+export function handlePseudoElement(
+  isPseudoElementSelector: (selector: string) => boolean,
+  selector: string,
+  element: HTMLElement,
+  processRule: ({ rule, selector, context }: ProcessRules) => void,
+  rule: CSSStyleRule,
+  styles: ElementStyles
+) {
+  if (isPseudoElementSelector(selector)) {
+    const baseSelector = selector.split("::")[0];
+    if (element.matches(baseSelector)) {
+      if (!styles.external.pseudoElementStyles[selector]) {
+        styles.external.pseudoElementStyles[selector] = {};
+      }
+      processRule({
+        rule,
+        selector,
+        context: styles.external.pseudoElementStyles[selector],
+      });
+    }
+  }
+}
+
+export function handlePseudoClass(
+  isPseudoClassSelector: (selector: string) => boolean,
+  selector: string,
+  element: HTMLElement,
+  processRule: ({ rule, selector, context }: ProcessRules) => void,
+  rule: CSSStyleRule,
+  styles: ElementStyles
+) {
+  if (isPseudoClassSelector(selector)) {
+    const baseSelector = selector.split(":")[0];
+    if (element.matches(baseSelector)) {
+      if (!styles.external.pseudoClassStyles[selector]) {
+        styles.external.pseudoClassStyles[selector] = {};
+      }
+      processRule({
+        rule,
+        selector,
+        context: styles.external.pseudoClassStyles[selector],
+      });
+    }
+  }
+}
+export const isDescendantSelector = (selector: string): boolean => {
+  return (
+    selector.includes(" ") ||
+    selector.includes(">") ||
+    selector.includes("+") ||
+    selector.includes("~")
+  );
+};
+
+export const isPseudoElementSelector = (selector: string): boolean => {
+  return selector.includes("::");
+};
+
+export const isPseudoClassSelector = (selector: string): boolean => {
+  return selector.includes(":") && !isPseudoElementSelector(selector);
+};
+
+export const isValidSelector = (selector: string): boolean => {
+  const pseudoSelectorRegex = /::?[\w-]+/g;
+  const cleanedSelector = selector.replace(pseudoSelectorRegex, "");
+  try {
+    document.querySelector(cleanedSelector);
+    return true;
+  } catch {
+    return false;
+  }
+};
