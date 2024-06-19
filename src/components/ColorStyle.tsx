@@ -20,6 +20,7 @@ function ColorStyle({ tag, style }: PTagTypes) {
       pseudoClassStyles: {},
       atRules: {},
     },
+    temporaryId: "",
   };
 
   const [styles, setStyles] = useState<ElementStyles>(initialStyles);
@@ -27,6 +28,7 @@ function ColorStyle({ tag, style }: PTagTypes) {
   useEffect(() => {
     if (style) {
       console.log("Received style:", style);
+
       setStyles(style);
     }
   }, [tag?.path, style]); // Check if style needs to be updated when tag.path changes

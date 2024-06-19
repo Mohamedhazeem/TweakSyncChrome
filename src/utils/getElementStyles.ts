@@ -1,5 +1,4 @@
 import { ElementStyles } from "../types/ElementTypes";
-import { resetStyles, styles } from "../utils/styleConstants";
 import {
   handleAtrules,
   handleAttribute,
@@ -16,6 +15,7 @@ import {
   isValidSelector,
 } from "../utils/styleHandlers";
 import { processAtRule, processRule } from "../utils/atRule";
+import { resetStyles, styles } from "./styleConstants";
 
 export function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
   return new Promise((resolve, reject) => {
