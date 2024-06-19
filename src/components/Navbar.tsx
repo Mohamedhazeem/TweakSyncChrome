@@ -3,10 +3,23 @@ import { Outlet, Link } from "react-router-dom";
 export const Navbar = () => {
   return (
     <>
-      <div>
-        <p>Movies DB</p>
+      <div id="navbar-container">
+        <ul>
+          <li>
+            {" "}
+            <Link to={"/home"}>Home</Link>
+          </li>
+          <li>
+            {" "}
+            <Link to={"/elementInspector"}>Inspector</Link>
+          </li>
+          <li>
+            {" "}
+            <Link to={"/styleInspector"}>Style</Link>
+          </li>
+        </ul>
       </div>
-      <Link to={"/app"}>App</Link>
+
       <Outlet />
     </>
   );

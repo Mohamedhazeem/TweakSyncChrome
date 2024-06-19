@@ -43,5 +43,5 @@ interface ExternalStyles {
 export interface ElementStyles {
   inline: InlineStyles;
   external: ExternalStyles;
-  temporaryId?: string | null;
+  temporaryId: string | null;
 }

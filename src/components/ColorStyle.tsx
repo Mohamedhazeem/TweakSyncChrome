@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { ElementDetails, ElementStyles } from "../types/ElementTypes";
+import { ElementStyles } from "../types/ElementTypes";
 import Color from "./Color";
 
-type PTagTypes = {
-  tag?: ElementDetails;
-  style?: ElementStyles;
+type ColorTypes = {
+  temporaryId: string | null;
+  style: ElementStyles;
 };
 
-function ColorStyle({ tag, style }: PTagTypes) {
+function ColorStyle({ temporaryId, style }: ColorTypes) {
   const initialStyles: ElementStyles = {
     inline: {},
     external: {
@@ -31,7 +31,7 @@ function ColorStyle({ tag, style }: PTagTypes) {
 
       setStyles(style);
     }
-  }, [tag?.path, style]); // Check if style needs to be updated when tag.path changes
+  }, [style]); // Check if style needs to be updated when tag.path changes
 
   console.log("Rendering ColorStyle with styles:", styles);
 
@@ -76,7 +76,7 @@ function ColorStyle({ tag, style }: PTagTypes) {
         selector,
         property,
         value: newColor,
-        temporaryId: tag?.temporaryId,
+        temporaryId: temporaryId,
       });
       return updatedStyles;
     });
@@ -129,7 +129,7 @@ function ColorStyle({ tag, style }: PTagTypes) {
     );
   };
 
-  if (!tag || !style) {
+  if (!style) {
     return null;
   }
 

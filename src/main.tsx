@@ -1,9 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
-import App from "./App.tsx";
+import Home from "./pages/Home.tsx";
+import "./main.css";
 
 import { Navbar } from "./components/Navbar.tsx";
+import ElementInspector from "./pages/ElementInspector.tsx";
+import StyleInspector from "./pages/StyleInspector.tsx";
 
 const router = createHashRouter([
   {
@@ -11,9 +14,17 @@ const router = createHashRouter([
     element: <Navbar />,
     children: [
       {
-        // index: true,
-        path: "/app",
-        element: <App />,
+        //index: true,
+        path: "/home",
+        element: <Home />,
+      },
+      {
+        path: "/elementInspector",
+        element: <ElementInspector />,
+      },
+      {
+        path: "/styleInspector",
+        element: <StyleInspector />,
       },
     ],
   },
@@ -24,14 +35,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
-// {
-//   path: "/trending",
-//   element: <Trending />,
-// },
-// {
-//   path: "/not_found",
-//   element: <NotFound />,
-// },
+
 // {
 //   path: "/searchresults",
 //   element: <SearchResults />,
