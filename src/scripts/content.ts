@@ -68,7 +68,6 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   console.log(message.action);
   if (message.action === "updateTextContent") {
     updateText({ text: message.text, temporaryId: message.temporaryId });
-    sendResponse({ status: "success" });
   } else if (message.action === "updateStyles") {
     updateStyles({
       newStyleValue: message.value,
@@ -76,7 +75,6 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       property: message.property,
       temporaryId: message.temporaryId,
     });
-    sendResponse({ status: "success" });
   } else if (message.action === "getUpdatedElement") {
     getElementDetails(lastClickedElement)
       .then((details) => {
