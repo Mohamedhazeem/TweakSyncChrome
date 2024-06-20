@@ -14,8 +14,8 @@ const router = createHashRouter([
     element: <Navbar />,
     children: [
       {
-        //index: true,
-        path: "/home",
+        index: true,
+
         element: <Home />,
       },
       {

@@ -1,26 +1,12 @@
 import PTag from "@/components/P_Tag";
-import { ElementDetails } from "@/types/ElementTypes";
-import { useEffect, useState } from "react";
+import { OutletContext } from "@/types/OutletContext";
+import { useOutletContext } from "react-router-dom";
 
 function ElementInspector() {
-  const [element, setTag] = useState<ElementDetails>();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleMessage = (message: any) => {
-    if (message.action === "showElementDetails") {
-      setTag(undefined);
-      setTag(message.details);
-    }
-  };
-
-  useEffect(() => {
-    // Add listener immediately when component mounts
-    chrome.runtime.onMessage.addListener(handleMessage);
-
-    // Clean up listener when component unmounts
-    return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
-    };
-  }, []);
+  const { element } = useOutletContext<OutletContext>();
+  if (!element) {
+    return <div> Not element selected</div>;
+  }
   return (
     <div>
       <PTag tag={element} />
