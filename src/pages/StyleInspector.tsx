@@ -9,8 +9,12 @@ function StyleInspector() {
     return <div> Not style selected</div>;
   } else {
     return (
-      <div>
-        {style && <ColorStyle temporaryId={style.temporaryId} style={style} />}
+      <div className="w-full h-[calc(100vh-65px)] flex items-center justify-center">
+        <div className="flex flex-col space-y-4 overflow-y-auto h-full w-full p-4">
+          {style && (
+            <ColorStyle temporaryId={style.temporaryId} style={style} />
+          )}
+        </div>
       </div>
     );
   }

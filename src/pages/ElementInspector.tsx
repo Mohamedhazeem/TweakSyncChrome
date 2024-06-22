@@ -8,8 +8,10 @@ function ElementInspector() {
     return <div> Not element selected</div>;
   }
   return (
-    <div>
-      <PTag tag={element} />
+    <div className="w-full h-[calc(100vh-65px)] flex items-center justify-center">
+      <div className="flex flex-col space-y-4 overflow-y-auto h-full w-full p-4">
+        <PTag tag={element} />
+      </div>
     </div>
   );
 }

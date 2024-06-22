@@ -24,7 +24,7 @@ function PTag({ tag }: PTagTypes) {
     <>
       {textContent && (
         <textarea
-          className="textbox noTemporaryId"
+          className="resize-none"
           rows={6}
           placeholder="Wite a Text"
           value={textContent}
