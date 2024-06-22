@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.tsx";
-import "./main.css";
+import "../app/globals.css";
 
 import { Navbar } from "./components/Navbar.tsx";
 import ElementInspector from "./pages/ElementInspector.tsx";

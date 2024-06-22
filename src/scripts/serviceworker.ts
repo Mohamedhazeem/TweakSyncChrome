@@ -136,9 +136,10 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       styles: message.styles,
     });
     sendResponse({ status: "element styles received" });
-  } else if (message.action === "injectContent") {
+  } else if (message.action === "injectContentScript") {
     injectContentScript();
-  } else if (message.action === "resetContentScriptInjected") {
+    console.log("Injecting content script");
+  } else if (message.action === "removeContentScript") {
     removeContentScript();
   } else if (
     message.action === "updateTextContent" ||

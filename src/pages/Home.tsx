@@ -1,47 +1,14 @@
-// import { useState, useEffect, useRef } from "react";
-// import { ElementDetails, ElementStyles } from "../types/ElementTypes";
-// import PTag from "../components/P_Tag";
-// import ColorStyle from "../components/ColorStyle";
-
+import { Button } from "@/components/ui/button";
 function Home() {
-  //   const [element, setTag] = useState<ElementDetails>();
-  //   const [style, setStyle] = useState<ElementStyles>();
-  //   const msg = useRef<HTMLDivElement>(null);
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   const handleMessage = (message: any) => {
-  //     if (message.action === "showElementDetails") {
-  //       setTag(undefined);
-  //       setTag(message.details);
-  //       //setSelectedTemporaryId(message.details.temporaryId);
-  //       //msg.current!.innerText = JSON.stringify(message.details, null, 2);
-  //     }
-  //     if (message.action === "showElementStyles") {
-  //       setStyle(undefined);
-  //       setStyle(message.styles);
-  //       //setSelectedTemporaryId(message.details.temporaryId);
-  //       //msg.current!.innerText = JSON.stringify(message.styles, null, 2);
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     // Add listener immediately when component mounts
-  //     chrome.runtime.onMessage.addListener(handleMessage);
-
-  //     // Clean up listener when component unmounts
-  //     return () => {
-  //       chrome.runtime.onMessage.removeListener(handleMessage);
-  //     };
-  //   }, []);
-
   async function connected() {
     console.log("initWebSocket");
     await chrome.runtime.sendMessage({ action: "connect" });
   }
   function inject() {
-    chrome.runtime.sendMessage({ action: "injectContent" });
+    chrome.runtime.sendMessage({ action: "injectContentScript" });
   }
   function removeInject() {
-    chrome.runtime.sendMessage({ action: "resetContentScriptInjected" });
+    chrome.runtime.sendMessage({ action: "removeContentScript" });
   }
   function applyElement() {
     chrome.runtime.sendMessage({ action: "apply", apply: "element" });
@@ -51,26 +18,27 @@ function Home() {
   }
 
   return (
-    <div className="box">
-      <button type="button" id="connect" onClick={connected}>
-        Connect
-      </button>
-      <button type="button" id="inject" onClick={inject}>
-        Inject
-      </button>
-      <button type="button" id="remove_inject" onClick={removeInject}>
-        Remove Inject
-      </button>
-      <button type="button" id="applyElement" onClick={applyElement}>
-        Apply Element
-      </button>
-      <button type="button" id="applyStyles" onClick={applyStyles}>
-        Apply styles
-      </button>
-      {/* <div>{tag?.textContent}</div> */}
-      {/* <PTag tag={element} /> */}
-      {/* <ColorStyle tag={element} style={style} /> */}
-      {/* <div ref={msg}></div> */}
+    <div className="w-full h-[calc(100vh-65px)] flex items-center justify-center">
+      <div className="flex flex-col space-y-4 overflow-y-auto h-full w-full p-4 items-center justify-center">
+        <span className="bg-slate-400 rounded-md font-semibold text-4xl">
+          Tweak Sync
+        </span>
+        <Button type="button" id="connect" onClick={connected}>
+          Connect
+        </Button>
+        <Button type="button" id="inject" onClick={inject}>
+          Inject
+        </Button>
+        <Button type="button" id="remove_inject" onClick={removeInject}>
+          Remove Inject
+        </Button>
+        <Button type="button" id="applyElement" onClick={applyElement}>
+          Apply Element
+        </Button>
+        <Button type="button" id="applyStyles" onClick={applyStyles}>
+          Apply styles
+        </Button>
+      </div>
     </div>
   );
 }
