@@ -6,7 +6,6 @@ export interface ElementDetails {
   attributes?: { [key: string]: string };
   temporaryId?: string | null;
   path?: string;
-  // styles: ElementStyles;
 }
 export type getElementTypes = {
   temporaryId: string;
