@@ -1,7 +1,8 @@
 import PTag from "@/components/P_Tag";
 import AttributeFactory from "@/components/attributes/AttributeFactory";
 import { OutletContext } from "@/types/OutletContext";
-import { Attribute, GLOBAL_ATTRIBUTES } from "@/types/attributeTypes";
+import { Attribute } from "@/types/attributeTypes";
+import { GLOBAL_ATTRIBUTES } from "@/utils/globalAttributes";
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
