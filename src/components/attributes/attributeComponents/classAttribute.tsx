@@ -1,7 +1,7 @@
 import { IAttributeContext } from "@/types/attributeTypes";
 function ClassAttribute({ key, attribute }: IAttributeContext) {
   if (!attribute) {
-    return null; // Or handle the case when attribute is undefined
+    return null;
   }
 
   return (

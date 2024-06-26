@@ -1,6 +1,15 @@
 import { Attribute } from "@/types/attributeTypes";
 import { AttributeContext } from "@/utils/attributesContext";
+import {
+  Card,
+  CardHeader,
+  // CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 import React from "react";
+// import { Button } from "@/components/ui/button";
 
 interface IAttributeLayout {
   key: number;
@@ -14,9 +23,25 @@ interface IAttributeLayout {
 }
 function AttributeLayout({ key, attribute, children }: IAttributeLayout) {
   return (
-    <AttributeContext.Provider value={{ key, attribute }}>
-      {children}
-    </AttributeContext.Provider>
+    <div>
+      <Card className="">
+        <CardHeader className="p-3">
+          <CardTitle className={"text-xl font-semibold"}>
+            {attribute.name}
+          </CardTitle>
+          <CardDescription>{attribute.description}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <AttributeContext.Provider value={{ key, attribute }}>
+            {children}
+          </AttributeContext.Provider>
+        </CardContent>
+        {/* <CardFooter className="flex justify-between">
+          <Button variant="outline">Cancel</Button>
+          <Button>Deploy</Button>
+        </CardFooter> */}
+      </Card>
+    </div>
   );
 }
 
