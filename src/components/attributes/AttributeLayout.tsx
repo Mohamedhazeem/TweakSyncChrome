@@ -15,13 +15,19 @@ interface IAttributeLayout {
   key: number;
   attribute: Attribute;
   children?: React.ReactNode;
+  onChange: (index: number, value: string) => void;
 }
 {
   /* <LayoutContext.Provider value={props}>
 {children}
 </LayoutContext.Provider> */
 }
-function AttributeLayout({ key, attribute, children }: IAttributeLayout) {
+function AttributeLayout({
+  key,
+  attribute,
+  children,
+  onChange,
+}: IAttributeLayout) {
   return (
     <div>
       <Card className="">
@@ -32,7 +38,7 @@ function AttributeLayout({ key, attribute, children }: IAttributeLayout) {
           <CardDescription>{attribute.description}</CardDescription>
         </CardHeader>
         <CardContent>
-          <AttributeContext.Provider value={{ key, attribute }}>
+          <AttributeContext.Provider value={{ key, attribute, onChange }}>
             {children}
           </AttributeContext.Provider>
         </CardContent>

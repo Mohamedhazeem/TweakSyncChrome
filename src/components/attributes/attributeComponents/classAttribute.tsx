@@ -1,19 +1,38 @@
-import { IAttributeContext } from "@/types/attributeTypes";
-function ClassAttribute({ key, attribute }: IAttributeContext) {
-  if (!attribute) {
+import { Input } from "@/components/ui/input";
+// import { IAttributeContext } from "@/types/attributeTypes";
+import { useAttributeContext } from "@/utils/attributesContext";
+function ClassAttribute() {
+  const context = useAttributeContext();
+  if (!context?.attribute) {
     return null;
   }
-
+  function splitStringToArray(text: string): string[] {
+    const words = text.split(" ");
+    return words;
+  }
+  const handleInputChange = (index: number, newValue: string) => {
+    if (context?.attribute) {
+      const words = splitStringToArray(context.attribute.value.toString());
+      words[index] = newValue;
+      const updatedValue = words.join(" ");
+      context.onChange(index, updatedValue);
+    }
+  };
   return (
-    <div key={key}>
-      <h3>{attribute.name}</h3>
-      <p>{attribute.description}</p>
-      <p>
-        {typeof attribute.value === "boolean"
-          ? attribute.value.toString()
-          : attribute.value}
-      </p>
-      {attribute.options && <p>Options: {attribute.options.join(", ")}</p>}
+    <div key={context?.key}>
+      {typeof context?.attribute?.type === "boolean" ||
+      context?.attribute?.type === "string"
+        ? splitStringToArray(context?.attribute?.value.toString()).map(
+            (word, index) => (
+              <Input
+                key={index}
+                type="text"
+                value={word}
+                onChange={(e) => handleInputChange(index, e.target.value)}
+              />
+            )
+          )
+        : context?.attribute?.value}
     </div>
   );
 }

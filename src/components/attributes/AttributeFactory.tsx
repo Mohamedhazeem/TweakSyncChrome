@@ -5,16 +5,16 @@ import ClassAttribute from "./attributeComponents/classAttribute";
 interface IAttributeFactory {
   key: number;
   attribute: Attribute;
-  onChange?: (name: string, value: string | boolean) => void;
+  onChange?: (index: number, value: string) => void;
 }
 
-function AttributeFactory({ key, attribute }: IAttributeFactory) {
+function AttributeFactory({ key, attribute, onChange }: IAttributeFactory) {
   switch (attribute.name) {
     case "class":
       return (
-        <AttributeLayout key={key} attribute={attribute}>
+        <AttributeLayout key={key} attribute={attribute} onChange={onChange!}>
           <div>Child component using attribute context</div>
-          <ClassAttribute key={key} attribute={attribute} />
+          <ClassAttribute />
         </AttributeLayout>
       );
     default:
