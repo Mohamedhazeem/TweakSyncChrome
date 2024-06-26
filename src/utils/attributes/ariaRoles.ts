@@ -1,4 +1,4 @@
-import { Attribute } from "../types/attributeTypes";
+import { Attribute } from "../../types/attributeTypes";
 
 export const ARIA_ROLES: Attribute = {
   name: "role",

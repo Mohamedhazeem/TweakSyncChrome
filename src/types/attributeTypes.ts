@@ -1,7 +1,8 @@
 export interface Attribute {
   name: string;
   description: string;
-  value: string | boolean;
+  type?: string | boolean | number;
+  value: string | boolean | number;
   options?: string[]; // For enum type attributes
 }
 export interface IAttributeContext {
