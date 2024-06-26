@@ -143,7 +143,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     removeContentScript();
   } else if (
     message.action === "updateTextContent" ||
-    message.action === "updateStyles"
+    message.action === "updateStyles" ||
+    message.action === "updateAttributes"
   ) {
     update(message, sendResponse);
   } else if (message.action === "apply") {

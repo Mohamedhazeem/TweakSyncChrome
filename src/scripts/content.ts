@@ -75,6 +75,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       property: message.property,
       temporaryId: message.temporaryId,
     });
+  } else if (message.action === "updateAttributes") {
+    lastClickedElement.setAttribute(message.name, message.value);
   } else if (message.action === "getUpdatedElement") {
     getElementDetails(lastClickedElement)
       .then((details) => {
