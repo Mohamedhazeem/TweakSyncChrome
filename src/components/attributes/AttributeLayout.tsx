@@ -14,6 +14,7 @@ import React from "react";
 interface IAttributeLayout {
   key: number;
   attribute: Attribute;
+  index: number;
   children?: React.ReactNode;
   onChange: (index: number, value: string) => void;
 }
@@ -25,6 +26,7 @@ interface IAttributeLayout {
 function AttributeLayout({
   key,
   attribute,
+  index,
   children,
   onChange,
 }: IAttributeLayout) {
@@ -38,7 +40,9 @@ function AttributeLayout({
           <CardDescription>{attribute.description}</CardDescription>
         </CardHeader>
         <CardContent>
-          <AttributeContext.Provider value={{ key, attribute, onChange }}>
+          <AttributeContext.Provider
+            value={{ key, attribute, index, onChange }}
+          >
             {children}
           </AttributeContext.Provider>
         </CardContent>

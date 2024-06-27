@@ -10,12 +10,12 @@ function ClassAttribute() {
     const words = text.split(" ");
     return words;
   }
-  const handleInputChange = (index: number, newValue: string) => {
+  const handleInputChange = (wordIndex: number, newValue: string) => {
     if (context?.attribute) {
       const words = splitStringToArray(context.attribute.value.toString());
-      words[index] = newValue;
+      words[wordIndex] = newValue;
       const updatedValue = words.join(" ");
-      context.onChange(index, updatedValue);
+      context.onChange(context.index!, updatedValue);
     }
   };
   return (
@@ -23,12 +23,12 @@ function ClassAttribute() {
       {typeof context?.attribute?.type === "boolean" ||
       context?.attribute?.type === "string"
         ? splitStringToArray(context?.attribute?.value.toString()).map(
-            (word, index) => (
+            (word, wordIndex) => (
               <Input
-                key={index}
+                key={wordIndex}
                 type="text"
                 value={word}
-                onChange={(e) => handleInputChange(index, e.target.value)}
+                onChange={(e) => handleInputChange(wordIndex, e.target.value)}
               />
             )
           )

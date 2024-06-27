@@ -1,8 +1,10 @@
 import { Attribute } from "../../types/attributeTypes";
+import { ARIA_ATTRIBUTES } from "./ariaAttributes";
 import { ARIA_ROLES } from "./ariaRoles";
 
 export const GLOBAL_ATTRIBUTES: Attribute[] = [
   ARIA_ROLES,
+  ...ARIA_ATTRIBUTES,
   {
     name: "accesskey",
     type: "string",

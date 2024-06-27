@@ -7,6 +7,7 @@ export interface Attribute {
 }
 export interface IAttributeContext {
   key?: number;
+  index?: number;
   attribute?: Attribute;
   onChange: (index: number, value: string) => void;
 }

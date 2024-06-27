@@ -11,11 +11,14 @@ function ElementInspector() {
   const [attributes, setAttributes] = useState<Attribute[] | undefined>(
     undefined
   );
-  // const [attr, setAttribute] = useState<Attribute>(attribute);
+  // const [dataAttributes, setDataAttributes] = useState<{
+  //   [key: string]: string;
+  // }>({});
 
   useEffect(() => {
     if (!element) return;
     const elementAttributes: Attribute[] = [];
+    //const dataAttr: { [key: string]: string } = {};
     GLOBAL_ATTRIBUTES.forEach((attr) => {
       if (element.attributes && element.attributes[attr.name]) {
         elementAttributes.push({
@@ -24,7 +27,18 @@ function ElementInspector() {
         });
       }
     });
+
+    // Process custom data-* attributes
+    // if (element.attributes) {
+    //   Object.keys(element.attributes).forEach((attributeName) => {
+    //     if (attributeName.startsWith("data-")) {
+    //       dataAttr[attributeName] = element.attributes![attributeName];
+    //     }
+    //   });
+    // }
+
     setAttributes(elementAttributes);
+    //setDataAttributes(dataAttr);
   }, [element]);
 
   const handleAttributeChange = (index: number, newValue: string) => {
@@ -43,15 +57,18 @@ function ElementInspector() {
         });
       }
     }
-
-    console.log(
-      attributes?.map((attribute) => {
-        attribute.value;
-      })
-    );
-    // Here you can also add code to update the service worker or perform other actions
   };
-
+  // const handleDataAttributeChange = (name: string, newValue: string) => {
+  //   setDataAttributes((prevDataAttributes) => ({
+  //     ...prevDataAttributes,
+  //     [name]: newValue,
+  //   }));
+  //   chrome.runtime.sendMessage({
+  //     action: "updateAttributes",
+  //     name,
+  //     value: newValue,
+  //   });
+  // };
   if (!element) {
     return <div> Not element selected</div>;
   }
@@ -59,16 +76,20 @@ function ElementInspector() {
     <div className="w-full h-[calc(100vh-65px)] flex items-center justify-center">
       <div className="flex flex-col space-y-4 overflow-y-auto h-full w-full p-4">
         {attributes?.map((attribute) => {
-          return <div>{attribute.value}</div>;
+          return <div>{`${attribute.name} and  ${attribute.value} `}</div>;
         })}
         <PTag tag={element} />
         {attributes?.length ? (
           attributes.map((attribute, index) => (
-            <AttributeFactory
-              key={index}
-              attribute={attribute}
-              onChange={handleAttributeChange}
-            />
+            <div>
+              {`${attribute.name} and  ${index} `}
+              <AttributeFactory
+                key={index}
+                index={index}
+                attribute={attribute}
+                onChange={handleAttributeChange}
+              />
+            </div>
           ))
         ) : (
           <div>No attributes available</div>
