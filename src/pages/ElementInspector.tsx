@@ -14,7 +14,7 @@ function ElementInspector() {
   useEffect(() => {
     if (!element) return;
     const elementAttributes: Attribute[] = [];
-    //const dataAttr: { [key: string]: string } = {};
+    const dataAttributes: { [key: string]: string } = {};
     GLOBAL_ATTRIBUTES.forEach((attr) => {
       if (element.attributes && element.attributes[attr.name]) {
         elementAttributes.push({
@@ -24,25 +24,77 @@ function ElementInspector() {
       }
     });
 
+    if (element.attributes) {
+      Object.entries(element.attributes).forEach(([name, value]) => {
+        if (name.startsWith("data-")) {
+          dataAttributes[name] = value;
+        }
+      });
+    }
+
+    if (Object.keys(dataAttributes).length > 0) {
+      elementAttributes.push({
+        name: "data-*",
+        type: "object",
+        description: "Custom data attributes",
+        value: dataAttributes,
+      });
+    }
+
     setAttributes(elementAttributes);
     //setDataAttributes(dataAttr);
   }, [element]);
 
+  // const handleAttributeChange = (index: number, newValue: string | object) => {
+  //   setAttributes((prevAttributes) =>
+  //     prevAttributes?.map((attr, idx) =>
+  //       idx === index ? { ...attr, value: newValue } : attr
+  //     )
+  //   );
+  //   if (attributes) {
+  //     const updatedAttribute = attributes[index];
+  //     if (updatedAttribute) {
+  //       chrome.runtime.sendMessage({
+  //         action: "updateAttributes",
+  //         name: updatedAttribute.name,
+  //         value: newValue,
+  //       });
+  //     }
+  //   }
+  // };
   const handleAttributeChange = (index: number, newValue: string | object) => {
-    setAttributes((prevAttributes) =>
-      prevAttributes?.map((attr, idx) =>
-        idx === index ? { ...attr, value: newValue } : attr
-      )
-    );
-    if (attributes) {
+    setAttributes((prevAttributes) => {
+      if (!prevAttributes) return prevAttributes;
+
+      const updatedAttributes = prevAttributes.map((attr, idx) => {
+        if (idx === index) {
+          if (typeof newValue === "object" && !Array.isArray(newValue)) {
+            // Update data-* attributes
+            if (typeof attr.value === "object" && !Array.isArray(attr.value)) {
+              return { ...attr, value: { ...attr.value, ...newValue } };
+            } else {
+              // Handle case where attr.value is not an object (e.g., string, boolean, number)
+              return { ...attr, value: newValue };
+            }
+          } else {
+            // Update normal attributes
+            return { ...attr, value: newValue };
+          }
+        }
+        return attr;
+      });
+
+      return updatedAttributes;
+    });
+
+    // Example: Sending message to background script in Chrome extension
+    if (Array.isArray(attributes) && attributes[index]) {
       const updatedAttribute = attributes[index];
-      if (updatedAttribute) {
-        chrome.runtime.sendMessage({
-          action: "updateAttributes",
-          name: updatedAttribute.name,
-          value: newValue,
-        });
-      }
+      chrome.runtime.sendMessage({
+        action: "updateAttributes",
+        name: updatedAttribute.name,
+        value: newValue,
+      });
     }
   };
   if (!element) {

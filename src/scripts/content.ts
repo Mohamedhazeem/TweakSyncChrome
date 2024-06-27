@@ -76,7 +76,20 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       temporaryId: message.temporaryId,
     });
   } else if (message.action === "updateAttributes") {
-    lastClickedElement.setAttribute(message.name, message.value);
+    if (
+      message.name === "data-*" &&
+      typeof message.value === "object" &&
+      !Array.isArray(message.value)
+    ) {
+      Object.entries(message.value).forEach(([key, value]) => {
+        if (typeof value === "string") {
+          // Ensure value is a string (or convert as needed)
+          lastClickedElement.setAttribute(key, value);
+        }
+      });
+    } else if (typeof message.value === "string") {
+      lastClickedElement.setAttribute(message.name, message.value);
+    }
   } else if (message.action === "getUpdatedElement") {
     getElementDetails(lastClickedElement)
       .then((details) => {

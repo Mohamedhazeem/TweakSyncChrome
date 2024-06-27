@@ -7,7 +7,22 @@ function DataAttribute() {
   if (!context?.attribute) {
     return null;
   }
+  //   const handleKeyChange = (oldKey: string, newKey: string) => {
+  //     const updatedValue: Attribute['value'] = { ...context.attribute.value };
+  //     if (updatedValue(oldKey)) {
+  //       updatedValue[newKey] = updatedValue[oldKey];
+  //       delete updatedValue[oldKey];
+  //       context.onChange(context.index, updatedValue);
+  //     }
+  //   };
 
+  //   const handleValueChange = (key: string, newValue: string) => {
+  //     const updatedValue: Attribute['value'] = {
+  //       ...context.attribute.value,
+  //       [key]: newValue,
+  //     };
+  //     context.onChange(context.index, updatedValue);
+  //   };
   const handleInputChange = (dataAttrName: string, newValue: string) => {
     if (context?.attribute && typeof context?.attribute?.value === "object") {
       const updatedValue = {
@@ -26,9 +41,10 @@ function DataAttribute() {
         ? Object.entries(context?.attribute?.value).map(
             ([key, value], index) => (
               <div key={index}>
+                <Input type="text" value={`${key}`} readOnly />
                 <Input
                   type="text"
-                  value={`${key} ${String(value)}`}
+                  value={`${String(value)}`}
                   onChange={(e) => handleInputChange(key, e.target.value)}
                 />
               </div>

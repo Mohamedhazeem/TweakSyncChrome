@@ -147,6 +147,11 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     message.action === "updateAttributes"
   ) {
     console.log(message.name);
+    if (message.name === "data-*") {
+      Object.entries(message.value).map(([key, value], index) =>
+        console.log(`key: ${key}, value: ${value} and index: ${index}`)
+      );
+    }
     update(message, sendResponse);
   } else if (message.action === "apply") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
