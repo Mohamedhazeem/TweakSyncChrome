@@ -32,7 +32,7 @@ function ClassAttribute() {
               />
             )
           )
-        : context?.attribute?.value}
+        : String(context?.attribute?.value)}
     </div>
   );
 }

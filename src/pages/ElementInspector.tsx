@@ -11,10 +11,6 @@ function ElementInspector() {
   const [attributes, setAttributes] = useState<Attribute[] | undefined>(
     undefined
   );
-  // const [dataAttributes, setDataAttributes] = useState<{
-  //   [key: string]: string;
-  // }>({});
-
   useEffect(() => {
     if (!element) return;
     const elementAttributes: Attribute[] = [];
@@ -28,20 +24,11 @@ function ElementInspector() {
       }
     });
 
-    // Process custom data-* attributes
-    // if (element.attributes) {
-    //   Object.keys(element.attributes).forEach((attributeName) => {
-    //     if (attributeName.startsWith("data-")) {
-    //       dataAttr[attributeName] = element.attributes![attributeName];
-    //     }
-    //   });
-    // }
-
     setAttributes(elementAttributes);
     //setDataAttributes(dataAttr);
   }, [element]);
 
-  const handleAttributeChange = (index: number, newValue: string) => {
+  const handleAttributeChange = (index: number, newValue: string | object) => {
     setAttributes((prevAttributes) =>
       prevAttributes?.map((attr, idx) =>
         idx === index ? { ...attr, value: newValue } : attr
@@ -58,17 +45,6 @@ function ElementInspector() {
       }
     }
   };
-  // const handleDataAttributeChange = (name: string, newValue: string) => {
-  //   setDataAttributes((prevDataAttributes) => ({
-  //     ...prevDataAttributes,
-  //     [name]: newValue,
-  //   }));
-  //   chrome.runtime.sendMessage({
-  //     action: "updateAttributes",
-  //     name,
-  //     value: newValue,
-  //   });
-  // };
   if (!element) {
     return <div> Not element selected</div>;
   }

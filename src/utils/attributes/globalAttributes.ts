@@ -41,9 +41,9 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "data-*",
-    type: "string",
+    type: "object",
     description: "Allows you to store custom data attributes on the element",
-    value: "",
+    value: {},
   },
   {
     name: "dir",

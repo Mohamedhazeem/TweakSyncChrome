@@ -146,6 +146,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     message.action === "updateStyles" ||
     message.action === "updateAttributes"
   ) {
+    console.log(message.name);
     update(message, sendResponse);
   } else if (message.action === "apply") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
