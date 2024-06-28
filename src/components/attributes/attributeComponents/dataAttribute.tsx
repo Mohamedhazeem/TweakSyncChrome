@@ -1,4 +1,6 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useAttributeContext } from "@/utils/attributesContext";
 import { ChangeEvent, useState, KeyboardEvent } from "react";
 
@@ -21,18 +23,33 @@ function DataAttribute() {
   };
 
   return (
-    <div key={context?.key}>
+    <div key={context?.key} className="flex flex-col gap-2">
       {typeof context?.attribute?.value === "object" &&
       !Array.isArray(context?.attribute?.value) // Ensure value is an object
         ? Object.entries(context?.attribute?.value).map(
             ([key, value], index) => (
-              <div key={index}>
-                <Input type="text" value={`${String(key)}`} readOnly />
-                <Input
-                  type="text"
-                  value={`${String(value)}`}
-                  onChange={(e) => handleInputChange(key, e.target.value)}
-                />
+              <div>
+                <div
+                  key={index}
+                  className="flex flex-col pt-1 gap-1 justify-center rounded-md bg-slate-300"
+                >
+                  <div className="flex justify-between px-2">
+                    <Label htmlFor={key}>{`${String(key)}`}</Label>
+                    <Button
+                      size="sm"
+                      className="bg-rose-600 rounded-xl text-xs p-1 w-4 h-4"
+                    >
+                      X
+                    </Button>
+                  </div>
+
+                  <Input
+                    type="text"
+                    id={key}
+                    value={`${String(value)}`}
+                    onChange={(e) => handleInputChange(key, e.target.value)}
+                  />
+                </div>
               </div>
             )
           )

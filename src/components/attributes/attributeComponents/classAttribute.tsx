@@ -46,24 +46,32 @@ function ClassAttribute() {
   };
 
   return (
-    <div key={context?.key}>
+    <div key={context?.key} className="flex flex-col gap-2">
       {words.map((word, wordIndex) => (
-        <div key={`div-${wordIndex}`} className="flex gap-2 place-items-center">
+        <div key={`div-${wordIndex}`} className="flex gap-2 items-center">
           <Input
             type="text"
             value={word}
             onChange={(e) => handleInputChange(wordIndex, e.target.value)}
+            autoFocus
+            spellCheck="false"
           />
           <Button
             size="sm"
-            className="bg-rose-600 rounded-xl"
+            className="bg-rose-600 rounded-xl text-xs p-1 w-4 h-4"
             onClick={() => handleRemoveClick(wordIndex)}
           >
             X
           </Button>
         </div>
       ))}
-      <Button onClick={handleAddWord}>Add Class</Button>
+      <Button
+        size={"default"}
+        onClick={handleAddWord}
+        className="min-w-32 max-w-48 self-center"
+      >
+        Add {context?.attribute?.nameForTitile}
+      </Button>
     </div>
   );
 }
