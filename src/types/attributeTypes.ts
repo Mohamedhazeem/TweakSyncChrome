@@ -1,5 +1,6 @@
 export interface Attribute {
   name: string;
+  nameForTitile?: string;
   description: string;
   type?: string | boolean | number;
   value: string | boolean | number | object;

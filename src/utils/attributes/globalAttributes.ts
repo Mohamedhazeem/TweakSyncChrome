@@ -29,6 +29,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "class",
+    nameForTitile: "Class",
     type: "string",
     description: "CSS classes for the element",
     value: "",
@@ -41,6 +42,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "data-*",
+    nameForTitile: "Data",
     type: "object",
     description: "Allows you to store custom data attributes on the element",
     value: {},
@@ -81,6 +83,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "id",
+    nameForTitile: "Id",
     type: "string",
     description: "Unique identifier for the element",
     value: "",
