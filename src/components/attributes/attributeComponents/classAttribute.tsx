@@ -1,23 +1,30 @@
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-// import { IAttributeContext } from "@/types/attributeTypes";
 import { useAttributeContext } from "@/utils/attributesContext";
-import { useEffect, useState } from "react";
+
 function ClassAttribute() {
   const context = useAttributeContext();
   const [words, setWords] = useState<string[]>([]);
+
   useEffect(() => {
     if (context?.attribute?.value) {
-      setWords(splitStringToArray(context.attribute.value.toString()));
+      const initialWords = splitStringToArray(
+        context.attribute.value.toString()
+      );
+      setWords(initialWords);
     }
   }, [context?.attribute]);
+
   if (!context?.attribute) {
     return null;
   }
+
   function splitStringToArray(text: string): string[] {
     const words = text.split(" ");
     return words;
   }
+
   const handleInputChange = (wordIndex: number, newValue: string) => {
     const updatedWords = [...words];
     updatedWords[wordIndex] = newValue;
@@ -33,6 +40,11 @@ function ClassAttribute() {
     const updatedValue = updatedWords.join(" ");
     context.onChange(context.index!, updatedValue);
   };
+
+  const handleAddWord = () => {
+    setWords([...words, ""]);
+  };
+
   return (
     <div key={context?.key}>
       {words.map((word, wordIndex) => (
@@ -51,6 +63,7 @@ function ClassAttribute() {
           </Button>
         </div>
       ))}
+      <Button onClick={handleAddWord}>Add Class</Button>
     </div>
   );
 }

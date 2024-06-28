@@ -3,12 +3,10 @@ import { AttributeContext } from "@/utils/attributesContext";
 import {
   Card,
   CardHeader,
-  // CardFooter,
   CardTitle,
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-// import { Button } from "@/components/ui/button";
 
 function AttributeLayout({
   key,
@@ -33,10 +31,6 @@ function AttributeLayout({
             {children}
           </AttributeContext.Provider>
         </CardContent>
-        {/* <CardFooter className="flex justify-between">
-          <Button variant="outline">Cancel</Button>
-          <Button>Deploy</Button>
-        </CardFooter> */}
       </Card>
     </div>
   );
