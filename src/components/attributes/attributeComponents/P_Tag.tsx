@@ -1,5 +1,5 @@
+import { ElementDetails } from "@/types/ElementTypes";
 import { useEffect, useState } from "react";
-import { ElementDetails } from "../types/ElementTypes";
 
 type PTagTypes = {
   tag?: ElementDetails;

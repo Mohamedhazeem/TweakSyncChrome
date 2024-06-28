@@ -1,5 +1,5 @@
-import PTag from "@/components/P_Tag";
 import AttributeFactory from "@/components/attributes/AttributeFactory";
+import PTag from "@/components/attributes/attributeComponents/P_Tag";
 import { OutletContext } from "@/types/OutletContext";
 import { Attribute } from "@/types/attributeTypes";
 import { GLOBAL_ATTRIBUTES } from "@/utils/attributes/globalAttributes";
@@ -42,7 +42,6 @@ function ElementInspector() {
     }
 
     setAttributes(elementAttributes);
-    //setDataAttributes(dataAttr);
   }, [element]);
 
   // const handleAttributeChange = (index: number, newValue: string | object) => {
