@@ -35,6 +35,7 @@ function ElementInspector() {
     if (Object.keys(dataAttributes).length > 0) {
       elementAttributes.push({
         name: "data-*",
+        nameForTitile: "Data",
         type: "object",
         description: "Custom data attributes",
         value: dataAttributes,
@@ -103,7 +104,9 @@ function ElementInspector() {
     <div className="w-full h-[calc(100vh-65px)] flex items-center justify-center">
       <div className="flex flex-col space-y-4 overflow-y-auto h-full w-full p-4">
         {attributes?.map((attribute) => {
-          return <div>{`${attribute.name} and  ${attribute.value} `}</div>;
+          return (
+            <div>{`${attribute.name}, ${attribute.nameForTitile} and  ${attribute.value} `}</div>
+          );
         })}
         <PTag tag={element} />
         {attributes?.length ? (
