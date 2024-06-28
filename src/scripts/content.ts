@@ -88,7 +88,11 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         }
       });
     } else if (typeof message.value === "string") {
-      lastClickedElement.setAttribute(message.name, message.value);
+      if (message.value) {
+        lastClickedElement.setAttribute(message.name, message.value);
+      } else {
+        lastClickedElement.removeAttribute(message.name);
+      }
     }
   } else if (message.action === "getUpdatedElement") {
     getElementDetails(lastClickedElement)
