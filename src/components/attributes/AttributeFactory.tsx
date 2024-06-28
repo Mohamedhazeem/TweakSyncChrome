@@ -13,6 +13,7 @@ function AttributeFactory({
 }: IAttributeContext) {
   const attributeComponents: { [key: string]: React.ComponentType } = {
     class: ClassAttribute,
+    id: ClassAttribute,
     role: ClassAttribute,
   };
   const patternComponents: { [key: string]: React.ComponentType } = {
@@ -30,7 +31,6 @@ function AttributeFactory({
       onChange={onChange!}
       index={index}
     >
-      <div>{attribute.name}</div>
       <AttributeComponent />
     </AttributeLayout>
   );

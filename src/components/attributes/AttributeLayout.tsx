@@ -4,9 +4,16 @@ import {
   Card,
   CardHeader,
   CardTitle,
-  CardDescription,
+  // CardDescription,
   CardContent,
 } from "@/components/ui/card";
+
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
+import { Button } from "../ui/button";
 
 function AttributeLayout({
   key,
@@ -19,10 +26,30 @@ function AttributeLayout({
     <div>
       <Card className="border-2">
         <CardHeader className="p-3">
-          <CardTitle className={"text-xl font-semibold"}>
-            {attribute.name}
+          <CardTitle
+            className={
+              "flex justify-between items-center text-xl font-semibold bg-lime-400"
+            }
+          >
+            {attribute.nameForTitile}
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <Button
+                  variant="outline"
+                  size={"sm"}
+                  className="bg-slate-400 rounded-xl text-sm p-1 w-6 h-6"
+                >
+                  ?
+                </Button>
+              </HoverCardTrigger>
+              <HoverCardContent className="w-64">
+                <div className="">
+                  <p className="text-sm">{attribute.description}</p>
+                </div>
+              </HoverCardContent>
+            </HoverCard>
           </CardTitle>
-          <CardDescription>{attribute.description}</CardDescription>
+          {/* <CardDescription>{attribute.description}</CardDescription> */}
         </CardHeader>
         <CardContent className="p-2">
           <AttributeContext.Provider
