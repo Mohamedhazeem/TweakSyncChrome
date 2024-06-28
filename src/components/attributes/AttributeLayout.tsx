@@ -19,14 +19,14 @@ function AttributeLayout({
 }: IAttributeContext) {
   return (
     <div>
-      <Card className="">
+      <Card className="border-2">
         <CardHeader className="p-3">
           <CardTitle className={"text-xl font-semibold"}>
             {attribute.name}
           </CardTitle>
           <CardDescription>{attribute.description}</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-2">
           <AttributeContext.Provider
             value={{ key, attribute, index, onChange }}
           >
