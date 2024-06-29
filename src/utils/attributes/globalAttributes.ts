@@ -22,6 +22,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "autofocus",
+    nameForTitile: "Auto Focus",
     type: "boolean",
     description:
       "Specifies that the element should automatically get focus when the page loads",
@@ -36,6 +37,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "contenteditable",
+    nameForTitile: "Content Editable",
     type: "boolean",
     description: "Specifies whether the content of an element is editable",
     value: false,
@@ -56,6 +58,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "draggable",
+    nameForTitile: "Draggable",
     type: "boolean",
     description: "Specifies whether an element is draggable",
     value: false,
@@ -77,6 +80,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "hidden",
+    nameForTitile: "Hidden",
     type: "boolean",
     description: "Specifies whether an element is visible or hidden",
     value: false,
@@ -90,6 +94,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "inert",
+    nameForTitile: "Inert",
     type: "boolean",
     description: "Makes the browser ignore input events sent by the user",
     value: false,
@@ -133,6 +138,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "spellcheck",
+    nameForTitile: "Spell Check",
     type: "boolean",
     description:
       "Specifies whether the element should have its spelling and grammar checked",
@@ -153,9 +159,11 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "translate",
-    type: "boolean",
+    nameForTitile: "Translate",
+    type: "string",
     description:
       "Specifies whether the content of an element should be translated or not",
-    value: true,
+    value: "yes",
+    options: ["yes", "no"],
   },
 ];

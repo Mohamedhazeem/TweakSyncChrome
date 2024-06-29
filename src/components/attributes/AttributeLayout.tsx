@@ -72,13 +72,15 @@ function AttributeLayout({
           </CardTitle>
           {/* <CardDescription>{attribute.description}</CardDescription> */}
         </CardHeader>
-        <CardContent className="p-2">
-          <AttributeContext.Provider
-            value={{ key, attribute, index, onChange }}
-          >
-            {children}
-          </AttributeContext.Provider>
-        </CardContent>
+        {attribute.type !== "boolean" && (
+          <CardContent className="p-2">
+            <AttributeContext.Provider
+              value={{ key, attribute, index, onChange }}
+            >
+              {children}
+            </AttributeContext.Provider>
+          </CardContent>
+        )}
       </Card>
     </div>
   );
