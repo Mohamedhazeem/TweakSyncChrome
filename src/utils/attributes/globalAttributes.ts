@@ -14,6 +14,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "autocapitalize",
+    nameForTitile: "Auto capitalize",
     type: "string",
     description:
       "Specifies whether the element should be automatically capitalized",
