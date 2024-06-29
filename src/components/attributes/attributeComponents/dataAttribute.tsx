@@ -50,6 +50,11 @@ function DataAttribute() {
       setShowAddFields(false);
     }
   };
+  const handleCancelDataAttribute = () => {
+    setShowAddFields(false);
+    setNewAttrKey("data-");
+    setNewAttrValue("");
+  };
   const handleAttrNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputVal = e.target.value;
     if (inputVal.startsWith("data-")) {
@@ -65,19 +70,22 @@ function DataAttribute() {
         >
           <div className="flex justify-between px-2">
             <Label htmlFor={key}>{key}</Label>
-            <Button
-              size="sm"
-              className="bg-rose-600 rounded-xl text-xs p-1 w-4 h-4"
-              onClick={() => handleRemoveClick(key)}
-            >
-              X
-            </Button>
+            {key !== "data-temporaryid" && (
+              <Button
+                size="sm"
+                className="bg-rose-600 rounded-xl text-xs p-1 w-4 h-4"
+                onClick={() => handleRemoveClick(key)}
+              >
+                X
+              </Button>
+            )}
           </div>
           <Input
             type="text"
             id={key}
             value={value}
             onChange={(e) => handleInputChange(key, e.target.value)}
+            disabled={key == "data-temporaryid"}
           />
         </div>
       ))}
@@ -98,9 +106,6 @@ function DataAttribute() {
           />
           <Button
             onClick={handleAddDataAttribute}
-            // disabled={
-            //   !newAttrKey || !newAttrValue || !newAttrKey.startsWith("data-")
-            // }
             disabled={
               !newAttrKey.startsWith("data-") ||
               newAttrKey === "data-" ||
@@ -109,7 +114,7 @@ function DataAttribute() {
           >
             Add
           </Button>
-          <Button onClick={() => setShowAddFields(false)}>Cancel</Button>
+          <Button onClick={handleCancelDataAttribute}>Cancel</Button>
         </div>
       )}
       {!showAddFields && (
@@ -122,57 +127,3 @@ function DataAttribute() {
 }
 
 export default DataAttribute;
-
-// interface DataInputProps {
-//   initialKey?: string;
-//   initialValue?: string;
-//   onKeyChange: (newKey: string) => void;
-//   onValueChange: (newValue: string) => void;
-// }
-
-// export const DataInput: React.FC<DataInputProps> = ({
-//   initialKey = "data-",
-//   initialValue = "",
-//   onKeyChange,
-//   onValueChange,
-// }) => {
-//   const prefix = "data-";
-//   const [key, setKey] = useState<string>(initialKey);
-//   const [value, setValue] = useState<string>(initialValue);
-
-//   const handleKeyChange = (e: ChangeEvent<HTMLInputElement>) => {
-//     const newKey = e.target.value;
-//     // Ensure the prefix is persistent
-//     if (newKey.startsWith(prefix)) {
-//       setKey(newKey);
-//       // Pass only the user-defined part (after the prefix) to the parent
-//       onKeyChange(newKey.slice(prefix.length));
-//     } else {
-//       setKey(prefix);
-//     }
-//   };
-
-//   const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
-//     const newValue = e.target.value;
-//     setValue(newValue);
-//     onValueChange(newValue);
-//   };
-
-//   const handleKeyKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-//     if (e.key === "Backspace" && key === prefix) {
-//       e.preventDefault();
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <input
-//         type="text"
-//         value={key}
-//         onChange={handleKeyChange}
-//         onKeyDown={handleKeyKeyDown}
-//       />
-//       <input type="text" value={value} onChange={handleValueChange} />
-//     </div>
-//   );
-// };
