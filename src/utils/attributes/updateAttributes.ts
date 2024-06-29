@@ -12,20 +12,20 @@ type UpdateAttributesType = {
 export function updateAttributes({ name, value }: UpdateAttributesType) {
   if (name === "data-*" && typeof value === "object" && !Array.isArray(value)) {
     // Get all current data-* attributes
-    const currentDataAttributes = Array.from(lastClickedElement.attributes)
+    const currentDataAttributes = Array.from(lastClickedElement!.attributes)
       .filter((attr) => attr.name.startsWith("data-"))
       .map((attr) => attr.name);
 
     // Set new data-* attributes
     const newDataAttributes = Object.entries(value).map(([key, value]) => {
       if (value) {
-        lastClickedElement.setAttribute(key, String(value)); // Ensure value is a string
+        lastClickedElement!.setAttribute(key, String(value)); // Ensure value is a string
       }
       return key;
     });
     currentDataAttributes.forEach((attr) => {
       if (!newDataAttributes.includes(attr)) {
-        lastClickedElement.removeAttribute(attr);
+        lastClickedElement!.removeAttribute(attr);
       }
     });
     if (currentElement) {
@@ -49,9 +49,9 @@ export function updateAttributes({ name, value }: UpdateAttributesType) {
     }
   } else if (typeof value === "string") {
     if (value) {
-      lastClickedElement.setAttribute(name, value);
+      lastClickedElement!.setAttribute(name, value);
     } else {
-      lastClickedElement.removeAttribute(name);
+      lastClickedElement!.removeAttribute(name);
     }
   }
 }

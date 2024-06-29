@@ -1,4 +1,4 @@
-import { ElementStyles } from "../types/ElementTypes";
+import { ElementStyles } from "../../types/ElementTypes";
 
 export const styles: ElementStyles = {
   inline: {},

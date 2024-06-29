@@ -1,5 +1,5 @@
-import { ProcessAtRulesType, ProcessRules } from "../types/AtRulesTypes";
-import { ElementStyles } from "../types/ElementTypes";
+import { ProcessAtRulesType, ProcessRules } from "../../types/AtRulesTypes";
+import { ElementStyles } from "../../types/ElementTypes";
 import { styles } from "./styleConstants";
 
 export function processRule({ rule, context }: ProcessRules) {

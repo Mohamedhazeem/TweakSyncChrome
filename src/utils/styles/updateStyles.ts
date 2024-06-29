@@ -1,5 +1,5 @@
-import { getElementTypes } from "../types/ElementTypes";
-import { getCachedRules } from "./cache";
+import { getElementTypes } from "../../types/ElementTypes";
+import { getCachedRules } from "../cache";
 
 export function updateStyles({
   newStyleValue,

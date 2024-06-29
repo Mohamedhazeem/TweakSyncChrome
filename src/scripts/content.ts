@@ -1,15 +1,22 @@
 import { generateTemporaryId } from "../utils/generateTemporaryId";
-import { updateStyles } from "../utils/updateStyles";
+import { updateStyles } from "../utils/styles/updateStyles";
 import { updateText } from "../utils/elementTextContent";
 import { getElementDetails } from "../utils/getElementDetails";
-import { getElementStyles } from "../utils/getElementStyles";
+import { getElementStyles } from "../utils/styles/getElementStyles";
 import { updateAttributes } from "../utils/attributes/updateAttributes";
+import {
+  throttledUpdateOutline,
+  outlineElement,
+  createOutlineElement,
+  updateOutline,
+  outlineElementNull,
+} from "./UpdateElementOutlineAtContent";
+
 let clickedElement: HTMLElement | null = null;
 export let currentElement: HTMLElement | null = null;
+export let lastClickedElement: HTMLElement | null = null;
 
-export let lastClickedElement: HTMLElement;
-
-export function isValidChromeRuntime() {
+export function isValidChromeRuntime(): boolean {
   return chrome.runtime && !!chrome.runtime.getManifest();
 }
 
@@ -29,6 +36,13 @@ document.addEventListener("click", (event) => {
   }
 
   lastClickedElement = clickedElement;
+
+  // Ensure the outline element exists
+  if (!outlineElement) {
+    createOutlineElement();
+  }
+  updateOutline(currentElement!);
+
   if (!clickedElement.hasAttribute("data-temporaryid")) {
     const temporaryId = generateTemporaryId();
     clickedElement.setAttribute("data-temporaryid", temporaryId);
@@ -79,7 +93,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   } else if (message.action === "updateAttributes") {
     updateAttributes({ name: message.name, value: message.value });
   } else if (message.action === "getUpdatedElement") {
-    getElementDetails(lastClickedElement)
+    getElementDetails(lastClickedElement!)
       .then((details) => {
         console.log("Sending details:", details);
         sendResponse(details);
@@ -90,14 +104,26 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       });
     return true;
   } else if (message.action === "getUpdatedStyle") {
-    getElementStyles(lastClickedElement)
+    getElementStyles(lastClickedElement!)
       .then((styles) => {
         sendResponse(styles);
       })
       .catch((error) => {
-        console.error("Error getting element style :", error);
+        console.error("Error getting element style:", error);
         sendResponse({ status: "error", message: error.message });
       });
   }
   return true;
+});
+window.addEventListener("resize", throttledUpdateOutline);
+window.addEventListener("scroll", throttledUpdateOutline);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    if (outlineElement) {
+      outlineElement.remove();
+      outlineElementNull();
+    }
+    currentElement = lastClickedElement = null;
+  }
 });

@@ -16,10 +16,13 @@ export default defineConfig({
         main: resolve(__dirname, "index.html"),
         content: resolve(__dirname, "src/scripts/content.ts"),
         serviceworker: resolve(__dirname, "src/scripts/serviceworker.ts"),
+        contentcss: resolve(__dirname, "src/scripts/content.css"),
       },
       output: {
         entryFileNames: (chunk) => {
-          return chunk.name === "serviceworker" || chunk.name === "content"
+          return chunk.name === "serviceworker" ||
+            chunk.name === "content" ||
+            chunk.name === "contentcss"
             ? "scripts/[name].js" // Output filename for service worker
             : "[name].[hash].js"; // Output filename for other chunks
         },

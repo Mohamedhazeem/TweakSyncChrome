@@ -1,4 +1,4 @@
-import { ElementStyles } from "../types/ElementTypes";
+import { ElementStyles } from "../../types/ElementTypes";
 import {
   handleAtrules,
   handleAttribute,
@@ -13,8 +13,8 @@ import {
   isPseudoClassSelector,
   isPseudoElementSelector,
   isValidSelector,
-} from "../utils/styleHandlers";
-import { processAtRule, processRule } from "../utils/atRule";
+} from "./styleHandlers";
+import { processAtRule, processRule } from "./atRule";
 import { resetStyles, styles } from "./styleConstants";
 
 export function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
