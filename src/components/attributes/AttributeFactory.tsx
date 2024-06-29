@@ -4,6 +4,7 @@ import {
   ClassAttribute,
   DataAttribute,
 } from "./attributeFacade";
+import { OptionsAttribute } from "./attributeComponents/OptionsAttribute";
 
 function AttributeFactory({
   key,
@@ -14,7 +15,8 @@ function AttributeFactory({
   const attributeComponents: { [key: string]: React.ComponentType } = {
     class: ClassAttribute,
     id: ClassAttribute,
-    role: ClassAttribute,
+    role: OptionsAttribute,
+    autocapitalize: OptionsAttribute,
   };
   const patternComponents: { [key: string]: React.ComponentType } = {
     "data-*": DataAttribute,

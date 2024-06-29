@@ -1,5 +1,5 @@
-import { useState } from "react";
-// import { useAttributeContext } from "@/utils/attributesContext";
+import { useEffect, useState } from "react";
+import { useAttributeContext } from "@/utils/attributesContext";
 // import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,34 +15,25 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
 export function OptionsAttribute() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+  const context = useAttributeContext();
+  const options = context!.attribute.options;
 
+  useEffect(() => {
+    if (context?.attribute?.value) {
+      setValue(context?.attribute?.value as string);
+    }
+  }, [context?.attribute]);
+
+  const handleSelect = (newValue: string) => {
+    setValue(newValue === value ? "" : newValue);
+    setOpen(false);
+    if (context) context.onChange(context.index!, newValue);
+  };
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -52,9 +43,11 @@ export function OptionsAttribute() {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select framework..."}
+          {value && options
+            ? capitalizeFirstLetter(
+                options.find((option) => option === value) || ""
+              )
+            : "Select Role..."}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
@@ -63,14 +56,11 @@ export function OptionsAttribute() {
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {options!.map((option) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
+                  key={option}
+                  value={option}
+                  onSelect={(currentValue) => handleSelect(currentValue)}
                 >
                   {/* <Check
                     className={cn(
@@ -78,7 +68,7 @@ export function OptionsAttribute() {
                       value === framework.value ? "opacity-100" : "opacity-0"
                     )}
                   /> */}
-                  {framework.label}
+                  {capitalizeFirstLetter(option)}
                 </CommandItem>
               ))}
             </CommandGroup>
