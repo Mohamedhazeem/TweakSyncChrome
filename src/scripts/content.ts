@@ -3,12 +3,13 @@ import { updateStyles } from "../utils/updateStyles";
 import { updateText } from "../utils/elementTextContent";
 import { getElementDetails } from "../utils/getElementDetails";
 import { getElementStyles } from "../utils/getElementStyles";
+import { updateAttributes } from "../utils/attributes/updateAttributes";
 let clickedElement: HTMLElement | null = null;
-let currentElement: HTMLElement | null = null;
+export let currentElement: HTMLElement | null = null;
 
-let lastClickedElement: HTMLElement;
+export let lastClickedElement: HTMLElement;
 
-function isValidChromeRuntime() {
+export function isValidChromeRuntime() {
   return chrome.runtime && !!chrome.runtime.getManifest();
 }
 
@@ -76,24 +77,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       temporaryId: message.temporaryId,
     });
   } else if (message.action === "updateAttributes") {
-    if (
-      message.name === "data-*" &&
-      typeof message.value === "object" &&
-      !Array.isArray(message.value)
-    ) {
-      Object.entries(message.value).forEach(([key, value]) => {
-        if (typeof value === "string") {
-          // Ensure value is a string (or convert as needed)
-          lastClickedElement.setAttribute(key, value);
-        }
-      });
-    } else if (typeof message.value === "string") {
-      if (message.value) {
-        lastClickedElement.setAttribute(message.name, message.value);
-      } else {
-        lastClickedElement.removeAttribute(message.name);
-      }
-    }
+    updateAttributes({ name: message.name, value: message.value });
   } else if (message.action === "getUpdatedElement") {
     getElementDetails(lastClickedElement)
       .then((details) => {
