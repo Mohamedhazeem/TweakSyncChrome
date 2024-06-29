@@ -1,5 +1,6 @@
 export function executeContentScript(tabId: number, url: string) {
   if (!url.startsWith("chrome://")) {
+    injectCSS(tabId);
     chrome.scripting.executeScript(
       {
         target: { tabId },
@@ -66,4 +67,19 @@ export function removeContentScript() {
       }
     );
   });
+}
+export function injectCSS(tabId: number) {
+  chrome.scripting.insertCSS(
+    {
+      target: { tabId: tabId },
+      files: ["assets/contentcss-lszeYeW9.css"],
+    },
+    () => {
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError);
+      } else {
+        console.log("CSS injected successfully.");
+      }
+    }
+  );
 }
