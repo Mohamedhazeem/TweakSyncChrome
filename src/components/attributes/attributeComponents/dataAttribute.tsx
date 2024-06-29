@@ -43,11 +43,17 @@ function DataAttribute() {
   };
 
   const handleAddDataAttribute = () => {
-    if (newAttrKey && newAttrValue) {
+    if (newAttrKey && newAttrValue && newAttrKey.startsWith("data-")) {
       handleInputChange(newAttrKey, newAttrValue);
       setNewAttrKey("data-");
       setNewAttrValue("");
       setShowAddFields(false);
+    }
+  };
+  const handleAttrNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputVal = e.target.value;
+    if (inputVal.startsWith("data-")) {
+      setNewAttrKey(inputVal);
     }
   };
   return (
@@ -82,7 +88,7 @@ function DataAttribute() {
             type="text"
             placeholder="Name (data-attribute)"
             value={newAttrKey}
-            onChange={(e) => setNewAttrKey(e.target.value)}
+            onChange={handleAttrNameChange}
           />
           <Input
             type="text"
@@ -90,7 +96,19 @@ function DataAttribute() {
             value={newAttrValue}
             onChange={(e) => setNewAttrValue(e.target.value)}
           />
-          <Button onClick={handleAddDataAttribute}>Add</Button>
+          <Button
+            onClick={handleAddDataAttribute}
+            // disabled={
+            //   !newAttrKey || !newAttrValue || !newAttrKey.startsWith("data-")
+            // }
+            disabled={
+              !newAttrKey.startsWith("data-") ||
+              newAttrKey === "data-" ||
+              !newAttrValue
+            }
+          >
+            Add
+          </Button>
           <Button onClick={() => setShowAddFields(false)}>Cancel</Button>
         </div>
       )}
