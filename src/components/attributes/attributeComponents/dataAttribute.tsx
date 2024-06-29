@@ -104,17 +104,22 @@ function DataAttribute() {
             value={newAttrValue}
             onChange={(e) => setNewAttrValue(e.target.value)}
           />
-          <Button
-            onClick={handleAddDataAttribute}
-            disabled={
-              !newAttrKey.startsWith("data-") ||
-              newAttrKey === "data-" ||
-              !newAttrValue
-            }
-          >
-            Add
-          </Button>
-          <Button onClick={handleCancelDataAttribute}>Cancel</Button>
+          <div className="flex justify-between gap-1">
+            <Button
+              className="flex-grow"
+              onClick={handleAddDataAttribute}
+              disabled={
+                !newAttrKey.startsWith("data-") ||
+                newAttrKey === "data-" ||
+                !newAttrValue
+              }
+            >
+              Add
+            </Button>
+            <Button className="flex-grow" onClick={handleCancelDataAttribute}>
+              Cancel
+            </Button>
+          </div>
         </div>
       )}
       {!showAddFields && (
