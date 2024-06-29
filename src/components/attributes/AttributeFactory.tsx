@@ -3,8 +3,8 @@ import {
   AttributeLayout,
   ClassAttribute,
   DataAttribute,
+  OptionsAttribute,
 } from "./attributeFacade";
-import { OptionsAttribute } from "./attributeComponents/OptionsAttribute";
 
 function AttributeFactory({
   key,
