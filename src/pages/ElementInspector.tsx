@@ -3,7 +3,7 @@ import PTag from "@/components/attributes/attributeComponents/P_Tag";
 import { OutletContext } from "@/types/OutletContext";
 import { Attribute } from "@/types/attributeTypes";
 import { GLOBAL_ATTRIBUTES } from "@/utils/attributes/globalAttributes";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 function ElementInspector() {
@@ -11,6 +11,7 @@ function ElementInspector() {
   const [attributes, setAttributes] = useState<Attribute[] | undefined>(
     undefined
   );
+  const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (!element) return;
     const elementAttributes: Attribute[] = [];
@@ -43,25 +44,13 @@ function ElementInspector() {
     }
 
     setAttributes(elementAttributes);
+    setTimeout(() => {
+      if (scrollableContainerRef.current) {
+        scrollableContainerRef.current.scrollTop = 0; // Scroll to top
+      }
+    }, 50);
   }, [element]);
 
-  // const handleAttributeChange = (index: number, newValue: string | object) => {
-  //   setAttributes((prevAttributes) =>
-  //     prevAttributes?.map((attr, idx) =>
-  //       idx === index ? { ...attr, value: newValue } : attr
-  //     )
-  //   );
-  //   if (attributes) {
-  //     const updatedAttribute = attributes[index];
-  //     if (updatedAttribute) {
-  //       chrome.runtime.sendMessage({
-  //         action: "updateAttributes",
-  //         name: updatedAttribute.name,
-  //         value: newValue,
-  //       });
-  //     }
-  //   }
-  // };
   const handleAttributeChange = (index: number, newValue: string | object) => {
     setAttributes((prevAttributes) => {
       if (!prevAttributes) return prevAttributes;
@@ -102,7 +91,10 @@ function ElementInspector() {
   }
   return (
     <div className="w-full h-[calc(100vh-65px)] flex items-center justify-center">
-      <div className="flex flex-col space-y-4 overflow-y-auto h-full w-full p-4">
+      <div
+        ref={scrollableContainerRef}
+        className="flex flex-col space-y-4 overflow-y-auto scroll-smooth h-full w-full p-4"
+      >
         {attributes?.map((attribute) => {
           return (
             <div>{`${attribute.name}, ${attribute.nameForTitile} and  ${attribute.value} `}</div>
