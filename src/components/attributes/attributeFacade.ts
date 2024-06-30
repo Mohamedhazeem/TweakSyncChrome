@@ -3,6 +3,7 @@ import ClassAttribute from "./attributeComponents/ClassAttribute";
 import DataAttribute from "./attributeComponents/DataAttribute";
 import OptionsAttribute from "./attributeComponents/OptionsAttribute";
 import StringAttribute from "./attributeComponents/StringAttribute";
+import LangAttribute from "./attributeComponents/LangAttribute";
 // not add boolean attributes beacuse it only on attribute layout
 export const attributeComponents: { [key: string]: React.ComponentType } = {
   accesskey: ClassAttribute, // need to be update
@@ -13,7 +14,7 @@ export const attributeComponents: { [key: string]: React.ComponentType } = {
   exportparts: ClassAttribute,
   id: ClassAttribute,
   inputmode: OptionsAttribute,
-  lang: OptionsAttribute, // need to be update
+  lang: LangAttribute, // need to be update
   part: ClassAttribute,
   popover: OptionsAttribute,
   tabindex: OptionsAttribute, // need to be update

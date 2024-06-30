@@ -4,7 +4,7 @@ export interface Attribute {
   description: string;
   type?: string | boolean | number;
   value: string | boolean | number | object;
-  options?: string[]; // For enum type attributes
+  options?: string[] | { [key: string]: string }; // For enum type attributes
 }
 export interface IAttributeContext {
   key: number;

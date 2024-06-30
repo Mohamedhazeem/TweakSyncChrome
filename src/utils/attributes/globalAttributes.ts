@@ -1,6 +1,7 @@
 import { Attribute } from "../../types/attributeTypes";
 import { ARIA_ATTRIBUTES } from "./ariaAttributes";
 import { ARIA_ROLES } from "./ariaRoles";
+import { languageTags } from "./lang";
 
 export const GLOBAL_ATTRIBUTES: Attribute[] = [
   ARIA_ROLES,
@@ -128,6 +129,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
     type: "string",
     description: "Specifies the language of the element",
     value: "",
+    options: languageTags,
   },
   {
     name: "part",

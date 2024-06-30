@@ -15,12 +15,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
+// import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
-function OptionsAttribute() {
+function LangAttribute() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const context = useAttributeContext();
+  // const attributeValue = context!.attribute.value;
   const options = context!.attribute.options;
   const nameForTitle = context!.attribute.nameForTitile;
 
@@ -37,13 +38,12 @@ function OptionsAttribute() {
   };
   const getButtonText = (): string => {
     if (value && options) {
-      if (Array.isArray(options)) {
-        const selectedIndex = options.indexOf(value);
-        return selectedIndex !== -1
-          ? capitalizeFirstLetter(options[selectedIndex])
-          : `Select ${nameForTitle}...`;
+      if (typeof options === "object" && !Array.isArray(options)) {
+        const selectedKey = Object.keys(options).find(
+          (key) => options[key] === value
+        );
+        return selectedKey ? selectedKey : `Select ${nameForTitle}...`;
       } else {
-        console.error("Unexpected options type:", typeof options);
         return `Select ${nameForTitle}...`;
       }
     }
@@ -58,11 +58,6 @@ function OptionsAttribute() {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {/* {value && options && Array.isArray(options)
-            ? capitalizeFirstLetter(
-                options.find((option) => option === value) || ""
-              )
-            : "Select Role..."} */}
           {getButtonText()}
         </Button>
       </PopoverTrigger>
@@ -72,20 +67,20 @@ function OptionsAttribute() {
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
-              {Array.isArray(options) &&
-                options!.map((option) => (
+              {typeof options === "object" &&
+                Object.entries(options).map(([key, value], index) => (
                   <CommandItem
-                    key={option}
-                    value={option}
-                    onSelect={(currentValue) => handleSelect(currentValue)}
+                    key={index}
+                    value={key}
+                    onSelect={() => handleSelect(value)}
                   >
                     {/* <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === framework.value ? "opacity-100" : "opacity-0"
-                    )}
-                  /> */}
-                    {capitalizeFirstLetter(option)}
+                  className={cn(
+                    "mr-2 h-4 w-4",
+                    value === framework.value ? "opacity-100" : "opacity-0"
+                  )}
+                /> */}
+                    {key}
                   </CommandItem>
                 ))}
             </CommandGroup>
@@ -95,4 +90,4 @@ function OptionsAttribute() {
     </Popover>
   );
 }
-export default OptionsAttribute;
+export default LangAttribute;
