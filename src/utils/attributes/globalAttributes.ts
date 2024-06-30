@@ -1,4 +1,4 @@
-import { Attribute } from "../../types/attributeTypes";
+import { Attribute, accessKeylists } from "../../types/attributeTypes";
 import { ARIA_ATTRIBUTES } from "./ariaAttributes";
 import { ARIA_ROLES } from "./ariaRoles";
 import { languageTags } from "./lang";
@@ -13,44 +13,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
     description:
       "Defines a keyboard shortcut to activate or focus on the element",
     value: "",
-    options: [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "0",
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L",
-      "M",
-      "N",
-      "O",
-      "P",
-      "Q",
-      "R",
-      "S",
-      "T",
-      "U",
-      "V",
-      "W",
-      "X",
-      "Y",
-      "Z",
-    ],
+    options: accessKeylists,
   },
   {
     name: "autocapitalize",
