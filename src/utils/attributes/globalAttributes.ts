@@ -7,6 +7,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   ...ARIA_ATTRIBUTES,
   {
     name: "accesskey",
+    nameForTitile: "Access Key",
     type: "string",
     description:
       "Defines a keyboard shortcut to activate or focus on the element",
@@ -45,13 +46,14 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "data-*",
-    nameForTitile: "Data",
+    nameForTitile: "Custom Data",
     type: "object",
     description: "Allows you to store custom data attributes on the element",
     value: {},
   },
   {
     name: "dir",
+    nameForTitile: "Direction",
     type: "string",
     description: "Specifies the direction of the text/writing",
     value: "",
@@ -66,6 +68,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "enterkeyhint",
+    nameForTitile: "EnterKey Hint",
     type: "string",
     description:
       "Specifies what action label or icon to present for the enter key on virtual keyboards",
@@ -74,6 +77,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "exportparts",
+    nameForTitile: "Export Parts",
     type: "string",
     description:
       "Allows to select and style elements existing in nested shadow trees, by exporting their part names",
@@ -102,6 +106,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "inputmode",
+    nameForTitile: "Input Mode",
     type: "string",
     description:
       "This allows a browser to display an appropriate virtual keyboard",
@@ -119,12 +124,14 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "lang",
+    nameForTitile: "Language",
     type: "string",
     description: "Specifies the language of the element",
     value: "",
   },
   {
     name: "part",
+    nameForTitile: "Part",
     type: "string",
     description:
       "Allows CSS to select and style specific elements in a shadow tree",
@@ -132,6 +139,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "popover",
+    nameForTitile: "Pop Over",
     type: "string",
     description: "Specifies element as a popover element",
     value: "",
@@ -147,6 +155,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "tabindex",
+    nameForTitile: "Tab Index",
     type: "number",
     description: "Specifies the tab order of an element",
     value: 0,
@@ -154,6 +163,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
   },
   {
     name: "title",
+    nameForTitile: "Title",
     type: "string",
     description: "Text to display as a tooltip when hovering over the element",
     value: "",

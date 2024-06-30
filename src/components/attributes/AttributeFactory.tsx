@@ -1,9 +1,8 @@
 import { IAttributeContext } from "@/types/attributeTypes";
 import {
   AttributeLayout,
-  ClassAttribute,
-  DataAttribute,
-  OptionsAttribute,
+  attributeComponents,
+  patternComponents,
 } from "./attributeFacade";
 
 function AttributeFactory({
@@ -12,15 +11,6 @@ function AttributeFactory({
   index,
   onChange,
 }: IAttributeContext) {
-  const attributeComponents: { [key: string]: React.ComponentType } = {
-    class: ClassAttribute,
-    id: ClassAttribute,
-    role: OptionsAttribute,
-    autocapitalize: OptionsAttribute,
-  };
-  const patternComponents: { [key: string]: React.ComponentType } = {
-    "data-*": DataAttribute,
-  };
   const SpecificComponent = attributeComponents[attribute.name];
 
   const AttributeComponent =
