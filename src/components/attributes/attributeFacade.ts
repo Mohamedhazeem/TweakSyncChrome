@@ -1,4 +1,5 @@
 export { default as AttributeLayout } from "./AttributeLayout";
+export { default as AddAttribute } from "./attributeComponents/AddAttribute";
 import ClassAttribute from "./attributeComponents/ClassAttribute";
 import DataAttribute from "./attributeComponents/DataAttribute";
 import OptionsAttribute from "./attributeComponents/OptionsAttribute";
@@ -57,8 +58,15 @@ const ARIA_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   "aria-valuenow": StringAttribute, //number
   "aria-valuetext": StringAttribute,
 };
+const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
+  href: StringAttribute,
+  target: StringAttribute,
+  rel: StringAttribute,
+  type: OptionsAttribute,
+};
 export const attributeComponents: { [key: string]: React.ComponentType } = {
   ...ARIA_ATTRIBUTES,
+  ...ELEMENT_SPECIFIC_ATTRIBUTES,
   accesskey: AccessKeyAttribute,
   autocapitalize: OptionsAttribute,
   class: ClassAttribute,

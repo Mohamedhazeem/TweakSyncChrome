@@ -1,5 +1,6 @@
 import { IAttributeContext } from "@/types/attributeTypes";
 import {
+  // AddAttribute,
   AttributeLayout,
   attributeComponents,
   patternComponents,
@@ -17,14 +18,17 @@ function AttributeFactory({
     SpecificComponent || matchAttribute(attribute.name, patternComponents);
 
   return (
-    <AttributeLayout
-      key={key}
-      attribute={attribute}
-      onChange={onChange!}
-      index={index}
-    >
-      <AttributeComponent />
-    </AttributeLayout>
+    <>
+      <AttributeLayout
+        key={key}
+        attribute={attribute}
+        onChange={onChange!}
+        index={index}
+      >
+        <AttributeComponent />
+      </AttributeLayout>
+      {/* <AddAttribute /> */}
+    </>
   );
 }
 

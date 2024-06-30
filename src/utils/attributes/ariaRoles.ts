@@ -2,7 +2,7 @@ import { Attribute } from "../../types/attributeTypes";
 
 export const ARIA_ROLES: Attribute = {
   name: "role",
-  nameForTitile: "Role",
+  nameForTitle: "Role",
   description: "Specifies the role of the element in accessibility",
   value: "",
   options: [

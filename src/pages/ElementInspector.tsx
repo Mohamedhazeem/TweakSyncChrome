@@ -2,6 +2,7 @@ import AttributeFactory from "@/components/attributes/AttributeFactory";
 import PTag from "@/components/attributes/attributeComponents/P_Tag";
 import { OutletContext } from "@/types/OutletContext";
 import { Attribute } from "@/types/attributeTypes";
+import { ELEMENT_SPECIFIC_ATTRIBUTES } from "@/utils/attributes/elementSpecificAttributes";
 import { GLOBAL_ATTRIBUTES } from "@/utils/attributes/globalAttributes";
 import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
@@ -12,6 +13,7 @@ function ElementInspector() {
     undefined
   );
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (!element) return;
     const elementAttributes: Attribute[] = [];
@@ -36,13 +38,23 @@ function ElementInspector() {
     if (Object.keys(dataAttributes).length > 0) {
       elementAttributes.push({
         name: "data-*",
-        nameForTitile: "Data",
+        nameForTitle: "Data",
         type: "object",
         description: "Custom data attributes",
         value: dataAttributes,
       });
     }
 
+    const specificAttributes =
+      ELEMENT_SPECIFIC_ATTRIBUTES[element.tagName!.toLowerCase()];
+    specificAttributes?.forEach((attr) => {
+      if (element.attributes![attr.name]) {
+        elementAttributes.push({
+          ...attr,
+          value: element.attributes![attr.name] || "",
+        });
+      }
+    });
     setAttributes(elementAttributes);
     setTimeout(() => {
       if (scrollableContainerRef.current) {
@@ -97,7 +109,7 @@ function ElementInspector() {
       >
         {attributes?.map((attribute) => {
           return (
-            <div>{`${attribute.name}, ${attribute.nameForTitile} and  ${attribute.value} `}</div>
+            <div>{`${attribute.name}, ${attribute.nameForTitle} and  ${attribute.value} `}</div>
           );
         })}
         <PTag tag={element} />

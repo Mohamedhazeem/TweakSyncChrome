@@ -22,7 +22,7 @@ function OptionsAttribute() {
   const [value, setValue] = useState("");
   const context = useAttributeContext();
   const options = context!.attribute.options;
-  const nameForTitle = context!.attribute.nameForTitile;
+  const nameForTitle = context!.attribute.nameForTitle;
 
   useEffect(() => {
     if (context?.attribute?.value) {

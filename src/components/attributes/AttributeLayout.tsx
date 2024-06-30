@@ -43,7 +43,7 @@ function AttributeLayout({
               "flex justify-between items-center text-xl font-semibold bg-lime-400"
             }
           >
-            {attribute.nameForTitile}
+            {attribute.nameForTitle}
             <div className="flex place-items-center gap-1 pr-1">
               <HoverCard>
                 <HoverCardTrigger asChild>

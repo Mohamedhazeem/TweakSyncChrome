@@ -70,7 +70,7 @@ function ClassAttribute() {
         onClick={handleAddWord}
         className="min-w-32 max-w-48 self-center"
       >
-        Add {context?.attribute?.nameForTitile}
+        Add {context?.attribute?.nameForTitle}
       </Button>
     </div>
   );
