@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/popover";
 // import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
-function LangAttribute() {
+function OptionsObjectAttribute() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const context = useAttributeContext();
@@ -90,4 +90,4 @@ function LangAttribute() {
     </Popover>
   );
 }
-export default LangAttribute;
+export default OptionsObjectAttribute;

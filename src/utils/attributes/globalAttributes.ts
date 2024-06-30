@@ -161,7 +161,7 @@ export const GLOBAL_ATTRIBUTES: Attribute[] = [
     type: "number",
     description: "Specifies the tab order of an element",
     value: 0,
-    options: ["0", "-1"],
+    options: { yes: "0", no: "-1" },
   },
   {
     name: "title",
