@@ -175,43 +175,54 @@ const ACCEPT = [
   ".xul",
   ".zip",
 ];
-
-const REL_TYPE = {
-  name: "rel",
-  nameForTitle: "Rel",
-  value: "",
-  type: "string",
-  description:
-    "Specifies the relationship between the current and linked document",
-  options: [
-    "alternate",
-    "author",
-    "bookmark",
-    "canonical",
-    "external",
-    "help",
-    "icon",
-    "license",
-    "manifest",
-    "me",
-    "modulepreload",
-    "next",
-    "nofollow",
-    "noopener",
-    "noreferrer",
-    "opener",
-    "pingback",
-    "preconnect",
-    "prefetch",
-    "preload",
-    "prerender",
-    "prev",
-    "search",
-    "shortlink",
-    "stylesheet",
-    "tag",
-  ],
-};
+const REL_OPTIONS = [
+  "alternate",
+  "author",
+  "bookmark",
+  "canonical",
+  "external",
+  "help",
+  "icon",
+  "license",
+  "manifest",
+  "me",
+  "modulepreload",
+  "next",
+  "nofollow",
+  "noopener",
+  "noreferrer",
+  "opener",
+  "pingback",
+  "preconnect",
+  "prefetch",
+  "preload",
+  "prerender",
+  "prev",
+  "search",
+  "shortlink",
+  "stylesheet",
+  "tag",
+];
+const REL_REV_TYPE = [
+  {
+    name: "rel",
+    nameForTitle: "Rel",
+    value: "",
+    type: "string",
+    description:
+      "Specifies the relationship between the current and linked document",
+    options: REL_OPTIONS,
+  },
+  {
+    name: "rev",
+    nameForTitle: "Rev",
+    value: "",
+    type: "string",
+    description:
+      "Specifies the reverse relationship between the current and linked document",
+    options: REL_OPTIONS,
+  },
+];
 const SHARED_MIME_TYPE = [
   "application/json",
   "application/msword",
@@ -259,7 +270,7 @@ export const SHARED_ATTRIBUTES: Attribute[] = [
     description: "Specifies where to open the linked document",
     options: ["_blank", "_self", "_parent", "_top"],
   },
-  REL_TYPE,
+  ...REL_REV_TYPE,
   {
     name: "download",
     nameForTitle: "Download",
@@ -742,7 +753,7 @@ export const FORM_SPECIFIC_ATTRIBUTES: Attribute[] = [
       "Specifies where to display the response received after submitting the form.",
     options: ["_self", "_blank", "_parent", "_top", "framename"],
   },
-  REL_TYPE,
+  ...REL_REV_TYPE,
 ];
 const IFRAME_SPECIFIC_ATTRIBUTES: Attribute[] = [
   {
@@ -1015,6 +1026,7 @@ const IMG_SPECIFIC_ATTRIBUTES = [
   },
 ];
 const INPUT_SPECIFIC_ATTRIBUTES = [
+  ...REL_REV_TYPE,
   {
     name: "accept",
     nameForTitle: "Accept",
@@ -1391,7 +1403,7 @@ const LIST_SPECIFIC_ATTRIBUTES = [
   },
 ];
 const LINK_SPECIFIC_ATTRIBUTES = [
-  REL_TYPE,
+  ...REL_REV_TYPE,
   {
     name: "href",
     nameForTitle: "Href",

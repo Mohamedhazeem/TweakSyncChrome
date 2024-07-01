@@ -61,7 +61,8 @@ const ARIA_ATTRIBUTES: { [key: string]: React.ComponentType } = {
 const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   href: StringAttribute,
   target: OptionsAttribute,
-  rel: StringAttribute, // multi option attributes
+  rel: OptionsAttribute, // multi option attributes
+  rev: OptionsAttribute, // multi option attributes
   download: StringAttribute,
   hreflang: OptionsObjectAttribute,
   type: OptionsAttribute,
