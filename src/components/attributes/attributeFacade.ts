@@ -60,9 +60,83 @@ const ARIA_ATTRIBUTES: { [key: string]: React.ComponentType } = {
 };
 const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   href: StringAttribute,
-  target: StringAttribute,
-  rel: StringAttribute,
+  target: OptionsAttribute,
+  rel: StringAttribute, // multi option attributes
+  download: StringAttribute,
+  hreflang: OptionsObjectAttribute,
   type: OptionsAttribute,
+  referrerpolicy: OptionsAttribute,
+  ping: StringAttribute,
+  alt: StringAttribute,
+  shape: OptionsAttribute,
+  coords: StringAttribute,
+  controlslist: OptionsAttribute, // multi option attributes
+  crossorigin: OptionsAttribute,
+  preload: OptionsAttribute,
+  src: StringAttribute, // need to update check url like that
+  volume: StringAttribute, //number
+  cite: StringAttribute, // need to check
+  form: StringAttribute,
+  formaction: StringAttribute,
+  formenctype: OptionsAttribute,
+  formmethod: OptionsAttribute,
+  formtarget: OptionsAttribute,
+  name: StringAttribute,
+  value: StringAttribute,
+  height: StringAttribute,
+  width: StringAttribute,
+  span: StringAttribute, // number
+  datetime: StringAttribute, // datetime attribute
+  "accept-charset": OptionsAttribute,
+  action: StringAttribute,
+  autocomplete: OptionsAttribute,
+  enctype: OptionsAttribute,
+  method: OptionsAttribute,
+  allow: OptionsAttribute, // multiple options attributes
+  csp: StringAttribute, // need to update on future
+  loading: OptionsAttribute,
+  sandbox: OptionsAttribute, // multiple options attributes
+  srcdoc: StringAttribute, // need to update on future
+  srcset: StringAttribute, // need to update on future (width/pixels)
+  sizes: StringAttribute, // need to update on future
+  usemap: StringAttribute, // need to update on future (suuport name of the map) #mapname
+  decoding: OptionsAttribute,
+  fetchpriority: OptionsAttribute,
+  accept: OptionsAttribute, // multiple options attribute with comma
+  dirname: OptionsAttribute,
+  list: StringAttribute,
+  max: StringAttribute,
+  min: StringAttribute,
+  minlength: StringAttribute, // number
+  maxlength: StringAttribute, // number
+  low: StringAttribute, //number
+  high: StringAttribute, //number
+  optimum: StringAttribute, //number
+  pattern: StringAttribute, // need to update (type="text" type="email" type="password" type="search" type="tel" (telephone number) type="url" (URL))
+  placeholder: StringAttribute,
+  size: StringAttribute, // number
+  step: StringAttribute, // need to update. The step attribute in HTML is used with <input> elements of type number, range, date, datetime-local, month, time, and week.
+  is: StringAttribute,
+  nonce: StringAttribute,
+  for: StringAttribute,
+  media: StringAttribute, // need to update o future
+  as: OptionsAttribute,
+  integrity: StringAttribute, // need to update /research
+  charset: OptionsAttribute,
+  start: StringAttribute, // number
+  label: StringAttribute,
+  colspan: StringAttribute, //number
+  rowspan: StringAttribute, //number
+  headers: ClassAttribute,
+  shadowrootmode: OptionsAttribute,
+  cols: StringAttribute, //number
+  rows: StringAttribute, //number
+  wrap: OptionsAttribute,
+  abbr: StringAttribute,
+  scope: OptionsAttribute,
+  kind: OptionsAttribute,
+  srclang: OptionsAttribute,
+  poster: StringAttribute,
 };
 export const attributeComponents: { [key: string]: React.ComponentType } = {
   ...ARIA_ATTRIBUTES,
