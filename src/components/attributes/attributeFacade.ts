@@ -6,6 +6,7 @@ import OptionsAttribute from "./attributeComponents/OptionsAttribute";
 import StringAttribute from "./attributeComponents/StringAttribute";
 import OptionsObjectAttribute from "./attributeComponents/OptionsObjectAttribute";
 import AccessKeyAttribute from "./attributeComponents/AccessKeyAttribute";
+import MultiOptionsAttribute from "./attributeComponents/MultiOptionsAttributes";
 // not add boolean attributes beacuse it only on attribute layout
 
 const ARIA_ATTRIBUTES: { [key: string]: React.ComponentType } = {
@@ -61,8 +62,8 @@ const ARIA_ATTRIBUTES: { [key: string]: React.ComponentType } = {
 const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   href: StringAttribute,
   target: OptionsAttribute,
-  rel: OptionsAttribute, // multi option attributes
-  rev: OptionsAttribute, // multi option attributes
+  rel: MultiOptionsAttribute,
+  rev: MultiOptionsAttribute,
   download: StringAttribute,
   hreflang: OptionsObjectAttribute,
   type: OptionsAttribute,
@@ -71,7 +72,7 @@ const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   alt: StringAttribute,
   shape: OptionsAttribute,
   coords: StringAttribute,
-  controlslist: OptionsAttribute, // multi option attributes
+  controlslist: MultiOptionsAttribute,
   crossorigin: OptionsAttribute,
   preload: OptionsAttribute,
   src: StringAttribute, // need to update check url like that
@@ -93,10 +94,10 @@ const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   autocomplete: OptionsAttribute,
   enctype: OptionsAttribute,
   method: OptionsAttribute,
-  allow: OptionsAttribute, // multiple options attributes
+  allow: MultiOptionsAttribute,
   csp: StringAttribute, // need to update on future
   loading: OptionsAttribute,
-  sandbox: OptionsAttribute, // multiple options attributes
+  sandbox: MultiOptionsAttribute,
   srcdoc: StringAttribute, // need to update on future
   srcset: StringAttribute, // need to update on future (width/pixels)
   sizes: StringAttribute, // need to update on future
