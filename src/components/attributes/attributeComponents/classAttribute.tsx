@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAttributeContext } from "@/utils/attributesContext";
+import { splitStringToArray } from "@/utils/splitStringToArray";
 
 function ClassAttribute() {
   const context = useAttributeContext();
@@ -18,11 +19,6 @@ function ClassAttribute() {
 
   if (!context?.attribute) {
     return null;
-  }
-
-  function splitStringToArray(text: string): string[] {
-    const words = text.split(" ");
-    return words;
   }
 
   const handleInputChange = (wordIndex: number, newValue: string) => {

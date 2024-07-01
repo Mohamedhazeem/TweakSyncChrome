@@ -104,7 +104,7 @@ const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   usemap: StringAttribute, // need to update on future (suuport name of the map) #mapname
   decoding: OptionsAttribute,
   fetchpriority: OptionsAttribute,
-  accept: OptionsAttribute, // multiple options attribute with comma
+  accept: MultiOptionsAttribute, // multiple options attribute with comma
   dirname: OptionsAttribute,
   list: StringAttribute,
   max: StringAttribute,

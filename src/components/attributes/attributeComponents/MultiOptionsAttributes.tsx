@@ -125,10 +125,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
+import { splitStringToArray } from "@/utils/splitStringToArray";
 
 function MultiOptionsAttribute() {
   const context = useAttributeContext();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [openPopoverIndex, setOpenPopoverIndex] = useState<number | null>(null);
+  const name = context!.attribute.name;
   const options = context!.attribute.options;
   const nameForTitle = context!.attribute.nameForTitle;
 
@@ -145,16 +148,17 @@ function MultiOptionsAttribute() {
     return null;
   }
 
-  function splitStringToArray(text: string): string[] {
-    const optionsArray = text.split(" ");
-    return optionsArray;
-  }
-
   const handleSelect = (index: number, newOption: string) => {
     const updatedOptions = [...selectedOptions];
     updatedOptions[index] = newOption;
     setSelectedOptions(updatedOptions);
-    const updatedValue = updatedOptions.join(" ");
+    let updatedValue = "";
+    if (name === "accept") {
+      updatedValue = updatedOptions.join(", ");
+    } else {
+      updatedValue = updatedOptions.join(" ");
+    }
+    setOpenPopoverIndex(null);
     context.onChange(context.index!, updatedValue);
   };
 
@@ -174,7 +178,12 @@ function MultiOptionsAttribute() {
     <div key={context?.key} className="flex flex-col gap-2">
       {selectedOptions.map((option, index) => (
         <div key={`div-${index}`} className="flex gap-2 items-center">
-          <Popover>
+          <Popover
+            open={openPopoverIndex === index}
+            onOpenChange={(newOpenState) =>
+              setOpenPopoverIndex(newOpenState ? index : null)
+            }
+          >
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
@@ -186,26 +195,28 @@ function MultiOptionsAttribute() {
                   : `Select ${nameForTitle}`}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-              <Command>
-                <CommandInput placeholder={`Search ${nameForTitle}...`} />
-                <CommandList>
-                  <CommandEmpty>No option found.</CommandEmpty>
-                  <CommandGroup>
-                    {Array.isArray(options) &&
-                      options!.map((opt) => (
-                        <CommandItem
-                          key={opt}
-                          value={opt}
-                          onSelect={() => handleSelect(index, opt)}
-                        >
-                          {capitalizeFirstLetter(opt)}
-                        </CommandItem>
-                      ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
+            {openPopoverIndex === index && (
+              <PopoverContent className="w-[200px] p-0">
+                <Command>
+                  <CommandInput placeholder={`Search ${nameForTitle}...`} />
+                  <CommandList>
+                    <CommandEmpty>No option found.</CommandEmpty>
+                    <CommandGroup>
+                      {Array.isArray(options) &&
+                        options!.map((opt) => (
+                          <CommandItem
+                            key={opt}
+                            value={opt}
+                            onSelect={() => handleSelect(index, opt)}
+                          >
+                            {capitalizeFirstLetter(opt)}
+                          </CommandItem>
+                        ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            )}
           </Popover>
           <Button
             size="sm"
