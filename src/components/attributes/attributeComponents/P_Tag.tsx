@@ -21,18 +21,18 @@ function PTag({ tag }: PTagTypes) {
     });
   };
   return (
-    <>
+    <div>
       {textContent && (
         <textarea
-          className="resize-none"
+          className="resize-none w-full bg-slate-500"
           rows={6}
           placeholder="Wite a Text"
           value={textContent}
           onChange={handleTextContentChange}
         />
       )}
-      {tag?.path && <p>{tag.path}</p>}
-    </>
+      {/* {tag?.path && <p>{tag.path}</p>} */}
+    </div>
   );
 }
 

@@ -116,29 +116,31 @@ function ElementInspector() {
     <div className="w-full h-[calc(100vh-65px)] flex items-center justify-center">
       <div
         ref={scrollableContainerRef}
-        className="flex flex-col space-y-4 overflow-y-auto scroll-smooth h-full w-full p-4"
+        className="flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-4"
       >
         {attributes?.map((attribute) => {
           return (
             <div>{`${attribute.name}, ${attribute.nameForTitle} and  ${attribute.value} `}</div>
           );
         })}
-        <PTag tag={element} />
-        {attributes?.length ? (
-          attributes.map((attribute, index) => (
-            <div>
-              {`${attribute.name} and  ${index} `}
-              <AttributeFactory
-                key={index}
-                index={index}
-                attribute={attribute}
-                onChange={handleAttributeChange}
-              />
-            </div>
-          ))
-        ) : (
-          <div>No attributes available</div>
-        )}
+        <div>
+          <PTag tag={element} />
+          {attributes?.length ? (
+            attributes.map((attribute, index) => (
+              <div>
+                {`${attribute.name} and  ${index} `}
+                <AttributeFactory
+                  key={index}
+                  index={index}
+                  attribute={attribute}
+                  onChange={handleAttributeChange}
+                />
+              </div>
+            ))
+          ) : (
+            <div>No attributes available</div>
+          )}
+        </div>
       </div>
     </div>
   );
