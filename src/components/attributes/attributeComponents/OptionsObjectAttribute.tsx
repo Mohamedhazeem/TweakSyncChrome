@@ -15,13 +15,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-// import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
+import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
 function OptionsObjectAttribute() {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>();
   const context = useAttributeContext();
-  // const attributeValue = context!.attribute.value;
   const options = context!.attribute.options;
   const nameForTitle = context!.attribute.nameForTitle;
 
@@ -42,7 +41,9 @@ function OptionsObjectAttribute() {
         const selectedKey = Object.keys(options).find(
           (key) => options[key] === value
         );
-        return selectedKey ? selectedKey : `Select ${nameForTitle}...`;
+        return selectedKey
+          ? capitalizeFirstLetter(selectedKey)
+          : `Select ${nameForTitle}...`;
       } else {
         return `Select ${nameForTitle}...`;
       }
@@ -56,12 +57,12 @@ function OptionsObjectAttribute() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-full justify-between"
         >
           {getButtonText()}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-full p-0">
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandList>
@@ -71,7 +72,7 @@ function OptionsObjectAttribute() {
                 Object.entries(options).map(([key, value], index) => (
                   <CommandItem
                     key={index}
-                    value={key}
+                    value={capitalizeFirstLetter(key)}
                     onSelect={() => handleSelect(value)}
                   >
                     {/* <Check

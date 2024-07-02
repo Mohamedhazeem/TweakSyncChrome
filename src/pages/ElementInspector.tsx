@@ -17,14 +17,25 @@ function ElementInspector() {
   useEffect(() => {
     if (!element) return;
     const elementAttributes: Attribute[] = [];
-    const dataAttributes: { [key: string]: string } = {};
+    const dataAttributes: { [key: string]: string | number } = {};
+
     GLOBAL_ATTRIBUTES.forEach((attr) => {
-      if (element.attributes && element.attributes[attr.name]) {
-        elementAttributes.push({
-          ...attr,
-          value: element.attributes[attr.name] || "",
+      if (element.attributes) {
+        Object.entries(element.attributes).forEach(([name]) => {
+          if (name === attr.name) {
+            elementAttributes.push({
+              ...attr,
+              value: element.attributes![attr.name] || "",
+            });
+          }
         });
       }
+      // if (element.attributes && element.attributes[attr.name]) {
+      //   elementAttributes.push({
+      //     ...attr,
+      //     value: element.attributes[attr.name] || "",
+      //   });
+      // }
     });
 
     if (element.attributes) {

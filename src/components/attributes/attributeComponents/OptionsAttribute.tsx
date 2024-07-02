@@ -56,7 +56,7 @@ function OptionsAttribute() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-full justify-between"
         >
           {/* {value && options && Array.isArray(options)
             ? capitalizeFirstLetter(
@@ -66,7 +66,7 @@ function OptionsAttribute() {
           {getButtonText()}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-full p-0">
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandList>

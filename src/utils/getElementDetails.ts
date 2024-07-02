@@ -30,7 +30,6 @@ export function getElementDetails(
         colspan: "number",
         rowspan: "number",
         span: "number",
-        tabindex: "number",
       };
 
       const type = typeMap[attrName.toLowerCase()];

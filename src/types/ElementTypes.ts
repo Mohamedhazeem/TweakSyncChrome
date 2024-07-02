@@ -1,9 +1,10 @@
+type AttributeType = { [key: string]: string | number };
 export interface ElementDetails {
   tagName?: string;
   id?: string | null;
   className?: string;
   textContent?: string | null;
-  attributes?: { [key: string]: string | number };
+  attributes?: AttributeType;
   temporaryId?: string | null;
   path?: string;
 }
