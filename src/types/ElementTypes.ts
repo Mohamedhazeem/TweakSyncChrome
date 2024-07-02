@@ -3,7 +3,7 @@ export interface ElementDetails {
   id?: string | null;
   className?: string;
   textContent?: string | null;
-  attributes?: { [key: string]: string };
+  attributes?: { [key: string]: string | number };
   temporaryId?: string | null;
   path?: string;
 }
