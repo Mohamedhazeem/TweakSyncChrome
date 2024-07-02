@@ -4,6 +4,7 @@ import ClassAttribute from "./attributeComponents/ClassAttribute";
 import DataAttribute from "./attributeComponents/DataAttribute";
 import OptionsAttribute from "./attributeComponents/OptionsAttribute";
 import StringAttribute from "./attributeComponents/StringAttribute";
+import NumberAttribute from "./attributeComponents/NumberAttribute";
 import OptionsObjectAttribute from "./attributeComponents/OptionsObjectAttribute";
 import AccessKeyAttribute from "./attributeComponents/AccessKeyAttribute";
 import MultiOptionsAttribute from "./attributeComponents/MultiOptionsAttributes";
@@ -76,7 +77,6 @@ const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   crossorigin: OptionsAttribute,
   preload: OptionsAttribute,
   src: StringAttribute, // need to update check url like that
-  volume: StringAttribute, //number
   cite: StringAttribute, // need to check
   form: StringAttribute,
   formaction: StringAttribute,
@@ -87,7 +87,7 @@ const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   value: StringAttribute,
   height: StringAttribute,
   width: StringAttribute,
-  span: StringAttribute, // number
+  span: NumberAttribute,
   datetime: StringAttribute, // datetime attribute
   "accept-charset": OptionsAttribute,
   action: StringAttribute,
@@ -104,19 +104,19 @@ const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   usemap: StringAttribute, // need to update on future (suuport name of the map) #mapname
   decoding: OptionsAttribute,
   fetchpriority: OptionsAttribute,
-  accept: MultiOptionsAttribute, // multiple options attribute with comma
+  accept: MultiOptionsAttribute,
   dirname: OptionsAttribute,
   list: StringAttribute,
   max: StringAttribute,
   min: StringAttribute,
-  minlength: StringAttribute, // number
-  maxlength: StringAttribute, // number
-  low: StringAttribute, //number
-  high: StringAttribute, //number
-  optimum: StringAttribute, //number
+  minlength: NumberAttribute,
+  maxlength: NumberAttribute,
+  low: NumberAttribute,
+  high: NumberAttribute,
+  optimum: NumberAttribute,
   pattern: StringAttribute, // need to update (type="text" type="email" type="password" type="search" type="tel" (telephone number) type="url" (URL))
   placeholder: StringAttribute,
-  size: StringAttribute, // number
+  size: NumberAttribute,
   step: StringAttribute, // need to update. The step attribute in HTML is used with <input> elements of type number, range, date, datetime-local, month, time, and week.
   is: StringAttribute,
   nonce: StringAttribute,
@@ -125,14 +125,14 @@ const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   as: OptionsAttribute,
   integrity: StringAttribute, // need to update /research
   charset: OptionsAttribute,
-  start: StringAttribute, // number
+  start: NumberAttribute,
   label: StringAttribute,
-  colspan: StringAttribute, //number
-  rowspan: StringAttribute, //number
+  colspan: NumberAttribute,
+  rowspan: NumberAttribute,
   headers: ClassAttribute,
   shadowrootmode: OptionsAttribute,
-  cols: StringAttribute, //number
-  rows: StringAttribute, //number
+  cols: NumberAttribute,
+  rows: NumberAttribute,
   wrap: OptionsAttribute,
   abbr: StringAttribute,
   scope: OptionsAttribute,

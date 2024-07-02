@@ -422,14 +422,6 @@ export const AUDIO_SPECIFIC_ATTRIBUTES: Attribute[] = [
     type: "string",
     description: "Specifies the URL of the audio file to embed.",
   },
-  {
-    name: "volume",
-    nameForTitle: "Volume",
-    value: "",
-    type: "number",
-    description:
-      "Sets the volume level of the audio, from 0.0 (silent) to 1.0 (maximum volume).",
-  },
 ];
 export const BASE_SPECIFIC_ATTRIBUTES: Attribute[] = [
   {
