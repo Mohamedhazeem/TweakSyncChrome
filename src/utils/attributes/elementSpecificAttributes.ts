@@ -788,13 +788,6 @@ const IFRAME_SPECIFIC_ATTRIBUTES: Attribute[] = [
     description: "Allows the <iframe> to activate fullscreen mode.",
   },
   {
-    name: "allowpaymentrequest",
-    nameForTitle: "Allow Payment Request",
-    value: "",
-    type: "boolean",
-    description: "Deprecated: Use allow='payment' instead.",
-  },
-  {
     name: "browsingtopics",
     nameForTitle: "Browsing Topics",
     value: "",
@@ -1060,14 +1053,6 @@ const INPUT_SPECIFIC_ATTRIBUTES = [
     type: "boolean",
     description:
       "Specifies that a checkbox or radio button input should be pre-selected (only for type='checkbox' or 'radio').",
-  },
-  {
-    name: "dirname",
-    nameForTitle: "Dirname",
-    value: "",
-    type: "string",
-    description: "Specifies the direction of text input for submission.",
-    options: ["ltr", "rtl"],
   },
   {
     name: "disabled",
