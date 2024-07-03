@@ -11,16 +11,37 @@ export function getCurrentElementText(element: HTMLElement): string {
 
   return currentText;
 }
+// export function setCurrentElementText(
+//   element: HTMLElement | undefined,
+//   text: string
+// ): void {
+//   element?.childNodes.forEach((node) => {
+//     if (node.nodeType === Node.TEXT_NODE) {
+//       node.textContent = text;
+//     }
+//   });
+// }
 export function setCurrentElementText(
   element: HTMLElement | undefined,
   text: string
 ): void {
-  element?.childNodes.forEach((node) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      node.textContent = text;
-    }
-  });
+  if (!element) return;
+
+  // Check if there's already a text node
+  const textNode = Array.from(element.childNodes).find(
+    (node) => node.nodeType === Node.TEXT_NODE
+  );
+
+  if (textNode) {
+    // If there's a text node, update its content
+    textNode.textContent = text;
+  } else {
+    // If there's no text node, create a new one
+    const newText = document.createTextNode(text);
+    element.appendChild(newText);
+  }
 }
+
 export function updateText({ text, temporaryId }: getElementTypes) {
   const element = getCachedElement({ temporaryId })(); // Call the function to get the element
   if (element) {

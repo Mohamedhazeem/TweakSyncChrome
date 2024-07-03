@@ -1,5 +1,5 @@
 import AttributeFactory from "@/components/attributes/AttributeFactory";
-import PTag from "@/components/attributes/attributeComponents/P_Tag";
+import TextContent from "@/components/attributes/attributeComponents/TextContent";
 import { OutletContext } from "@/types/OutletContext";
 import { Attribute } from "@/types/attributeTypes";
 import { ELEMENT_SPECIFIC_ATTRIBUTES } from "@/utils/attributes/elementSpecificAttributes";
@@ -124,7 +124,7 @@ function ElementInspector() {
           );
         })}
         <div>
-          <PTag tag={element} />
+          <TextContent tag={element} />
           {attributes?.length ? (
             attributes.map((attribute, index) => (
               <div>
