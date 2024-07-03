@@ -21,12 +21,13 @@ function AttributeLayout({
   index,
   children,
   onChange,
+  onRemove,
 }: IAttributeContext) {
   function handleRemoveClick(): void {
     if (attribute.name === "data-*") {
       onChange(index, {});
     } else {
-      onChange(index, "");
+      onRemove!(attribute.name);
     }
     const element = document.getElementById(attribute.name);
     if (element) {

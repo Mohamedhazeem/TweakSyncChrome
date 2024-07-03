@@ -12,6 +12,7 @@ export interface IAttributeContext {
   attribute: Attribute;
   children?: React.ReactNode;
   onChange: (index: number, value: string | object) => void;
+  onRemove?: (removeAttribute: string) => void;
 }
 export const accessKeylists = [
   "1",

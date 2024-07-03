@@ -10,6 +10,7 @@ function AttributeFactory({
   attribute,
   index,
   onChange,
+  onRemove,
 }: IAttributeContext) {
   const SpecificComponent = attributeComponents[attribute.name];
 
@@ -22,6 +23,7 @@ function AttributeFactory({
         key={key}
         attribute={attribute}
         onChange={onChange!}
+        onRemove={onRemove}
         index={index}
       >
         <AttributeComponent />

@@ -117,6 +117,29 @@ function ElementInspector() {
       // value: newValue,
     });
   };
+  const removeAttribute = (attributeToRemoveName: string) => {
+    setAttributes((prevAttributes) => {
+      if (!prevAttributes) return [];
+
+      const updatedAttributes = prevAttributes.filter(
+        (attr) => attr.name !== attributeToRemoveName
+      );
+
+      // Example: Sending message to background script in Chrome extension
+      const removedAttribute = prevAttributes.find(
+        (attr) => attr.name === attributeToRemoveName
+      );
+      if (removedAttribute) {
+        chrome.runtime.sendMessage({
+          action: "updateAttributes",
+          name: removedAttribute.name,
+          value: "",
+        });
+      }
+
+      return updatedAttributes;
+    });
+  };
   if (!element) {
     return <div> Not element selected</div>;
   }
@@ -142,6 +165,7 @@ function ElementInspector() {
                   index={index}
                   attribute={attribute}
                   onChange={handleAttributeChange}
+                  onRemove={removeAttribute}
                 />
               </div>
             ))
