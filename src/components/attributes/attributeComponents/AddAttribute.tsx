@@ -10,6 +10,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command";
 import {
   Popover,
@@ -27,14 +28,6 @@ interface AddAttributeProps {
 function AddAttribute({ setAttributes, addAttribute }: AddAttributeProps) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>();
-  // const context = useAttributeContext();
-  // Ensure context and context.attribute are defined
-  // if (!context || !context.attribute) {
-  //   return <div>Loading...</div>; // or some fallback UI
-  // }
-
-  // const options = context.attribute.options;
-  // const nameForTitle = context.attribute.nameForTitle;
 
   const handleSelect = (newValue: string) => {
     setValue(newValue === value ? "" : newValue);
@@ -58,25 +51,19 @@ function AddAttribute({ setAttributes, addAttribute }: AddAttributeProps) {
     });
 
     setOpen(false);
-    // if (context) context.onChange(context.index!, newValue);
   };
+  const groupedAttributes: { [key: string]: Attribute[] } = {};
 
-  // const getButtonText = (): string => {
-  //   if (value && options) {
-  //     if (typeof options === "object" && !Array.isArray(options)) {
-  //       const selectedKey = Object.keys(options).find(
-  //         (key) => options[key] === value
-  //       );
-  //       return selectedKey
-  //         ? capitalizeFirstLetter(selectedKey)
-  //         : `Select ${nameForTitle}...`;
-  //     } else {
-  //       return `Select ${nameForTitle}...`;
-  //     }
-  //   }
-  //   return `Select ${nameForTitle}...`;
-  // };
-
+  // Group attributes based on their names
+  GLOBAL_ATTRIBUTES.forEach((attribute) => {
+    const groupName = attribute.name.startsWith("aria-")
+      ? "ARIA"
+      : "GLOBAL_ATTRIBUTES";
+    if (!groupedAttributes[groupName]) {
+      groupedAttributes[groupName] = [];
+    }
+    groupedAttributes[groupName].push(attribute);
+  });
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -86,36 +73,38 @@ function AddAttribute({ setAttributes, addAttribute }: AddAttributeProps) {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {/* {getButtonText()} */}
           Add Attributes
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0">
+      <PopoverContent className="w-[250px] p-0">
         <Command>
           <CommandInput placeholder="Search attributes..." />
           <CommandList>
-            {GLOBAL_ATTRIBUTES.map((attribute, index) => (
+            {/* <CommandGroup heading="ARIA">
+              <CommandItem>Profile</CommandItem>
+              <CommandItem>Billing</CommandItem>
+              <CommandItem>Settings</CommandItem>
+            </CommandGroup> */}
+            {Object.keys(groupedAttributes).map((groupName, groupIndex) => (
               <CommandGroup
-                key={index}
-                title={capitalizeFirstLetter(attribute.name)}
+                key={groupIndex}
+                heading={groupName}
+                title={groupName}
               >
-                <CommandItem
-                  key={attribute.name}
-                  value={attribute.name}
-                  onSelect={() => handleSelect(attribute.name)}
-                >
-                  {/* <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === attribute.name ? "opacity-100" : "opacity-0"
-                    )}
-                  /> */}
-                  {capitalizeFirstLetter(attribute.name)}
-                  {/* <span className="text-xs text-gray-500 ml-2">
-                    - {attribute.description}
-                  </span> */}
-                </CommandItem>
+                {groupedAttributes[groupName].map((attribute, index) => (
+                  <CommandItem
+                    key={index}
+                    value={attribute.name}
+                    onSelect={() => handleSelect(attribute.name)}
+                  >
+                    {capitalizeFirstLetter(attribute.name)}
+                    {/* <span className="text-xs text-gray-500 ml-2">
+              - {attribute.description}
+            </span> */}
+                  </CommandItem>
+                ))}
+                <CommandSeparator />
               </CommandGroup>
             ))}
             {GLOBAL_ATTRIBUTES.length === 0 && (
