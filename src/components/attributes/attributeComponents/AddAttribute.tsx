@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 // import { useAttributeContext } from "@/utils/attributesContext";
 import { ChevronsUpDown } from "lucide-react";
 // import { cn } from "@/lib/utils";
@@ -20,14 +20,21 @@ import {
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { GLOBAL_ATTRIBUTES } from "@/utils/attributes/globalAttributes";
 import { Attribute } from "@/types/attributeTypes";
+import { ELEMENT_SPECIFIC_ATTRIBUTES } from "@/utils/attributes/elementSpecificAttributes";
 
 interface AddAttributeProps {
+  selectedAttributeName: string;
   setAttributes: React.Dispatch<React.SetStateAction<Attribute[] | undefined>>;
   addAttribute: (newAttributeName: string) => void;
 }
-function AddAttribute({ setAttributes, addAttribute }: AddAttributeProps) {
+function AddAttribute({
+  selectedAttributeName,
+  setAttributes,
+  addAttribute,
+}: AddAttributeProps) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>();
+  const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleSelect = (newValue: string) => {
     setValue(newValue === value ? "" : newValue);
@@ -54,7 +61,18 @@ function AddAttribute({ setAttributes, addAttribute }: AddAttributeProps) {
   };
   const groupedAttributes: { [key: string]: Attribute[] } = {};
 
-  // Group attributes based on their names
+  Object.entries(ELEMENT_SPECIFIC_ATTRIBUTES).forEach(([key, value]) => {
+    if (key === selectedAttributeName) {
+      if (groupedAttributes[key.toUpperCase()]) {
+        groupedAttributes[key.toUpperCase()] = [
+          ...groupedAttributes[key],
+          ...value,
+        ];
+      } else {
+        groupedAttributes[key.toUpperCase()] = [...value];
+      }
+    }
+  });
   GLOBAL_ATTRIBUTES.forEach((attribute) => {
     const groupName = attribute.name.startsWith("aria-")
       ? "ARIA"
@@ -91,17 +109,16 @@ function AddAttribute({ setAttributes, addAttribute }: AddAttributeProps) {
                 key={groupIndex}
                 heading={groupName}
                 title={groupName}
+                className="font-semibold "
               >
                 {groupedAttributes[groupName].map((attribute, index) => (
                   <CommandItem
                     key={index}
+                    className="pl-7"
                     value={attribute.name}
                     onSelect={() => handleSelect(attribute.name)}
                   >
                     {capitalizeFirstLetter(attribute.name)}
-                    {/* <span className="text-xs text-gray-500 ml-2">
-              - {attribute.description}
-            </span> */}
                   </CommandItem>
                 ))}
                 <CommandSeparator />

@@ -173,6 +173,7 @@ function ElementInspector() {
             <div>No attributes available</div>
           )}
           <AddAttribute
+            selectedAttributeName={element.tagName!}
             setAttributes={setAttributes}
             addAttribute={addAttribute}
           />
