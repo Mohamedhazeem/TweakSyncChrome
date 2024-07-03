@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAttributeContext } from "@/utils/attributesContext";
-// import { cn } from "@/lib/utils";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -58,12 +59,8 @@ function OptionsAttribute() {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {/* {value && options && Array.isArray(options)
-            ? capitalizeFirstLetter(
-                options.find((option) => option === value) || ""
-              )
-            : "Select Role..."} */}
           {getButtonText()}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
@@ -79,12 +76,12 @@ function OptionsAttribute() {
                     value={option}
                     onSelect={(currentValue) => handleSelect(currentValue)}
                   >
-                    {/* <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === framework.value ? "opacity-100" : "opacity-0"
-                    )}
-                  /> */}
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        value === option ? "opacity-100" : "opacity-0"
+                      )}
+                    />
                     {capitalizeFirstLetter(option)}
                   </CommandItem>
                 ))}
