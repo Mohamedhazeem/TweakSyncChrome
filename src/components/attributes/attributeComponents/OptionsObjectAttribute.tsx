@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
-  CommandEmpty,
+  // CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -68,7 +68,7 @@ function OptionsObjectAttribute() {
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            {/* <CommandEmpty>No framework found.</CommandEmpty> */}
             <CommandGroup>
               {typeof options === "object" &&
                 Object.entries(options).map(([key, val], index) => (

@@ -53,5 +53,7 @@ export function updateAttributes({ name, value }: UpdateAttributesType) {
     } else {
       lastClickedElement!.removeAttribute(name);
     }
+  } else {
+    lastClickedElement!.setAttribute(name, "");
   }
 }

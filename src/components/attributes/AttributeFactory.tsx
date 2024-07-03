@@ -1,6 +1,5 @@
 import { IAttributeContext } from "@/types/attributeTypes";
 import {
-  // AddAttribute,
   AttributeLayout,
   attributeComponents,
   patternComponents,
@@ -27,7 +26,6 @@ function AttributeFactory({
       >
         <AttributeComponent />
       </AttributeLayout>
-      {/* <AddAttribute /> */}
     </>
   );
 }

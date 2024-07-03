@@ -1,5 +1,6 @@
 import AttributeFactory from "@/components/attributes/AttributeFactory";
 import TextContent from "@/components/attributes/attributeComponents/TextContent";
+import { AddAttribute } from "@/components/attributes/attributeFacade";
 import { OutletContext } from "@/types/OutletContext";
 import { Attribute } from "@/types/attributeTypes";
 import { ELEMENT_SPECIFIC_ATTRIBUTES } from "@/utils/attributes/elementSpecificAttributes";
@@ -109,6 +110,13 @@ function ElementInspector() {
       });
     }
   };
+  const addAttribute = (newAttributeName: string) => {
+    chrome.runtime.sendMessage({
+      action: "updateAttributes",
+      name: newAttributeName,
+      // value: newValue,
+    });
+  };
   if (!element) {
     return <div> Not element selected</div>;
   }
@@ -140,6 +148,10 @@ function ElementInspector() {
           ) : (
             <div>No attributes available</div>
           )}
+          <AddAttribute
+            setAttributes={setAttributes}
+            addAttribute={addAttribute}
+          />
         </div>
       </div>
     </div>

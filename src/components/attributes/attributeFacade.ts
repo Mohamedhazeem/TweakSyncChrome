@@ -16,9 +16,9 @@ const ARIA_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   "aria-autocomplete": OptionsAttribute,
   //"aria-busy": boolean,
   "aria-checked": OptionsAttribute,
-  "aria-colcount": StringAttribute, // number
-  "aria-colindex": StringAttribute, //number
-  "aria-colspan": StringAttribute, //number
+  "aria-colcount": NumberAttribute,
+  "aria-colindex": NumberAttribute,
+  "aria-colspan": NumberAttribute,
   "aria-controls": StringAttribute,
   "aria-current": OptionsAttribute,
   "aria-describedby": StringAttribute,
@@ -35,7 +35,7 @@ const ARIA_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   "aria-keyshortcuts": StringAttribute,
   "aria-label": StringAttribute,
   "aria-labelledby": StringAttribute,
-  "aria-level": StringAttribute, //number
+  "aria-level": NumberAttribute,
   "aria-live": OptionsAttribute,
   //"aria-modal": boolean,
   //"aria-multiline": boolean,
@@ -43,21 +43,21 @@ const ARIA_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   "aria-orientation": OptionsAttribute,
   "aria-owns": StringAttribute,
   "aria-placeholder": StringAttribute,
-  "aria-posinset": StringAttribute, //number
+  "aria-posinset": NumberAttribute,
   "aria-pressed": OptionsAttribute,
   //"aria-readonly": boolean,
   "aria-relevant": OptionsAttribute,
   //"aria-required": boolean,
   "aria-roledescription": StringAttribute,
-  "aria-rowcount": StringAttribute, //number
-  "aria-rowindex": StringAttribute, //number
-  "aria-rowspan": StringAttribute, //number
+  "aria-rowcount": NumberAttribute,
+  "aria-rowindex": NumberAttribute,
+  "aria-rowspan": NumberAttribute,
   //"aria-selected": boolean,
-  "aria-setsize": StringAttribute, //number
+  "aria-setsize": NumberAttribute,
   "aria-sort": OptionsAttribute,
-  "aria-valuemax": StringAttribute, //number
-  "aria-valuemin": StringAttribute, //number
-  "aria-valuenow": StringAttribute, //number
+  "aria-valuemax": NumberAttribute,
+  "aria-valuemin": NumberAttribute,
+  "aria-valuenow": NumberAttribute,
   "aria-valuetext": StringAttribute,
 };
 const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
