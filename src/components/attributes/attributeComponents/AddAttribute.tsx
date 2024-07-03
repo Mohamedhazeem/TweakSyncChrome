@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 // import { useAttributeContext } from "@/utils/attributesContext";
 import { ChevronsUpDown } from "lucide-react";
 // import { cn } from "@/lib/utils";
@@ -34,7 +34,6 @@ function AddAttribute({
 }: AddAttributeProps) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>();
-  const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleSelect = (newValue: string) => {
     setValue(newValue === value ? "" : newValue);
@@ -99,11 +98,6 @@ function AddAttribute({
         <Command>
           <CommandInput placeholder="Search attributes..." />
           <CommandList>
-            {/* <CommandGroup heading="ARIA">
-              <CommandItem>Profile</CommandItem>
-              <CommandItem>Billing</CommandItem>
-              <CommandItem>Settings</CommandItem>
-            </CommandGroup> */}
             {Object.keys(groupedAttributes).map((groupName, groupIndex) => (
               <CommandGroup
                 key={groupIndex}
@@ -115,6 +109,7 @@ function AddAttribute({
                   <CommandItem
                     key={index}
                     className="pl-7"
+                    title={attribute.description}
                     value={attribute.name}
                     onSelect={() => handleSelect(attribute.name)}
                   >

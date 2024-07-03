@@ -1039,14 +1039,6 @@ const INPUT_SPECIFIC_ATTRIBUTES = [
     options: ["on", "off"],
   },
   {
-    name: "autofocus",
-    nameForTitle: "Autofocus",
-    value: false,
-    type: "boolean",
-    description:
-      "Specifies that the input field should automatically get focus when the page loads.",
-  },
-  {
     name: "checked",
     nameForTitle: "Checked",
     value: false,
