@@ -154,12 +154,11 @@ function ElementInspector() {
             <div>{`${attribute.name}, ${attribute.nameForTitle} and  ${attribute.value} `}</div>
           );
         })}
-        <div>
+        <div className="flex flex-col gap-1">
           <TextContent tag={element} />
           {attributes?.length ? (
             attributes.map((attribute, index) => (
               <div>
-                {`${attribute.name} and  ${index} `}
                 <AttributeFactory
                   key={index}
                   index={index}
@@ -172,6 +171,7 @@ function ElementInspector() {
           ) : (
             <div>No attributes available</div>
           )}
+
           <AddAttribute
             selectedAttributeName={element.tagName!}
             setAttributes={setAttributes}
