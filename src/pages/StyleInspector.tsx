@@ -21,25 +21,102 @@
 // }
 
 // export default StyleInspector;
+import StyleFactory from "@/components/styles/StyleFactory";
 import { OutletContext } from "@/types/outletContext";
+import { Style } from "@/types/styleTypes";
+import { GLOBAL_STYLES } from "@/utils/styles/styles";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 function StyleInspector() {
-  const { style } = useOutletContext<OutletContext>();
-  // const [attributes, setAttributes] = useState<Attribute[] | undefined>(
-  //   undefined
-  // );
+  const { style, element } = useOutletContext<OutletContext>();
+  const [styles, setStyles] = useState<Style[] | undefined>(undefined);
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    if (!style) return;
+    const elementStyles: Style[] = [];
+    // const dataAttributes: { [key: string]: string | number } = {};
+
+    GLOBAL_STYLES.forEach((eachStyle) => {
+      Object.entries(style.external).forEach(([category, styles]) => {
+        if (typeof styles === "object" && styles !== null) {
+          Object.entries(
+            styles as { [key: string]: { [key: string]: string } }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          ).forEach(([_selector, styleProps]) => {
+            if (typeof styleProps === "object" && styleProps !== null) {
+              Object.entries(styleProps as { [key: string]: string }).forEach(
+                ([key, value]) => {
+                  if (key === eachStyle.name) {
+                    elementStyles.push({
+                      ...eachStyle,
+                      category,
+                      value,
+                    });
+                  }
+                }
+              );
+            }
+          });
+        }
+      });
+    });
+    // GLOBAL_ATTRIBUTES.forEach((attr) => {
+    //   if (element.attributes) {
+    //     Object.entries(element.attributes).forEach(([name]) => {
+    //       if (name === attr.name) {
+    //         elementStyles.push({
+    //           ...attr,
+    //           value: element.attributes![attr.name] || "",
+    //         });
+    //       }
+    //     });
+    //   }
+    //   // if (element.attributes && element.attributes[attr.name]) {
+    //   //   elementAttributes.push({
+    //   //     ...attr,
+    //   //     value: element.attributes[attr.name] || "",
+    //   //   });
+    //   // }
+    // });
+
+    // if (styles.attributes) {
+    //   Object.entries(element.attributes).forEach(([name, value]) => {
+    //     if (name.startsWith("data-")) {
+    //       dataAttributes[name] = value;
+    //     }
+    //   });
+    // }
+
+    // if (Object.keys(dataAttributes).length > 0) {
+    //   elementStyles.push({
+    //     name: "data-*",
+    //     nameForTitle: "Data",
+    //     type: "object",
+    //     description: "Custom data attributes",
+    //     value: dataAttributes,
+    //   });
+    // }
+
+    // const specificAttributes =
+    //   ELEMENT_SPECIFIC_ATTRIBUTES[element.tagName!.toLowerCase()];
+    // specificAttributes?.forEach((attr) => {
+    //   if (element.attributes![attr.name]) {
+    //     elementStyles.push({
+    //       ...attr,
+    //       value: element.attributes![attr.name] || "",
+    //     });
+    //   }
+    // });
+    setStyles(elementStyles);
     setTimeout(() => {
       if (scrollableContainerRef.current) {
         scrollableContainerRef.current.scrollTop = 0; // Scroll to top
       }
     }, 50);
-  }, [style]);
+  }, [style, element]);
 
   // const handleAttributeChange = (index: number, newValue: string | object) => {
   //   setAttributes((prevAttributes) => {
@@ -115,29 +192,24 @@ function StyleInspector() {
         ref={scrollableContainerRef}
         className="flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-4"
       >
-        {/* {attributes?.map((attribute) => {
-          return (
-            <div>{`${attribute.name}, ${attribute.nameForTitle} and  ${attribute.value} `}</div>
-          );
-        })} */}
-        {/* <div className="flex flex-col gap-1">
-          
-          {attributes?.length ? (
-            attributes.map((attribute, index) => (
+        {styles?.length ? (
+          styles?.map((style, index) => {
+            return (
               <div>
-                <AttributeFactory
+                <StyleFactory
                   key={index}
                   index={index}
-                  attribute={attribute}
-                  onChange={handleAttributeChange}
-                  onRemove={removeAttribute}
-                />
+                  style={style}
+                  onChange={() => {}}
+                  onRemove={() => {}}
+                ></StyleFactory>
+                {`${style.category} -> ${style.name}, ${style.nameForTitle} and  ${style.value} `}
               </div>
-            ))
-          ) : (
-            <div>No attributes available</div>
-          )} */}
-
+            );
+          })
+        ) : (
+          <div>No Styles available</div>
+        )}
         {/* <AddAttribute
             selectedAttributeName={element.tagName!}
             setAttributes={setAttributes}

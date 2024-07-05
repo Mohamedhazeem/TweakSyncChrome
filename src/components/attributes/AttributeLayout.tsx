@@ -38,10 +38,10 @@ function AttributeLayout({
   return (
     <div id={attribute.name}>
       <Card className="border-2">
-        <CardHeader className="p-3">
+        <CardHeader className="p-3 pt-1">
           <CardTitle
             className={
-              "flex justify-between items-center text-xl font-semibold bg-lime-400"
+              "flex justify-between items-center text-xl font-semibold"
             }
           >
             {attribute.nameForTitle}

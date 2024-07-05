@@ -29,7 +29,7 @@ export interface AtRules {
     };
   };
 }
-interface ExternalStyles {
+export interface ExternalStyles {
   classes: { [key: string]: { [key: string]: string } };
   ids: { [key: string]: { [key: string]: string } };
   tags: { [key: string]: { [key: string]: string } };
