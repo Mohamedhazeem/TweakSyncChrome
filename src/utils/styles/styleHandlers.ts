@@ -1,5 +1,5 @@
-import { ProcessAtRulesType, ProcessRules } from "../../types/AtRulesTypes";
-import { ElementStyles } from "../../types/ElementTypes";
+import { ProcessAtRulesType, ProcessRules } from "../../types/atRulesTypes";
+import { ElementStyles } from "../../types/elementTypes";
 
 export function handleAtrules(
   atRule: CSSRule,

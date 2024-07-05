@@ -1,8 +1,8 @@
 import AttributeFactory from "@/components/attributes/AttributeFactory";
 import TextContent from "@/components/attributes/attributeComponents/TextContent";
 import { AddAttribute } from "@/components/attributes/attributeFacade";
-import { OutletContext } from "@/types/OutletContext";
 import { Attribute } from "@/types/attributeTypes";
+import { OutletContext } from "@/types/outletContext.ts";
 import { ELEMENT_SPECIFIC_ATTRIBUTES } from "@/utils/attributes/elementSpecificAttributes";
 import { GLOBAL_ATTRIBUTES } from "@/utils/attributes/globalAttributes";
 import { useEffect, useRef, useState } from "react";

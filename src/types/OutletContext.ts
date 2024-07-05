@@ -1,4 +1,4 @@
-import { ElementDetails, ElementStyles } from "./ElementTypes";
+import { ElementDetails, ElementStyles } from "./elementTypes";
 
 export interface OutletContext {
   element: ElementDetails;

@@ -1,4 +1,4 @@
-import { ElementStyles } from "../../types/ElementTypes";
+import { ElementStyles } from "../../types/elementTypes";
 import {
   handleAtrules,
   handleAttribute,

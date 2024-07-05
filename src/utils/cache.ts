@@ -1,4 +1,4 @@
-import { getElementTypes } from "../types/ElementTypes";
+import { getElementTypes } from "../types/elementTypes";
 
 export function getCachedElement({ temporaryId }: getElementTypes) {
   const elementCache: { [key: string]: HTMLElement | null } = {};

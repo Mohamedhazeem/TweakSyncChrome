@@ -1,4 +1,4 @@
-import { getElementTypes } from "../types/ElementTypes";
+import { getElementTypes } from "../types/elementTypes";
 import { getCachedElement } from "./cache";
 
 export function getCurrentElementText(element: HTMLElement): string {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ElementStyles } from "../types/ElementTypes";
+import { ElementStyles } from "../types/elementTypes";
 import Color from "./Color";
 
 type ColorTypes = {

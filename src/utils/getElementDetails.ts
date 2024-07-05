@@ -1,4 +1,4 @@
-import { ElementDetails } from "../types/ElementTypes";
+import { ElementDetails } from "../types/elementTypes";
 import { getCurrentElementText } from "./elementTextContent";
 import { getElementPath } from "./getElementPath";
 

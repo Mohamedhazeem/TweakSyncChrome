@@ -8,6 +8,7 @@ import NumberAttribute from "./attributeComponents/NumberAttribute";
 import OptionsObjectAttribute from "./attributeComponents/OptionsObjectAttribute";
 import AccessKeyAttribute from "./attributeComponents/AccessKeyAttribute";
 import MultiOptionsAttribute from "./attributeComponents/MultiOptionsAttributes";
+
 // not add boolean attributes beacuse it only on attribute layout
 
 const ARIA_ATTRIBUTES: { [key: string]: React.ComponentType } = {

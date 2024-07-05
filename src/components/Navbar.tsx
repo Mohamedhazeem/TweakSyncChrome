@@ -1,4 +1,4 @@
-import { ElementDetails, ElementStyles } from "@/types/ElementTypes";
+import { ElementDetails, ElementStyles } from "@/types/elementTypes";
 import { useEffect, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { Button } from "./ui/button";
