@@ -135,7 +135,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       action: "showElementStyles",
       styles: message.styles,
     });
-    sendResponse({ status: "element styles received" });
+    sendResponse({ status: message.styles });
   } else if (message.action === "injectContentScript") {
     injectContentScript();
 

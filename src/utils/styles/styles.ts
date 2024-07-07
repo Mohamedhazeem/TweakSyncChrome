@@ -9,4 +9,12 @@ export const GLOBAL_STYLES: Style[] = [
     value: "",
     // options: ,
   },
+  {
+    name: "background-color",
+    nameForTitle: "Background Color",
+    type: "string",
+    description: "Color Styles for the element",
+    value: "",
+    // options: ,
+  },
 ];

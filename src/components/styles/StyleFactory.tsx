@@ -1,28 +1,18 @@
-import { IStyleContext } from "@/types/styleTypes";
 import StyleLayout from "./StyleLayout";
 import { styleComponents } from "./styleFacade";
 
-function StyleFactory({
-  key,
-  style,
-  index,
-  onChange,
-  onRemove,
-}: IStyleContext) {
-  const SpecificComponent = styleComponents[style.name];
+type styleFatory = {
+  name: string;
+};
+function StyleFactory({ name }: styleFatory) {
+  const SpecificComponent = styleComponents[name];
 
   // const AttributeComponent =
   //   SpecificComponent || matchAttribute(style.name);
 
   return (
     <>
-      <StyleLayout
-        key={key}
-        style={style}
-        onChange={onChange!}
-        onRemove={onRemove}
-        index={index}
-      >
+      <StyleLayout>
         <SpecificComponent />
       </StyleLayout>
     </>

@@ -1,23 +1,18 @@
 // import { IStyleContext } from "@/types/styleTypes";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "../ui/hover-card";
 import { Button } from "../ui/button";
-import { useStyleContext } from "@/utils/attributesContext";
+
 import React from "react";
-import { IStyleContext } from "@/types/styleTypes";
+
 type StyleLayout = {
+  key: string;
+  selector: string;
   children: React.ReactNode;
 };
-function StyleLayout({ children }: StyleLayout) {
-  const { name, style } = useStyleContext() as IStyleContext;
-
+function StyleLayoutParent({ key, selector, children }: StyleLayout) {
   return (
     <>
-      <div id={name}>
+      <div key={key}>
         <Card className="border-2">
           <CardHeader className="p-3 pt-1">
             <CardTitle
@@ -25,9 +20,9 @@ function StyleLayout({ children }: StyleLayout) {
                 "flex justify-between items-center text-xl font-semibold"
               }
             >
-              {name}
+              {selector}
               <div className="flex place-items-center gap-1 pr-1">
-                <HoverCard>
+                {/* <HoverCard>
                   <HoverCardTrigger asChild>
                     <Button
                       variant="outline"
@@ -39,10 +34,10 @@ function StyleLayout({ children }: StyleLayout) {
                   </HoverCardTrigger>
                   <HoverCardContent className="w-64">
                     <div className="">
-                      <p className="text-sm">{style?.description}</p>
+                      <p className="text-sm">{key}</p>
                     </div>
                   </HoverCardContent>
-                </HoverCard>
+                </HoverCard> */}
                 <Button
                   size="sm"
                   className="bg-rose-600 rounded-xl text-xs p-1 w-4 h-4"
@@ -61,4 +56,4 @@ function StyleLayout({ children }: StyleLayout) {
   );
 }
 
-export default StyleLayout;
+export default StyleLayoutParent;

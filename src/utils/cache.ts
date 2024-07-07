@@ -20,8 +20,8 @@ export function getCachedElement({ temporaryId }: getElementTypes) {
     }
   };
 }
-const cachedRules: Record<string, CSSStyleRule[]> = {};
 
+const cachedRules: Record<string, CSSStyleRule[]> = {};
 export function getCachedRules() {
   if (Object.keys(cachedRules).length === 0) {
     // Cache the rules if the cache is empty
@@ -38,6 +38,7 @@ export function getCachedRules() {
       }
     }
   }
+  console.warn(cachedRules);
   return cachedRules;
 }
 

@@ -29,11 +29,26 @@ export function handleValidSelector(
   selector: string,
   isValidSelector: (selector: string) => boolean
 ) {
-  if (!selector || selector.trim() === "" || !isValidSelector(selector)) {
-    return true;
+  if (
+    !selector ||
+    selector.trim() === "" ||
+    !isValidSelector(selector) ||
+    (!selector.includes(".") && !selector.includes("#"))
+  ) {
+    return true; // Invalid selector
   }
-  return false;
+  return false; // Valid selector
 }
+
+// export function handleValidSelector(
+//   selector: string,
+//   isValidSelector: (selector: string) => boolean
+// ) {
+//   if (!selector || selector.trim() === "" || !isValidSelector(selector)) {
+//     return true;
+//   }
+//   return false;
+// }
 
 export function handleDescendant(
   element: HTMLElement,
@@ -60,7 +75,7 @@ export function handleDescendant(
 
 export function handleClass(
   classList: string[],
-  classSelector: string,
+  selector: string,
   element: HTMLElement,
   isDescendantSelector: (selector: string) => boolean,
   processRule: ({ rule, selector, context }: ProcessRules) => void,
@@ -68,19 +83,20 @@ export function handleClass(
   styles: ElementStyles
 ) {
   classList.forEach((className) => {
-    const selector = `.${className}`;
+    // classSelector
+    const classSelector = `.${className}`;
     if (
-      classSelector.includes(selector) &&
-      element.matches(classSelector) &&
-      !isDescendantSelector(classSelector)
+      selector.includes(classSelector) &&
+      element.matches(selector) &&
+      !isDescendantSelector(selector)
     ) {
-      if (!styles.external.classes[className]) {
-        styles.external.classes[className] = {};
+      if (!styles.external.classes[classSelector]) {
+        styles.external.classes[classSelector] = {};
       }
       processRule({
         rule,
         selector,
-        context: styles.external.classes[className],
+        context: styles.external.classes[classSelector],
       });
     }
   });
@@ -88,24 +104,24 @@ export function handleClass(
 
 export function handleId(
   elementId: string,
-  idSelector: string,
+  selector: string,
   element: HTMLElement,
   isDescendantSelector: (selector: string) => boolean,
   processRule: ({ rule, selector, context }: ProcessRules) => void,
   rule: CSSStyleRule,
   styles: ElementStyles
 ) {
-  const selector = `#${elementId}`;
+  const idSselector = `#${elementId}`;
   if (
     elementId &&
-    idSelector.includes(selector) &&
-    element.matches(idSelector) &&
-    !isDescendantSelector(idSelector)
+    selector.includes(idSselector) &&
+    element.matches(selector) &&
+    !isDescendantSelector(selector)
   ) {
-    if (!styles.external.ids[elementId]) {
-      styles.external.ids[elementId] = {};
+    if (!styles.external.ids[idSselector]) {
+      styles.external.ids[idSselector] = {};
     }
-    processRule({ rule, selector, context: styles.external.ids[elementId] });
+    processRule({ rule, selector, context: styles.external.ids[idSselector] });
   }
 }
 

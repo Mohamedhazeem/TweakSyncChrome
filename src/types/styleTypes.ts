@@ -6,10 +6,14 @@ export interface Style extends Attribute {
 }
 
 export interface IStyleContext {
-  key: number;
-  index: number;
-  style: Style;
+  key: string | number;
+  name: string;
+  selector: string;
+  property: string;
+  value: string;
   children?: React.ReactNode;
-  onChange: (index: number, value: string | object) => void;
+  style?: Style;
+  convertToHex?: (value: string) => string;
+  onChange: (selector: string, property: string, newColor: string) => void;
   onRemove?: (removeStyle: string) => void;
 }
