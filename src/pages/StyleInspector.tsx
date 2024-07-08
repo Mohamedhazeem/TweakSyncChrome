@@ -47,7 +47,7 @@ function StyleInspector() {
 
   console.log("Rendering ColorStyle with styles:", styles);
 
-  const handleColorChange = (
+  const handleStyleChange = (
     selector: string,
     property: string,
     newValue: string
@@ -94,33 +94,33 @@ function StyleInspector() {
     });
   };
 
-  const rgbToHex = (rgb: string): string => {
-    const result = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/.exec(rgb);
-    return result
-      ? `#${(+result[1]).toString(16).padStart(2, "0")}${(+result[2])
-          .toString(16)
-          .padStart(2, "0")}${(+result[3]).toString(16).padStart(2, "0")}`
-      : rgb;
-  };
+  // const rgbToHex = (rgb: string): string => {
+  //   const result = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/.exec(rgb);
+  //   return result
+  //     ? `#${(+result[1]).toString(16).padStart(2, "0")}${(+result[2])
+  //         .toString(16)
+  //         .padStart(2, "0")}${(+result[3]).toString(16).padStart(2, "0")}`
+  //     : rgb;
+  // };
 
-  const namedColorsToHex = (color: string): string => {
-    const ctx = document.createElement("canvas").getContext("2d");
-    if (ctx) {
-      ctx.fillStyle = color;
-      return ctx.fillStyle;
-    }
-    return color;
-  };
+  // const namedColorsToHex = (color: string): string => {
+  //   const ctx = document.createElement("canvas").getContext("2d");
+  //   if (ctx) {
+  //     ctx.fillStyle = color;
+  //     return ctx.fillStyle;
+  //   }
+  //   return color;
+  // };
 
-  const convertToHex = (color: string): string => {
-    if (color.startsWith("#")) {
-      return color;
-    } else if (color.startsWith("rgb")) {
-      return rgbToHex(color);
-    } else {
-      return namedColorsToHex(color);
-    }
-  };
+  // const convertToHex = (color: string): string => {
+  //   if (color.startsWith("#")) {
+  //     return color;
+  //   } else if (color.startsWith("rgb")) {
+  //     return rgbToHex(color);
+  //   } else {
+  //     return namedColorsToHex(color);
+  //   }
+  // };
   const renderStyles = (styles: {
     [key: string]: { [key: string]: string };
   }) => {
@@ -151,9 +151,9 @@ function StyleInspector() {
                     property,
                     value,
                     style: globalStyle,
-                    convertToHex,
+                    // convertToHex,
                     onRemove: () => {},
-                    onChange: handleColorChange,
+                    onChange: handleStyleChange,
                   }}
                   key={`${selector}-${property}`}
                 >

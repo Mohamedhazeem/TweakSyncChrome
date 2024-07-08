@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
-  // CommandEmpty,
+  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -65,9 +65,9 @@ function OptionsAttribute() {
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder="Search options..." />
           <CommandList>
-            {/* <CommandEmpty>No framework found.</CommandEmpty> */}
+            <CommandEmpty>No option found.</CommandEmpty>
             <CommandGroup>
               {Array.isArray(options) &&
                 options!.map((option) => (
