@@ -5,7 +5,7 @@ import { OutletContext } from "@/types/outletContext";
 import { useOutletContext } from "react-router-dom";
 import { GLOBAL_STYLES } from "@/utils/styles/styles";
 import StyleFactory from "@/components/styles/StyleFactory";
-import { StyleContext } from "@/utils/attributesContext";
+import { StyleContext } from "@/utils/elementContext";
 import StyleLayoutParent from "@/components/styles/StyleLayoutParent";
 import AddStyleProperty from "@/components/styles/styleHelperComponents/AddStyleProperty";
 

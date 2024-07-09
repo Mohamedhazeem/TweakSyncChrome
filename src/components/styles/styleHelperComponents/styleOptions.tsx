@@ -83,22 +83,21 @@ function StyleOptions({ style, customOptionsCallback }: Options) {
             <CommandEmpty>No option found.</CommandEmpty>
             <CommandGroup>
               {Array.isArray(style.options) &&
-                style.options!.map((option) => (
+                style.options!.map((ops) => (
                   <CommandItem
-                    key={option}
-                    value={option}
+                    key={ops}
+                    value={ops}
                     onSelect={(currentValue) => handleSelect(currentValue)}
                   >
                     <Check
                       className={cn(
                         "mr-2 h-4 w-4",
-                        (option === "custom" && isCustomValue) ||
-                          option === option
+                        (ops === "custom" && isCustomValue) || ops === option
                           ? "opacity-100"
                           : "opacity-0"
                       )}
                     />
-                    {capitalizeFirstLetter(option)}
+                    {capitalizeFirstLetter(ops)}
                   </CommandItem>
                 ))}
             </CommandGroup>

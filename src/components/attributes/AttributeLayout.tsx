@@ -1,5 +1,5 @@
 import { IAttributeContext } from "@/types/attributeTypes";
-import { AttributeContext } from "@/utils/attributesContext";
+import { AttributeContext } from "@/utils/elementContext";
 import {
   Card,
   CardHeader,

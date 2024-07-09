@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useAttributeContext } from "@/utils/attributesContext";
+import { useAttributeContext } from "@/utils/elementContext";
 import { splitStringToArray } from "@/utils/splitStringToArray";
 
 function ClassAttribute() {

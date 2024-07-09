@@ -8,7 +8,6 @@ import StyleOptions from "../styleHelperComponents/styleOptions";
 import { globalCssOptions } from "@/utils/styles/styles";
 
 const Color = () => {
-  //convertToHex onChange
   const { selector, property, onChange, value, style } =
     useStyleContext() as IStyleContext;
 

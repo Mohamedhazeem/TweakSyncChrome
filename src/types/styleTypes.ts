@@ -13,7 +13,6 @@ export interface IStyleContext {
   value: string;
   children?: React.ReactNode;
   style?: Style;
-  convertToHex?: (value: string) => string;
   onChange: (selector: string, property: string, newColor: string) => void;
   onRemove?: (removeStyle: string) => void;
 }

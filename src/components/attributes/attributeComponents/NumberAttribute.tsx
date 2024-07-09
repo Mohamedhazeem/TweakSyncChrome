@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { useAttributeContext } from "@/utils/attributesContext";
+import { useAttributeContext } from "@/utils/elementContext";
 
 function NumberAttribute() {
   const context = useAttributeContext();

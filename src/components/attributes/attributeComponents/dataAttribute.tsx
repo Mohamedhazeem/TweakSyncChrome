@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAttributeContext } from "@/utils/attributesContext";
+import { useAttributeContext } from "@/utils/elementContext";
 import { useState, useEffect } from "react";
 
 type AttributeValue = { [key: string]: string };
