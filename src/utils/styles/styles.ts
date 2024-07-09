@@ -1,5 +1,19 @@
 import { Style } from "@/types/styleTypes";
-
+export const globalCssOptions = [
+  "inherit",
+  "initial",
+  "revert",
+  "revert-layer",
+  "unset",
+];
+export const customAndGlobalCssOptions = [
+  "custom",
+  "inherit",
+  "initial",
+  "revert",
+  "revert-layer",
+  "unset",
+];
 export const GLOBAL_STYLES: Style[] = [
   {
     name: "color",
@@ -7,7 +21,7 @@ export const GLOBAL_STYLES: Style[] = [
     type: "string",
     description: "Color Styles for the element",
     value: "",
-    // options: ,
+    options: [...customAndGlobalCssOptions],
   },
   {
     name: "background-color",
