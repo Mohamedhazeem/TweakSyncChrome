@@ -6,7 +6,7 @@ import {
   HoverCardTrigger,
 } from "../ui/hover-card";
 import { Button } from "../ui/button";
-import { useStyleContext } from "@/utils/attributesContext";
+import { useStyleContext } from "@/utils/elementContext";
 import React from "react";
 import { IStyleContext } from "@/types/styleTypes";
 type StyleLayout = {

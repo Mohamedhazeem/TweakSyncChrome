@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { IStyleContext } from "@/types/styleTypes";
-import { useStyleContext } from "@/utils/attributesContext";
+import { useStyleContext } from "@/utils/elementContext";
 import { useEffect, useState } from "react";
 import { SketchPicker, ColorResult, HSLColor, RGBColor } from "react-color";
-
 import { presetColors } from "@/utils/styles/colorUtils";
 import StyleOptions from "../styleHelperComponents/styleOptions";
+import { globalCssOptions } from "@/utils/styles/styles";
 
 const Color = () => {
   //convertToHex onChange
@@ -16,9 +16,7 @@ const Color = () => {
   const [showColor, setShowColor] = useState<boolean>(false);
   const [showMoreColor, setShowMoreColor] = useState(false);
   useEffect(() => {
-    if (
-      ["inherit", "initial", "revert", "revert-layer", "unset"].includes(value)
-    ) {
+    if (globalCssOptions.includes(value)) {
       setShowColor(false);
     } else {
       setShowColor(true);

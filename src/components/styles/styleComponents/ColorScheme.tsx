@@ -1,5 +1,5 @@
 import { IStyleContext } from "@/types/styleTypes";
-import { useStyleContext } from "@/utils/attributesContext";
+import { useStyleContext } from "@/utils/elementContext";
 import { useEffect, useState } from "react";
 import StyleOptions from "../styleHelperComponents/styleOptions";
 
