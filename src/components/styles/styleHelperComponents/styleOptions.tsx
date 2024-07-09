@@ -17,7 +17,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
-import { Style } from "@/types/styleTypes";
+import { IStyleContext, Style } from "@/types/styleTypes";
 import { globalCssOptions } from "@/utils/styles/styles";
 type Options = {
   style: Style;
@@ -25,32 +25,32 @@ type Options = {
 };
 function StyleOptions({ style, customOptionsCallback }: Options) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
-  const context = useStyleContext();
+  const [option, setOption] = useState("");
+  const { selector, property, onChange, value } =
+    useStyleContext() as IStyleContext;
   //   const options = context!.attribute.options;
   //   const nameForTitle = context!.attribute.nameForTitle;
 
   useEffect(() => {
-    if (context?.value) {
-      setValue(context?.value as string);
+    if (value) {
+      setOption(value as string);
     }
-  }, [context?.selector]);
+  }, [selector, value]);
 
   const handleSelect = (newValue: string) => {
     if (newValue == "custom") {
       customOptionsCallback(true);
     } else {
       customOptionsCallback(false);
-      if (context)
-        context.onChange(context.selector!, context.property, newValue);
+      onChange(selector, property, newValue);
     }
-    setValue(newValue);
+    setOption(newValue);
     setOpen(false);
   };
   const getButtonText = (): string => {
-    if (value && style.options) {
+    if (option && style.options) {
       if (Array.isArray(style.options)) {
-        const selectedIndex = style.options.indexOf(value);
+        const selectedIndex = style.options.indexOf(option);
         return selectedIndex !== -1
           ? capitalizeFirstLetter(style.options[selectedIndex])
           : `${capitalizeFirstLetter(style.options[0])}`;
@@ -62,7 +62,7 @@ function StyleOptions({ style, customOptionsCallback }: Options) {
     return `Select ${style.nameForTitle}...`;
   };
 
-  const isCustomValue = !globalCssOptions.includes(value);
+  const isCustomValue = !globalCssOptions.includes(option);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -93,7 +93,7 @@ function StyleOptions({ style, customOptionsCallback }: Options) {
                       className={cn(
                         "mr-2 h-4 w-4",
                         (option === "custom" && isCustomValue) ||
-                          value === option
+                          option === option
                           ? "opacity-100"
                           : "opacity-0"
                       )}
