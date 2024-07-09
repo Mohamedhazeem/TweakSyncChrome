@@ -22,7 +22,7 @@ const Color = () => {
       setShowColor(true);
     }
     setColor(value);
-  }, []);
+  }, [value]);
   const handleColorChange = (color: ColorResult) => {
     let colorValue: string;
 

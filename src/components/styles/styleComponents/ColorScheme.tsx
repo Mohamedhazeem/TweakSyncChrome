@@ -13,7 +13,7 @@ const ColorScheme = () => {
     if (value) {
       setColor(value);
     }
-  }, []);
+  }, [value]);
   const handleColorChange = (newValue: string | boolean) => {
     if (typeof newValue === "string") {
       onChange(selector, property, newValue);
