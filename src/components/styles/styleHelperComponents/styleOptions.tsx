@@ -40,10 +40,11 @@ function StyleOptions({ style, customOptionsCallback }: Options) {
     if (newValue == "custom") {
       customOptionsCallback(true);
     } else {
+      customOptionsCallback(false);
       if (context)
         context.onChange(context.selector!, context.property, newValue);
     }
-    setValue(newValue === value ? "" : newValue);
+    setValue(newValue);
     setOpen(false);
   };
   const getButtonText = (): string => {

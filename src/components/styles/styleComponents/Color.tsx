@@ -51,7 +51,7 @@ const Color = () => {
       // onChange(selector, property, newValue);
       setShowColor(newValue);
     } else {
-      console.warn("Unexpected boolean value for color interpolation");
+      console.log("Unexpected boolean value for color interpolation");
       // Handle the boolean case if needed
     }
   };

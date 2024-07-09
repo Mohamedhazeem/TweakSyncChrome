@@ -29,7 +29,7 @@ function StyleLayout({ children }: StyleLayout) {
                 "flex justify-between items-center text-xl font-semibold"
               }
             >
-              {name}
+              {style?.nameForTitle || name}
               <div className="flex place-items-center gap-1 pr-1">
                 <HoverCard>
                   <HoverCardTrigger asChild>
