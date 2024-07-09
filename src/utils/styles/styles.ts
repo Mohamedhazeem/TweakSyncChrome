@@ -16,6 +16,14 @@ export const customAndGlobalCssOptions = [
 ];
 export const GLOBAL_STYLES: Style[] = [
   {
+    name: "background-color",
+    nameForTitle: "Background Color",
+    type: "string",
+    description: "Color Styles for the element",
+    value: "",
+    options: [...customAndGlobalCssOptions],
+  },
+  {
     name: "color",
     nameForTitle: "Color",
     type: "string",
@@ -24,11 +32,18 @@ export const GLOBAL_STYLES: Style[] = [
     options: [...customAndGlobalCssOptions],
   },
   {
-    name: "background-color",
-    nameForTitle: "Background Color",
+    name: "color-scheme",
+    nameForTitle: "Color Scheme",
     type: "string",
     description: "Color Styles for the element",
     value: "",
-    // options: ,
+    options: [
+      "normal",
+      "light",
+      "dark",
+      "light dark",
+      "only light",
+      ...globalCssOptions,
+    ],
   },
 ];

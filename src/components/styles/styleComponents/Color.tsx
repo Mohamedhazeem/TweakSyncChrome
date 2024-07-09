@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { SketchPicker, ColorResult, HSLColor, RGBColor } from "react-color";
 
 import { presetColors } from "@/utils/styles/colorUtils";
-import StyleOptions from "../styleHelperComponents/StyleOptions";
+import StyleOptions from "../styleHelperComponents/styleOptions";
 
 const Color = () => {
   //convertToHex onChange
@@ -13,7 +13,7 @@ const Color = () => {
     useStyleContext() as IStyleContext;
 
   const [color, setColor] = useState<string | RGBColor | HSLColor>();
-  const [showColor, setShowColor] = useState(false);
+  const [showColor, setShowColor] = useState<boolean>(false);
   const [showMoreColor, setShowMoreColor] = useState(false);
   useEffect(() => {
     if (
@@ -46,10 +46,19 @@ const Color = () => {
       setColor(color.rgb);
     }
   };
+  const handleShowColor = (newValue: string | boolean) => {
+    if (typeof newValue === "boolean") {
+      // onChange(selector, property, newValue);
+      setShowColor(newValue);
+    } else {
+      console.warn("Unexpected boolean value for color interpolation");
+      // Handle the boolean case if needed
+    }
+  };
   return (
     <div>
       <span key={`${selector}-${property}`} className="flex flex-col gap-1">
-        <StyleOptions style={style!} customOptionsCallback={setShowColor} />
+        <StyleOptions style={style!} customOptionsCallback={handleShowColor} />
         {showColor && (
           <div className="flex flex-col gap-1">
             <SketchPicker

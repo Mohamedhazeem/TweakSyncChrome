@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useStyleContext } from "@/utils/attributesContext";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -21,12 +21,9 @@ import { Style } from "@/types/styleTypes";
 import { globalCssOptions } from "@/utils/styles/styles";
 type Options = {
   style: Style;
-  customOptionsCallback: React.Dispatch<React.SetStateAction<boolean>>;
+  customOptionsCallback: (newValue: string | boolean) => void;
 };
-function StyleOptions({
-  style,
-  customOptionsCallback: customOptions,
-}: Options) {
+function StyleOptions({ style, customOptionsCallback }: Options) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const context = useStyleContext();
@@ -41,7 +38,7 @@ function StyleOptions({
 
   const handleSelect = (newValue: string) => {
     if (newValue == "custom") {
-      customOptions(true);
+      customOptionsCallback(true);
     } else {
       if (context)
         context.onChange(context.selector!, context.property, newValue);
