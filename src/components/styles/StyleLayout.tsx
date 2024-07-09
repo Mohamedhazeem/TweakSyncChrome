@@ -13,8 +13,12 @@ type StyleLayout = {
   children: React.ReactNode;
 };
 function StyleLayout({ children }: StyleLayout) {
-  const { name, style } = useStyleContext() as IStyleContext;
+  const { name, style, onRemove, property } =
+    useStyleContext() as IStyleContext;
 
+  const handleRemoveClick = () => {
+    onRemove!(property);
+  };
   return (
     <>
       <div id={name}>
@@ -46,7 +50,7 @@ function StyleLayout({ children }: StyleLayout) {
                 <Button
                   size="sm"
                   className="bg-rose-600 rounded-xl text-xs p-1 w-4 h-4"
-                  // onClick={() => handleRemoveClick()}
+                  onClick={() => handleRemoveClick()}
                 >
                   X
                 </Button>

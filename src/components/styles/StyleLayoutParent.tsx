@@ -1,6 +1,6 @@
 // import { IStyleContext } from "@/types/styleTypes";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Button } from "../ui/button";
+// import { Button } from "../ui/button";
 
 import React from "react";
 
@@ -38,13 +38,13 @@ function StyleLayoutParent({ key, selector, children }: StyleLayout) {
                     </div>
                   </HoverCardContent>
                 </HoverCard> */}
-                <Button
+                {/* <Button
                   size="sm"
                   className="bg-rose-600 rounded-xl text-xs p-1 w-4 h-4"
                   // onClick={() => handleRemoveClick()}
                 >
                   X
-                </Button>
+                </Button> */}
               </div>
             </CardTitle>
             {/* <CardDescription>{attribute.description}</CardDescription> */}
