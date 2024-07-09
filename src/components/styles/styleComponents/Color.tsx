@@ -3,8 +3,9 @@ import { IStyleContext } from "@/types/styleTypes";
 import { useStyleContext } from "@/utils/attributesContext";
 import { useEffect, useState } from "react";
 import { SketchPicker, ColorResult, HSLColor, RGBColor } from "react-color";
-import StyleOptions from "../styleHelperComponents/styleOptions";
+
 import { presetColors } from "@/utils/styles/colorUtils";
+import StyleOptions from "../styleHelperComponents/StyleOptions";
 
 const Color = () => {
   //convertToHex onChange

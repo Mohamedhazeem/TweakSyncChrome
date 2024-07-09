@@ -7,6 +7,7 @@ import { GLOBAL_STYLES } from "@/utils/styles/styles";
 import StyleFactory from "@/components/styles/StyleFactory";
 import { StyleContext } from "@/utils/attributesContext";
 import StyleLayoutParent from "@/components/styles/StyleLayoutParent";
+import AddStyleProperty from "@/components/styles/styleHelperComponents/AddStyleProperty";
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();
@@ -121,6 +122,17 @@ function StyleInspector() {
       return updatedStyles;
     });
   };
+  const addProperty = (selector: string, property: string) => {
+    const temporaryId = styles.temporaryId; // Ensure that temporaryId is accessible here
+
+    chrome.runtime.sendMessage({
+      action: "updateStyles",
+      selector,
+      property,
+      value: "",
+      temporaryId, // Ensure this value is correctly passed
+    });
+  };
   const renderStyles = (styles: {
     [key: string]: { [key: string]: string };
   }) => {
@@ -165,6 +177,11 @@ function StyleInspector() {
             return null;
           })
         )}
+        <AddStyleProperty
+          selector={selector}
+          setStyles={setStyles}
+          addStyleProperty={addProperty}
+        />
       </StyleLayoutParent>
     ));
   };
