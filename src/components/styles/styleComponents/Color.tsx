@@ -8,8 +8,7 @@ import StyleOptions from "../styleHelperComponents/styleOptions";
 import { globalCssOptions } from "@/utils/styles/styles";
 
 const Color = () => {
-  const { selector, property, onChange, value, style } =
-    useStyleContext() as IStyleContext;
+  const { selector, property, onChange, value, style } = useStyleContext() as IStyleContext;
 
   const [color, setColor] = useState<string | RGBColor | HSLColor>();
   const [showColor, setShowColor] = useState<boolean>(false);
@@ -64,10 +63,7 @@ const Color = () => {
               presetColors={showMoreColor ? presetColors : undefined}
               onChange={(e) => handleColorChange(e)}
             />
-            <Button
-              className="w-full"
-              onClick={() => setShowMoreColor(!showMoreColor)}
-            >
+            <Button className="w-full" onClick={() => setShowMoreColor(!showMoreColor)}>
               {showMoreColor ? "Show Less Colors" : "Show More Colors"}
             </Button>
           </div>

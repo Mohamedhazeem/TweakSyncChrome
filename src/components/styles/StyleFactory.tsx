@@ -15,25 +15,10 @@ function StyleFactory({ name }: styleFatory) {
     <>
       <StyleLayout>
         <SpecificComponent />
+        {/* need default style layout for non supported properties */}
       </StyleLayout>
     </>
   );
 }
 
 export default StyleFactory;
-
-//   const DefaultAttribute: React.FC = () => {
-//     return <div>Default Attribute Component</div>;
-//   };
-//   function matchAttribute(
-//     name: string,
-//     patterns: { [key: string]: React.ComponentType }
-//   ): React.ComponentType {
-//     for (const pattern in patterns) {
-//       const regex = new RegExp(`^${pattern.replace(/\*/g, ".*")}$`);
-//       if (regex.test(name)) {
-//         return patterns[pattern];
-//       }
-//     }
-//     return DefaultAttribute;
-//   }

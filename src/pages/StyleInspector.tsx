@@ -39,11 +39,7 @@ function StyleInspector() {
 
   console.log("Rendering ColorStyle with styles:", styles);
 
-  const handleStyleChange = (
-    selector: string,
-    property: string,
-    newValue: string | null
-  ) => {
+  const handleStyleChange = (selector: string, property: string, newValue: string | null) => {
     setStyles((prevStyles) => {
       const updatedStyles = { ...prevStyles };
       if (newValue === null) {
@@ -64,18 +60,12 @@ function StyleInspector() {
           } else if (updatedStyles.external.descendant[selector]) {
             delete updatedStyles.external.descendant[selector][property];
           } else if (updatedStyles.external.pseudoElementStyles[selector]) {
-            delete updatedStyles.external.pseudoElementStyles[selector][
-              property
-            ];
+            delete updatedStyles.external.pseudoElementStyles[selector][property];
           } else if (updatedStyles.external.pseudoClassStyles[selector]) {
             delete updatedStyles.external.pseudoClassStyles[selector][property];
           } else if (updatedStyles.external.atRules[selector]) {
-            for (const subSelector in updatedStyles.external.atRules[
-              selector
-            ]) {
-              delete updatedStyles.external.atRules[selector][subSelector][
-                property
-              ];
+            for (const subSelector in updatedStyles.external.atRules[selector]) {
+              delete updatedStyles.external.atRules[selector][subSelector][property];
             }
           }
         }
@@ -97,17 +87,12 @@ function StyleInspector() {
           } else if (updatedStyles.external.descendant[selector]) {
             updatedStyles.external.descendant[selector][property] = newValue;
           } else if (updatedStyles.external.pseudoElementStyles[selector]) {
-            updatedStyles.external.pseudoElementStyles[selector][property] =
-              newValue;
+            updatedStyles.external.pseudoElementStyles[selector][property] = newValue;
           } else if (updatedStyles.external.pseudoClassStyles[selector]) {
-            updatedStyles.external.pseudoClassStyles[selector][property] =
-              newValue;
+            updatedStyles.external.pseudoClassStyles[selector][property] = newValue;
           } else if (updatedStyles.external.atRules[selector]) {
-            for (const subSelector in updatedStyles.external.atRules[
-              selector
-            ]) {
-              updatedStyles.external.atRules[selector][subSelector][property] =
-                newValue;
+            for (const subSelector in updatedStyles.external.atRules[selector]) {
+              updatedStyles.external.atRules[selector][subSelector][property] = newValue;
             }
           }
         }
@@ -133,26 +118,19 @@ function StyleInspector() {
       temporaryId, // Ensure this value is correctly passed
     });
   };
-  const renderStyles = (styles: {
-    [key: string]: { [key: string]: string };
-  }) => {
+  const renderStyles = (styles: { [key: string]: { [key: string]: string } }) => {
     // Group properties by selector
-    const groupedStyles = Object.entries(styles).reduce(
-      (acc, [selector, properties]) => {
-        acc[selector] = acc[selector] || [];
-        acc[selector].push(properties);
-        return acc;
-      },
-      {} as { [key: string]: Array<{ [key: string]: string }> }
-    );
+    const groupedStyles = Object.entries(styles).reduce((acc, [selector, properties]) => {
+      acc[selector] = acc[selector] || [];
+      acc[selector].push(properties);
+      return acc;
+    }, {} as { [key: string]: Array<{ [key: string]: string }> });
 
     return Object.entries(groupedStyles).map(([selector, propertiesArray]) => (
       <StyleLayoutParent key={selector} selector={selector}>
         {propertiesArray.flatMap((properties) =>
           Object.entries(properties).map(([property, value]) => {
-            const globalStyle = GLOBAL_STYLES.find(
-              (style) => style.name === property
-            );
+            const globalStyle = GLOBAL_STYLES.find((style) => style.name === property);
             if (globalStyle) {
               return (
                 <StyleContext.Provider
@@ -164,8 +142,7 @@ function StyleInspector() {
                     value,
                     style: globalStyle,
                     // convertToHex,
-                    onRemove: (property: string) =>
-                      handleStyleChange(selector, property, null),
+                    onRemove: (property: string) => handleStyleChange(selector, property, null),
                     onChange: handleStyleChange,
                   }}
                   key={`${selector}-${property}`}
