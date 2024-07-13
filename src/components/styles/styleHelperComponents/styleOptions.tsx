@@ -11,11 +11,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { IStyleContext, Style } from "@/types/styleTypes";
 import { globalCssOptions } from "@/utils/styles/styles";
@@ -26,23 +22,24 @@ type Options = {
 function StyleOptions({ style, customOptionsCallback }: Options) {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState("");
-  const { selector, property, onChange, value } =
-    useStyleContext() as IStyleContext;
+  const { selector, onChange } = useStyleContext() as IStyleContext;
   //   const options = context!.attribute.options;
   //   const nameForTitle = context!.attribute.nameForTitle;
 
   useEffect(() => {
-    if (value) {
-      setOption(value as string);
+    if (style.value) {
+      setOption(style.value);
     }
-  }, [selector, value]);
+  }, [selector, style]);
 
   const handleSelect = (newValue: string) => {
     if (newValue == "custom") {
       customOptionsCallback(true);
     } else {
       customOptionsCallback(false);
-      onChange(selector, property, newValue);
+      if (style.name) {
+        onChange(selector, style.name, newValue);
+      }
     }
     setOption(newValue);
     setOpen(false);
@@ -59,7 +56,7 @@ function StyleOptions({ style, customOptionsCallback }: Options) {
         return `Select ${style.nameForTitle}...`;
       }
     }
-    return `Select ${style.nameForTitle}...`;
+    return `Select...`;
   };
 
   const isCustomValue = !globalCssOptions.includes(option);
@@ -82,8 +79,9 @@ function StyleOptions({ style, customOptionsCallback }: Options) {
           <CommandList>
             <CommandEmpty>No option found.</CommandEmpty>
             <CommandGroup>
-              {Array.isArray(style.options) &&
-                style.options!.map((ops) => (
+              {style.options &&
+                Array.isArray(style.options) &&
+                style.options.map((ops) => (
                   <CommandItem
                     key={ops}
                     value={ops}
