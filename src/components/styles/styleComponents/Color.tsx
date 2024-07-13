@@ -6,30 +6,33 @@ import { SketchPicker, ColorResult, HSLColor, RGBColor } from "react-color";
 import { presetColors } from "@/utils/styles/colorUtils";
 import StyleOptions from "../styleHelperComponents/styleOptions";
 import { globalCssOptions } from "@/utils/styles/styles";
+import ColorScheme from "./ColorScheme";
 
 const Color = () => {
-  const { selector, property, onChange, value, style } = useStyleContext() as IStyleContext;
-
+  const { selector, onChange, group } = useStyleContext() as IStyleContext;
   const [color, setColor] = useState<string | RGBColor | HSLColor>();
   const [showColor, setShowColor] = useState<boolean>(false);
   const [showMoreColor, setShowMoreColor] = useState(false);
+  const style = group?.groups.filter((group) => group.name === "color");
   useEffect(() => {
-    if (globalCssOptions.includes(value)) {
-      setShowColor(false);
-    } else {
-      setShowColor(true);
+    if (style) {
+      if (globalCssOptions.includes(style[0]?.value)) {
+        setShowColor(false);
+      } else {
+        setShowColor(true);
+      }
+      setColor(style[0]?.value);
     }
-    setColor(value);
-  }, [value]);
+  }, [style]);
   const handleColorChange = (color: ColorResult) => {
     let colorValue: string;
 
     const preset = presetColors.find(
       (preset) => preset.color.toLowerCase() === color.hex.toLowerCase()
     );
-    if (preset) {
+    if (preset && style && style[0].name) {
       setColor(preset.color);
-      onChange(selector, property, preset.title.toLowerCase());
+      onChange(selector, style[0].name, preset.title.toLowerCase());
       return;
     } else {
       if (color.rgb.a == 100) {
@@ -38,7 +41,7 @@ const Color = () => {
         colorValue = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
       }
 
-      onChange(selector, property, colorValue);
+      onChange(selector, style![0].name!, colorValue);
       setColor(color.rgb);
     }
   };
@@ -53,8 +56,11 @@ const Color = () => {
   };
   return (
     <div>
-      <span key={`${selector}-${property}`} className="flex flex-col gap-1">
-        <StyleOptions style={style!} customOptionsCallback={handleShowColor} />
+      <span
+        key={`${selector}-${style![0].name ? style![0].name : ""}`}
+        className="flex flex-col gap-1"
+      >
+        <StyleOptions style={style![0]} customOptionsCallback={handleShowColor} />
         {showColor && (
           <div className="flex flex-col gap-1">
             <SketchPicker
@@ -68,6 +74,7 @@ const Color = () => {
             </Button>
           </div>
         )}
+        <ColorScheme />
       </span>
     </div>
   );

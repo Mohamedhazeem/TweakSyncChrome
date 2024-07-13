@@ -4,32 +4,37 @@ import { useEffect, useState } from "react";
 import StyleOptions from "../styleHelperComponents/styleOptions";
 
 const ColorScheme = () => {
-  //convertToHex onChange
-  const { selector, property, onChange, value, style } =
-    useStyleContext() as IStyleContext;
+  const { selector, group, onChange } = useStyleContext() as IStyleContext;
 
-  const [, setColor] = useState<string>();
+  const [color, setColor] = useState<string>("");
+  const style = group?.groups.filter((style) => style.name === "color-scheme");
+
   useEffect(() => {
-    if (value) {
-      setColor(value);
-    }
-  }, [value]);
-  const handleColorChange = (newValue: string | boolean) => {
-    if (typeof newValue === "string") {
-      onChange(selector, property, newValue);
-      setColor(newValue);
+    if (style && style[0]?.value) {
+      setColor(style[0].value);
     } else {
-      console.warn("Unexpected boolean value for color interpolation");
-      // Handle the boolean case if needed
+      setColor("default");
+    }
+  }, [style]);
+
+  const handleColorChange = (newValue: string | boolean) => {
+    if (style && style[0]) {
+      if (typeof newValue === "string") {
+        onChange(selector, style[0].name, newValue);
+        setColor(newValue);
+      } else {
+        console.warn("Unexpected boolean value for color interpolation");
+      }
     }
   };
+
   return (
     <div>
-      <span key={`${selector}-${property}`} className="flex flex-col gap-1">
-        <StyleOptions
-          style={style!}
-          customOptionsCallback={handleColorChange}
-        />
+      <span className="flex flex-col gap-1">
+        {color}
+        {style && style[0]?.options && (
+          <StyleOptions style={style[0]} customOptionsCallback={handleColorChange} />
+        )}
       </span>
     </div>
   );
