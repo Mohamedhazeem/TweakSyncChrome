@@ -3,11 +3,12 @@ import { ElementStyles } from "../types/elementTypes";
 // import Color from "./Color";
 import { OutletContext } from "@/types/outletContext";
 import { useOutletContext } from "react-router-dom";
-import { GLOBAL_STYLES } from "@/utils/styles/styles";
+import { STYLE_GROUP } from "@/utils/styles/styles";
 import StyleFactory from "@/components/styles/StyleFactory";
 import { StyleContext } from "@/utils/elementContext";
 import StyleLayoutParent from "@/components/styles/StyleLayoutParent";
 import AddStyleProperty from "@/components/styles/styleHelperComponents/AddStyleProperty";
+import { StyleGroup } from "@/types/styleTypes";
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();
@@ -118,6 +119,39 @@ function StyleInspector() {
       temporaryId, // Ensure this value is correctly passed
     });
   };
+  const groupStylesByStyleGroups = (properties: { [key: string]: string }) => {
+    const groupedStyles: { [key: string]: StyleGroup } = {};
+
+    // Initialize all groups with default values
+    STYLE_GROUP.forEach((group) => {
+      groupedStyles[group.groupName] = {
+        ...group,
+        groups: group.groups.map((style) => ({
+          ...style,
+          value: properties[style.name] || "",
+        })),
+      };
+    });
+
+    // Update groups with actual property values
+    for (const property in properties) {
+      const value = properties[property];
+      const group = STYLE_GROUP.find((group) => group.propertyNames.includes(property));
+
+      if (group) {
+        const styleMeta = group.groups.find((style) => style.name === property);
+
+        if (styleMeta) {
+          groupedStyles[group.groupName].groups = groupedStyles[group.groupName].groups.map(
+            (style) => (style.name === property ? { ...style, value } : style)
+          );
+        }
+      }
+    }
+
+    return groupedStyles;
+  };
+
   const renderStyles = (styles: { [key: string]: { [key: string]: string } }) => {
     // Group properties by selector
     const groupedStyles = Object.entries(styles).reduce((acc, [selector, properties]) => {
@@ -126,41 +160,39 @@ function StyleInspector() {
       return acc;
     }, {} as { [key: string]: Array<{ [key: string]: string }> });
 
-    return Object.entries(groupedStyles).map(([selector, propertiesArray]) => (
-      <StyleLayoutParent key={selector} selector={selector}>
-        {propertiesArray.flatMap((properties) =>
-          Object.entries(properties).map(([property, value]) => {
-            const globalStyle = GLOBAL_STYLES.find((style) => style.name === property);
-            if (globalStyle) {
-              return (
-                <StyleContext.Provider
-                  value={{
-                    key: `${selector}-${property}`,
-                    name: property,
-                    selector,
-                    property,
-                    value,
-                    style: globalStyle,
-                    // convertToHex,
-                    onRemove: (property: string) => handleStyleChange(selector, property, null),
-                    onChange: handleStyleChange,
-                  }}
-                  key={`${selector}-${property}`}
-                >
-                  <StyleFactory name={property} />
-                </StyleContext.Provider>
-              );
-            }
-            return null;
-          })
-        )}
-        <AddStyleProperty
-          selector={selector}
-          setStyles={setStyles}
-          addStyleProperty={addProperty}
-        />
-      </StyleLayoutParent>
-    ));
+    return Object.entries(groupedStyles).map(([selector, propertiesArray]) => {
+      const allProperties = propertiesArray.reduce((acc, properties) => {
+        return { ...acc, ...properties };
+      }, {});
+
+      const groupedProperties = groupStylesByStyleGroups(allProperties);
+
+      return (
+        <StyleLayoutParent key={selector} selector={selector}>
+          {Object.entries(groupedProperties).map(([groupName, group]) => (
+            <StyleContext.Provider
+              value={{
+                key: `${selector}-${groupName}`,
+                name: groupName,
+                selector,
+                group,
+                onRemove: (property: string) => handleStyleChange(selector, property, null),
+                onChange: handleStyleChange,
+              }}
+              key={`${selector}-${groupName}`}
+            >
+              <StyleFactory name={groupName} />
+            </StyleContext.Provider>
+          ))}
+
+          <AddStyleProperty
+            selector={selector}
+            setStyles={setStyles}
+            addStyleProperty={addProperty}
+          />
+        </StyleLayoutParent>
+      );
+    });
   };
 
   if (!style) {
@@ -170,7 +202,7 @@ function StyleInspector() {
     <div className="w-full h-[calc(100vh-65px)] flex items-center justify-center">
       <div
         ref={scrollableContainerRef}
-        className="flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-4"
+        className="flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-1"
       >
         {/* {styles.inline &&
         Object.entries(styles.inline).map(([property, value]) =>
