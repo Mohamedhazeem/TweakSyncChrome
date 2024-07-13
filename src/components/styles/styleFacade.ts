@@ -1,11 +1,11 @@
 import Color from "./styleComponents/Color";
-import ColorScheme from "./styleComponents/ColorScheme";
+// import ColorScheme from "./styleComponents/ColorScheme";
 
 export const styleComponents: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: React.ComponentType<any>;
 } = {
   "background-color": Color,
-  color: Color,
-  "color-scheme": ColorScheme,
+  "Color Group": Color,
+  // "color-scheme": ColorScheme,
 };
