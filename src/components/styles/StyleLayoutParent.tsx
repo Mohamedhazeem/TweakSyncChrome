@@ -15,11 +15,7 @@ function StyleLayoutParent({ key, selector, children }: StyleLayout) {
       <div key={key}>
         <Card className="border-2">
           <CardHeader className="p-3 pt-1">
-            <CardTitle
-              className={
-                "flex justify-between items-center text-xl font-semibold"
-              }
-            >
+            <CardTitle className={"flex justify-between items-center text-xl font-semibold"}>
               {selector}
               <div className="flex place-items-center gap-1 pr-1">
                 {/* <HoverCard>
@@ -49,7 +45,7 @@ function StyleLayoutParent({ key, selector, children }: StyleLayout) {
             </CardTitle>
             {/* <CardDescription>{attribute.description}</CardDescription> */}
           </CardHeader>
-          {<CardContent className="p-2">{children}</CardContent>}
+          {<CardContent className="p-2 m-0 flex flex-col gap-2">{children}</CardContent>}
         </Card>
       </div>
     </>

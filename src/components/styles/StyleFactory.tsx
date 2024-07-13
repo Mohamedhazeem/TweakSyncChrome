@@ -1,4 +1,4 @@
-import StyleLayout from "./StyleLayout";
+// import StyleLayout from "./StyleLayout";
 import { styleComponents } from "./styleFacade";
 
 type styleFatory = {
@@ -13,10 +13,10 @@ function StyleFactory({ name }: styleFatory) {
 
   return (
     <>
-      <StyleLayout>
-        <SpecificComponent />
-        {/* need default style layout for non supported properties */}
-      </StyleLayout>
+      <SpecificComponent />
+      {/* <StyleLayout>
+        {/* need default style layout for non supported properties 
+         </StyleLayout> */}
     </>
   );
 }
