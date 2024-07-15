@@ -50,30 +50,24 @@ document.addEventListener("click", (event) => {
   if (currentElement) {
     getElementDetails(currentElement).then((details) => {
       if (isValidChromeRuntime()) {
-        chrome.runtime.sendMessage(
-          { action: "elementClicked", details },
-          (response) => {
-            if (chrome.runtime.lastError) {
-              console.error("Error sending message:", chrome.runtime.lastError);
-            } else {
-              console.log("Message sent successfully", response);
-            }
+        chrome.runtime.sendMessage({ action: "elementClicked", details }, (response) => {
+          if (chrome.runtime.lastError) {
+            console.error("Error sending message:", chrome.runtime.lastError);
+          } else {
+            console.log("Message sent successfully", response);
           }
-        );
+        });
       }
     });
     getElementStyles(currentElement).then((styles) => {
       if (isValidChromeRuntime()) {
-        chrome.runtime.sendMessage(
-          { action: "styleClicked", styles },
-          (response) => {
-            if (chrome.runtime.lastError) {
-              console.error("Error sending message:", chrome.runtime.lastError);
-            } else {
-              console.log("Message sent successfully", response);
-            }
+        chrome.runtime.sendMessage({ action: "styleClicked", styles }, (response) => {
+          if (chrome.runtime.lastError) {
+            console.error("Error sending message:", chrome.runtime.lastError);
+          } else {
+            console.log("Message sent successfully", response);
           }
-        );
+        });
       }
     });
   }

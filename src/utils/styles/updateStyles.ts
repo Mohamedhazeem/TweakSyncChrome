@@ -24,9 +24,19 @@ export function updateStyles({ newStyleValue, selector, property, temporaryId }:
       console.error(`No cached rules found for selector: ${selector}`);
       return;
     }
-
     for (const rule of rules) {
-      rule.style.setProperty(property, newStyleValue!);
+      if (rule.selectorText === selector) {
+        if (typeof newStyleValue === "string") {
+          rule.style.setProperty(property, newStyleValue);
+        } else {
+          rule.style.removeProperty(property);
+        }
+        return; // Exit after updating the correct rule
+      }
     }
+    // for (const rule of rules) {
+    //   console.log(`${rule} and ${selector} and ${property}and ${newStyleValue}`);
+    //   rule.style.setProperty(property, newStyleValue ? newStyleValue : "");
+    // }
   }
 }

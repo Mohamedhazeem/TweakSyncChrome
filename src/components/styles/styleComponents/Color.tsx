@@ -6,14 +6,16 @@ import { SketchPicker, ColorResult, HSLColor, RGBColor } from "react-color";
 import { presetColors } from "@/utils/styles/colorUtils";
 import StyleOptions from "../styleHelperComponents/styleOptions";
 import { globalCssOptions } from "@/utils/styles/styles";
-import ColorScheme from "./ColorScheme";
 
-const Color = () => {
+type ColorPropType = {
+  colorProp: string;
+};
+const Color = ({ colorProp }: ColorPropType) => {
   const { selector, onChange, group } = useStyleContext() as IStyleContext;
   const [color, setColor] = useState<string | RGBColor | HSLColor>();
   const [showColor, setShowColor] = useState<boolean>(false);
   const [showMoreColor, setShowMoreColor] = useState(false);
-  const style = group?.groups.filter((group) => group.name === "color");
+  const style = group?.groups.filter((group) => group.name === colorProp);
   useEffect(() => {
     if (style) {
       if (globalCssOptions.includes(style[0]?.value)) {
@@ -30,9 +32,9 @@ const Color = () => {
     const preset = presetColors.find(
       (preset) => preset.color.toLowerCase() === color.hex.toLowerCase()
     );
-    if (preset && style && style[0].name) {
+    if (preset && style && colorProp) {
       setColor(preset.color);
-      onChange(selector, style[0].name, preset.title.toLowerCase());
+      onChange(selector, colorProp, preset.title.toLowerCase());
       return;
     } else {
       if (color.rgb.a == 100) {
@@ -41,7 +43,7 @@ const Color = () => {
         colorValue = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
       }
 
-      onChange(selector, style![0].name!, colorValue);
+      onChange(selector, colorProp, colorValue);
       setColor(color.rgb);
     }
   };
@@ -60,6 +62,7 @@ const Color = () => {
         key={`${selector}-${style![0].name ? style![0].name : ""}`}
         className="flex flex-col gap-1"
       >
+        {colorProp}
         <StyleOptions style={style![0]} customOptionsCallback={handleShowColor} />
         {showColor && (
           <div className="flex flex-col gap-1">
@@ -74,7 +77,6 @@ const Color = () => {
             </Button>
           </div>
         )}
-        <ColorScheme />
       </span>
     </div>
   );

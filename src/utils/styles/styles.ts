@@ -57,4 +57,18 @@ export const STYLE_GROUP: StyleGroup[] = [
       },
     ],
   },
+  {
+    groupName: "Background Group",
+    propertyNames: ["background-color"],
+    groups: [
+      {
+        name: "background-color",
+        nameForTitle: "Background Color",
+        type: "string",
+        description: "Color Styles for the element",
+        value: "",
+        options: [...customAndGlobalCssOptions],
+      },
+    ],
+  },
 ];

@@ -25,30 +25,30 @@ export function handleAtrules(
     processAtRule({ atRule, atRuleName });
   }
 }
-export function handleValidSelector(
-  selector: string,
-  isValidSelector: (selector: string) => boolean
-) {
-  if (
-    !selector ||
-    selector.trim() === "" ||
-    !isValidSelector(selector) ||
-    (!selector.includes(".") && !selector.includes("#"))
-  ) {
-    return true; // Invalid selector
-  }
-  return false; // Valid selector
-}
-
 // export function handleValidSelector(
 //   selector: string,
 //   isValidSelector: (selector: string) => boolean
 // ) {
-//   if (!selector || selector.trim() === "" || !isValidSelector(selector)) {
-//     return true;
+//   if (
+//     !selector ||
+//     selector.trim() === "" ||
+//     !isValidSelector(selector) ||
+//     (!selector.includes(".") && !selector.includes("#"))
+//   ) {
+//     return true; // Invalid selector
 //   }
-//   return false;
+//   return false; // Valid selector
 // }
+
+export function handleValidSelector(
+  selector: string,
+  isValidSelector: (selector: string) => boolean
+) {
+  if (!selector || selector.trim() === "" || !isValidSelector(selector)) {
+    return true;
+  }
+  return false;
+}
 
 export function handleDescendant(
   element: HTMLElement,
@@ -157,10 +157,7 @@ export function handleAttribute(
     element.matches(selector) &&
     !isDescendantSelector(selector)
   ) {
-    if (
-      !isPseudoElementSelector(selector) &&
-      !isPseudoClassSelector(selector)
-    ) {
+    if (!isPseudoElementSelector(selector) && !isPseudoClassSelector(selector)) {
       if (!styles.external.attribute[selector]) {
         styles.external.attribute[selector] = {};
       }

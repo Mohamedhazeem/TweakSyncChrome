@@ -6,9 +6,7 @@ export function getCachedElement({ temporaryId }: getElementTypes) {
   return () => {
     if (!(temporaryId in elementCache)) {
       console.log("Caching element");
-      elementCache[temporaryId] = document.querySelector(
-        `[data-temporaryid="${temporaryId}"]`
-      );
+      elementCache[temporaryId] = document.querySelector(`[data-temporaryid="${temporaryId}"]`);
     }
 
     const element = elementCache[temporaryId];
@@ -38,7 +36,7 @@ export function getCachedRules() {
       }
     }
   }
-  console.warn(cachedRules);
+
   return cachedRules;
 }
 
