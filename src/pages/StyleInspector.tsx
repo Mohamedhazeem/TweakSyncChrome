@@ -121,42 +121,21 @@ function StyleInspector() {
   };
   const groupStylesByStyleGroups = (properties: { [key: string]: string }) => {
     const groupedStyles: { [key: string]: StyleGroup } = {};
-
-    // Initialize all groups with default values
-    // STYLE_GROUP.forEach((group) => {
-    //   groupedStyles[group.groupName] = {
-    //     ...group,
-    //     groups: group.groups.map((style) => ({
-    //       ...style,
-    //       value: properties[style.name] || "",
-    //     })),
-    //   };
-    // });
-
-    // Update groups with actual property values
     for (const property in properties) {
-      const value = properties[property];
+      // const value = properties[property];
       // const group = STYLE_GROUP.find((group) => group.propertyNames.includes(property));
       STYLE_GROUP.forEach((group) => {
         if (group.propertyNames.includes(property)) {
           // const styleMeta = group.groups.find((style) => style.name === property);
           groupedStyles[group.groupName] = {
             ...group,
-            groups: group.groups.map((style) =>
-              style.name === property ? { ...style, value } : style
-            ),
+            groups: group.groups.map((style) => ({
+              ...style,
+              value: properties[style.name] || "", // Initialize with property value or empty string
+            })),
           };
         }
       });
-      // if (group) {
-      //   const styleMeta = group.groups.find((style) => style.name === property);
-
-      //   if (styleMeta) {
-      //     groupedStyles[group.groupName].groups = groupedStyles[group.groupName].groups.map(
-      //       (style) => (style.name === property ? { ...style, value } : style)
-      //     );
-      //   }
-      // }
     }
 
     return groupedStyles;
