@@ -209,7 +209,7 @@ export const STYLE_GROUP: StyleGroup[] = [
         name: "color",
         nameForTitle: "Color",
         type: "string",
-        description: "Color Styles for the element",
+        description: "Defines the color of the text for the element.",
         value: "",
         options: [...customAndGlobalCssOptions],
       },
@@ -217,7 +217,8 @@ export const STYLE_GROUP: StyleGroup[] = [
         name: "color-scheme",
         nameForTitle: "Color Scheme",
         type: "string",
-        description: "Color Styles for the element",
+        description:
+          "Specifies the preferred color scheme for the element, allowing for light and dark modes.",
         value: "",
         options: ["normal", "light", "dark", "light dark", "only light", ...globalCssOptions],
       },

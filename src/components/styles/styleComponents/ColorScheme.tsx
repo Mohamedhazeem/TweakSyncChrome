@@ -2,6 +2,7 @@ import { IStyleContext } from "@/types/styleTypes";
 import { useStyleContext } from "@/utils/elementContext";
 import { useEffect, useState } from "react";
 import StyleOptions from "../styleHelperComponents/StyleOptions";
+import StyleLayout from "../StyleLayout";
 
 const ColorScheme = () => {
   const { selector, group, onChange } = useStyleContext() as IStyleContext;
@@ -30,11 +31,13 @@ const ColorScheme = () => {
 
   return (
     <div>
-      <span className="flex flex-col gap-1">
-        {style && style.options && (
-          <StyleOptions style={style} customOptionsCallback={handleColorScheme} />
-        )}
-      </span>
+      {style && (
+        <StyleLayout title={style.nameForTitle || style.name} description={style.description}>
+          <span className="flex flex-col gap-1">
+            <StyleOptions style={style} customOptionsCallback={handleColorScheme} />
+          </span>
+        </StyleLayout>
+      )}
     </div>
   );
 };

@@ -170,7 +170,6 @@ function StyleInspector() {
               }}
               key={`${selector}-${groupName}`}
             >
-              {selector}
               <StyleFactory name={groupName} />
             </StyleContext.Provider>
           ))}

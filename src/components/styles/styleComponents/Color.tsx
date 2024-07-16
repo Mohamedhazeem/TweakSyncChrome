@@ -7,6 +7,7 @@ import { presetColors } from "@/utils/styles/colorUtils";
 
 import { globalCssOptions } from "@/utils/styles/styles";
 import StyleOptions from "../styleHelperComponents/StyleOptions";
+import StyleLayout from "../StyleLayout";
 
 type ColorPropType = {
   colorProp: string;
@@ -59,22 +60,26 @@ const Color = ({ colorProp }: ColorPropType) => {
   };
   return (
     <div>
-      <span key={`${selector}-${colorProp}`} className="flex flex-col gap-1">
-        {style && <StyleOptions style={style} customOptionsCallback={handleShowColor} />}
-        {showColor && (
-          <div className="flex flex-col gap-1">
-            <SketchPicker
-              color={color}
-              width="w-full"
-              presetColors={showMoreColor ? presetColors : undefined}
-              onChange={(e) => handleColorChange(e)}
-            />
-            <Button className="w-full" onClick={() => setShowMoreColor(!showMoreColor)}>
-              {showMoreColor ? "Show Less Colors" : "Show More Colors"}
-            </Button>
-          </div>
-        )}
-      </span>
+      {style && (
+        <StyleLayout title={style.nameForTitle || style.name} description={style.description}>
+          <span key={`${selector}-${colorProp}`} className="flex flex-col gap-1">
+            <StyleOptions style={style} customOptionsCallback={handleShowColor} />
+            {showColor && (
+              <div className="flex flex-col gap-1">
+                <SketchPicker
+                  color={color}
+                  width="w-full"
+                  presetColors={showMoreColor ? presetColors : undefined}
+                  onChange={(e) => handleColorChange(e)}
+                />
+                <Button className="w-full" onClick={() => setShowMoreColor(!showMoreColor)}>
+                  {showMoreColor ? "Show Less Colors" : "Show More Colors"}
+                </Button>
+              </div>
+            )}
+          </span>
+        </StyleLayout>
+      )}
     </div>
   );
 };
