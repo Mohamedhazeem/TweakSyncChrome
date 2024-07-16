@@ -2,7 +2,7 @@ import { Attribute } from "./attributeTypes";
 
 export interface Style extends Attribute {
   value: string;
-  // property?: string;
+  maxOptionCounts?: number;
   temporaryId?: string;
 }
 
@@ -10,8 +10,6 @@ export interface IStyleContext {
   key: string | number;
   name: string;
   selector: string;
-  // property: string;
-  // value: string;
   children?: React.ReactNode;
   group?: StyleGroup;
   onChange: (selector: string, property: string, newColor: string) => void;
