@@ -4,8 +4,9 @@ import { useStyleContext } from "@/utils/elementContext";
 import { useEffect, useState } from "react";
 import { SketchPicker, ColorResult, HSLColor, RGBColor } from "react-color";
 import { presetColors } from "@/utils/styles/colorUtils";
-import StyleOptions from "../styleHelperComponents/styleOptions";
+
 import { globalCssOptions } from "@/utils/styles/styles";
+import StyleOptions from "../styleHelperComponents/StyleOptions";
 
 type ColorPropType = {
   colorProp: string;
@@ -15,15 +16,15 @@ const Color = ({ colorProp }: ColorPropType) => {
   const [color, setColor] = useState<string | RGBColor | HSLColor>();
   const [showColor, setShowColor] = useState<boolean>(false);
   const [showMoreColor, setShowMoreColor] = useState(false);
-  const style = group?.groups.filter((group) => group.name === colorProp);
+  const style = group?.groups.find((group) => group.name === colorProp);
   useEffect(() => {
     if (style) {
-      if (globalCssOptions.includes(style[0]?.value)) {
+      if (globalCssOptions.includes(style.value)) {
         setShowColor(false);
       } else {
         setShowColor(true);
       }
-      setColor(style[0]?.value);
+      setColor(style.value);
     }
   }, [style]);
   const handleColorChange = (color: ColorResult) => {
@@ -58,12 +59,8 @@ const Color = ({ colorProp }: ColorPropType) => {
   };
   return (
     <div>
-      <span
-        key={`${selector}-${style![0].name ? style![0].name : ""}`}
-        className="flex flex-col gap-1"
-      >
-        {colorProp}
-        <StyleOptions style={style![0]} customOptionsCallback={handleShowColor} />
+      <span key={`${selector}-${colorProp}`} className="flex flex-col gap-1">
+        {style && <StyleOptions style={style} customOptionsCallback={handleShowColor} />}
         {showColor && (
           <div className="flex flex-col gap-1">
             <SketchPicker
