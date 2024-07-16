@@ -1,8 +1,22 @@
+import BackgroundAttachment from "../styleComponents/BackgroundAttachment";
 import Color from "../styleComponents/Color";
 
+// background
+// background-attachment
+// background-blend-mode
+// background-clip
+// background-color
+// background-image
+// background-origin
+// background-position
+// background-position-x
+// background-position-y
+// background-repeat
+// background-size
 function BackgroundGroup() {
   return (
     <div>
+      <BackgroundAttachment />
       <Color colorProp="background-color" />
     </div>
   );
