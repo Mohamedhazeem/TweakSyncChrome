@@ -4,10 +4,10 @@ import { ElementStyles } from "../types/elementTypes";
 import { OutletContext } from "@/types/outletContext";
 import { useOutletContext } from "react-router-dom";
 import { STYLE_GROUP } from "@/utils/styles/styles";
-import StyleFactory from "@/components/styles/StyleFactory";
-import { StyleContext } from "@/utils/elementContext";
+// import StyleFactory from "@/components/styles/StyleFactory";
+// import { StyleContext } from "@/utils/elementContext";
 import StyleLayoutParent from "@/components/styles/StyleLayoutParent";
-import AddStyleProperty from "@/components/styles/styleHelperComponents/AddStyleProperty";
+// import AddStyleProperty from "@/components/styles/styleHelperComponents/AddStyleProperty";
 import { StyleGroup } from "@/types/styleTypes";
 
 function StyleInspector() {
@@ -28,6 +28,7 @@ function StyleInspector() {
   };
 
   const [styles, setStyles] = useState<ElementStyles>(initialStyles);
+
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -157,29 +158,14 @@ function StyleInspector() {
       const groupedProperties = groupStylesByStyleGroups(allProperties);
 
       return (
-        <StyleLayoutParent key={selector} selector={selector}>
-          {Object.entries(groupedProperties).map(([groupName, group]) => (
-            <StyleContext.Provider
-              value={{
-                key: `${selector}-${groupName}`,
-                name: groupName,
-                selector,
-                group,
-                onRemove: (property: string) => handleStyleChange(selector, property, null),
-                onChange: handleStyleChange,
-              }}
-              key={`${selector}-${groupName}`}
-            >
-              <StyleFactory name={groupName} />
-            </StyleContext.Provider>
-          ))}
-
-          <AddStyleProperty
-            selector={selector}
-            setStyles={setStyles}
-            addStyleProperty={addProperty}
-          />
-        </StyleLayoutParent>
+        <StyleLayoutParent
+          key={selector}
+          selector={selector}
+          groupedProperties={groupedProperties}
+          setStyles={setStyles}
+          addProperty={addProperty}
+          handleStyleChange={handleStyleChange}
+        />
       );
     });
   };

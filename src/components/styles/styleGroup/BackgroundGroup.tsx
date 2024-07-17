@@ -1,5 +1,6 @@
 import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
 import Color from "../styleComponents/Color";
+import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 
 // background
 // background-attachment
@@ -18,6 +19,7 @@ function BackgroundGroup() {
     <div>
       <MultiStyleOptionSetter name="background-attachment" />
       <MultiStyleOptionSetter name="background-blend-mode" />
+      <SingleStyleOptionSetter name="background-clip" />
       <Color colorProp="background-color" />
     </div>
   );

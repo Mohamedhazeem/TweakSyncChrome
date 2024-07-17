@@ -75,7 +75,7 @@ function StyleOptions({ style, customOptionsCallback }: Options) {
       </PopoverTrigger>
       <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder="Search options..." />
+          <CommandInput placeholder="Search Options..." />
           <CommandList>
             <CommandEmpty>No option found.</CommandEmpty>
             <CommandGroup>

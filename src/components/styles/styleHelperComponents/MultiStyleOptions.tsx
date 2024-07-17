@@ -12,6 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { splitStringToArray } from "@/utils/splitStringToArray";
 import { Style } from "@/types/styleTypes";
+import { ChevronsUpDown } from "lucide-react";
 
 interface MultiOptionsStyleProps {
   style: Style;
@@ -71,12 +72,13 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({ style, customOpti
             <PopoverTrigger asChild>
               <Button variant="outline" size="default" className="w-full justify-between">
                 {option ? capitalizeFirstLetter(option) : `Select ${nameForTitle}`}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
             {openPopoverIndex === index && (
               <PopoverContent className="w-[200px] p-0">
                 <Command>
-                  <CommandInput placeholder={`Search ${nameForTitle}...`} />
+                  <CommandInput placeholder={`Search Options...`} />
                   <CommandList>
                     <CommandEmpty>No option found.</CommandEmpty>
                     <CommandGroup>

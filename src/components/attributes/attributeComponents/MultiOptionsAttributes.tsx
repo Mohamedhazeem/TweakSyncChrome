@@ -119,13 +119,10 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { splitStringToArray } from "@/utils/splitStringToArray";
+import { ChevronsUpDown } from "lucide-react";
 
 function MultiOptionsAttribute() {
   const context = useAttributeContext();
@@ -137,9 +134,7 @@ function MultiOptionsAttribute() {
 
   useEffect(() => {
     if (context?.attribute?.value) {
-      const initialOptions = splitStringToArray(
-        context.attribute.value.toString()
-      );
+      const initialOptions = splitStringToArray(context.attribute.value.toString());
       setSelectedOptions(initialOptions);
     }
   }, [context?.attribute]);
@@ -180,19 +175,12 @@ function MultiOptionsAttribute() {
         <div key={`div-${index}`} className="flex gap-2 items-center">
           <Popover
             open={openPopoverIndex === index}
-            onOpenChange={(newOpenState) =>
-              setOpenPopoverIndex(newOpenState ? index : null)
-            }
+            onOpenChange={(newOpenState) => setOpenPopoverIndex(newOpenState ? index : null)}
           >
             <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                size={"default"}
-                className="w-full justify-between"
-              >
-                {option
-                  ? capitalizeFirstLetter(option)
-                  : `Select ${nameForTitle}`}
+              <Button variant="outline" size={"default"} className="w-full justify-between">
+                {option ? capitalizeFirstLetter(option) : `Select ${nameForTitle}`}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
             {openPopoverIndex === index && (
@@ -227,11 +215,7 @@ function MultiOptionsAttribute() {
           </Button>
         </div>
       ))}
-      <Button
-        size={"default"}
-        onClick={handleAddOption}
-        className="min-w-32 max-w-48 self-center"
-      >
+      <Button size={"default"} onClick={handleAddOption} className="min-w-32 max-w-48 self-center">
         Add {nameForTitle}
       </Button>
     </div>
