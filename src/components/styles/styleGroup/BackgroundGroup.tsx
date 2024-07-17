@@ -1,4 +1,4 @@
-import BackgroundAttachment from "../styleComponents/BackgroundAttachment";
+import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
 import Color from "../styleComponents/Color";
 
 // background
@@ -16,7 +16,8 @@ import Color from "../styleComponents/Color";
 function BackgroundGroup() {
   return (
     <div>
-      <BackgroundAttachment />
+      <MultiStyleOptionSetter backgroundProp="background-attachment" />
+      <MultiStyleOptionSetter backgroundProp="background-blend-mode" />
       <Color colorProp="background-color" />
     </div>
   );

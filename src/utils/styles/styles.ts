@@ -99,6 +99,7 @@ export const STYLE_GROUP: StyleGroup[] = [
         type: "string",
         description: "Specifies the blending mode of the background images",
         value: "",
+        maxOptionCounts: 2,
         options: [
           "normal",
           "multiply",

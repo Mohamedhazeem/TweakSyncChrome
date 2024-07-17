@@ -1,7 +1,6 @@
+import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
-
-import React from "react";
 import { useStyleContext } from "@/utils/elementContext";
 import { IStyleContext, Style } from "@/types/styleTypes";
 import { Button } from "../ui/button";
@@ -28,7 +27,7 @@ function StyleLayout({ style, children }: StyleLayoutProps) {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="bg-slate-400 rounded-xl text-xs p-1 w-4 h-4"
+                    className="bg-slate-400 rounded-xl text-xs p-1 w-5 h-5"
                   >
                     ?
                   </Button>

@@ -3,11 +3,14 @@ import { useStyleContext } from "@/utils/elementContext";
 import { useEffect, useState } from "react";
 import MultiStyleOptions from "../styleHelperComponents/MultiStyleOptions";
 
-const BackgroundAttachment = () => {
+type BackgroundProps = {
+  backgroundProp: string;
+};
+const MultiStyleOptionSetter = ({ backgroundProp }: BackgroundProps) => {
   const { selector, group, onChange } = useStyleContext() as IStyleContext;
 
   const [, setAttachment] = useState<string>("");
-  const style = group?.groups.find((style) => style.name === "background-attachment");
+  const style = group?.groups.find((style) => style.name === backgroundProp);
 
   useEffect(() => {
     if (style && style.value) {
@@ -37,4 +40,4 @@ const BackgroundAttachment = () => {
   );
 };
 
-export default BackgroundAttachment;
+export default MultiStyleOptionSetter;

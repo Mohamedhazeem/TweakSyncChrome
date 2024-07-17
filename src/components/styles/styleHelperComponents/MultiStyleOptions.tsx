@@ -62,7 +62,6 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({ style, customOpti
 
   return (
     <div className="flex flex-col gap-2">
-      {`selectedOptions - ${selectedOptions}`}
       {selectedOptions.map((option, index) => (
         <div key={`option-${index}`} className="flex gap-2 items-center">
           <Popover
