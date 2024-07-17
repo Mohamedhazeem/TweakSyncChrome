@@ -1,11 +1,11 @@
 import Color from "../styleComponents/Color";
-import ColorScheme from "../styleComponents/ColorScheme";
+import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 
 function ColorGroup() {
   return (
     <div>
       <Color colorProp="color" />
-      <ColorScheme />
+      <SingleStyleOptionSetter name="color-scheme" />
     </div>
   );
 }

@@ -19,7 +19,7 @@ function StyleLayout({ style, children }: StyleLayoutProps) {
     <div id={style.name}>
       <Card className="border-1">
         <CardHeader className={`p-2 py-1 rounded ${style.value ? "bg-green-400" : "bg-gray-200"} `}>
-          <CardTitle className="flex justify-between items-center text-xl font-semibold">
+          <CardTitle className="flex justify-between items-center text-base font-semibold">
             {style.nameForTitle}
             <div className="flex place-items-center gap-1 ">
               <HoverCard>

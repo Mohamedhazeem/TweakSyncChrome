@@ -2,6 +2,7 @@ import { IStyleContext } from "@/types/styleTypes";
 import { useStyleContext } from "@/utils/elementContext";
 import { useEffect, useState } from "react";
 import MultiStyleOptions from "../styleHelperComponents/MultiStyleOptions";
+import StyleLayout from "../StyleLayout";
 
 type MultiStyleOptionSetterProps = {
   name: string;
@@ -18,7 +19,7 @@ const MultiStyleOptionSetter = ({ name }: MultiStyleOptionSetterProps) => {
     }
   }, [style]);
 
-  const handleBackgroundAttachment = (newValue: string | boolean) => {
+  const handleMultiStyleOption = (newValue: string | boolean) => {
     if (style) {
       if (typeof newValue === "string") {
         onChange(selector, style.name, newValue);
@@ -31,11 +32,13 @@ const MultiStyleOptionSetter = ({ name }: MultiStyleOptionSetterProps) => {
 
   return (
     <div>
-      <span className="flex flex-col gap-1">
-        {style && style.options && (
-          <MultiStyleOptions style={style} customOptionsCallback={handleBackgroundAttachment} />
-        )}
-      </span>
+      {style && (
+        <StyleLayout style={style}>
+          <span className="flex flex-col gap-1">
+            <MultiStyleOptions style={style} customOptionsCallback={handleMultiStyleOption} />
+          </span>
+        </StyleLayout>
+      )}
     </div>
   );
 };

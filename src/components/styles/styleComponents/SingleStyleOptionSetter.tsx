@@ -3,28 +3,30 @@ import { useStyleContext } from "@/utils/elementContext";
 import { useEffect, useState } from "react";
 import StyleOptions from "../styleHelperComponents/StyleOptions";
 import StyleLayout from "../StyleLayout";
-
-const ColorScheme = () => {
+type SingleStyleOptionSetterProps = {
+  name: string;
+};
+const SingleStyleOptionSetter = ({ name }: SingleStyleOptionSetterProps) => {
   const { selector, group, onChange } = useStyleContext() as IStyleContext;
 
-  const [, setColor] = useState<string>("");
-  const style = group?.groups.find((style) => style.name === "color-scheme");
+  const [, setOption] = useState<string>("");
+  const style = group?.groups.find((style) => style.name === name);
 
   useEffect(() => {
     if (style && style.value) {
-      setColor(style.value);
+      setOption(style.value);
     } else {
-      setColor("default");
+      setOption("default");
     }
   }, [style]);
 
-  const handleColorScheme = (newValue: string | boolean) => {
+  const handleSingleStyleOption = (newValue: string | boolean) => {
     if (style) {
       if (typeof newValue === "string") {
         onChange(selector, style.name, newValue);
-        setColor(newValue);
+        setOption(newValue);
       } else {
-        console.warn("Unexpected boolean value for color interpolation");
+        console.warn("Unexpected boolean value");
       }
     }
   };
@@ -34,7 +36,7 @@ const ColorScheme = () => {
       {style && (
         <StyleLayout style={style}>
           <span className="flex flex-col gap-1">
-            <StyleOptions style={style} customOptionsCallback={handleColorScheme} />
+            <StyleOptions style={style} customOptionsCallback={handleSingleStyleOption} />
           </span>
         </StyleLayout>
       )}
@@ -42,4 +44,4 @@ const ColorScheme = () => {
   );
 };
 
-export default ColorScheme;
+export default SingleStyleOptionSetter;

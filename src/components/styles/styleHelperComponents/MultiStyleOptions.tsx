@@ -108,7 +108,7 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({ style, customOpti
       <Button
         size="default"
         onClick={handleAddOption}
-        className="min-w-32 max-w-48 self-center"
+        className="w-full self-center"
         disabled={maxOptionCounts ? optionCount >= maxOptionCounts : false}
       >
         Add {nameForTitle}
