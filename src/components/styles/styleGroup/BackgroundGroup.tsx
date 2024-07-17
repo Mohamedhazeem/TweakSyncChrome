@@ -16,8 +16,8 @@ import Color from "../styleComponents/Color";
 function BackgroundGroup() {
   return (
     <div>
-      <MultiStyleOptionSetter backgroundProp="background-attachment" />
-      <MultiStyleOptionSetter backgroundProp="background-blend-mode" />
+      <MultiStyleOptionSetter name="background-attachment" />
+      <MultiStyleOptionSetter name="background-blend-mode" />
       <Color colorProp="background-color" />
     </div>
   );

@@ -3,14 +3,14 @@ import { useStyleContext } from "@/utils/elementContext";
 import { useEffect, useState } from "react";
 import MultiStyleOptions from "../styleHelperComponents/MultiStyleOptions";
 
-type BackgroundProps = {
-  backgroundProp: string;
+type MultiStyleOptionSetterProps = {
+  name: string;
 };
-const MultiStyleOptionSetter = ({ backgroundProp }: BackgroundProps) => {
+const MultiStyleOptionSetter = ({ name }: MultiStyleOptionSetterProps) => {
   const { selector, group, onChange } = useStyleContext() as IStyleContext;
 
   const [, setAttachment] = useState<string>("");
-  const style = group?.groups.find((style) => style.name === backgroundProp);
+  const style = group?.groups.find((style) => style.name === name);
 
   useEffect(() => {
     if (style && style.value) {
