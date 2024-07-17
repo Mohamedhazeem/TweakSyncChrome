@@ -40,33 +40,33 @@ function StyleInspector() {
 
   console.log("Rendering ColorStyle with styles:", styles);
 
-  const handleStyleChange = (selector: string, property: string, newValue: string) => {
+  const handleStyleChange = (selector: string, property: string, newValue: string | null) => {
     setStyles((prevStyles) => {
       const updatedStyles = { ...prevStyles };
       if (newValue === null) {
         // Remove the property
         if (selector === "inline") {
-          delete updatedStyles.inline[property];
+          updatedStyles.inline[property] = "";
         } else {
           if (updatedStyles.inline[selector]) {
-            delete updatedStyles.inline[selector];
+            updatedStyles.inline[selector] = "";
           } else if (updatedStyles.external.classes[selector]) {
-            delete updatedStyles.external.classes[selector][property];
+            updatedStyles.external.classes[selector][property] = "";
           } else if (updatedStyles.external.ids[selector]) {
-            delete updatedStyles.external.ids[selector][property];
+            updatedStyles.external.ids[selector][property] = "";
           } else if (updatedStyles.external.tags[selector]) {
-            delete updatedStyles.external.tags[selector][property];
+            updatedStyles.external.tags[selector][property] = "";
           } else if (updatedStyles.external.attribute[selector]) {
-            delete updatedStyles.external.attribute[selector][property];
+            updatedStyles.external.attribute[selector][property] = "";
           } else if (updatedStyles.external.descendant[selector]) {
-            delete updatedStyles.external.descendant[selector][property];
+            updatedStyles.external.descendant[selector][property] = "";
           } else if (updatedStyles.external.pseudoElementStyles[selector]) {
-            delete updatedStyles.external.pseudoElementStyles[selector][property];
+            updatedStyles.external.pseudoElementStyles[selector][property] = "";
           } else if (updatedStyles.external.pseudoClassStyles[selector]) {
-            delete updatedStyles.external.pseudoClassStyles[selector][property];
+            updatedStyles.external.pseudoClassStyles[selector][property] = "";
           } else if (updatedStyles.external.atRules[selector]) {
             for (const subSelector in updatedStyles.external.atRules[selector]) {
-              delete updatedStyles.external.atRules[selector][subSelector][property];
+              updatedStyles.external.atRules[selector][subSelector][property] = "";
             }
           }
         }
@@ -165,7 +165,7 @@ function StyleInspector() {
                 name: groupName,
                 selector,
                 group,
-                onRemove: (property: string) => handleStyleChange(selector, property, ""),
+                onRemove: (property: string) => handleStyleChange(selector, property, null),
                 onChange: handleStyleChange,
               }}
               key={`${selector}-${groupName}`}

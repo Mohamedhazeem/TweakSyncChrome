@@ -32,7 +32,7 @@ const ColorScheme = () => {
   return (
     <div>
       {style && (
-        <StyleLayout title={style.nameForTitle || style.name} description={style.description}>
+        <StyleLayout style={style}>
           <span className="flex flex-col gap-1">
             <StyleOptions style={style} customOptionsCallback={handleColorScheme} />
           </span>

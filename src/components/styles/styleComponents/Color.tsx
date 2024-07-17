@@ -61,7 +61,7 @@ const Color = ({ colorProp }: ColorPropType) => {
   return (
     <div>
       {style && (
-        <StyleLayout title={style.nameForTitle || style.name} description={style.description}>
+        <StyleLayout style={style}>
           <span key={`${selector}-${colorProp}`} className="flex flex-col gap-1">
             <StyleOptions style={style} customOptionsCallback={handleShowColor} />
             {showColor && (
