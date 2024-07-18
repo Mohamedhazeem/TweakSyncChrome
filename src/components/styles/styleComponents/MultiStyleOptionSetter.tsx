@@ -1,6 +1,6 @@
 import { IStyleContext } from "@/types/styleTypes";
 import { useStyleContext } from "@/utils/elementContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import MultiStyleOptions from "../styleHelperComponents/MultiStyleOptions";
 import StyleLayout from "../StyleLayout";
 
@@ -10,12 +10,12 @@ type MultiStyleOptionSetterProps = {
 const MultiStyleOptionSetter = ({ name }: MultiStyleOptionSetterProps) => {
   const { selector, group, onChange } = useStyleContext() as IStyleContext;
 
-  const [, setAttachment] = useState<string>("");
+  // const [, setAttachment] = useState<string>("");
   const style = group?.groups.find((style) => style.name === name);
 
   useEffect(() => {
     if (style && style.value) {
-      setAttachment(style.value);
+      // setAttachment(style.value);
     }
   }, [style]);
 
@@ -23,7 +23,7 @@ const MultiStyleOptionSetter = ({ name }: MultiStyleOptionSetterProps) => {
     if (style) {
       if (typeof newValue === "string") {
         onChange(selector, style.name, newValue);
-        setAttachment(newValue);
+        // setAttachment(newValue);
       } else {
         console.warn("Unexpected boolean value for color interpolation");
       }

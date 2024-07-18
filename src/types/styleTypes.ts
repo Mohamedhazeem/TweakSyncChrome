@@ -4,6 +4,7 @@ export interface Style extends Attribute {
   value: string;
   maxOptionCounts?: number;
   temporaryId?: string;
+  functions?: string[]; // For enum type
 }
 
 export interface IStyleContext {

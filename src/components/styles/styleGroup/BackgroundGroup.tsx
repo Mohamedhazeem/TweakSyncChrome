@@ -21,6 +21,10 @@ function BackgroundGroup() {
       <MultiStyleOptionSetter name="background-blend-mode" />
       <SingleStyleOptionSetter name="background-clip" />
       <Color colorProp="background-color" />
+      <MultiStyleOptionSetter name="background-image" />
+      <SingleStyleOptionSetter name="background-origin" />
+
+      <MultiStyleOptionSetter name="background-repeat" />
     </div>
   );
 }

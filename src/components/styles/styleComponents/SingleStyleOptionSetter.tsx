@@ -1,7 +1,7 @@
 import { IStyleContext } from "@/types/styleTypes";
 import { useStyleContext } from "@/utils/elementContext";
 import { useEffect, useState } from "react";
-import StyleOptions from "../styleHelperComponents/StyleOptions";
+import SingleStyleOptions from "../styleHelperComponents/SingleStyleOptions";
 import StyleLayout from "../StyleLayout";
 type SingleStyleOptionSetterProps = {
   name: string;
@@ -36,7 +36,7 @@ const SingleStyleOptionSetter = ({ name }: SingleStyleOptionSetterProps) => {
       {style && (
         <StyleLayout style={style}>
           <span className="flex flex-col gap-1">
-            <StyleOptions style={style} customOptionsCallback={handleSingleStyleOption} />
+            <SingleStyleOptions style={style} customOptionsCallback={handleSingleStyleOption} />
           </span>
         </StyleLayout>
       )}

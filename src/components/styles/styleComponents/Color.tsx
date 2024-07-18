@@ -6,7 +6,7 @@ import { SketchPicker, ColorResult, HSLColor, RGBColor } from "react-color";
 import { presetColors } from "@/utils/styles/colorUtils";
 
 import { globalCssOptions } from "@/utils/styles/styles";
-import StyleOptions from "../styleHelperComponents/StyleOptions";
+import SingleStyleOptions from "../styleHelperComponents/SingleStyleOptions";
 import StyleLayout from "../StyleLayout";
 
 type ColorPropType = {
@@ -63,7 +63,7 @@ const Color = ({ colorProp }: ColorPropType) => {
       {style && (
         <StyleLayout style={style}>
           <span key={`${selector}-${colorProp}`} className="flex flex-col gap-1">
-            <StyleOptions style={style} customOptionsCallback={handleShowColor} />
+            <SingleStyleOptions style={style} customOptionsCallback={handleShowColor} />
             {showColor && (
               <div className="flex flex-col gap-1">
                 <SketchPicker

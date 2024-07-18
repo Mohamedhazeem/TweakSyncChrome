@@ -19,7 +19,7 @@ type Options = {
   style: Style;
   customOptionsCallback: (newValue: string | boolean) => void;
 };
-function StyleOptions({ style, customOptionsCallback }: Options) {
+function SingleStyleOptions({ style, customOptionsCallback }: Options) {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState("");
   const { selector, onChange } = useStyleContext() as IStyleContext;
@@ -105,4 +105,4 @@ function StyleOptions({ style, customOptionsCallback }: Options) {
     </Popover>
   );
 }
-export default StyleOptions;
+export default SingleStyleOptions;

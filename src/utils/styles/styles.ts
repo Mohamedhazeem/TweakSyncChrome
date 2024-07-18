@@ -143,6 +143,7 @@ export const STYLE_GROUP: StyleGroup[] = [
         description: "Specifies the background image",
         value: "",
         options: ["function", ...globalCssOptions], // url(), linear gradient()
+        functions: ["url()", "linearGradient()"],
       },
       {
         name: "background-origin",
@@ -182,6 +183,7 @@ export const STYLE_GROUP: StyleGroup[] = [
         type: "string",
         description: "Specifies how the background image repeats",
         value: "",
+        maxOptionCounts: 2,
         options: [
           "repeat",
           "repeat-x",
