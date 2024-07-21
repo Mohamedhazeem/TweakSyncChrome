@@ -1,18 +1,11 @@
 import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
 import Color from "../styleComponents/Color";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
+import { BackgroundPosition } from "../styleComponents/BackgroundPosition";
 
 // background
-// background-attachment
-// background-blend-mode
-// background-clip
-// background-color
 // background-image
-// background-origin
 // background-position
-// background-position-x
-// background-position-y
-// background-repeat
 // background-size
 function BackgroundGroup() {
   return (
@@ -21,8 +14,10 @@ function BackgroundGroup() {
       <MultiStyleOptionSetter name="background-blend-mode" />
       <SingleStyleOptionSetter name="background-clip" />
       <Color colorProp="background-color" />
-      <MultiStyleOptionSetter name="background-image" />
+      {/* <MultiStyleOptionSetter name="background-image" /> */}
       <SingleStyleOptionSetter name="background-origin" />
+      <BackgroundPosition name="background-position-x" />
+      <BackgroundPosition name="background-position-y" />
 
       <MultiStyleOptionSetter name="background-repeat" />
     </div>
