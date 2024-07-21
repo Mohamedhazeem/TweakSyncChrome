@@ -6,38 +6,48 @@ import { globalCssOptions, Length } from "@/utils/styles/styles";
 
 type BackgroundPositionGroupType = {
   optionType: string;
+  value: string;
+  unit: string;
   customOptionsCallback: (newValue: string) => void;
 };
 
 export function BackgroundPositionGroup({
   optionType,
+  value,
+  unit,
   customOptionsCallback,
 }: BackgroundPositionGroupType) {
-  const [number, setNumber] = useState<string>();
+  const [number, setNumber] = useState<string>(value);
+  const [currentUnit, setCurrentUnit] = useState<string>(unit);
   const [open, setOpen] = useState(false);
-  const [option, setOption] = useState("");
+
+  useEffect(() => {
+    setNumber(value);
+  }, [value]);
+
+  useEffect(() => {
+    setCurrentUnit(unit);
+  }, [unit]);
 
   useEffect(() => {
     handleApplyUnitChanges();
-
-    return () => {
-      handleApplyUnitChanges();
-    };
-  }, [optionType, option]);
+  }, [number, currentUnit]);
 
   const handleApplyUnitChanges = () => {
     if (optionType === "percentage") {
       customOptionsCallback(`${number}%`);
     } else if (optionType === "length") {
-      customOptionsCallback(`${number + option}`);
+      customOptionsCallback(`${number}${currentUnit}`);
     }
   };
+
   const handleSelect = (newValue: string) => {
-    setOption(newValue);
+    setCurrentUnit(newValue);
     setOpen(false);
   };
-  // re check this Custom value needed?
-  const isCustomValue = !globalCssOptions.includes(option);
+
+  const isCustomValue = !globalCssOptions.includes(currentUnit);
+
   if (optionType === "percentage") {
     return (
       <div>
@@ -59,18 +69,18 @@ export function BackgroundPositionGroup({
           value={number}
           onChange={(e) => {
             setNumber(e.target.value);
-            customOptionsCallback(`${e.target.value + option}`);
+            customOptionsCallback(`${e.target.value}${currentUnit}`);
           }}
         />
         <PopOver
           open={open}
           setOpen={setOpen}
-          getButtonText={getButtonText(option, Length, false)}
+          getButtonText={getButtonText(currentUnit, Length, false)}
           style={Length}
           handleSelect={handleSelect}
           isCustomValue={isCustomValue}
           isCaptilized={false}
-          option={option}
+          option={currentUnit}
         />
       </div>
     );

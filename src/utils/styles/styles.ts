@@ -30,7 +30,7 @@ export const namedPositionCombinations = [
   "bottom center",
   "bottom right",
 ];
-const lengthUnits = [
+export const lengthUnits = [
   "px",
   "em",
   "rem",

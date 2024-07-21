@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { useStyleContext } from "@/utils/elementContext";
 import { IStyleContext } from "@/types/styleTypes";
-import { globalCssOptions } from "@/utils/styles/styles";
+import { globalCssOptions, lengthUnits } from "@/utils/styles/styles";
 import { BackgroundPositionGroup } from "../styleHelperComponents/BackgroundPositionUnitsGroup";
 import { PopOver } from "../styleHelperComponents/PopOver";
 import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
 import StyleLayout from "../StyleLayout";
+import { extractUnit, extractValue } from "@/utils/styles/extractUnits";
 
 type BackgroundPositionType = {
-  // style: Style;
-  // customOptionsCallback: (newValue: string) => void;
   name: string;
 };
 export function BackgroundPosition({ name }: BackgroundPositionType) {
@@ -21,10 +20,28 @@ export function BackgroundPosition({ name }: BackgroundPositionType) {
 
   useEffect(() => {
     if (!option && style!.value) {
-      setOption(style!.value);
-    } else if (option === "percentage" || option === "length") return;
+      const initialOption = getOptionFromValue(style!.value);
+      setOption(initialOption);
+    } //else if (option === "percentage" || option === "length") return;
   }, [selector, style, option]);
 
+  function getOptionFromValue(value: string): string {
+    // Check if value is a percentage
+    if (value.endsWith("%")) {
+      return "percentage";
+    }
+    // Check if value is a length
+    const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
+    if (lengthUnitRegex.test(value)) {
+      return "length";
+    }
+    // Check if value is in global CSS options
+    if (globalCssOptions.includes(value)) {
+      return value;
+    }
+    // Default to an empty string or a default option if needed
+    return "";
+  }
   const handleSelect = (newValue: string) => {
     if (style && style.name) {
       onChange(selector, style.name, newValue);
@@ -39,6 +56,8 @@ export function BackgroundPosition({ name }: BackgroundPositionType) {
   };
 
   const isCustomValue = !globalCssOptions.includes(option);
+  const value = style?.value ? extractValue(style.value) : "";
+  const unit = style?.value ? extractUnit(style.value) : "";
   return (
     <div>
       {style && (
@@ -60,6 +79,8 @@ export function BackgroundPosition({ name }: BackgroundPositionType) {
               {
                 <BackgroundPositionGroup
                   optionType={option}
+                  value={value}
+                  unit={unit}
                   customOptionsCallback={handleValueChange}
                 />
               }
