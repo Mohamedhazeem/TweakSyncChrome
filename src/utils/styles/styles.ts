@@ -30,6 +30,29 @@ export const namedPositionCombinations = [
   "bottom center",
   "bottom right",
 ];
+const lengthUnits = [
+  "px",
+  "em",
+  "rem",
+  "cm",
+  "mm",
+  "in",
+  "pt",
+  "pc",
+  "ch",
+  "vw",
+  "vh",
+  "vmin",
+  "vmax",
+];
+export const Length: Style = {
+  name: "length",
+  nameForTitle: "Length",
+  type: "string",
+  description: "Unit of lengths",
+  value: "",
+  options: [...lengthUnits],
+};
 
 export const GLOBAL_STYLES: Style[] = [
   {
@@ -142,8 +165,7 @@ export const STYLE_GROUP: StyleGroup[] = [
         type: "string",
         description: "Specifies the background image",
         value: "",
-        options: ["function", ...globalCssOptions], // url(), linear gradient()
-        functions: ["url()", "linearGradient()"],
+        options: ["none", ...globalCssOptions], // url(), linear gradient()
       },
       {
         name: "background-origin",

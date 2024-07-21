@@ -1,10 +1,13 @@
-import { Attribute } from "./attributeTypes";
-
-export interface Style extends Attribute {
+export interface Style {
+  name: string;
+  nameForTitle?: string;
+  description: string;
+  type?: string | boolean | number;
+  options?: string[] | { [key: string]: string };
   value: string;
   maxOptionCounts?: number;
   temporaryId?: string;
-  functions?: string[]; // For enum type
+  functions?: string[];
 }
 
 export interface IStyleContext {
@@ -20,4 +23,9 @@ export interface StyleGroup {
   groupName: string;
   propertyNames: string[];
   groups: Style[];
+}
+
+export interface CssFunction {
+  type: string;
+  value: string;
 }
