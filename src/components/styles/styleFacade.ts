@@ -1,3 +1,4 @@
+import AlignGroup from "./styleGroup/AlignGroup";
 import BackgroundGroup from "./styleGroup/BackgroundGroup";
 import ColorGroup from "./styleGroup/ColorGroup";
 
@@ -7,5 +8,6 @@ export const styleComponents: {
 } = {
   "Background Group": BackgroundGroup,
   "Color Group": ColorGroup,
+  "Alignment Group": AlignGroup,
   // "color-scheme": ColorScheme,
 };
