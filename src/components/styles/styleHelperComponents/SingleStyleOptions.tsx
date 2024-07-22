@@ -112,7 +112,7 @@ function SingleStyleOptions({ style, customOptionsCallback }: Options) {
       style={style}
       handleSelect={handleSelect}
       isCustomValue={isCustomValue}
-      isCaptilized={false}
+      isCaptilized={true}
       option={option}
     />
   );

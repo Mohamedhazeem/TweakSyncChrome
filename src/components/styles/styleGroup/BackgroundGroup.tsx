@@ -1,12 +1,11 @@
 import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
 import Color from "../styleComponents/Color";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
-import { BackgroundPosition } from "../styleComponents/BackgroundPosition";
+import { Position } from "../styleComponents/Position";
 
 // background
 // background-image
-// background-position
-// background-size
+// background-position (add edge offset and multiple image positions)
 function BackgroundGroup() {
   return (
     <div>
@@ -16,10 +15,10 @@ function BackgroundGroup() {
       <Color colorProp="background-color" />
       {/* <MultiStyleOptionSetter name="background-image" /> */}
       <SingleStyleOptionSetter name="background-origin" />
-      <BackgroundPosition name="background-position-x" />
-      <BackgroundPosition name="background-position-y" />
-
+      <Position name="background-position-x" />
+      <Position name="background-position-y" />
       <MultiStyleOptionSetter name="background-repeat" />
+      <Position name="background-size" />
     </div>
   );
 }

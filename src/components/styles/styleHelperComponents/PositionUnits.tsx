@@ -4,19 +4,19 @@ import { PopOver } from "./PopOver";
 import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
 import { globalCssOptions, Length } from "@/utils/styles/styles";
 
-type BackgroundPositionGroupType = {
+type PositionUnitType = {
   optionType: string;
   value: string;
   unit: string;
   customOptionsCallback: (newValue: string) => void;
 };
 
-export function BackgroundPositionGroup({
+export function PositionUnits({
   optionType,
   value,
   unit,
   customOptionsCallback,
-}: BackgroundPositionGroupType) {
+}: PositionUnitType) {
   const [number, setNumber] = useState<string>(value);
   const [currentUnit, setCurrentUnit] = useState<string>(unit);
   const [open, setOpen] = useState(false);

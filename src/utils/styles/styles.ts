@@ -222,7 +222,7 @@ export const STYLE_GROUP: StyleGroup[] = [
         type: "string",
         description: "Specifies the size of the background image",
         value: "",
-        options: ["auto", "cover", "contain", ...globalCssOptions],
+        options: ["auto", "cover", "contain", "percentage", "length", ...globalCssOptions],
       },
     ],
   },

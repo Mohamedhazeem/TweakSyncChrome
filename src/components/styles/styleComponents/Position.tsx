@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useStyleContext } from "@/utils/elementContext";
 import { IStyleContext } from "@/types/styleTypes";
 import { globalCssOptions, lengthUnits } from "@/utils/styles/styles";
-import { BackgroundPositionGroup } from "../styleHelperComponents/BackgroundPositionUnitsGroup";
+import { PositionUnits } from "../styleHelperComponents/PositionUnits";
 import { PopOver } from "../styleHelperComponents/PopOver";
 import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
 import StyleLayout from "../StyleLayout";
@@ -11,7 +11,7 @@ import { extractUnit, extractValue } from "@/utils/styles/extractUnits";
 type BackgroundPositionType = {
   name: string;
 };
-export function BackgroundPosition({ name }: BackgroundPositionType) {
+export function Position({ name }: BackgroundPositionType) {
   const { selector, onChange, group } = useStyleContext() as IStyleContext;
 
   const style = group?.groups.find((style) => style.name === name);
@@ -40,7 +40,7 @@ export function BackgroundPosition({ name }: BackgroundPositionType) {
       return value;
     }
     // Default to an empty string or a default option if needed
-    return "";
+    return value;
   }
   const handleSelect = (newValue: string) => {
     if (style && style.name) {
@@ -77,7 +77,7 @@ export function BackgroundPosition({ name }: BackgroundPositionType) {
                 />
               </div>
               {
-                <BackgroundPositionGroup
+                <PositionUnits
                   optionType={option}
                   value={value}
                   unit={unit}
