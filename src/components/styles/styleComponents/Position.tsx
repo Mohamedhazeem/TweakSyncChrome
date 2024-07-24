@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { useStyleContext } from "@/utils/elementContext";
 import { IStyleContext } from "@/types/styleTypes";
-import { globalCssOptions, lengthUnits } from "@/utils/styles/styles";
 import { PositionUnits } from "../styleHelperComponents/PositionUnits";
 import { PopOver } from "../styleHelperComponents/PopOver";
 import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
 import StyleLayout from "../StyleLayout";
 import { extractUnit, extractValue } from "@/utils/styles/extractUnits";
+import { globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
 
 type BackgroundPositionType = {
   name: string;
 };
-export function Position({ name }: BackgroundPositionType) {
+export default function Position({ name }: BackgroundPositionType) {
   const { selector, onChange, group } = useStyleContext() as IStyleContext;
 
   const style = group?.groups.find((style) => style.name === name);
@@ -31,7 +31,8 @@ export function Position({ name }: BackgroundPositionType) {
       return "percentage";
     }
     // Check if value is a length
-    const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
+    const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})?$`);
+    // const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
     if (lengthUnitRegex.test(value)) {
       return "length";
     }

@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { PopOver } from "./PopOver";
 import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
-import { globalCssOptions, Length } from "@/utils/styles/styles";
+import { globalCssOptions, Length } from "@/utils/styles/globalStyles";
 
 type PositionUnitType = {
   optionType: string;

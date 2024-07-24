@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { ElementStyles } from "../types/elementTypes";
-// import Color from "./Color";
 import { OutletContext } from "@/types/outletContext";
 import { useOutletContext } from "react-router-dom";
-import { STYLE_GROUP } from "@/utils/styles/styles";
 // import StyleFactory from "@/components/styles/StyleFactory";
 // import { StyleContext } from "@/utils/elementContext";
 import StyleLayoutParent from "@/components/styles/StyleLayoutParent";
 // import AddStyleProperty from "@/components/styles/styleHelperComponents/AddStyleProperty";
 import { StyleGroup } from "@/types/styleTypes";
+import { STYLE_GROUP } from "@/utils/styles/globalStyles";
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();

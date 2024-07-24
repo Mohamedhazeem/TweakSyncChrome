@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
-import { GLOBAL_STYLES } from "@/utils/styles/styles";
+
 import { ElementStyles } from "@/types/elementTypes";
+import { GLOBAL_STYLES } from "@/utils/styles/globalStyles";
 
 interface AddStylePropertyProps {
   selector: string;

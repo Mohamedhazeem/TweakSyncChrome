@@ -4,10 +4,9 @@ import { useStyleContext } from "@/utils/elementContext";
 import { useEffect, useState } from "react";
 import { SketchPicker, ColorResult, HSLColor, RGBColor } from "react-color";
 import { presetColors } from "@/utils/styles/colorUtils";
-
-import { globalCssOptions } from "@/utils/styles/styles";
 import SingleStyleOptions from "../styleHelperComponents/SingleStyleOptions";
 import StyleLayout from "../StyleLayout";
+import { globalCssOptions } from "@/utils/styles/globalStyles";
 
 type ColorPropType = {
   colorProp: string;

@@ -14,9 +14,9 @@ import { useStyleContext } from "@/utils/elementContext";
 // import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 // import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { IStyleContext, Style } from "@/types/styleTypes";
-import { globalCssOptions } from "@/utils/styles/styles";
 import { PopOver } from "./PopOver";
 import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
+import { globalCssOptions } from "@/utils/styles/globalStyles";
 type Options = {
   style: Style;
   customOptionsCallback: (newValue: string | boolean) => void;

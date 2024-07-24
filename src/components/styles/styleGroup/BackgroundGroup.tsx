@@ -1,7 +1,7 @@
 import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
 import Color from "../styleComponents/Color";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
-import { Position } from "../styleComponents/Position";
+import Position from "../styleComponents/Position";
 
 // background
 // background-image
