@@ -1,8 +1,7 @@
-import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
-import { PopOver } from "./PopOver";
-import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
-import { globalCssOptions, Length } from "@/utils/styles/globalStyles";
+import { globalCssOptions } from "@/utils/styles/globalStyles";
+import { NumberInput } from "./NumberInput";
+import { Length } from "./Length";
 
 type PositionUnitType = {
   optionType: string;
@@ -38,6 +37,8 @@ export function PositionUnits({
       customOptionsCallback(`${number}%`);
     } else if (optionType === "length") {
       customOptionsCallback(`${number}${currentUnit}`);
+    } else if (optionType === "number") {
+      customOptionsCallback(`${number}`);
     }
   };
 
@@ -49,41 +50,20 @@ export function PositionUnits({
   const isCustomValue = !globalCssOptions.includes(currentUnit);
 
   if (optionType === "percentage") {
-    return (
-      <div>
-        <Input
-          type="number"
-          value={number}
-          onChange={(e) => {
-            setNumber(e.target.value);
-            customOptionsCallback(`${e.target.value}%`);
-          }}
-        />
-      </div>
-    );
+    return NumberInput({ number, setNumber, customOptionsCallback, sign: "%" });
   } else if (optionType === "length") {
-    return (
-      <div className="flex gap-2">
-        <Input
-          type="number"
-          value={number}
-          onChange={(e) => {
-            setNumber(e.target.value);
-            customOptionsCallback(`${e.target.value}${currentUnit}`);
-          }}
-        />
-        <PopOver
-          open={open}
-          setOpen={setOpen}
-          getButtonText={getButtonText(currentUnit, Length, false)}
-          style={Length}
-          handleSelect={handleSelect}
-          isCustomValue={isCustomValue}
-          isCaptilized={false}
-          option={currentUnit}
-        />
-      </div>
-    );
+    return Length({
+      number,
+      setNumber,
+      customOptionsCallback,
+      currentUnit,
+      open,
+      setOpen,
+      handleSelect,
+      isCustomValue,
+    });
+  } else if (optionType === "number") {
+    return NumberInput({ number, setNumber, customOptionsCallback });
   }
   return <div></div>;
 }
