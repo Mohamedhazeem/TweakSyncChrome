@@ -31,10 +31,14 @@ export default function Position({ name }: BackgroundPositionType) {
       return "percentage";
     }
     // Check if value is a length
-    const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})?$`);
-    // const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
+    // const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})?$`);
+    const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
     if (lengthUnitRegex.test(value)) {
       return "length";
+    }
+    const numberRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?$`);
+    if (numberRegex.test(value)) {
+      return "number";
     }
     // Check if value is in global CSS options
     if (globalCssOptions.includes(value)) {
@@ -77,6 +81,7 @@ export default function Position({ name }: BackgroundPositionType) {
                   option={option}
                 />
               </div>
+              {option}
               {
                 <PositionUnits
                   optionType={option}
