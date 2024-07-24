@@ -24,7 +24,7 @@ export const lengthUnits = [
   "vmin",
   "vmax",
 ];
-export const Length: Style = {
+export const LengthUnit: Style = {
   name: "length",
   nameForTitle: "Length",
   type: "string",
@@ -370,6 +370,7 @@ const FlexGroup: StyleGroup = {
       description:
         "Specifies how much a flex item will grow relative to the rest of the flex items",
       value: "",
+      options: ["number", ...globalCssOptions],
     },
     {
       name: "flex-shrink",
@@ -378,6 +379,7 @@ const FlexGroup: StyleGroup = {
       description:
         "Specifies how much a flex item will shrink relative to the rest of the flex items",
       value: "",
+      options: ["number", ...globalCssOptions],
     },
     {
       name: "flex-wrap",
