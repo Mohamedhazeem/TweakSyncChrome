@@ -8,10 +8,10 @@ import StyleLayout from "../StyleLayout";
 import { extractUnit, extractValue } from "@/utils/styles/extractUnits";
 import { globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
 
-type BackgroundPositionType = {
+type PositionType = {
   name: string;
 };
-export default function Position({ name }: BackgroundPositionType) {
+export default function Position({ name }: PositionType) {
   const { selector, onChange, group } = useStyleContext() as IStyleContext;
 
   const style = group?.groups.find((style) => style.name === name);
@@ -75,7 +75,6 @@ export default function Position({ name }: BackgroundPositionType) {
                   option={option}
                 />
               </div>
-              {option} {style.value}
               {
                 <PositionUnits
                   optionType={option}
