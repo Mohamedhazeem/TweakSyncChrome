@@ -40,7 +40,7 @@ export function PositionUnits({
 
   const handleApplyUnitChanges = () => {
     if (optionType === "length") {
-      customOptionsCallback(`${number}${currentUnit ? currentUnit : "px"}`);
+      customOptionsCallback(`${number}${currentUnit}`);
     } else if (optionType === "number") {
       customOptionsCallback(`${number}`);
     }

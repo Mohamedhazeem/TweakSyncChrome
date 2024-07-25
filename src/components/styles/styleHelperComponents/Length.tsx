@@ -29,7 +29,7 @@ export function Length({
         number={number}
         setNumber={setNumber}
         customOptionsCallback={customOptionsCallback}
-        sign={currentUnit ? currentUnit : "px"}
+        sign={currentUnit != "length" ? currentUnit : "px"}
       />
       <PopOver
         open={open}
@@ -39,7 +39,7 @@ export function Length({
         handleSelect={handleSelect}
         isCustomValue={isCustomValue}
         isCaptilized={false}
-        option={currentUnit ? currentUnit : "px"}
+        option={currentUnit != "length" ? currentUnit : "px"}
       />
     </div>
   );
