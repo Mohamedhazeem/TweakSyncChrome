@@ -5,6 +5,7 @@ import StyleFactory from "./StyleFactory";
 import { StyleGroup } from "@/types/styleTypes";
 import { ElementStyles } from "@/types/elementTypes";
 import AddStyleProperty from "./styleHelperComponents/AddStyleProperty";
+import { Button } from "../ui/button";
 
 type StyleLayoutParentProps = {
   selector: string;
@@ -12,6 +13,7 @@ type StyleLayoutParentProps = {
   setStyles: React.Dispatch<React.SetStateAction<ElementStyles>>;
   addProperty: (selector: string, property: string) => void;
   handleStyleChange: (selector: string, property: string, newValue: string | null) => void;
+  onClear: (selector: string, property: string) => void;
 };
 
 const StyleLayoutParent: React.FC<StyleLayoutParentProps> = ({
@@ -20,7 +22,14 @@ const StyleLayoutParent: React.FC<StyleLayoutParentProps> = ({
   setStyles,
   addProperty,
   handleStyleChange,
+  onClear,
 }) => {
+  const handleClearGroup = (group: StyleGroup) => {
+    group.propertyNames.forEach((property) => {
+      handleStyleChange(selector, property, null);
+      onClear(selector, property);
+    });
+  };
   return (
     <div key={selector}>
       <Card className="border-2">
@@ -31,7 +40,17 @@ const StyleLayoutParent: React.FC<StyleLayoutParentProps> = ({
           {Object.entries(groupedProperties).map(([groupName, group]) => (
             <React.Fragment key={`${selector}-${groupName}`}>
               <CardHeader className={`p-2 py-1 rounded bg-blue-400`}>
-                <CardTitle className="text-center text-base font-semibold">{groupName}</CardTitle>
+                <CardTitle className="text-base font-semibold flex justify-between">
+                  {groupName}
+                  <Button
+                    size="sm"
+                    variant={"default"}
+                    className="bg-red-500 text-xs p-1 h-5 tracking-wider hover:bg-red-600"
+                    onClick={() => handleClearGroup(group)}
+                  >
+                    CLEAR
+                  </Button>
+                </CardTitle>
               </CardHeader>
               <StyleContext.Provider
                 value={{

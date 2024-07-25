@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ElementStyles } from "../types/elementTypes";
+import { ElementStyles, ExternalStyles } from "../types/elementTypes";
 import { OutletContext } from "@/types/outletContext";
 import { useOutletContext } from "react-router-dom";
 // import StyleFactory from "@/components/styles/StyleFactory";
@@ -119,6 +119,23 @@ function StyleInspector() {
       temporaryId, // Ensure this value is correctly passed
     });
   };
+  const handleClearGroup = (selector: string, property: string) => {
+    setStyles((prevStyles) => {
+      const updatedStyles = { ...prevStyles };
+
+      // Type assertion to avoid TypeScript error
+      (Object.keys(updatedStyles.external) as Array<keyof ExternalStyles>).forEach((key) => {
+        const group = updatedStyles.external[key];
+        if (typeof group === "object" && group[selector]) {
+          // Delete the specific property within the selector's styles
+          delete group[selector][property];
+        }
+      });
+
+      return updatedStyles;
+    });
+  };
+
   const groupStylesByStyleGroups = (properties: { [key: string]: string }) => {
     const groupedStyles: { [key: string]: StyleGroup } = {};
     for (const property in properties) {
@@ -140,7 +157,6 @@ function StyleInspector() {
 
     return groupedStyles;
   };
-
   const renderStyles = (styles: { [key: string]: { [key: string]: string } }) => {
     // Group properties by selector
     const groupedStyles = Object.entries(styles).reduce((acc, [selector, properties]) => {
@@ -164,6 +180,7 @@ function StyleInspector() {
           setStyles={setStyles}
           addProperty={addProperty}
           handleStyleChange={handleStyleChange}
+          onClear={handleClearGroup}
         />
       );
     });
