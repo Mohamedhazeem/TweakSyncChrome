@@ -58,7 +58,7 @@ export const GLOBAL_STYLES: Style[] = [
   },
 ];
 const AlignGroup: StyleGroup = {
-  groupName: "Alignment Group",
+  groupName: "Alignment Properties",
   propertyNames: ["align-content", "align-items", "align-self"],
   groups: [
     {
@@ -143,7 +143,7 @@ const AlignGroup: StyleGroup = {
   ],
 };
 const BackgroundGroup: StyleGroup = {
-  groupName: "Background Group",
+  groupName: "Background Properties",
   propertyNames: [
     "background",
     "background-color",
@@ -288,7 +288,7 @@ const BackgroundGroup: StyleGroup = {
   ],
 };
 const ColorGroup: StyleGroup = {
-  groupName: "Color Group",
+  groupName: "Color Properties",
   propertyNames: ["color", "color-scheme"],
   groups: [
     {
@@ -311,7 +311,7 @@ const ColorGroup: StyleGroup = {
   ],
 };
 const FlexGroup: StyleGroup = {
-  groupName: "Flex Group",
+  groupName: "Flex Properties",
   propertyNames: [
     "flex-basis",
     "flex-direction",
@@ -392,5 +392,90 @@ const FlexGroup: StyleGroup = {
     },
   ],
 };
+const MarginGroup: StyleGroup = {
+  groupName: "Margin Properties",
+  propertyNames: [
+    "margin-block-end",
+    "margin-block-start",
+    "margin-bottom",
+    "margin-inline-end",
+    "margin-inline-start",
+    "margin-left",
+    "margin-right",
+    "margin-top",
+  ],
+  groups: [
+    {
+      name: "margin-block-end",
+      nameForTitle: "Margin Block End",
+      type: "string",
+      description: "Defines the logical block-end margin of an element.",
+      value: "",
+      options: ["auto", "length", ...globalCssOptions],
+    },
+    {
+      name: "margin-block-start",
+      nameForTitle: "Margin Block Start",
+      type: "string",
+      description: "Defines the logical block-start margin of an element.",
+      value: "",
+      options: ["auto", "length", ...globalCssOptions],
+    },
+    {
+      name: "margin-bottom",
+      nameForTitle: "Margin Bottom",
+      type: "string",
+      description: "Sets the margin area on the bottom of an element.",
+      value: "",
+      options: ["auto", "length", ...globalCssOptions],
+    },
+    {
+      name: "margin-inline-end",
+      nameForTitle: "Margin Inline End",
+      type: "string",
+      description: "Defines the logical inline-end margin of an element.",
+      value: "",
+      options: ["auto", "length", ...globalCssOptions],
+    },
+    {
+      name: "margin-inline-start",
+      nameForTitle: "Margin Inline Start",
+      type: "string",
+      description: "Defines the logical inline-start margin of an element.",
+      value: "",
+      options: ["auto", "length", ...globalCssOptions],
+    },
+    {
+      name: "margin-left",
+      nameForTitle: "Margin Left",
+      type: "string",
+      description: "Sets the margin area on the left side of an element.",
+      value: "",
+      options: ["auto", "length", ...globalCssOptions],
+    },
+    {
+      name: "margin-right",
+      nameForTitle: "Margin Right",
+      type: "string",
+      description: "Sets the margin area on the right side of an element.",
+      value: "",
+      options: ["auto", "length", ...globalCssOptions],
+    },
+    {
+      name: "margin-top",
+      nameForTitle: "Margin Top",
+      type: "string",
+      description: "Sets the margin area on the top of an element.",
+      value: "",
+      options: ["auto", "length", ...globalCssOptions],
+    },
+  ],
+};
 
-export const STYLE_GROUP: StyleGroup[] = [AlignGroup, BackgroundGroup, ColorGroup, FlexGroup];
+export const STYLE_GROUP: StyleGroup[] = [
+  AlignGroup,
+  BackgroundGroup,
+  ColorGroup,
+  FlexGroup,
+  MarginGroup,
+];
