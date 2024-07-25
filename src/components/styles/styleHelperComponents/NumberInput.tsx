@@ -13,7 +13,9 @@ export function NumberInput({ number, setNumber, customOptionsCallback, sign }: 
       value={number}
       onChange={(e) => {
         setNumber(e.target.value);
-        customOptionsCallback(`${e.target.value}${sign}`);
+        customOptionsCallback(
+          `${e.target.value != "" ? (sign ? e.target.value + sign : e.target.value) : ""}`
+        );
       }}
     />
   );

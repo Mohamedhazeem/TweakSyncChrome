@@ -30,13 +30,13 @@ export function PositionUnits({
 
   useEffect(() => {
     handleApplyUnitChanges();
-  }, [number, currentUnit]);
+  }, []);
 
   const handleApplyUnitChanges = () => {
     if (optionType === "percentage") {
       customOptionsCallback(`${number}%`);
     } else if (optionType === "length") {
-      customOptionsCallback(`${number}${currentUnit}`);
+      customOptionsCallback(`${number}${currentUnit ? currentUnit : "px"}`);
     } else if (optionType === "number") {
       customOptionsCallback(`${number}`);
     }
