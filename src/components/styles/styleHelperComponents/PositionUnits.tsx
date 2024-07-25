@@ -25,17 +25,21 @@ export function PositionUnits({
   }, [value]);
 
   useEffect(() => {
-    setCurrentUnit(unit);
-  }, [unit]);
+    if (optionType === "length") {
+      if (unit) {
+        setCurrentUnit(unit);
+      } else {
+        setCurrentUnit("px");
+      }
+    }
+  }, [unit, optionType]);
 
   useEffect(() => {
     handleApplyUnitChanges();
   }, []);
 
   const handleApplyUnitChanges = () => {
-    if (optionType === "percentage") {
-      customOptionsCallback(`${number}%`);
-    } else if (optionType === "length") {
+    if (optionType === "length") {
       customOptionsCallback(`${number}${currentUnit ? currentUnit : "px"}`);
     } else if (optionType === "number") {
       customOptionsCallback(`${number}`);
@@ -48,10 +52,7 @@ export function PositionUnits({
   };
 
   const isCustomValue = !globalCssOptions.includes(currentUnit);
-
-  if (optionType === "percentage") {
-    return NumberInput({ number, setNumber, customOptionsCallback, sign: "%" });
-  } else if (optionType === "length") {
+  if (optionType === "length") {
     return Length({
       number,
       setNumber,

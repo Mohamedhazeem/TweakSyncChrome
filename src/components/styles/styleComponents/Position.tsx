@@ -22,16 +22,10 @@ export default function Position({ name }: BackgroundPositionType) {
     if (!option && style!.value) {
       const initialOption = getOptionFromValue(style!.value);
       setOption(initialOption);
-    } //else if (option === "percentage" || option === "length") return;
+    }
   }, [selector, style, option]);
 
   function getOptionFromValue(value: string): string {
-    // Check if value is a percentage
-    if (value.endsWith("%")) {
-      return "percentage";
-    }
-    // Check if value is a length
-    // const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})?$`);
     const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
     if (lengthUnitRegex.test(value)) {
       return "length";
@@ -81,7 +75,7 @@ export default function Position({ name }: BackgroundPositionType) {
                   option={option}
                 />
               </div>
-              {option}
+              {option} {style.value}
               {
                 <PositionUnits
                   optionType={option}

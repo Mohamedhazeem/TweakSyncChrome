@@ -11,6 +11,7 @@ export const customAndGlobalCssOptions = [
 export const namedPositions = ["left", "right", "top", "bottom", "center"];
 export const lengthUnits = [
   "px",
+  "%",
   "em",
   "rem",
   "cm",
@@ -241,7 +242,7 @@ const BackgroundGroup: StyleGroup = {
       type: "string",
       description: "Specifies the position of the background image",
       value: "",
-      options: [...namedPositions, "percentage", "length", ...globalCssOptions],
+      options: [...namedPositions, "length", ...globalCssOptions],
     },
     {
       name: "background-position-x",
@@ -249,7 +250,7 @@ const BackgroundGroup: StyleGroup = {
       type: "string",
       description: "Specifies the x-coordinate of the background image",
       value: "",
-      options: ["left", "center", "right", "percentage", "length", ...globalCssOptions],
+      options: ["left", "center", "right", "length", ...globalCssOptions],
     },
     {
       name: "background-position-y",
@@ -257,7 +258,7 @@ const BackgroundGroup: StyleGroup = {
       type: "string",
       description: "Specifies the y-coordinate of the background image",
       value: "",
-      options: ["top", "center", "bottom", "percentage", "length", ...globalCssOptions],
+      options: ["top", "center", "bottom", "length", ...globalCssOptions],
     },
     {
       name: "background-repeat",
@@ -282,7 +283,7 @@ const BackgroundGroup: StyleGroup = {
       type: "string",
       description: "Specifies the size of the background image",
       value: "",
-      options: ["auto", "cover", "contain", "percentage", "length", ...globalCssOptions],
+      options: ["auto", "cover", "contain", "length", ...globalCssOptions],
     },
   ],
 };
@@ -332,7 +333,6 @@ const FlexGroup: StyleGroup = {
         "min-content",
         "max-content",
         "fit-content",
-        "percentage",
         "length",
         ...globalCssOptions,
       ],
