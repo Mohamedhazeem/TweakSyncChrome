@@ -46,8 +46,11 @@ export function PositionUnits({
     }
   };
 
-  const handleSelect = (newValue: string) => {
-    setCurrentUnit(newValue);
+  const handleUnitSelect = (unit: string) => {
+    setCurrentUnit(unit);
+    if (optionType === "length") {
+      customOptionsCallback(`${number}${unit}`);
+    }
     setOpen(false);
   };
 
@@ -60,7 +63,7 @@ export function PositionUnits({
       currentUnit,
       open,
       setOpen,
-      handleSelect,
+      handleUnitSelect,
       isCustomValue,
     });
   } else if (optionType === "number") {

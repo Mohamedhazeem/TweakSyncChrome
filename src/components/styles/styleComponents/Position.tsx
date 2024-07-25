@@ -41,7 +41,7 @@ export default function Position({ name }: PositionType) {
     // Default to an empty string or a default option if needed
     return value;
   }
-  const handleSelect = (newValue: string) => {
+  const handlePopOverSelect = (newValue: string) => {
     if (style && style.name) {
       onChange(selector, style.name, newValue);
     }
@@ -69,7 +69,7 @@ export default function Position({ name }: PositionType) {
                   setOpen={setOpen}
                   getButtonText={getButtonText(option, style!, true)}
                   style={style}
-                  handleSelect={handleSelect}
+                  handleSelect={handlePopOverSelect}
                   isCustomValue={isCustomValue}
                   isCaptilized={true}
                   option={option}

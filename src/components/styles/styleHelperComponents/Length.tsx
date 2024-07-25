@@ -10,7 +10,7 @@ type Length = {
   currentUnit: string;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSelect: (newValue: string) => void;
+  handleUnitSelect: (newValue: string) => void;
   isCustomValue: boolean;
 };
 export function Length({
@@ -20,7 +20,7 @@ export function Length({
   currentUnit,
   open,
   setOpen,
-  handleSelect,
+  handleUnitSelect,
   isCustomValue,
 }: Length) {
   return (
@@ -36,7 +36,7 @@ export function Length({
         setOpen={setOpen}
         getButtonText={getButtonText(currentUnit, LengthUnit, false)}
         style={LengthUnit}
-        handleSelect={handleSelect}
+        handleSelect={handleUnitSelect}
         isCustomValue={isCustomValue}
         isCaptilized={false}
         option={currentUnit != "length" ? currentUnit : "px"}
