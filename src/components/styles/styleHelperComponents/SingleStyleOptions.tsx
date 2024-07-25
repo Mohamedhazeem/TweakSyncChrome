@@ -1,18 +1,5 @@
 import { useEffect, useState } from "react";
 import { useStyleContext } from "@/utils/elementContext";
-// import { Check, ChevronsUpDown } from "lucide-react";
-// import { cn } from "@/lib/utils";
-// import { Button } from "@/components/ui/button";
-// import {
-//   Command,
-//   CommandEmpty,
-//   CommandGroup,
-//   CommandInput,
-//   CommandItem,
-//   CommandList,
-// } from "@/components/ui/command";
-// import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-// import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { IStyleContext, Style } from "@/types/styleTypes";
 import { PopOver } from "./PopOver";
 import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
@@ -20,13 +7,12 @@ import { globalCssOptions } from "@/utils/styles/globalStyles";
 type Options = {
   style: Style;
   customOptionsCallback: (newValue: string | boolean) => void;
+  isCapitalized?: boolean;
 };
-function SingleStyleOptions({ style, customOptionsCallback }: Options) {
+function SingleStyleOptions({ style, isCapitalized, customOptionsCallback }: Options) {
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState("");
   const { selector, onChange } = useStyleContext() as IStyleContext;
-  //   const options = context!.attribute.options;
-  //   const nameForTitle = context!.attribute.nameForTitle;
 
   useEffect(() => {
     if (style.value) {
@@ -35,7 +21,7 @@ function SingleStyleOptions({ style, customOptionsCallback }: Options) {
   }, [selector, style]);
 
   const handleSelect = (newValue: string) => {
-    if (newValue == "custom") {
+    if (newValue == "color") {
       customOptionsCallback(true);
     } else {
       customOptionsCallback(false);
@@ -108,11 +94,11 @@ function SingleStyleOptions({ style, customOptionsCallback }: Options) {
     <PopOver
       open={open}
       setOpen={setOpen}
-      getButtonText={getButtonText(option, style, false)}
+      getButtonText={getButtonText(option, style, isCapitalized || false)}
       style={style}
       handleSelect={handleSelect}
       isCustomValue={isCustomValue}
-      isCaptilized={true}
+      isCaptilized={isCapitalized}
       option={option}
     />
   );

@@ -3,9 +3,9 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 function AlignProperties() {
   return (
     <div>
-      <SingleStyleOptionSetter name="align-content" />
-      <SingleStyleOptionSetter name="align-items" />
-      <SingleStyleOptionSetter name="align-self" />
+      <SingleStyleOptionSetter name="align-content" isCapitalized={true} />
+      <SingleStyleOptionSetter name="align-items" isCapitalized={true} />
+      <SingleStyleOptionSetter name="align-self" isCapitalized={true} />
     </div>
   );
 }

@@ -5,8 +5,9 @@ import SingleStyleOptions from "../styleHelperComponents/SingleStyleOptions";
 import StyleLayout from "../StyleLayout";
 type SingleStyleOptionSetterProps = {
   name: string;
+  isCapitalized?: boolean;
 };
-const SingleStyleOptionSetter = ({ name }: SingleStyleOptionSetterProps) => {
+const SingleStyleOptionSetter = ({ name, isCapitalized }: SingleStyleOptionSetterProps) => {
   const { selector, group, onChange } = useStyleContext() as IStyleContext;
 
   const [, setOption] = useState<string>("");
@@ -36,7 +37,11 @@ const SingleStyleOptionSetter = ({ name }: SingleStyleOptionSetterProps) => {
       {style && (
         <StyleLayout style={style}>
           <span className="flex flex-col gap-1">
-            <SingleStyleOptions style={style} customOptionsCallback={handleSingleStyleOption} />
+            <SingleStyleOptions
+              style={style}
+              isCapitalized={isCapitalized}
+              customOptionsCallback={handleSingleStyleOption}
+            />
           </span>
         </StyleLayout>
       )}

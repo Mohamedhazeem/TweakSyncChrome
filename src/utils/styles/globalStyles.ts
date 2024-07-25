@@ -160,14 +160,6 @@ const BackgroundGroup: StyleGroup = {
   ],
   groups: [
     {
-      name: "background",
-      nameForTitle: "Background",
-      type: "string",
-      description: "Shorthand for setting all background properties",
-      value: "",
-      options: [...customAndGlobalCssOptions],
-    },
-    {
       name: "background-attachment",
       nameForTitle: "Background Attachment",
       type: "string",
@@ -218,7 +210,7 @@ const BackgroundGroup: StyleGroup = {
       type: "string",
       description: "Color styles for the element's background",
       value: "",
-      options: [...customAndGlobalCssOptions],
+      options: ["color", ...globalCssOptions],
     },
     {
       name: "background-image",
@@ -327,7 +319,7 @@ const ColorGroup: StyleGroup = {
       type: "string",
       description: "Defines the color of the text for the element.",
       value: "",
-      options: [...customAndGlobalCssOptions],
+      options: ["color", ...globalCssOptions],
     },
     {
       name: "color-scheme",
@@ -640,7 +632,56 @@ const PaddingGroup: StyleGroup = {
     },
   ],
 };
-
+const OutlineGroup: StyleGroup = {
+  groupName: "Outline Properties",
+  propertyNames: ["outline-color", "outline-offset", "outline-style", "outline-width"],
+  groups: [
+    {
+      name: "outline-color",
+      nameForTitle: "Outline Color",
+      type: "color",
+      description: "Sets the color of an element's outline.",
+      value: "",
+      options: ["color", ...globalCssOptions],
+    },
+    {
+      name: "outline-offset",
+      nameForTitle: "Outline Offset",
+      type: "string",
+      description: "Sets the space between an outline and the edge or border of an element.",
+      value: "",
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "outline-style",
+      nameForTitle: "Outline Style",
+      type: "string",
+      description: "Sets the style of an element's outline.",
+      value: "",
+      options: [
+        "auto",
+        "none",
+        "dotted",
+        "dashed",
+        "solid",
+        "double",
+        "groove",
+        "ridge",
+        "inset",
+        "outset",
+        ...globalCssOptions,
+      ],
+    },
+    {
+      name: "outline-width",
+      nameForTitle: "Outline Width",
+      type: "string",
+      description: "Sets the width of an element's outline.",
+      value: "",
+      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
+    },
+  ],
+};
 const WidthGroup: StyleGroup = {
   groupName: "Width Properties",
   propertyNames: ["width", "min-width", "max-width"],
@@ -682,5 +723,6 @@ export const STYLE_GROUP: StyleGroup[] = [
   InlineSizeGroup,
   MarginGroup,
   PaddingGroup,
+  OutlineGroup,
   WidthGroup,
 ];

@@ -10,10 +10,10 @@ function BackgroundProperties() {
     <div>
       <MultiStyleOptionSetter name="background-attachment" />
       <MultiStyleOptionSetter name="background-blend-mode" />
-      <SingleStyleOptionSetter name="background-clip" />
+      <SingleStyleOptionSetter name="background-clip" isCapitalized={true} />
       <Color colorProp="background-color" />
       {/* <MultiStyleOptionSetter name="background-image" /> */}
-      <SingleStyleOptionSetter name="background-origin" />
+      <SingleStyleOptionSetter name="background-origin" isCapitalized={true} />
       <Position name="background-position-x" />
       <Position name="background-position-y" />
       <MultiStyleOptionSetter name="background-repeat" />

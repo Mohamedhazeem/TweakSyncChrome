@@ -5,7 +5,7 @@ function ColorProperties() {
   return (
     <div>
       <Color colorProp="color" />
-      <SingleStyleOptionSetter name="color-scheme" />
+      <SingleStyleOptionSetter name="color-scheme" isCapitalized={true} />
     </div>
   );
 }
