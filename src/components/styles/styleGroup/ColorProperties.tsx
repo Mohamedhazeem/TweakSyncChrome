@@ -1,7 +1,7 @@
 import Color from "../styleComponents/Color";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 
-function ColorGroup() {
+function ColorProperties() {
   return (
     <div>
       <Color colorProp="color" />
@@ -10,4 +10,4 @@ function ColorGroup() {
   );
 }
 
-export default ColorGroup;
+export default ColorProperties;

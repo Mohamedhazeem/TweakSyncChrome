@@ -392,6 +392,36 @@ const FlexGroup: StyleGroup = {
     },
   ],
 };
+const HeightGroup: StyleGroup = {
+  groupName: "Height Properties",
+  propertyNames: ["height", "min-height", "max-height"],
+  groups: [
+    {
+      name: "height",
+      nameForTitle: "Height",
+      type: "string",
+      description: "Sets the height of an element.",
+      value: "",
+      options: ["auto", "length", "max-content", "min-content", "fit-content", ...globalCssOptions],
+    },
+    {
+      name: "min-height",
+      nameForTitle: "Minimum Height",
+      type: "string",
+      description: "Sets the minimum height of an element.",
+      value: "",
+      options: ["auto", "length", "max-content", "min-content", "fit-content", ...globalCssOptions],
+    },
+    {
+      name: "max-height",
+      nameForTitle: "Maximum Height",
+      type: "string",
+      description: "Sets the maximum height of an element.",
+      value: "",
+      options: ["none", "length", "max-content", "min-content", "fit-content", ...globalCssOptions],
+    },
+  ],
+};
 const MarginGroup: StyleGroup = {
   groupName: "Margin Properties",
   propertyNames: [
@@ -551,11 +581,44 @@ const PaddingGroup: StyleGroup = {
   ],
 };
 
+const WidthGroup: StyleGroup = {
+  groupName: "Width Properties",
+  propertyNames: ["width", "min-width", "max-width"],
+  groups: [
+    {
+      name: "width",
+      nameForTitle: "Width",
+      type: "string",
+      description: "Sets the width of an element.",
+      value: "",
+      options: ["auto", "length", "max-content", "min-content", "fit-content", ...globalCssOptions],
+    },
+    {
+      name: "min-width",
+      nameForTitle: "Minimum Width",
+      type: "string",
+      description: "Sets the minimum width of an element.",
+      value: "",
+      options: ["auto", "length", "max-content", "min-content", "fit-content", ...globalCssOptions],
+    },
+    {
+      name: "max-width",
+      nameForTitle: "Maximum Width",
+      type: "string",
+      description: "Sets the maximum width of an element.",
+      value: "",
+      options: ["none", "length", "max-content", "min-content", "fit-content", ...globalCssOptions],
+    },
+  ],
+};
+
 export const STYLE_GROUP: StyleGroup[] = [
   AlignGroup,
   BackgroundGroup,
   ColorGroup,
   FlexGroup,
+  HeightGroup,
   MarginGroup,
   PaddingGroup,
+  WidthGroup,
 ];

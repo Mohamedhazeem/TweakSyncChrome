@@ -1,7 +1,7 @@
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 import Position from "../styleComponents/Position";
 import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
-function FlexGroup() {
+function FlexProperties() {
   return (
     <div>
       <Position name="flex-basis" />
@@ -14,4 +14,4 @@ function FlexGroup() {
   );
 }
 
-export default FlexGroup;
+export default FlexProperties;

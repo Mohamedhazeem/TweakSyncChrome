@@ -48,7 +48,7 @@ const StyleLayoutParent: React.FC<StyleLayoutParentProps> = ({
                     className="bg-red-500 text-xs p-1 h-5 tracking-wider hover:bg-red-600"
                     onClick={() => handleClearGroup(group)}
                   >
-                    CLEAR
+                    Remove
                   </Button>
                 </CardTitle>
               </CardHeader>

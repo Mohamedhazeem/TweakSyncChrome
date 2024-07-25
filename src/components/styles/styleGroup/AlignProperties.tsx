@@ -1,6 +1,6 @@
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 
-function AlignGroup() {
+function AlignProperties() {
   return (
     <div>
       <SingleStyleOptionSetter name="align-content" />
@@ -10,4 +10,4 @@ function AlignGroup() {
   );
 }
 
-export default AlignGroup;
+export default AlignProperties;

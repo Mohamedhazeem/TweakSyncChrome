@@ -3,10 +3,9 @@ import Color from "../styleComponents/Color";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 import Position from "../styleComponents/Position";
 
-// background
 // background-image
 // background-position (add edge offset and multiple image positions)
-function BackgroundGroup() {
+function BackgroundProperties() {
   return (
     <div>
       <MultiStyleOptionSetter name="background-attachment" />
@@ -23,4 +22,4 @@ function BackgroundGroup() {
   );
 }
 
-export default BackgroundGroup;
+export default BackgroundProperties;
