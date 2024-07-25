@@ -471,6 +471,85 @@ const MarginGroup: StyleGroup = {
     },
   ],
 };
+const PaddingGroup: StyleGroup = {
+  groupName: "Padding Properties",
+  propertyNames: [
+    "padding-block-end",
+    "padding-block-start",
+    "padding-bottom",
+    "padding-inline-end",
+    "padding-inline-start",
+    "padding-left",
+    "padding-right",
+    "padding-top",
+  ],
+  groups: [
+    {
+      name: "padding-block-end",
+      nameForTitle: "Padding Block End",
+      type: "string",
+      description: "Defines the logical block-end padding of an element.",
+      value: "",
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "padding-block-start",
+      nameForTitle: "Padding Block Start",
+      type: "string",
+      description: "Defines the logical block-start padding of an element.",
+      value: "",
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "padding-bottom",
+      nameForTitle: "Padding Bottom",
+      type: "string",
+      description: "Sets the padding area on the bottom of an element.",
+      value: "",
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "padding-inline-end",
+      nameForTitle: "Padding Inline End",
+      type: "string",
+      description: "Defines the logical inline-end padding of an element.",
+      value: "",
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "padding-inline-start",
+      nameForTitle: "Padding Inline Start",
+      type: "string",
+      description: "Defines the logical inline-start padding of an element.",
+      value: "",
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "padding-left",
+      nameForTitle: "Padding Left",
+      type: "string",
+      description: "Sets the padding area on the left side of an element.",
+      value: "",
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "padding-right",
+      nameForTitle: "Padding Right",
+      type: "string",
+      description: "Sets the padding area on the right side of an element.",
+      value: "",
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "padding-top",
+      nameForTitle: "Padding Top",
+      type: "string",
+      description: "Sets the padding area on the top of an element.",
+      value: "",
+      options: ["length", ...globalCssOptions],
+    },
+  ],
+};
 
 export const STYLE_GROUP: StyleGroup[] = [
   AlignGroup,
@@ -478,4 +557,5 @@ export const STYLE_GROUP: StyleGroup[] = [
   ColorGroup,
   FlexGroup,
   MarginGroup,
+  PaddingGroup,
 ];
