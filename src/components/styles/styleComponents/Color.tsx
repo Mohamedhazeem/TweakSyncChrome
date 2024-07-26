@@ -62,7 +62,11 @@ const Color = ({ colorProp }: ColorPropType) => {
       {style && (
         <StyleLayout style={style}>
           <span key={`${selector}-${colorProp}`} className="flex flex-col gap-1">
-            <SingleStyleOptions style={style} customOptionsCallback={handleShowColor} />
+            <SingleStyleOptions
+              style={style}
+              customOptionsCallback={handleShowColor}
+              isCapitalized={true}
+            />
             {showColor && (
               <div className="flex flex-col gap-1">
                 <SketchPicker

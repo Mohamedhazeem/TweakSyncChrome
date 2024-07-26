@@ -20,8 +20,8 @@ export default function Position({ name, isRange }: PositionType) {
   const [option, setOption] = useState("");
 
   useEffect(() => {
-    if (!option && style!.value) {
-      const initialOption = getOptionFromValue(style!.value);
+    if (!option && style?.value) {
+      const initialOption = getOptionFromValue(style.value);
       setOption(initialOption);
     }
   }, [selector, style, option]);

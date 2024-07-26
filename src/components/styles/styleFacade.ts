@@ -10,6 +10,7 @@ import MarginProperties from "./styleGroup/MarginProperties";
 import OutlineProperties from "./styleGroup/OutlineProperties";
 import PaddingProperties from "./styleGroup/PaddingProperties";
 import PositionProperties from "./styleGroup/PositionProperties";
+import TextProperties from "./styleGroup/TextProperties";
 import WidthProperties from "./styleGroup/WidthProperties";
 
 export const styleComponents: {
@@ -26,6 +27,7 @@ export const styleComponents: {
   "Margin Properties": MarginProperties,
   "Padding Properties": PaddingProperties,
   "Position Properties": PositionProperties,
+  "Text Properties": TextProperties,
   "Outline Properties": OutlineProperties,
   "Width Properties": WidthProperties,
 };

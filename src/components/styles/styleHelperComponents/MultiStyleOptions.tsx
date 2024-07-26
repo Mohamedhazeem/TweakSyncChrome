@@ -25,7 +25,6 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({ style, customOpti
   const [optionCount, setOptionCount] = useState<number>(0);
   const nameForTitle = style.nameForTitle;
   const options = style.options;
-  // const functions = style.functions;
   const maxOptionCounts = style.maxOptionCounts;
 
   useEffect(() => {
