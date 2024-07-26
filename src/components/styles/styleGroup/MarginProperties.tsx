@@ -11,10 +11,10 @@ function MarginProperties() {
   "margin-top";
   return (
     <div>
+      <Position name="margin-top" />
+      <Position name="margin-right" />
       <Position name="margin-bottom" />
       <Position name="margin-left" />
-      <Position name="margin-right" />
-      <Position name="margin-top" />
       <Position name="margin-block-end" />
       <Position name="margin-block-start" />
       <Position name="margin-inline-end" />
