@@ -40,7 +40,7 @@ const StyleLayoutParent: React.FC<StyleLayoutParentProps> = ({
           {Object.entries(groupedProperties).map(([groupName, group]) => (
             <React.Fragment key={`${selector}-${groupName}`}>
               <CardHeader className={`p-2 py-1 rounded bg-blue-400`}>
-                <CardTitle className="text-lg font-bold flex justify-between items-center">
+                <CardTitle className="text-lg font-semibold flex justify-between items-center">
                   {groupName}
                   <Button
                     size="sm"

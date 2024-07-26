@@ -33,7 +33,6 @@ export const LengthUnit: Style = {
   value: "",
   options: [...lengthUnits],
 };
-
 export const GLOBAL_STYLES: Style[] = [
   {
     name: "align-content",
@@ -57,6 +56,7 @@ export const GLOBAL_STYLES: Style[] = [
     value: "",
   },
 ];
+
 const AlignGroup: StyleGroup = {
   groupName: "Alignment Properties",
   propertyNames: ["align-content", "align-items", "align-self"],
@@ -332,6 +332,64 @@ const ColorGroup: StyleGroup = {
     },
   ],
 };
+const DisplayGroup: StyleGroup = {
+  groupName: "Display Properties",
+  propertyNames: ["display", "visibility", "opacity"],
+  groups: [
+    {
+      name: "display",
+      nameForTitle: "Display",
+      type: "string",
+      description: "Specifies the display behavior of an element.",
+      value: "",
+      options: [
+        "block",
+        "inline",
+        "inline-block",
+        "flex",
+        "inline-flex",
+        "grid",
+        "inline-grid",
+        "flow-root",
+        "none",
+        "contents",
+        "table",
+        "table-row",
+        "table-cell",
+        "table-row-group",
+        "table-header-group",
+        "table-footer-group",
+        "table-column-group",
+        "table-column",
+        "table-caption",
+        "list-item",
+        "ruby",
+        "ruby-base",
+        "ruby-text",
+        "ruby-base-container",
+        "ruby-text-container",
+        ...globalCssOptions,
+      ],
+    },
+    {
+      name: "visibility",
+      nameForTitle: "Visibility",
+      type: "string",
+      description: "Specifies whether an element is visible or not.",
+      value: "",
+      options: ["visible", "hidden", "collapse", ...globalCssOptions],
+    },
+    {
+      name: "opacity",
+      nameForTitle: "Opacity",
+      type: "string",
+      description: "Specifies the opacity level of an element.",
+      value: "",
+      options: ["number", ...globalCssOptions],
+    },
+  ],
+};
+
 const FlexGroup: StyleGroup = {
   groupName: "Flex Properties",
   propertyNames: [
@@ -718,6 +776,7 @@ export const STYLE_GROUP: StyleGroup[] = [
   BackgroundGroup,
   BlockSizeGroup,
   ColorGroup,
+  DisplayGroup,
   FlexGroup,
   HeightGroup,
   InlineSizeGroup,

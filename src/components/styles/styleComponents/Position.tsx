@@ -10,8 +10,9 @@ import { globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
 
 type PositionType = {
   name: string;
+  isRange?: boolean;
 };
-export default function Position({ name }: PositionType) {
+export default function Position({ name, isRange }: PositionType) {
   const { selector, onChange, group } = useStyleContext() as IStyleContext;
 
   const style = group?.groups.find((style) => style.name === name);
@@ -80,6 +81,7 @@ export default function Position({ name }: PositionType) {
                   optionType={option}
                   value={value}
                   unit={unit}
+                  isRange={isRange}
                   customOptionsCallback={handleValueChange}
                 />
               }

@@ -7,6 +7,7 @@ type PositionUnitType = {
   optionType: string;
   value: string;
   unit: string;
+  isRange?: boolean;
   customOptionsCallback: (newValue: string) => void;
 };
 
@@ -14,6 +15,7 @@ export function PositionUnits({
   optionType,
   value,
   unit,
+  isRange,
   customOptionsCallback,
 }: PositionUnitType) {
   const [number, setNumber] = useState<string>(value);
@@ -22,7 +24,7 @@ export function PositionUnits({
 
   useEffect(() => {
     setNumber(value);
-  }, [value]);
+  }, [value, isRange]);
 
   useEffect(() => {
     if (optionType === "length") {
@@ -67,7 +69,7 @@ export function PositionUnits({
       isCustomValue,
     });
   } else if (optionType === "number") {
-    return NumberInput({ number, setNumber, customOptionsCallback });
+    return NumberInput({ number, setNumber, customOptionsCallback, isRange });
   }
   return <div></div>;
 }
