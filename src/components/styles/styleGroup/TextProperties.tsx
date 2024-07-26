@@ -1,7 +1,6 @@
 // "text-shadow" (update in future versions)
 // "text-wrap-mode" not supported on chrome
 // "text-wrap-style" not supported on chrome
-// "text-size-adjust" not working
 
 import Color from "../styleComponents/Color";
 import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
