@@ -16,7 +16,7 @@ export function NumberInput({
   return (
     <div className="flex gap-2 items-center w-full">
       <Input
-        className="flex-grow p-0"
+        className={`${isRange ? "p-0" : ""}`}
         type={`${isRange ? "range" : "number"}`}
         min={`${isRange ? "0" : undefined}`}
         max={`${isRange ? "1" : undefined}`}
