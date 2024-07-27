@@ -16,6 +16,7 @@ import MarginProperties from "./styleGroup/MarginProperties";
 import OutlineProperties from "./styleGroup/OutlineProperties";
 import OverFlowProperties from "./styleGroup/OverFlowProperties";
 import PaddingProperties from "./styleGroup/PaddingProperties";
+import PlaceProperties from "./styleGroup/PlaceProperties";
 import PositionProperties from "./styleGroup/PositionProperties";
 import TextProperties from "./styleGroup/TextProperties";
 import WhiteSpaceProperties from "./styleGroup/WhiteSpaceProperties";
@@ -41,6 +42,7 @@ export const styleComponents: {
   "Line Properties": LineProperties,
   "Margin Properties": MarginProperties,
   "Padding Properties": PaddingProperties,
+  "Place Properties": PlaceProperties,
   "Position Properties": PositionProperties,
   "Text Properties": TextProperties,
   "Outline Properties": OutlineProperties,
