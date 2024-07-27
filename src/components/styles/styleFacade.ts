@@ -6,6 +6,7 @@ import DisplayProperties from "./styleGroup/DisplayProperties";
 import FlexProperties from "./styleGroup/FlexProperties";
 import HeightProperties from "./styleGroup/HeightProperties";
 import InlineSizeProperties from "./styleGroup/InlineSizeProperties";
+import JustifyProperties from "./styleGroup/JustifyProperties";
 import MarginProperties from "./styleGroup/MarginProperties";
 import OutlineProperties from "./styleGroup/OutlineProperties";
 import PaddingProperties from "./styleGroup/PaddingProperties";
@@ -24,6 +25,7 @@ export const styleComponents: {
   "Flex Properties": FlexProperties,
   "Height Properties": HeightProperties,
   "Inline-Size Properties": InlineSizeProperties,
+  "Justify Properties": JustifyProperties,
   "Margin Properties": MarginProperties,
   "Padding Properties": PaddingProperties,
   "Position Properties": PositionProperties,

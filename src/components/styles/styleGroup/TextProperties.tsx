@@ -1,12 +1,10 @@
-// "text-shadow" (update in future versions)
-// "text-wrap-mode" not supported on chrome
-// "text-wrap-style" not supported on chrome
-
 import Color from "../styleComponents/Color";
 import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
 import Position from "../styleComponents/Position";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
-
+// "text-shadow" (update in future versions)
+// "text-wrap-mode" not supported on chrome
+// "text-wrap-style" not supported on chrome
 function TextProperties() {
   return (
     <div>
