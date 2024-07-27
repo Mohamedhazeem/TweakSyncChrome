@@ -14,6 +14,7 @@ import PaddingProperties from "./styleGroup/PaddingProperties";
 import PositionProperties from "./styleGroup/PositionProperties";
 import TextProperties from "./styleGroup/TextProperties";
 import WidthProperties from "./styleGroup/WidthProperties";
+import WordProperties from "./styleGroup/WordProperties";
 
 export const styleComponents: {
   [key: string]: React.ComponentType;
@@ -34,4 +35,5 @@ export const styleComponents: {
   "Text Properties": TextProperties,
   "Outline Properties": OutlineProperties,
   "Width Properties": WidthProperties,
+  "Word Properties": WordProperties,
 };
