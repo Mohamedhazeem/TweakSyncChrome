@@ -417,6 +417,97 @@ const ColorGroup: StyleGroup = {
     },
   ],
 };
+const ColumnGroup: StyleGroup = {
+  groupName: "Column Properties",
+  propertyNames: [
+    "column-count",
+    "column-fill",
+    "column-gap",
+    "column-rule-color",
+    "column-rule-style",
+    "column-rule-width",
+    "column-span",
+    "column-width",
+  ],
+  groups: [
+    {
+      name: "column-count",
+      nameForTitle: "Column Count",
+      type: "number",
+      description: "Specifies the number of columns an element should be divided into.",
+      value: "",
+      options: ["auto", "number", ...globalCssOptions],
+    },
+    {
+      name: "column-fill",
+      nameForTitle: "Column Fill",
+      type: "string",
+      description: "Specifies how the columns are filled.",
+      value: "",
+      options: ["auto", "balance", ...globalCssOptions],
+    },
+    {
+      name: "column-gap",
+      nameForTitle: "Column Gap",
+      type: "string",
+      description: "Specifies the gap between columns.",
+      value: "",
+      options: ["length", "normal", ...globalCssOptions],
+    },
+    {
+      name: "column-rule-color",
+      nameForTitle: "Column Rule Color",
+      type: "string",
+      description: "Specifies the color of the rule between columns.",
+      value: "",
+      options: ["color", ...globalCssOptions],
+    },
+    {
+      name: "column-rule-style",
+      nameForTitle: "Column Rule Style",
+      type: "string",
+      description: "Specifies the style of the rule between columns.",
+      value: "",
+      options: [
+        "none",
+        "hidden",
+        "solid",
+        "dotted",
+        "dashed",
+        "double",
+        "groove",
+        "ridge",
+        "inset",
+        "outset",
+        ...globalCssOptions,
+      ],
+    },
+    {
+      name: "column-rule-width",
+      nameForTitle: "Column Rule Width",
+      type: "string",
+      description: "Specifies the width of the rule between columns.",
+      value: "",
+      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
+    },
+    {
+      name: "column-span",
+      nameForTitle: "Column Span",
+      type: "string",
+      description: "Specifies how many columns an element should span.",
+      value: "",
+      options: ["none", "all", ...globalCssOptions],
+    },
+    {
+      name: "column-width",
+      nameForTitle: "Column Width",
+      type: "string",
+      description: "Specifies the ideal width of the columns.",
+      value: "",
+      options: ["auto", "length", ...globalCssOptions],
+    },
+  ],
+};
 const ContainGroup: StyleGroup = {
   groupName: "Contain Properties",
   propertyNames: [
@@ -480,6 +571,7 @@ const ContainGroup: StyleGroup = {
     },
   ],
 };
+
 const DisplayGroup: StyleGroup = {
   groupName: "Display Properties",
   propertyNames: ["display", "visibility", "opacity"],
@@ -1477,6 +1569,7 @@ export const STYLE_GROUP: StyleGroup[] = [
   BoxGroup,
   BreakGroup,
   ColorGroup,
+  ColumnGroup,
   ContainGroup,
   DisplayGroup,
   FlexGroup,
