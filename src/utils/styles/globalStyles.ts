@@ -13,6 +13,7 @@ export const lengthUnits = [
   "px",
   "%",
   "em",
+  "fr",
   "rem",
   "cm",
   "mm",
