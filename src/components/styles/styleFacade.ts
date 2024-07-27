@@ -2,6 +2,7 @@ import AlignProperties from "./styleGroup/AlignProperties";
 import BackgroundProperties from "./styleGroup/BackgroundProperties";
 import BlockSizeProperties from "./styleGroup/BlockSizeProperties";
 import BoxProperties from "./styleGroup/BoxProperties";
+import BreakProperties from "./styleGroup/BreakProperties";
 import ColorProperties from "./styleGroup/ColorProperties";
 import DisplayProperties from "./styleGroup/DisplayProperties";
 import FlexProperties from "./styleGroup/FlexProperties";
@@ -25,6 +26,7 @@ export const styleComponents: {
   "Background Properties": BackgroundProperties,
   "Block-Size Properties": BlockSizeProperties,
   "Box Properties": BoxProperties,
+  "Break Properties": BreakProperties,
   "Color Properties": ColorProperties,
   "Display Properties": DisplayProperties,
   "Flex Properties": FlexProperties,
