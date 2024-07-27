@@ -18,6 +18,7 @@ import OverFlowProperties from "./styleGroup/OverFlowProperties";
 import PaddingProperties from "./styleGroup/PaddingProperties";
 import PositionProperties from "./styleGroup/PositionProperties";
 import TextProperties from "./styleGroup/TextProperties";
+import WhiteSpaceProperties from "./styleGroup/WhiteSpaceProperties";
 import WidthProperties from "./styleGroup/WidthProperties";
 import WordProperties from "./styleGroup/WordProperties";
 
@@ -44,6 +45,7 @@ export const styleComponents: {
   "Text Properties": TextProperties,
   "Outline Properties": OutlineProperties,
   "Overflow Properties": OverFlowProperties,
+  "White Space Properties": WhiteSpaceProperties,
   "Width Properties": WidthProperties,
   "Word Properties": WordProperties,
 };
