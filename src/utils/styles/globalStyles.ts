@@ -1803,6 +1803,27 @@ const WordGroup: StyleGroup = {
     },
   ],
 };
+const WritingModeGroup: StyleGroup = {
+  groupName: "Writing Mode",
+  propertyNames: ["writing-mode"],
+  groups: [
+    {
+      name: "writing-mode",
+      nameForTitle: "Writing Mode",
+      type: "string",
+      description: "Defines the direction and orientation of text.",
+      value: "",
+      options: [
+        "horizontal-tb",
+        "vertical-rl",
+        "vertical-lr",
+        "sideways-rl",
+        "sideways-lr",
+        ...globalCssOptions,
+      ],
+    },
+  ],
+};
 
 export const STYLE_GROUP: StyleGroup[] = [
   AlignGroup,
@@ -1830,4 +1851,5 @@ export const STYLE_GROUP: StyleGroup[] = [
   WhiteSpaceGroup,
   WidthGroup,
   WordGroup,
+  WritingModeGroup,
 ];

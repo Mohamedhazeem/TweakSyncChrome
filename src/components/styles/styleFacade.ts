@@ -23,6 +23,7 @@ import TextProperties from "./styleGroup/TextProperties";
 import WhiteSpaceProperties from "./styleGroup/WhiteSpaceProperties";
 import WidthProperties from "./styleGroup/WidthProperties";
 import WordProperties from "./styleGroup/WordProperties";
+import WritingMode from "./styleGroup/WritingMode";
 
 export const styleComponents: {
   [key: string]: React.ComponentType;
@@ -52,4 +53,5 @@ export const styleComponents: {
   "White Space Properties": WhiteSpaceProperties,
   "Width Properties": WidthProperties,
   "Word Properties": WordProperties,
+  "writing-mode": WritingMode,
 };
