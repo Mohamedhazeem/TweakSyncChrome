@@ -12,7 +12,7 @@ function BackgroundProperties() {
       <MultiStyleOptionSetter name="background-blend-mode" />
       <SingleStyleOptionSetter name="background-clip" isCapitalized={true} />
       <Color colorProp="background-color" />
-      {/* <MultiStyleOptionSetter name="background-image" /> */}
+      <SingleStyleOptionSetter name="background-image" isCapitalized={true} />
       <SingleStyleOptionSetter name="background-origin" isCapitalized={true} />
       <Position name="background-position-x" />
       <Position name="background-position-y" />

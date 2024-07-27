@@ -12,6 +12,7 @@ import HeightProperties from "./styleGroup/HeightProperties";
 import InlineSizeProperties from "./styleGroup/InlineSizeProperties";
 import JustifyProperties from "./styleGroup/JustifyProperties";
 import LineProperties from "./styleGroup/LineProperties";
+import ListProperties from "./styleGroup/ListProperties";
 import MarginProperties from "./styleGroup/MarginProperties";
 import OutlineProperties from "./styleGroup/OutlineProperties";
 import OverFlowProperties from "./styleGroup/OverFlowProperties";
@@ -40,6 +41,7 @@ export const styleComponents: {
   "Inline-Size Properties": InlineSizeProperties,
   "Justify Properties": JustifyProperties,
   "Line Properties": LineProperties,
+  "List Properties": ListProperties,
   "Margin Properties": MarginProperties,
   "Padding Properties": PaddingProperties,
   "Place Properties": PlaceProperties,
