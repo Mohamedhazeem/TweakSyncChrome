@@ -10,6 +10,7 @@ import JustifyProperties from "./styleGroup/JustifyProperties";
 import LineProperties from "./styleGroup/LineProperties";
 import MarginProperties from "./styleGroup/MarginProperties";
 import OutlineProperties from "./styleGroup/OutlineProperties";
+import OverFlowProperties from "./styleGroup/OverFlowProperties";
 import PaddingProperties from "./styleGroup/PaddingProperties";
 import PositionProperties from "./styleGroup/PositionProperties";
 import TextProperties from "./styleGroup/TextProperties";
@@ -34,6 +35,7 @@ export const styleComponents: {
   "Position Properties": PositionProperties,
   "Text Properties": TextProperties,
   "Outline Properties": OutlineProperties,
+  "Overflow Properties": OverFlowProperties,
   "Width Properties": WidthProperties,
   "Word Properties": WordProperties,
 };
