@@ -53,5 +53,5 @@ export const styleComponents: {
   "White Space Properties": WhiteSpaceProperties,
   "Width Properties": WidthProperties,
   "Word Properties": WordProperties,
-  "writing-mode": WritingMode,
+  "Writing Mode": WritingMode,
 };

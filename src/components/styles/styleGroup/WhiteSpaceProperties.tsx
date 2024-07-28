@@ -5,6 +5,7 @@ function WhiteSpaceProperties() {
     <div>
       <SingleStyleOptionSetter name="white-space" isCapitalized={true} />
       <SingleStyleOptionSetter name="white-space-collapse" isCapitalized={true} />
+      <SingleStyleOptionSetter name="text-wrap" isCapitalized={true} />
     </div>
   );
 }

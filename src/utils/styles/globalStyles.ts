@@ -304,10 +304,10 @@ const BlockSizeGroup: StyleGroup = {
 };
 const BoxGroup: StyleGroup = {
   groupName: "Box Properties",
-  propertyNames: ["box-decoration-break", "box-shadow", "box-sizing"],
+  propertyNames: ["-webkit-box-decoration-break", "box-shadow", "box-sizing"],
   groups: [
     {
-      name: "box-decoration-break",
+      name: "-webkit-box-decoration-break",
       nameForTitle: "Box Decoration Break",
       type: "string",
       description:
@@ -525,7 +525,6 @@ const ContainGroup: StyleGroup = {
       type: "string",
       description: "Specifies the extent of containment of an element.",
       value: "",
-      maxOptionCounts: 4,
       options: [
         "none",
         "strict",
@@ -544,7 +543,7 @@ const ContainGroup: StyleGroup = {
       type: "string",
       description: "Specifies the intrinsic block size of an element when containment is applied.",
       value: "",
-      options: ["auto", "length", "none", ...globalCssOptions],
+      options: ["length", "none", ...globalCssOptions],
     },
     {
       name: "contain-intrinsic-height",
@@ -552,7 +551,7 @@ const ContainGroup: StyleGroup = {
       type: "string",
       description: "Specifies the intrinsic height of an element when containment is applied.",
       value: "",
-      options: ["auto", "length", "none", ...globalCssOptions],
+      options: ["length", "none", ...globalCssOptions],
     },
     {
       name: "contain-intrinsic-inline-size",
@@ -560,7 +559,7 @@ const ContainGroup: StyleGroup = {
       type: "string",
       description: "Specifies the intrinsic inline size of an element when containment is applied.",
       value: "",
-      options: ["auto", "length", "none", ...globalCssOptions],
+      options: ["length", "none", ...globalCssOptions],
     },
     {
       name: "contain-intrinsic-width",
@@ -568,7 +567,7 @@ const ContainGroup: StyleGroup = {
       type: "string",
       description: "Specifies the intrinsic width of an element when containment is applied.",
       value: "",
-      options: ["auto", "length", "none", ...globalCssOptions],
+      options: ["length", "none", ...globalCssOptions],
     },
   ],
 };
@@ -862,7 +861,7 @@ const JustifyGroup: StyleGroup = {
 };
 const LineGroup: StyleGroup = {
   groupName: "Line Properties",
-  propertyNames: ["line-break", "line-height", "line-height-step"],
+  propertyNames: ["line-break", "-webkit-line-clamp", "line-height", "line-height-step"],
   groups: [
     {
       name: "line-break",
@@ -871,6 +870,15 @@ const LineGroup: StyleGroup = {
       description: "Specifies how or if to break lines within text.",
       value: "",
       options: ["auto", "loose", "normal", "strict", "anywhere", ...globalCssOptions],
+    },
+    {
+      name: "-webkit-line-clamp",
+      nameForTitle: "Line Clamp",
+      type: "string",
+      description:
+        "Sets the amount of space used for lines, such as in the case of multiple lines of text.",
+      value: "",
+      options: ["number", ...globalCssOptions],
     },
     {
       name: "line-height",

@@ -6,6 +6,7 @@ function LineProperties() {
   return (
     <div>
       <SingleStyleOptionSetter name="line-break" isCapitalized={true} />
+      <Position name="-webkit-line-clamp" />
       <Position name="line-height" />
     </div>
   );

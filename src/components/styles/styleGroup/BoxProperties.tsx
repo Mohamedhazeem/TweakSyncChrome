@@ -4,7 +4,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 function BoxProperties() {
   return (
     <div>
-      <SingleStyleOptionSetter name="box-decoration-break" isCapitalized={true} />
+      <SingleStyleOptionSetter name="-webkit-box-decoration-break" isCapitalized={true} />
       <SingleStyleOptionSetter name="box-sizing" isCapitalized={true} />
     </div>
   );

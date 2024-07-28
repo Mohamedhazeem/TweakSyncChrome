@@ -1,10 +1,10 @@
-import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
 import Position from "../styleComponents/Position";
+import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 
 function ContainProperties() {
   return (
     <div>
-      <MultiStyleOptionSetter name="contain" />
+      <SingleStyleOptionSetter name="contain" isCapitalized={true} />
       <Position name="contain-intrinsic-block-size" />
       <Position name="contain-intrinsic-inline-size" />
       <Position name="contain-intrinsic-height" />
