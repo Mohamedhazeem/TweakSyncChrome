@@ -11,7 +11,6 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
 import { ElementStyles } from "@/types/elementTypes";
 import { GLOBAL_STYLES } from "@/utils/styles/globalStyles";
@@ -102,7 +101,7 @@ function AddStyleProperty({ selector, setStyles, addStyleProperty }: AddStylePro
                     value={style.name}
                     onSelect={() => handleSelect(style.name)}
                   >
-                    {capitalizeFirstLetter(style.name)}
+                    {style.nameForTitle}
                   </CommandItem>
                   <CommandSeparator />
                 </div>

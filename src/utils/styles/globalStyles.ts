@@ -37,23 +37,132 @@ export const LengthUnit: Style = {
 export const GLOBAL_STYLES: Style[] = [
   {
     name: "align-content",
-    description:
-      "Aligns the flex container's lines within the flex container when there is extra space on the cross-axis",
+    nameForTitle: "Alignment Properties",
     value: "",
   },
   {
     name: "background-color",
-    description: "Color Styles for the element",
+    nameForTitle: "Background Properties",
+    value: "",
+  },
+  {
+    name: "block-size",
+    nameForTitle: "Block-Size Properties",
+    value: "",
+  },
+  {
+    name: "break-after",
+    nameForTitle: "Break Properties",
     value: "",
   },
   {
     name: "color",
-    description: "Color Styles for the element",
+    nameForTitle: "Color Properties",
     value: "",
   },
   {
-    name: "color-scheme",
-    description: "Color Styles for the element",
+    name: "column-count",
+    nameForTitle: "Column Properties",
+    value: "",
+  },
+  {
+    name: "contain",
+    nameForTitle: "Contain Properties",
+    value: "",
+  },
+  {
+    name: "display",
+    nameForTitle: "Display Properties",
+    value: "",
+  },
+  {
+    name: "display",
+    nameForTitle: "Display Properties",
+    value: "",
+  },
+  {
+    name: "flex-basis",
+    nameForTitle: "Flex Properties",
+    value: "",
+  },
+  {
+    name: "height",
+    nameForTitle: "Height Properties",
+    value: "",
+  },
+  {
+    name: "inline-size",
+    nameForTitle: "Inline-Size Properties",
+    value: "",
+  },
+  {
+    name: "justify-content",
+    nameForTitle: "Justify Properties",
+    value: "",
+  },
+  {
+    name: "line-break",
+    nameForTitle: "Line Properties",
+    value: "",
+  },
+  {
+    name: "list-style-image",
+    nameForTitle: "List Properties",
+    value: "",
+  },
+  {
+    name: "margin-top",
+    nameForTitle: "Margin Properties",
+    value: "",
+  },
+  {
+    name: "outline-color",
+    nameForTitle: "Outline Properties",
+    value: "",
+  },
+  {
+    name: "overflow-anchor",
+    nameForTitle: "Overflow Properties",
+    value: "",
+  },
+  {
+    name: "padding-top",
+    nameForTitle: "Padding Properties",
+    value: "",
+  },
+  {
+    name: "place-content",
+    nameForTitle: "Place Properties",
+    value: "",
+  },
+  {
+    name: "position",
+    nameForTitle: "Position Properties",
+    value: "",
+  },
+  {
+    name: "text-align",
+    nameForTitle: "Text Properties",
+    value: "",
+  },
+  {
+    name: "white-space",
+    nameForTitle: "White-Space Properties",
+    value: "",
+  },
+  {
+    name: "width",
+    nameForTitle: "Width Properties",
+    value: "",
+  },
+  {
+    name: "word-break",
+    nameForTitle: "Word Properties",
+    value: "",
+  },
+  {
+    name: "writing-mode",
+    nameForTitle: "Writing Mode",
     value: "",
   },
 ];

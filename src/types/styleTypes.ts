@@ -1,7 +1,7 @@
 export interface Style {
   name: string;
   nameForTitle?: string;
-  description: string;
+  description?: string;
   type?: string | boolean | number;
   options?: string[] | { [key: string]: string };
   value: string;
