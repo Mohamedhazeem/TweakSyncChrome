@@ -14,6 +14,7 @@ import { splitStringToArray } from "@/utils/splitStringToArray";
 import { Style } from "@/types/styleTypes";
 import { ChevronsUpDown } from "lucide-react";
 import { useClearLayoutContext } from "@/utils/elementContext";
+import { sortOptions } from "@/utils/sortOptions";
 // import BackgroundPosition from "../styleComponents/BackgroundPosition";
 interface MultiOptionsStyleProps {
   style: Style;
@@ -89,7 +90,7 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({ style, customOpti
                       <CommandEmpty>No option found.</CommandEmpty>
                       <CommandGroup>
                         {Array.isArray(options) &&
-                          options!.map((opt) => (
+                          sortOptions(options).map((opt) => (
                             <CommandItem
                               key={opt}
                               value={opt}

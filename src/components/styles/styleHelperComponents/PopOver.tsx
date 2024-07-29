@@ -14,6 +14,7 @@ import { Style } from "@/types/styleTypes";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
 import { useClearLayoutContext } from "@/utils/elementContext";
+import { sortOptions } from "@/utils/sortOptions";
 
 type PopOverType = {
   open: boolean;
@@ -59,7 +60,7 @@ export function PopOver({
               {style &&
                 style.options &&
                 Array.isArray(style.options) &&
-                style.options.map((ops) => (
+                sortOptions(style?.options).map((ops) => (
                   <CommandItem
                     key={ops}
                     value={ops}
