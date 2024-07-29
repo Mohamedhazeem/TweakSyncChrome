@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { globalCssOptions } from "@/utils/styles/globalStyles";
 import { NumberInput } from "./NumberInput";
 import { Length } from "./Length";
+import { useClearLayoutContext } from "@/utils/elementContext";
 
 type PositionUnitType = {
   optionType: string;
@@ -21,20 +22,27 @@ export function PositionUnits({
   const [number, setNumber] = useState<string>(value);
   const [currentUnit, setCurrentUnit] = useState<string>(unit);
   const [open, setOpen] = useState(false);
+  const clearLayout = useClearLayoutContext();
 
   useEffect(() => {
-    setNumber(value);
-  }, [value, isRange]);
+    if (clearLayout) {
+      setNumber("");
+    } else {
+      setNumber(value);
+    }
+  }, [value, isRange, clearLayout]);
 
   useEffect(() => {
-    if (optionType === "length") {
+    if (clearLayout) {
+      setCurrentUnit("");
+    } else if (optionType === "length") {
       if (unit) {
         setCurrentUnit(unit);
       } else {
         setCurrentUnit("px");
       }
     }
-  }, [unit, optionType]);
+  }, [unit, optionType, clearLayout]);
 
   useEffect(() => {
     handleApplyUnitChanges();
@@ -57,7 +65,7 @@ export function PositionUnits({
   };
 
   const isCustomValue = !globalCssOptions.includes(currentUnit);
-  if (optionType === "length") {
+  if (optionType === "length" && !clearLayout) {
     return Length({
       number,
       setNumber,
@@ -68,7 +76,7 @@ export function PositionUnits({
       handleUnitSelect,
       isCustomValue,
     });
-  } else if (optionType === "number") {
+  } else if (optionType === "number" && !clearLayout) {
     return NumberInput({ number, setNumber, customOptionsCallback, isRange });
   }
   return <div></div>;

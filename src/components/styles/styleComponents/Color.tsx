@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { IStyleContext } from "@/types/styleTypes";
-import { useStyleContext } from "@/utils/elementContext";
+import { useClearLayoutContext, useStyleContext } from "@/utils/elementContext";
 import { useEffect, useState } from "react";
 import { SketchPicker, ColorResult, HSLColor, RGBColor } from "react-color";
 import { presetColors } from "@/utils/styles/colorUtils";
@@ -13,20 +13,29 @@ type ColorPropType = {
 };
 const Color = ({ colorProp }: ColorPropType) => {
   const { selector, onChange, group } = useStyleContext() as IStyleContext;
+  const clearLayout = useClearLayoutContext();
   const [color, setColor] = useState<string | RGBColor | HSLColor>();
   const [showColor, setShowColor] = useState<boolean>(false);
   const [showMoreColor, setShowMoreColor] = useState(false);
   const style = group?.groups.find((group) => group.name === colorProp);
   useEffect(() => {
     if (style) {
-      if (globalCssOptions.includes(style.value)) {
+      if (clearLayout) {
+        setColor(undefined);
+        setShowColor(false);
+      } else if (globalCssOptions.includes(style.value)) {
         setShowColor(false);
       } else if (style.value) {
+        setColor(style.value);
         setShowColor(true);
+      } else {
+        setShowColor(false);
       }
-      setColor(style.value);
+    } else {
+      setShowColor(false);
     }
-  }, [style]);
+  }, [style, style?.value, clearLayout]);
+
   const handleColorChange = (color: ColorResult) => {
     let colorValue: string;
 
@@ -65,8 +74,10 @@ const Color = ({ colorProp }: ColorPropType) => {
               customOptionsCallback={handleShowColor}
               isCapitalized={true}
             />
+
             {showColor && (
               <div className="flex flex-col gap-1">
+                {showColor ? "showcolor" : "noshowcolor"}
                 {style.value}
                 <SketchPicker
                   color={color}

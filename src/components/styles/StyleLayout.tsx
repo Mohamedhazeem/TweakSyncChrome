@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
-import { useStyleContext } from "@/utils/elementContext";
+import { ClearLayoutContext, useStyleContext } from "@/utils/elementContext";
 import { IStyleContext, Style } from "@/types/styleTypes";
 import { Button } from "../ui/button";
 
@@ -12,8 +12,18 @@ type StyleLayoutProps = {
 
 function StyleLayout({ style, children }: StyleLayoutProps) {
   const { onRemove } = useStyleContext() as IStyleContext;
+  const [clearLayout, setClearLayout] = useState(false);
+  useEffect(() => {
+    if (style.value == "" || style.value == undefined || style.value == null) {
+      setClearLayout(true);
+    } else {
+      setClearLayout(false);
+    }
+  }, [style.value]);
+
   const handleRemoveClick = () => {
     onRemove!(style.name);
+    setClearLayout(true);
   };
   return (
     <div id={style.name}>
@@ -49,7 +59,9 @@ function StyleLayout({ style, children }: StyleLayoutProps) {
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-2">{children}</CardContent>
+        <CardContent className="p-2">
+          <ClearLayoutContext.Provider value={clearLayout}>{children}</ClearLayoutContext.Provider>
+        </CardContent>
       </Card>
     </div>
   );

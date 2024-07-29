@@ -3,7 +3,6 @@ import { useStyleContext } from "@/utils/elementContext";
 import { IStyleContext } from "@/types/styleTypes";
 import { PositionUnits } from "../styleHelperComponents/PositionUnits";
 import { PopOver } from "../styleHelperComponents/PopOver";
-import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
 import StyleLayout from "../StyleLayout";
 import { extractUnit, extractValue } from "@/utils/styles/extractUnits";
 import { globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
@@ -68,7 +67,6 @@ export default function Position({ name, isRange }: PositionType) {
                 <PopOver
                   open={open}
                   setOpen={setOpen}
-                  getButtonText={getButtonText(option, style!, true)}
                   style={style}
                   handleSelect={handlePopOverSelect}
                   isCustomValue={isCustomValue}

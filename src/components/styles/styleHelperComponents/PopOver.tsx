@@ -12,11 +12,12 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Style } from "@/types/styleTypes";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
+import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
+import { useClearLayoutContext } from "@/utils/elementContext";
 
 type PopOverType = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  getButtonText: string;
   style?: Style;
   handleSelect: (newValue: string) => void;
   isCustomValue: boolean;
@@ -27,13 +28,15 @@ type PopOverType = {
 export function PopOver({
   open,
   setOpen,
-  getButtonText,
+
   style,
   handleSelect,
   isCustomValue,
   isCaptilized,
   option,
 }: PopOverType) {
+  const clearLayout = useClearLayoutContext();
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -43,7 +46,7 @@ export function PopOver({
           aria-expanded={open}
           className="w-full justify-between h-7"
         >
-          {getButtonText}
+          {getButtonText(clearLayout ? "" : option, style!, true)}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -66,7 +69,9 @@ export function PopOver({
                       className={cn(
                         "mr-2 h-4 w-4",
                         (ops === "custom" && isCustomValue) || ops === option
-                          ? "opacity-100"
+                          ? clearLayout
+                            ? "opacity-0"
+                            : "opacity-100"
                           : "opacity-0"
                       )}
                     />

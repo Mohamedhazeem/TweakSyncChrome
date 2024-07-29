@@ -13,6 +13,7 @@ import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { splitStringToArray } from "@/utils/splitStringToArray";
 import { Style } from "@/types/styleTypes";
 import { ChevronsUpDown } from "lucide-react";
+import { useClearLayoutContext } from "@/utils/elementContext";
 // import BackgroundPosition from "../styleComponents/BackgroundPosition";
 interface MultiOptionsStyleProps {
   style: Style;
@@ -23,17 +24,21 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({ style, customOpti
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [openPopoverIndex, setOpenPopoverIndex] = useState<number | null>(null);
   const [optionCount, setOptionCount] = useState<number>(0);
+  const clearLayout = useClearLayoutContext();
   const nameForTitle = style.nameForTitle;
   const options = style.options;
   const maxOptionCounts = style.maxOptionCounts;
 
   useEffect(() => {
-    if (style.value) {
+    if (clearLayout) {
+      setSelectedOptions([]);
+      setOptionCount(0);
+    } else if (style.value) {
       const initialOptions = splitStringToArray(style.value.toString());
       setSelectedOptions(initialOptions);
       setOptionCount(initialOptions.length);
     }
-  }, [style]);
+  }, [style, clearLayout]);
 
   const handleSelect = (index: number, newOption: string) => {
     const updatedOptions = [...selectedOptions];
