@@ -47,7 +47,9 @@ export function PopOver({
           aria-expanded={open}
           className="w-full h-7 flex items-center justify-center px-4 py-2"
         >
-          {getButtonText(clearLayout ? "" : option, style!, true)}
+          <span className="flex-grow text-center">
+            {getButtonText(clearLayout ? "" : option, style!, true)}
+          </span>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
