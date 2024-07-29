@@ -140,3 +140,28 @@ export const presetColors = [
   { color: "#FFFF00", title: "Yellow" },
   { color: "#9ACD32", title: "YellowGreen" },
 ];
+
+export function isColor(value: string): boolean {
+  const hexColorRegex = /^#(?:[0-9a-fA-F]{3}){1,2}$/;
+  const rgbColorRegex = /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/;
+  const rgbaColorRegex = /^rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(0|1|0?\.\d+)\)$/;
+  const hslColorRegex = /^hsl\(\s*(\d{1,3}),\s*([0-9]{1,2}|100)%,\s*([0-9]{1,2}|100)%\)$/;
+  const hslaColorRegex =
+    /^hsla\(\s*(\d{1,3}),\s*([0-9]{1,2}|100)%,\s*([0-9]{1,2}|100)%,\s*(0|1|0?\.\d+)\)$/;
+
+  // Named colors (basic list, extend as needed)
+  const namedColors = presetColors.map((preset) => preset.title.toLowerCase());
+
+  if (
+    hexColorRegex.test(value) ||
+    rgbColorRegex.test(value) ||
+    rgbaColorRegex.test(value) ||
+    hslColorRegex.test(value) ||
+    hslaColorRegex.test(value) ||
+    namedColors.includes(value.toLowerCase())
+  ) {
+    return true;
+  }
+
+  return false;
+}

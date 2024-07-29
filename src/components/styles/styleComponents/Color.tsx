@@ -21,7 +21,7 @@ const Color = ({ colorProp }: ColorPropType) => {
     if (style) {
       if (globalCssOptions.includes(style.value)) {
         setShowColor(false);
-      } else {
+      } else if (style.value) {
         setShowColor(true);
       }
       setColor(style.value);
@@ -50,11 +50,9 @@ const Color = ({ colorProp }: ColorPropType) => {
   };
   const handleShowColor = (newValue: string | boolean) => {
     if (typeof newValue === "boolean") {
-      // onChange(selector, property, newValue);
       setShowColor(newValue);
     } else {
       console.log("Unexpected boolean value for color interpolation");
-      // Handle the boolean case if needed
     }
   };
   return (
@@ -69,6 +67,7 @@ const Color = ({ colorProp }: ColorPropType) => {
             />
             {showColor && (
               <div className="flex flex-col gap-1">
+                {style.value}
                 <SketchPicker
                   color={color}
                   width="w-full"

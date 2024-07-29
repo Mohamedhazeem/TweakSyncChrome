@@ -10,12 +10,14 @@ export function getButtonText(option: string, style: Style, isCaptilized: boolea
           ? capitalizeFirstLetter(style.options[selectedIndex])
           : style.options[selectedIndex]
         : isCaptilized
-        ? `${capitalizeFirstLetter(option == "color" ? "color" : "select")}`
+        ? `${capitalizeFirstLetter(
+            option == "color" ? "color" : `Select ${style.nameForTitle}...`
+          )}`
         : capitalizeFirstLetter(style.options[0]);
     } else {
       console.error("Unexpected options type:", typeof style.options);
       return `Select ${style.nameForTitle}...`;
     }
   }
-  return `Select...`;
+  return `Select ${style.nameForTitle}...`;
 }
