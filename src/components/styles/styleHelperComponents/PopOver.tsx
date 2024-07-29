@@ -45,7 +45,7 @@ export function PopOver({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between h-7"
+          className="w-full h-7 flex items-center justify-center px-4 py-2"
         >
           {getButtonText(clearLayout ? "" : option, style!, true)}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

@@ -77,8 +77,6 @@ const Color = ({ colorProp }: ColorPropType) => {
 
             {showColor && (
               <div className="flex flex-col gap-1">
-                {showColor ? "showcolor" : "noshowcolor"}
-                {style.value}
                 <SketchPicker
                   color={color}
                   width="w-full"
