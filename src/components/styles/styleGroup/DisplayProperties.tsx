@@ -3,7 +3,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 
 function DisplayProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       <SingleStyleOptionSetter name="display" isCapitalized={true} />
       <SingleStyleOptionSetter name="visibility" isCapitalized={true} />
       <Position name="opacity" isRange={true} />

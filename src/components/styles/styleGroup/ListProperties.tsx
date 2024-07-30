@@ -2,7 +2,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 
 function ListProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       <SingleStyleOptionSetter name="list-style-image" isCapitalized={true} />
       <SingleStyleOptionSetter name="list-style-position" isCapitalized={true} />
       <SingleStyleOptionSetter name="list-style-type" isCapitalized={true} />

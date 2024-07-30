@@ -7,7 +7,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 // "text-wrap-style" not supported on chrome
 function TextProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       <SingleStyleOptionSetter name="text-align" isCapitalized={true} />
       <SingleStyleOptionSetter name="text-align-last" isCapitalized={true} />
       <SingleStyleOptionSetter name="text-combine-upright" isCapitalized={true} />

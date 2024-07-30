@@ -4,7 +4,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 
 function OutlineProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       <Color colorProp="outline-color" />
       <Position name="outline-offset" />
       <SingleStyleOptionSetter name="outline-style" isCapitalized={true} />

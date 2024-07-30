@@ -2,7 +2,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 
 function JustifyProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       <SingleStyleOptionSetter name="justify-content" isCapitalized={true} />
       <SingleStyleOptionSetter name="justify-items" isCapitalized={true} />
       <SingleStyleOptionSetter name="justify-self" isCapitalized={true} />

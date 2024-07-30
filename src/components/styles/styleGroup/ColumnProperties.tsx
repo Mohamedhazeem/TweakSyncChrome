@@ -4,7 +4,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 
 function ColumnProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       <Position name="column-count" />
       <SingleStyleOptionSetter name="column-fill" isCapitalized={true} />
       <Position name="column-gap" />

@@ -10,7 +10,7 @@ function MarginProperties() {
   "margin-right";
   "margin-top";
   return (
-    <div>
+    <div className="inspector-component">
       <Position name="margin-top" />
       <Position name="margin-right" />
       <Position name="margin-bottom" />

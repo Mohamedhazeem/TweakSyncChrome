@@ -3,7 +3,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 
 function ContainProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       <SingleStyleOptionSetter name="contain" isCapitalized={true} />
       <Position name="contain-intrinsic-block-size" />
       <Position name="contain-intrinsic-inline-size" />

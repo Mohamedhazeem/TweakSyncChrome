@@ -3,7 +3,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 
 function ColorProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       <Color colorProp="color" />
       <SingleStyleOptionSetter name="color-scheme" isCapitalized={true} />
     </div>

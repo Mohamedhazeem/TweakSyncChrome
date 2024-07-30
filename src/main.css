@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* #region LayoutStyles */
+/* #region InspectorStyles */
 .inspector-container {
   @apply w-full h-[calc(100vh-65px)] flex items-center justify-center;
 }
@@ -18,7 +18,7 @@
 .tweak-sync-logo {
   @apply bg-gradient-to-r from-emerald-300 to-lime-500 rounded-md font-semibold p-2 text-4xl cursor-default;
 }
-/* #endregion LayoutStyles */
+/* #endregion InspectorStyles */
 
 /* #region LayoutStyles */
 .layoutCard {

@@ -1,7 +1,7 @@
 import Position from "../styleComponents/Position";
 function PaddingProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       <Position name="padding-top" />
       <Position name="padding-right" />
       <Position name="padding-bottom" />

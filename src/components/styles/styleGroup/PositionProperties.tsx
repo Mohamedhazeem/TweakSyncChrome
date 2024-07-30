@@ -4,7 +4,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 function PositionProperties() {
   ["position", "top", "right", "bottom", "left", "z-index"];
   return (
-    <div>
+    <div className="inspector-component">
       <SingleStyleOptionSetter name="position" isCapitalized={true} />
       <Position name="top" />
       <Position name="right" />

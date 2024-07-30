@@ -2,7 +2,7 @@ import Position from "../styleComponents/Position";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 function OverFlowProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       <SingleStyleOptionSetter name="overflow-anchor" isCapitalized={true} />
       {/* <SingleStyleOptionSetter name="overflow-block" isCapitalized={true} /> not supported yet */}
       <Position name="overflow-clip-margin" />
