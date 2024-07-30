@@ -61,30 +61,28 @@ export default function Position({ name, isRange }: PositionType) {
     <div>
       {style && (
         <StyleLayout style={style}>
-          <span className="flex flex-col gap-1">
-            <div className="flex flex-col gap-2 items-center">
-              <div key={`option-${option}`} className="flex gap-2 items-center w-full">
-                <PopOver
-                  open={open}
-                  setOpen={setOpen}
-                  style={style}
-                  handleSelect={handlePopOverSelect}
-                  isCustomValue={isCustomValue}
-                  isCaptilized={true}
-                  option={option}
-                />
-              </div>
-              {
-                <PositionUnits
-                  optionType={option}
-                  value={value}
-                  unit={unit}
-                  isRange={isRange}
-                  customOptionsCallback={handleValueChange}
-                />
-              }
+          <div className="position">
+            <div key={`option-${option}`} className="positionAndUnits">
+              <PopOver
+                open={open}
+                setOpen={setOpen}
+                style={style}
+                handleSelect={handlePopOverSelect}
+                isCustomValue={isCustomValue}
+                isCaptilized={true}
+                option={option}
+              />
             </div>
-          </span>
+            {
+              <PositionUnits
+                optionType={option}
+                value={value}
+                unit={unit}
+                isRange={isRange}
+                customOptionsCallback={handleValueChange}
+              />
+            }
+          </div>
         </StyleLayout>
       )}
     </div>

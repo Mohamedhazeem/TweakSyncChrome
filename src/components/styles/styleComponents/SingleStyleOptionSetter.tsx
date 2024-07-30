@@ -36,13 +36,11 @@ const SingleStyleOptionSetter = ({ name, isCapitalized }: SingleStyleOptionSette
     <div>
       {style && (
         <StyleLayout style={style}>
-          <span className="flex flex-col gap-1">
-            <SingleStyleOptions
-              style={style}
-              isCapitalized={isCapitalized}
-              customOptionsCallback={handleSingleStyleOption}
-            />
-          </span>
+          <SingleStyleOptions
+            style={style}
+            isCapitalized={isCapitalized}
+            customOptionsCallback={handleSingleStyleOption}
+          />
         </StyleLayout>
       )}
     </div>

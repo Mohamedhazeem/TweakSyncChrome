@@ -1,4 +1,3 @@
-import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
 import { NumberInput } from "./NumberInput";
 import { PopOver } from "./PopOver";
 import { LengthUnit } from "@/utils/styles/globalStyles";
@@ -34,7 +33,6 @@ export function Length({
       <PopOver
         open={open}
         setOpen={setOpen}
-        getButtonText={getButtonText(currentUnit, LengthUnit, false)}
         style={LengthUnit}
         handleSelect={handleUnitSelect}
         isCustomValue={isCustomValue}

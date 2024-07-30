@@ -14,7 +14,7 @@ export function NumberInput({
   isRange,
 }: NumberInputType) {
   return (
-    <div className="flex gap-2 items-center w-full">
+    <div className="positionAndUnits">
       <Input
         className={`${isRange ? "p-0" : ""}`}
         type={`${isRange ? "range" : "number"}`}
@@ -37,7 +37,7 @@ export function NumberInput({
           );
         }}
       />
-      {isRange && <p className="w-8 h-6 text-center text-sm border-2">{number}</p>}
+      {isRange && <p className="rangeCount">{number}</p>}
     </div>
   );
 }

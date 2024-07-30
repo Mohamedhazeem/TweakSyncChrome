@@ -34,9 +34,7 @@ const MultiStyleOptionSetter = ({ name }: MultiStyleOptionSetterProps) => {
     <div>
       {style && (
         <StyleLayout style={style}>
-          <span className="flex flex-col gap-1">
-            <MultiStyleOptions style={style} customOptionsCallback={handleMultiStyleOption} />
-          </span>
+          <MultiStyleOptions style={style} customOptionsCallback={handleMultiStyleOption} />
         </StyleLayout>
       )}
     </div>

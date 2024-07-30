@@ -76,3 +76,15 @@
   @apply grid w-full gap-1.5 p-2;
 }
 /* #endregion LayoutStyles */
+
+/* #region PositionComponentStyles */
+.position {
+  @apply flex flex-col gap-2 items-center;
+}
+.positionAndUnits {
+  @apply flex gap-2 items-center w-full;
+}
+.rangeCount {
+  @apply w-8 h-6 text-center text-sm border-2;
+}
+/* #endregion PositionComponentStyles */

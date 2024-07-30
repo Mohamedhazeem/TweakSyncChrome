@@ -68,27 +68,25 @@ const Color = ({ colorProp }: ColorPropType) => {
     <div>
       {style && (
         <StyleLayout style={style}>
-          <span key={`${selector}-${colorProp}`} className="flex flex-col gap-1">
-            <SingleStyleOptions
-              style={style}
-              customOptionsCallback={handleShowColor}
-              isCapitalized={true}
-            />
+          <SingleStyleOptions
+            style={style}
+            customOptionsCallback={handleShowColor}
+            isCapitalized={true}
+          />
 
-            {showColor && (
-              <div className="flex flex-col gap-1">
-                <SketchPicker
-                  color={color}
-                  width="w-full"
-                  presetColors={showMoreColor ? presetColors : undefined}
-                  onChange={(e) => handleColorChange(e)}
-                />
-                <Button className="w-full" onClick={() => setShowMoreColor(!showMoreColor)}>
-                  {showMoreColor ? "Show Less Colors" : "Show More Colors"}
-                </Button>
-              </div>
-            )}
-          </span>
+          {showColor && (
+            <div className="flex flex-col gap-1">
+              <SketchPicker
+                color={color}
+                width="w-full"
+                presetColors={showMoreColor ? presetColors : undefined}
+                onChange={(e) => handleColorChange(e)}
+              />
+              <Button className="w-full" onClick={() => setShowMoreColor(!showMoreColor)}>
+                {showMoreColor ? "Show Less Colors" : "Show More Colors"}
+              </Button>
+            </div>
+          )}
         </StyleLayout>
       )}
     </div>
