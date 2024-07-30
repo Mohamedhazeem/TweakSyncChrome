@@ -55,7 +55,7 @@ function AttributeLayout({
                 </HoverCardContent>
               </HoverCard>
               <Button size="sm" className="layoutClearButton" onClick={() => handleRemoveClick()}>
-                X
+                Clear
               </Button>
             </div>
           </CardTitle>

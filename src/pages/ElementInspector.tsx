@@ -1,6 +1,7 @@
 import AttributeFactory from "@/components/attributes/AttributeFactory";
 import TextContent from "@/components/attributes/attributeComponents/TextContent";
 import { AddAttribute } from "@/components/attributes/attributeFacade";
+import { Button } from "@/components/ui/button";
 import { Attribute } from "@/types/attributeTypes";
 import { OutletContext } from "@/types/outletContext.ts";
 import { ELEMENT_SPECIFIC_ATTRIBUTES } from "@/utils/attributes/elementSpecificAttributes";
@@ -135,6 +136,9 @@ function ElementInspector() {
       return updatedAttributes;
     });
   };
+  function applyElement() {
+    chrome.runtime.sendMessage({ action: "apply", apply: "element" });
+  }
   if (!element) {
     return <div> Not element selected</div>;
   }
@@ -142,6 +146,19 @@ function ElementInspector() {
     <div className="inspector-container">
       <div ref={scrollableContainerRef} className="inspector-scroll">
         <div className="inspector-component">
+          <div className="inspector-header">
+            <span className="inspector-title">Element Inspector</span>
+            <Button
+              size={"default"}
+              variant={"default"}
+              type="button"
+              id="applyElement"
+              onClick={applyElement}
+              className="inspector-applyButton"
+            >
+              Apply
+            </Button>
+          </div>
           <TextContent tag={element} />
           {attributes?.length ? (
             attributes.map((attribute, index) => (

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* #root {
+  @apply font-mono;
+} */
 /* #region InspectorStyles */
 .inspector-container {
   @apply w-full h-[calc(100vh-65px)] flex items-center justify-center;
@@ -14,6 +17,15 @@
 }
 .inspector-component {
   @apply flex flex-col gap-1;
+}
+.inspector-header {
+  @apply flex flex-row justify-between items-center rounded px-3 h-9 bg-gradient-to-r from-blue-400 to-violet-500;
+}
+.inspector-title {
+  @apply text-lg font-semibold;
+}
+.inspector-applyButton {
+  @apply bg-gradient-to-r from-amber-200 to-yellow-500 py-1 h-7 text-black;
 }
 .tweak-sync-logo {
   @apply bg-gradient-to-r from-emerald-300 to-lime-500 rounded-md font-semibold p-2 text-4xl cursor-default;

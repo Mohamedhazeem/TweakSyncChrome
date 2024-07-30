@@ -8,6 +8,7 @@ import StyleLayoutParent from "@/components/styles/StyleLayoutParent";
 // import AddStyleProperty from "@/components/styles/styleHelperComponents/AddStyleProperty";
 import { StyleGroup } from "@/types/styleTypes";
 import { STYLE_GROUP } from "@/utils/styles/globalStyles";
+import { Button } from "@/components/ui/button";
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();
@@ -185,13 +186,30 @@ function StyleInspector() {
       );
     });
   };
-
+  function applyStyles() {
+    chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
+  }
   if (!style) {
     return null;
   }
   return (
     <div className="inspector-container">
       <div ref={scrollableContainerRef} className="inspector-scroll">
+        <div className="inspector-component">
+          <div className="inspector-header">
+            <span className="inspector-title">Style Inspector</span>
+            <Button
+              size={"default"}
+              variant={"default"}
+              type="button"
+              id="applyElement"
+              onClick={applyStyles}
+              className="inspector-applyButton"
+            >
+              Apply
+            </Button>
+          </div>
+        </div>
         {/* {styles.inline &&
         Object.entries(styles.inline).map(([property, value]) =>
           property === "color" ? (
