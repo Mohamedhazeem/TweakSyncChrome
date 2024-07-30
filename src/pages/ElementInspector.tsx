@@ -10,9 +10,7 @@ import { useOutletContext } from "react-router-dom";
 
 function ElementInspector() {
   const { element } = useOutletContext<OutletContext>();
-  const [attributes, setAttributes] = useState<Attribute[] | undefined>(
-    undefined
-  );
+  const [attributes, setAttributes] = useState<Attribute[] | undefined>(undefined);
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -57,8 +55,7 @@ function ElementInspector() {
       });
     }
 
-    const specificAttributes =
-      ELEMENT_SPECIFIC_ATTRIBUTES[element.tagName!.toLowerCase()];
+    const specificAttributes = ELEMENT_SPECIFIC_ATTRIBUTES[element.tagName!.toLowerCase()];
     specificAttributes?.forEach((attr) => {
       if (element.attributes![attr.name]) {
         elementAttributes.push({
@@ -126,9 +123,7 @@ function ElementInspector() {
       );
 
       // Example: Sending message to background script in Chrome extension
-      const removedAttribute = prevAttributes.find(
-        (attr) => attr.name === attributeToRemoveName
-      );
+      const removedAttribute = prevAttributes.find((attr) => attr.name === attributeToRemoveName);
       if (removedAttribute) {
         chrome.runtime.sendMessage({
           action: "updateAttributes",
@@ -147,13 +142,8 @@ function ElementInspector() {
     <div className="w-full h-[calc(100vh-65px)] flex items-center justify-center">
       <div
         ref={scrollableContainerRef}
-        className="flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-4"
+        className="flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-1"
       >
-        {attributes?.map((attribute) => {
-          return (
-            <div>{`${attribute.name}, ${attribute.nameForTitle} and  ${attribute.value} `}</div>
-          );
-        })}
         <div className="flex flex-col gap-1">
           <TextContent tag={element} />
           {attributes?.length ? (

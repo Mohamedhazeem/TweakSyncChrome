@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.layoutCard {
+  @apply border-2;
+}
+.layoutCardHeader {
+  @apply p-2 py-1 rounded;
+}
+.layoutCardHeaderActive {
+  @apply bg-green-400;
+}
+.layoutCardHeaderInActive {
+  @apply bg-gray-200;
+}
+.layoutCardTitle {
+  @apply flex justify-between items-center text-base font-medium;
+}
+.layoutHoverCardHolder {
+  @apply flex place-items-center gap-1;
+}
+.layoutHoverCardTriggerButton {
+  @apply bg-slate-400 rounded-xl text-xs p-1 w-5 h-5;
+}
+.layoutHoverCardContent {
+  @apply w-64;
+}
+.layoutHoverCardContentDiscription {
+  @apply text-sm;
+}
+.layoutClearButton {
+  @apply bg-red-500 text-xs p-1 h-5 tracking-wider hover:bg-red-600;
+}
+.layoutCardContent {
+  @apply p-2;
+}
+.layoutParentCardHeader {
+  @apply p-1 bg-violet-400;
+}
+.layoutParentCardTitle {
+  @apply text-lg font-semibold;
+}
+.layoutParentCardContent {
+  @apply p-0 pt-1 px-1 m-0 flex flex-col gap-2;
+}
+.layoutParentCardContentHeader {
+  @apply p-2 rounded bg-blue-400;
+}
+.layoutParentCardContentTitle {
+  @apply flex justify-between items-center text-base font-medium;
+}
+.layoutParentCardTitle {
+  @apply text-lg font-semibold flex justify-between items-center;
+}

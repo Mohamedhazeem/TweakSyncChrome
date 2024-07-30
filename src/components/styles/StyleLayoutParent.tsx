@@ -32,20 +32,20 @@ const StyleLayoutParent: React.FC<StyleLayoutParentProps> = ({
   };
   return (
     <div key={selector}>
-      <Card className="border-2">
-        <CardHeader className="p-1 bg-violet-400">
-          <CardTitle className="text-lg font-semibold">{selector}</CardTitle>
+      <Card className="layoutCard">
+        <CardHeader className="layoutParentCardHeader">
+          <CardTitle className="layoutParentCardTitle">{selector}</CardTitle>
         </CardHeader>
-        <CardContent className="p-2 m-0 flex flex-col gap-2">
+        <CardContent className="layoutParentCardContent">
           {Object.entries(groupedProperties).map(([groupName, group]) => (
             <React.Fragment key={`${selector}-${groupName}`}>
-              <CardHeader className={`p-2 py-1 rounded bg-blue-400`}>
-                <CardTitle className="text-lg font-semibold flex justify-between items-center">
+              <CardHeader className={"layoutParentCardContentHeader"}>
+                <CardTitle className="layoutParentCardContentTitle">
                   {groupName}
                   <Button
                     size="sm"
                     variant={"default"}
-                    className="bg-red-500 text-xs p-1 h-5 tracking-wider hover:bg-red-600"
+                    className="layoutClearButton"
                     onClick={() => handleClearGroup(group)}
                   >
                     Remove

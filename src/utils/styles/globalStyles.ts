@@ -1118,7 +1118,7 @@ const ListGroup: StyleGroup = {
         "-moz-hangul-consonant",
         "-moz-urdu",
         ...globalCssOptions,
-      ], //string
+      ],
     },
   ],
 };
@@ -1722,7 +1722,7 @@ const TextGroup: StyleGroup = {
       description: "Specifies how the overflowed text should be displayed.",
       value: "",
       maxOptionCounts: 2,
-      options: ["clip", "ellipsis", ...globalCssOptions], //"string"
+      options: ["clip", "ellipsis", ...globalCssOptions], //"string -> notsupported yet on chrome"
     },
     {
       name: "text-rendering",

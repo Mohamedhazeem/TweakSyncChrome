@@ -11,9 +11,7 @@ function TextContent({ tag }: PTagTypes) {
   useEffect(() => {
     setTextContent(tag?.textContent);
   }, [tag?.textContent, tag?.path]);
-  const handleTextContentChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  const handleTextContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextContent(e.target.value);
     chrome.runtime.sendMessage({
       action: "updateTextContent",

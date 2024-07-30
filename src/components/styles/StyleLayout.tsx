@@ -27,30 +27,30 @@ function StyleLayout({ style, children }: StyleLayoutProps) {
   };
   return (
     <div id={style.name}>
-      <Card className="border-1">
-        <CardHeader className={`p-2 py-1 rounded ${style.value ? "bg-green-400" : "bg-gray-200"} `}>
-          <CardTitle className="flex justify-between items-center text-base font-medium">
+      <Card className="layoutCard">
+        <CardHeader
+          className={`layoutCardHeader ${
+            style.value ? "layoutCardHeaderActive" : "layoutCardHeaderInActive"
+          } `}
+        >
+          <CardTitle className="layoutCardTitle">
             {style.nameForTitle}
-            <div className="flex place-items-center gap-1 ">
+            <div className="layoutHoverCardHolder">
               <HoverCard>
                 <HoverCardTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="bg-slate-400 rounded-xl text-xs p-1 w-5 h-5"
-                  >
+                  <Button variant="outline" size="sm" className="layoutHoverCardTriggerButton">
                     ?
                   </Button>
                 </HoverCardTrigger>
-                <HoverCardContent className="w-64">
-                  <p className="text-sm">{style.description}</p>
+                <HoverCardContent className="layoutHoverCardContent">
+                  <p className="layoutHoverCardContentDiscription">{style.description}</p>
                 </HoverCardContent>
               </HoverCard>
               {style.value && (
                 <Button
                   size="sm"
                   variant={"default"}
-                  className="bg-red-500 text-xs p-1 h-5 tracking-wider hover:bg-red-600"
+                  className="layoutClearButton"
                   onClick={() => handleRemoveClick()}
                 >
                   CLEAR
@@ -59,7 +59,7 @@ function StyleLayout({ style, children }: StyleLayoutProps) {
             </div>
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-2">
+        <CardContent className="layoutCardContent">
           <ClearLayoutContext.Provider value={clearLayout}>{children}</ClearLayoutContext.Provider>
         </CardContent>
       </Card>
