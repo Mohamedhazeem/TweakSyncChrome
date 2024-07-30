@@ -19,7 +19,7 @@
   @apply flex flex-col gap-1;
 }
 .inspector-header {
-  @apply flex flex-row justify-between items-center rounded px-3 h-9 bg-gradient-to-r from-blue-400 to-violet-500;
+  @apply flex flex-row justify-between items-center rounded px-3 h-9 bg-gradient-to-r from-indigo-500 to-blue-500;
 }
 .inspector-title {
   @apply text-lg font-semibold;
@@ -67,7 +67,7 @@
   @apply p-2;
 }
 .layoutParentCardHeader {
-  @apply p-1 bg-violet-400;
+  @apply p-1 rounded bg-gradient-to-r from-pink-500 to-amber-500;
 }
 .layoutParentCardTitle {
   @apply text-lg font-semibold;
@@ -76,7 +76,7 @@
   @apply p-0 pt-1 px-1 m-0 flex flex-col gap-2;
 }
 .layoutParentCardContentHeader {
-  @apply p-2 rounded bg-blue-400;
+  @apply p-2 rounded bg-gradient-to-r from-purple-400 to-purple-700;
 }
 .layoutParentCardContentTitle {
   @apply flex justify-between items-center text-base font-medium;
