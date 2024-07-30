@@ -1,7 +1,9 @@
 import { ElementDetails } from "@/types/elementTypes";
 import { useEffect, useState } from "react";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Button } from "@/components/ui/button";
 type PTagTypes = {
   tag: ElementDetails;
 };
@@ -16,6 +18,14 @@ function TextContent({ tag }: PTagTypes) {
     chrome.runtime.sendMessage({
       action: "updateTextContent",
       text: e.target.value,
+      temporaryId: tag?.temporaryId,
+    });
+  };
+  const handleRemoveClick = () => {
+    setTextContent("");
+    chrome.runtime.sendMessage({
+      action: "updateTextContent",
+      text: "",
       temporaryId: tag?.temporaryId,
     });
   };
@@ -97,16 +107,52 @@ function TextContent({ tag }: PTagTypes) {
   const ShowTextContent = () => {
     if (textContent || textContentElements.includes(tag.tagName!)) {
       return (
-        <div className="grid w-full gap-1.5">
-          <Label htmlFor="message">Text Content</Label>
-          <Textarea
-            className="resize-none"
-            placeholder="Type your message here."
-            id="message"
-            value={textContent!}
-            onChange={handleTextContentChange}
-          />
-        </div>
+        <>
+          <Card className="layoutCard">
+            <CardHeader
+              className={`layoutCardHeader ${
+                textContent ? "layoutCardHeaderActive" : "layoutCardHeaderInActive"
+              } `}
+            >
+              <CardTitle className="layoutCardTitle">
+                Text Content
+                <div className="layoutHoverCardHolder">
+                  <HoverCard>
+                    <HoverCardTrigger asChild>
+                      <Button variant="outline" size="sm" className="layoutHoverCardTriggerButton">
+                        ?
+                      </Button>
+                    </HoverCardTrigger>
+                    <HoverCardContent className="layoutHoverCardContent">
+                      <p className="layoutHoverCardContentDiscription">
+                        {"Here you can type text of the element"}
+                      </p>
+                    </HoverCardContent>
+                  </HoverCard>
+                  {textContent && (
+                    <Button
+                      size="sm"
+                      variant={"default"}
+                      className="layoutClearButton"
+                      onClick={() => handleRemoveClick()}
+                    >
+                      CLEAR
+                    </Button>
+                  )}
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="layoutCardContent">
+              <Textarea
+                className="resize-none"
+                placeholder="Type your message here."
+                id="message"
+                value={textContent ? textContent : ""}
+                onChange={handleTextContentChange}
+              />
+            </CardContent>
+          </Card>
+        </>
       );
     } else {
       return <></>;
@@ -114,18 +160,7 @@ function TextContent({ tag }: PTagTypes) {
   };
   return (
     <>{ShowTextContent()}</>
-    // <div>
-    //   {textContent && (
-    //     <textarea
-    //       className="resize-none w-full bg-slate-500"
-    //       rows={6}
-    //       placeholder="Wite a Text"
-    //       value={textContent}
-    //       onChange={handleTextContentChange}
-    //     />
-    //   )}
-    //   {/* {tag?.path && <p>{tag.path}</p>} */}
-    // </div>
+    //  {/* {tag?.path && <p>{tag.path}</p>} */}
   );
 }
 

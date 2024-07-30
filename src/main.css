@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* #region LayoutStyles */
+.inspector-container {
+  @apply w-full h-[calc(100vh-65px)] flex items-center justify-center;
+}
+.inspector-scroll {
+  @apply flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-1;
+}
+.inspector-home {
+  @apply flex flex-col space-y-4 overflow-y-auto h-full w-full p-4 items-center justify-center;
+}
+.inspector-component {
+  @apply flex flex-col gap-1;
+}
+.tweak-sync-logo {
+  @apply bg-gradient-to-r from-emerald-300 to-lime-500 rounded-md font-semibold p-2 text-4xl cursor-default;
+}
+/* #endregion LayoutStyles */
+
+/* #region LayoutStyles */
 .layoutCard {
   @apply border-2;
 }
@@ -9,10 +28,10 @@
   @apply p-2 py-1 rounded;
 }
 .layoutCardHeaderActive {
-  @apply bg-green-400;
+  @apply bg-gradient-to-r from-emerald-300 to-lime-500;
 }
 .layoutCardHeaderInActive {
-  @apply bg-gray-200;
+  @apply bg-gradient-to-r from-zinc-300 to-slate-500;
 }
 .layoutCardTitle {
   @apply flex justify-between items-center text-base font-medium;
@@ -53,3 +72,7 @@
 .layoutParentCardTitle {
   @apply text-lg font-semibold flex justify-between items-center;
 }
+.textArea {
+  @apply grid w-full gap-1.5 p-2;
+}
+/* #endregion LayoutStyles */

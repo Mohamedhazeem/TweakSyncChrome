@@ -190,11 +190,8 @@ function StyleInspector() {
     return null;
   }
   return (
-    <div className="w-full h-[calc(100vh-65px)] flex items-center justify-center">
-      <div
-        ref={scrollableContainerRef}
-        className="flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-1"
-      >
+    <div className="inspector-container">
+      <div ref={scrollableContainerRef} className="inspector-scroll">
         {/* {styles.inline &&
         Object.entries(styles.inline).map(([property, value]) =>
           property === "color" ? (

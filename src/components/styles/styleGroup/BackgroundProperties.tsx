@@ -7,7 +7,7 @@ import Position from "../styleComponents/Position";
 // background-position (add edge offset and multiple image positions)
 function BackgroundProperties() {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="inspector-component">
       <MultiStyleOptionSetter name="background-attachment" />
       <MultiStyleOptionSetter name="background-blend-mode" />
       <SingleStyleOptionSetter name="background-clip" isCapitalized={true} />
