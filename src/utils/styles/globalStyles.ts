@@ -70,12 +70,6 @@ export const GLOBAL_STYLES: Style[] = [
     nameForTitle: "Break Properties",
     value: "",
   },
-
-  {
-    name: "clear",
-    nameForTitle: "Clear Property",
-    value: "",
-  },
   {
     name: "color",
     nameForTitle: "Color Properties",
@@ -114,6 +108,11 @@ export const GLOBAL_STYLES: Style[] = [
   {
     name: "flex-basis",
     nameForTitle: "Flex Properties",
+    value: "",
+  },
+  {
+    name: "float",
+    nameForTitle: "Float Properties",
     value: "",
   },
   {
@@ -567,21 +566,7 @@ const BreakGroup: StyleGroup = {
     },
   ],
 };
-const ClearGroup: StyleGroup = {
-  groupName: "Clear Property",
-  propertyNames: ["clear"],
-  groups: [
-    {
-      name: "clear",
-      nameForTitle: "Clear",
-      type: "string",
-      description:
-        "Specifies which sides of an element's box are not affected by floating elements.",
-      value: "",
-      options: ["none", "left", "right", "both", "inline-start", "inline-end", ...globalCssOptions],
-    },
-  ],
-};
+
 const ColorGroup: StyleGroup = {
   groupName: "Color Properties",
   propertyNames: ["accent-color", "caret-color", "color", "color-scheme"],
@@ -1014,6 +999,29 @@ const FlexGroup: StyleGroup = {
         "Specifies whether flex items are forced into a single line or can be wrapped onto multiple lines",
       value: "",
       options: ["nowrap", "wrap", "wrap-reverse", ...globalCssOptions],
+    },
+  ],
+};
+const FloatGroup: StyleGroup = {
+  groupName: "Float Properties",
+  propertyNames: ["float", "clear"],
+  groups: [
+    {
+      name: "float",
+      nameForTitle: "Float",
+      type: "string",
+      description: "Specifies how an element should float within its container.",
+      value: "",
+      options: ["none", "left", "right", "inline-start", "inline-end", ...globalCssOptions],
+    },
+    {
+      name: "clear",
+      nameForTitle: "Clear",
+      type: "string",
+      description:
+        "Specifies which sides of an element's box are not affected by floating elements.",
+      value: "",
+      options: ["none", "left", "right", "both", "inline-start", "inline-end", ...globalCssOptions],
     },
   ],
 };
@@ -2180,7 +2188,6 @@ export const STYLE_GROUP: StyleGroup[] = [
   BlockSizeGroup,
   BoxGroup,
   BreakGroup,
-  ClearGroup,
   ColorGroup,
   ColumnGroup,
   ContainGroup,
@@ -2188,6 +2195,7 @@ export const STYLE_GROUP: StyleGroup[] = [
   CursorGroup,
   DisplayGroup,
   FlexGroup,
+  FloatGroup,
   HeightGroup,
   InlineSizeGroup,
   JustifyGroup,

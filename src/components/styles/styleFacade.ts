@@ -5,7 +5,7 @@ import BackgroundProperties from "./styleGroup/BackgroundProperties";
 import BlockSizeProperties from "./styleGroup/BlockSizeProperties";
 import BoxProperties from "./styleGroup/BoxProperties";
 import BreakProperties from "./styleGroup/BreakProperties";
-import ClearProperty from "./styleGroup/ClearProperty";
+import FloatProperties from "./styleGroup/FloatProperties";
 import ColorProperties from "./styleGroup/ColorProperties";
 import ColumnProperties from "./styleGroup/ColumnProperties";
 import ContainProperties from "./styleGroup/ContainProperties";
@@ -41,7 +41,6 @@ export const styleComponents: {
   "Block-Size Properties": BlockSizeProperties,
   "Box Properties": BoxProperties,
   "Break Properties": BreakProperties,
-  "Clear Property": ClearProperty,
   "Color Properties": ColorProperties,
   "Column Properties": ColumnProperties,
   "Contain Properties": ContainProperties,
@@ -49,6 +48,7 @@ export const styleComponents: {
   "Cursor Property": CursorProperty,
   "Display Properties": DisplayProperties,
   "Flex Properties": FlexProperties,
+  "Float Properties": FloatProperties,
   "Height Properties": HeightProperties,
   "Inline-Size Properties": InlineSizeProperties,
   "Justify Properties": JustifyProperties,

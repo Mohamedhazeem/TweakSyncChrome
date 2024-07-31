@@ -1,11 +1,12 @@
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 
-function ClearProperty() {
+function FloatProperties() {
   return (
     <div>
+      <SingleStyleOptionSetter name="float" isCapitalized={true} />
       <SingleStyleOptionSetter name="clear" isCapitalized={true} />
     </div>
   );
 }
 
-export default ClearProperty;
+export default FloatProperties;
