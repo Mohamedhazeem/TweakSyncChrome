@@ -1,5 +1,6 @@
 import AlignProperties from "./styleGroup/AlignProperties";
 import AllProperty from "./styleGroup/AllProperty";
+import BackfaceVisibilityProperty from "./styleGroup/BackfaceVisibilityProperty";
 import BackgroundProperties from "./styleGroup/BackgroundProperties";
 import BlockSizeProperties from "./styleGroup/BlockSizeProperties";
 import BoxProperties from "./styleGroup/BoxProperties";
@@ -31,6 +32,7 @@ export const styleComponents: {
 } = {
   "Alignment Properties": AlignProperties,
   "All Property": AllProperty,
+  "Backface Visibility Property": BackfaceVisibilityProperty,
   "Background Properties": BackgroundProperties,
   "Block-Size Properties": BlockSizeProperties,
   "Box Properties": BoxProperties,

@@ -265,6 +265,20 @@ const AllGroup: StyleGroup = {
     },
   ],
 };
+const BackfaceVisibilityGroup: StyleGroup = {
+  groupName: "Backface Visibility Property",
+  propertyNames: ["backface-visibility"],
+  groups: [
+    {
+      name: "backface-visibility",
+      nameForTitle: "Backface Visibility",
+      type: "string",
+      description: "Determines whether the back face of an element is visible when turned.",
+      value: "",
+      options: ["visible", "hidden"],
+    },
+  ],
+};
 const BackgroundGroup: StyleGroup = {
   groupName: "Background Properties",
   propertyNames: [
@@ -704,8 +718,30 @@ const ContainGroup: StyleGroup = {
 };
 const DisplayGroup: StyleGroup = {
   groupName: "Display Properties",
-  propertyNames: ["display", "visibility", "opacity"],
+  propertyNames: ["appearance", "display", "opacity", "visibility"],
   groups: [
+    {
+      name: "appearance",
+      nameForTitle: "Appearance",
+      type: "string",
+      description: "Defines the appearance of an element, including how it should look by default.",
+      value: "",
+      options: [
+        "auto",
+        "button",
+        "checkbox",
+        "listbox",
+        "menulist ",
+        "menulist-button",
+        "meter",
+        "none",
+        "progress-bar",
+        "radio",
+        "searchfield",
+        "textarea",
+        "textfield",
+      ],
+    },
     {
       name: "display",
       nameForTitle: "Display",
@@ -742,20 +778,20 @@ const DisplayGroup: StyleGroup = {
       ],
     },
     {
-      name: "visibility",
-      nameForTitle: "Visibility",
-      type: "string",
-      description: "Specifies whether an element is visible or not.",
-      value: "",
-      options: ["visible", "hidden", "collapse", ...globalCssOptions],
-    },
-    {
       name: "opacity",
       nameForTitle: "Opacity",
       type: "string",
       description: "Specifies the opacity level of an element.",
       value: "",
       options: ["number", ...globalCssOptions],
+    },
+    {
+      name: "visibility",
+      nameForTitle: "Visibility",
+      type: "string",
+      description: "Specifies whether an element is visible or not.",
+      value: "",
+      options: ["visible", "hidden", "collapse", ...globalCssOptions],
     },
   ],
 };
@@ -1967,6 +2003,7 @@ const WritingModeGroup: StyleGroup = {
 export const STYLE_GROUP: StyleGroup[] = [
   AlignGroup,
   AllGroup,
+  BackfaceVisibilityGroup,
   BackgroundGroup,
   BlockSizeGroup,
   BoxGroup,
