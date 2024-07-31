@@ -144,7 +144,7 @@ function TextContent({ tag }: PTagTypes) {
             </CardHeader>
             <CardContent className="layoutCardContent">
               <Textarea
-                className="resize-none"
+                className="resize-y"
                 placeholder="Type your message here."
                 id="message"
                 value={textContent ? textContent : ""}

@@ -7,12 +7,16 @@ import StyleLayout from "../StyleLayout";
 import { extractString, extractUnit, extractValue } from "@/utils/styles/extractUnits";
 import { globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
 
-type PositionType = {
+type DynamicOptionType = {
   name: string;
   isRange?: boolean;
-  isText?: boolean;
+  isDoubleQuotesText?: boolean;
 };
-export default function DynamicOptionSetter({ name, isRange, isText }: PositionType) {
+export default function DynamicOptionSetter({
+  name,
+  isRange,
+  isDoubleQuotesText,
+}: DynamicOptionType) {
   const { selector, onChange, group } = useStyleContext() as IStyleContext;
 
   const style = group?.groups.find((style) => style.name === name);
@@ -27,7 +31,7 @@ export default function DynamicOptionSetter({ name, isRange, isText }: PositionT
   }, [selector, style, option]);
 
   function getOptionFromValue(value: string): string {
-    if (isText) {
+    if (isDoubleQuotesText) {
       return "text";
     }
     const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
@@ -84,9 +88,10 @@ export default function DynamicOptionSetter({ name, isRange, isText }: PositionT
             {
               <DynamicOptions
                 optionType={option}
-                value={isText ? extractString(style.value) : value}
+                value={isDoubleQuotesText ? extractString(style.value) : value}
                 unit={unit}
                 isRange={isRange}
+                isDoubleQuotesText={isDoubleQuotesText}
                 customOptionsCallback={handleValueChange}
               />
             }

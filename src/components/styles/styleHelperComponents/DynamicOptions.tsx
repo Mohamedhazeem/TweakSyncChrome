@@ -10,6 +10,7 @@ type PositionUnitType = {
   value: string;
   unit: string;
   isRange?: boolean;
+  isDoubleQuotesText?: boolean;
   customOptionsCallback: (newValue: string) => void;
 };
 
@@ -18,6 +19,7 @@ export function DynamicOptions({
   value,
   unit,
   isRange,
+  isDoubleQuotesText,
   customOptionsCallback,
 }: PositionUnitType) {
   const [number, setNumber] = useState<string>(value);
@@ -80,7 +82,12 @@ export function DynamicOptions({
   } else if (optionType === "number" && !clearLayout) {
     return NumberInput({ number, setNumber, customOptionsCallback, isRange });
   } else if (optionType === "text" && !clearLayout) {
-    return TextInput({ string: number, setString: setNumber, customOptionsCallback });
+    return TextInput({
+      string: number,
+      setString: setNumber,
+      customOptionsCallback,
+      isDoubleQuotesText,
+    });
   }
   return <div></div>;
 }
