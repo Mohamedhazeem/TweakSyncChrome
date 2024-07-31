@@ -34,7 +34,7 @@
 
 /* #region LayoutStyles */
 .layoutCard {
-  @apply border-2;
+  @apply border-2 border-t-neutral-200;
 }
 .layoutCardHeader {
   @apply p-2 py-1 rounded;

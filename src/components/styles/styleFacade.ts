@@ -12,6 +12,7 @@ import ColorProperties from "./styleGroup/ColorProperties";
 import ColumnProperties from "./styleGroup/ColumnProperties";
 import ContainProperties from "./styleGroup/ContainProperties";
 import ContentProperties from "./styleGroup/ContentProperties";
+import CursorProperty from "./styleGroup/CursorProperty";
 import DisplayProperties from "./styleGroup/DisplayProperties";
 import FlexProperties from "./styleGroup/FlexProperties";
 import HeightProperties from "./styleGroup/HeightProperties";
@@ -47,6 +48,7 @@ export const styleComponents: {
   "Column Properties": ColumnProperties,
   "Contain Properties": ContainProperties,
   "Content Properties": ContentProperties,
+  "Cursor Property": CursorProperty,
   "Display Properties": DisplayProperties,
   "Flex Properties": FlexProperties,
   "Height Properties": HeightProperties,
