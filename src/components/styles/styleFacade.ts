@@ -30,6 +30,7 @@ import WhiteSpaceProperties from "./styleGroup/WhiteSpaceProperties";
 import WidthProperties from "./styleGroup/WidthProperties";
 import WordProperties from "./styleGroup/WordProperties";
 import WritingMode from "./styleGroup/WritingMode";
+import OverScrollProperties from "./styleGroup/OverScrollProperties";
 
 export const styleComponents: {
   [key: string]: React.ComponentType;
@@ -62,6 +63,7 @@ export const styleComponents: {
   "Text Properties": TextProperties,
   "Outline Properties": OutlineProperties,
   "Overflow Properties": OverFlowProperties,
+  "Overscroll Properties": OverScrollProperties,
   "White Space Properties": WhiteSpaceProperties,
   "Width Properties": WidthProperties,
   "Word Properties": WordProperties,

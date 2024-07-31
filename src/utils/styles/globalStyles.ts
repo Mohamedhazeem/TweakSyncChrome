@@ -156,6 +156,11 @@ export const GLOBAL_STYLES: Style[] = [
     value: "",
   },
   {
+    name: "overscroll-behavior-x",
+    nameForTitle: "Overscroll Properties",
+    value: "",
+  },
+  {
     name: "padding-top",
     nameForTitle: "Padding Properties",
     value: "",
@@ -1538,6 +1543,50 @@ const OverflowGroup: StyleGroup = {
     },
   ],
 };
+const OverscrollGroup: StyleGroup = {
+  groupName: "Overscroll Properties",
+  propertyNames: [
+    "overscroll-behavior-x",
+    "overscroll-behavior-y",
+    "overscroll-behavior-block",
+    "overscroll-behavior-inline",
+  ],
+  groups: [
+    {
+      name: "overscroll-behavior-x",
+      nameForTitle: "Overscroll Behavior X",
+      type: "string",
+      description: "Specifies the overscroll behavior for the x-axis.",
+      value: "",
+      options: ["auto", "contain", "none", ...globalCssOptions],
+    },
+    {
+      name: "overscroll-behavior-y",
+      nameForTitle: "Overscroll Behavior Y",
+      type: "string",
+      description: "Specifies the overscroll behavior for the y-axis.",
+      value: "",
+      options: ["auto", "contain", "none", ...globalCssOptions],
+    },
+    {
+      name: "overscroll-behavior-block",
+      nameForTitle: "Overscroll Behavior Block",
+      type: "string",
+      description: "Specifies the overscroll behavior for block-level elements.",
+      value: "",
+      options: ["auto", "contain", "none", ...globalCssOptions],
+    },
+    {
+      name: "overscroll-behavior-inline",
+      nameForTitle: "Overscroll Behavior Inline",
+      type: "string",
+      description: "Specifies the overscroll behavior for inline-level elements.",
+      value: "",
+      options: ["auto", "contain", "none", ...globalCssOptions],
+    },
+  ],
+};
+
 const PaddingGroup: StyleGroup = {
   groupName: "Padding Properties",
   propertyNames: [
@@ -1793,7 +1842,6 @@ const TableGroup: StyleGroup = {
     },
   ],
 };
-
 const TextGroup: StyleGroup = {
   groupName: "Text Properties",
   propertyNames: [
@@ -2212,6 +2260,7 @@ export const STYLE_GROUP: StyleGroup[] = [
   MarginGroup,
   OutlineGroup,
   OverflowGroup,
+  OverscrollGroup,
   PaddingGroup,
   PlaceGroup,
   PositionGroup,
