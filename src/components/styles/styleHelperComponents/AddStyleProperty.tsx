@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -78,9 +77,8 @@ function AddStyleProperty({ selector, setStyles, addStyleProperty }: AddStylePro
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="w-full">
+        <Button variant="outline" role="combobox" aria-expanded={open} className="addStyleProperty">
           Add Style Property
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[250px] p-0">

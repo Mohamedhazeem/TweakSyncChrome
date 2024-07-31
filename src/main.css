@@ -70,7 +70,7 @@
   @apply p-1 rounded bg-gradient-to-r from-pink-500 to-amber-500;
 }
 .layoutParentCardContent {
-  @apply p-0 pt-1 px-1 m-0 flex flex-col gap-2;
+  @apply p-0 pb-2 py-1 px-1 m-0 flex flex-col gap-2;
 }
 .layoutParentCardContentHeader {
   @apply p-2 rounded bg-gradient-to-r from-purple-400 to-purple-700;
@@ -83,6 +83,9 @@
 }
 .textArea {
   @apply grid w-full gap-1.5 p-2;
+}
+.addStyleProperty {
+  @apply bg-gradient-to-r from-lime-400 to-lime-500;
 }
 /* #endregion LayoutStyles */
 

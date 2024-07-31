@@ -37,10 +37,7 @@ function StyleLayout({ style, children }: StyleLayoutProps) {
             >
               <AccordionTrigger className="AccordionTrigger">
                 <CardTitle className="layoutCardTitle">
-                  {/* <AccordionTrigger className="AccordionTrigger"> */}
                   {style.nameForTitle}
-                  {/* </AccordionTrigger> */}
-
                   <div className="layoutHoverCardHolder">
                     <HoverCard>
                       <HoverCardTrigger asChild>

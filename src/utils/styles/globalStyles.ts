@@ -41,6 +41,16 @@ export const GLOBAL_STYLES: Style[] = [
     value: "",
   },
   {
+    name: "all",
+    nameForTitle: "All Property",
+    value: "",
+  },
+  {
+    name: "backface-visibility",
+    nameForTitle: "Backface Visibility Property",
+    value: "",
+  },
+  {
     name: "background-color",
     nameForTitle: "Background Properties",
     value: "",
@@ -51,8 +61,23 @@ export const GLOBAL_STYLES: Style[] = [
     value: "",
   },
   {
+    name: "box-sizing",
+    nameForTitle: "Box Properties",
+    value: "",
+  },
+  {
     name: "break-after",
     nameForTitle: "Break Properties",
+    value: "",
+  },
+  {
+    name: "caption-side",
+    nameForTitle: "Caption Side Property",
+    value: "",
+  },
+  {
+    name: "clear",
+    nameForTitle: "Clear Property",
     value: "",
   },
   {
@@ -68,6 +93,11 @@ export const GLOBAL_STYLES: Style[] = [
   {
     name: "contain",
     nameForTitle: "Contain Properties",
+    value: "",
+  },
+  {
+    name: "content",
+    nameForTitle: "Content Properties",
     value: "",
   },
   {
@@ -162,7 +192,7 @@ export const GLOBAL_STYLES: Style[] = [
   },
   {
     name: "writing-mode",
-    nameForTitle: "Writing Mode",
+    nameForTitle: "Writing Property",
     value: "",
   },
 ];
@@ -2046,7 +2076,7 @@ const WordGroup: StyleGroup = {
   ],
 };
 const WritingModeGroup: StyleGroup = {
-  groupName: "Writing Mode",
+  groupName: "Writing Property",
   propertyNames: ["writing-mode"],
   groups: [
     {

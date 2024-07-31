@@ -64,5 +64,5 @@ export const styleComponents: {
   "White Space Properties": WhiteSpaceProperties,
   "Width Properties": WidthProperties,
   "Word Properties": WordProperties,
-  "Writing Mode": WritingMode,
+  "Writing Property": WritingMode,
 };
