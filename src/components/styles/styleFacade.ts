@@ -1,4 +1,5 @@
 import AlignProperties from "./styleGroup/AlignProperties";
+import AllProperty from "./styleGroup/AllProperty";
 import BackgroundProperties from "./styleGroup/BackgroundProperties";
 import BlockSizeProperties from "./styleGroup/BlockSizeProperties";
 import BoxProperties from "./styleGroup/BoxProperties";
@@ -29,6 +30,7 @@ export const styleComponents: {
   [key: string]: React.ComponentType;
 } = {
   "Alignment Properties": AlignProperties,
+  "All Property": AllProperty,
   "Background Properties": BackgroundProperties,
   "Block-Size Properties": BlockSizeProperties,
   "Box Properties": BoxProperties,

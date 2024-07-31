@@ -251,6 +251,20 @@ const AlignGroup: StyleGroup = {
     },
   ],
 };
+const AllGroup: StyleGroup = {
+  groupName: "All Property",
+  propertyNames: ["all"],
+  groups: [
+    {
+      name: "all",
+      nameForTitle: "All Property",
+      type: "string",
+      description: "Applies all styles to an element.",
+      value: "",
+      options: [...globalCssOptions],
+    },
+  ],
+};
 const BackgroundGroup: StyleGroup = {
   groupName: "Background Properties",
   propertyNames: [
@@ -1952,6 +1966,7 @@ const WritingModeGroup: StyleGroup = {
 
 export const STYLE_GROUP: StyleGroup[] = [
   AlignGroup,
+  AllGroup,
   BackgroundGroup,
   BlockSizeGroup,
   BoxGroup,
