@@ -5,6 +5,7 @@ function ColorProperties() {
   return (
     <div className="inspector-component">
       <Color colorProp="accent-color" />
+      <Color colorProp="caret-color" />
       <Color colorProp="color" />
       <SingleStyleOptionSetter name="color-scheme" isCapitalized={true} />
     </div>
