@@ -46,7 +46,7 @@
   @apply bg-gradient-to-r from-zinc-300 to-slate-500;
 }
 .layoutCardTitle {
-  @apply flex justify-between items-center text-base font-medium;
+  @apply flex justify-between items-center text-base font-medium w-full;
 }
 .layoutHoverCardHolder {
   @apply flex place-items-center gap-1;
@@ -69,9 +69,6 @@
 .layoutParentCardHeader {
   @apply p-1 rounded bg-gradient-to-r from-pink-500 to-amber-500;
 }
-.layoutParentCardTitle {
-  @apply text-lg font-semibold;
-}
 .layoutParentCardContent {
   @apply p-0 pt-1 px-1 m-0 flex flex-col gap-2;
 }
@@ -79,7 +76,7 @@
   @apply p-2 rounded bg-gradient-to-r from-purple-400 to-purple-700;
 }
 .layoutParentCardContentTitle {
-  @apply flex justify-between items-center text-base font-medium;
+  @apply flex justify-between items-center text-base font-medium w-full;
 }
 .layoutParentCardTitle {
   @apply text-lg font-semibold flex justify-between items-center;

@@ -6,6 +6,7 @@ import { StyleGroup } from "@/types/styleTypes";
 import { ElementStyles } from "@/types/elementTypes";
 import AddStyleProperty from "./styleHelperComponents/AddStyleProperty";
 import { Button } from "../ui/button";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "../ui/accordion";
 
 type StyleLayoutParentProps = {
   selector: string;
@@ -30,6 +31,7 @@ const StyleLayoutParent: React.FC<StyleLayoutParentProps> = ({
       onClear(selector, property);
     });
   };
+
   return (
     <div key={selector}>
       <Card className="layoutCard">
@@ -38,33 +40,46 @@ const StyleLayoutParent: React.FC<StyleLayoutParentProps> = ({
         </CardHeader>
         <CardContent className="layoutParentCardContent">
           {Object.entries(groupedProperties).map(([groupName, group]) => (
-            <React.Fragment key={`${selector}-${groupName}`}>
-              <CardHeader className={"layoutParentCardContentHeader"}>
-                <CardTitle className="layoutParentCardContentTitle">
-                  {groupName}
-                  <Button
-                    size="sm"
-                    variant={"default"}
-                    className="layoutClearButton"
-                    onClick={() => handleClearGroup(group)}
-                  >
-                    Remove
-                  </Button>
-                </CardTitle>
-              </CardHeader>
-              <StyleContext.Provider
-                value={{
-                  key: `${selector}-${groupName}`,
-                  name: groupName,
-                  selector,
-                  group,
-                  onRemove: (property: string) => handleStyleChange(selector, property, null),
-                  onChange: handleStyleChange,
-                }}
+            <div key={`${selector}-${groupName}`}>
+              <Accordion
+                type="multiple"
+                defaultValue={
+                  group.groups.some((style) => style.value) ? [`${selector}-${groupName}`] : []
+                }
               >
-                <StyleFactory name={groupName} />
-              </StyleContext.Provider>
-            </React.Fragment>
+                <AccordionItem value={`${selector}-${groupName}`}>
+                  <CardHeader className={"layoutParentCardContentHeader"}>
+                    <AccordionTrigger className="AccordionTrigger">
+                      <CardTitle className="layoutParentCardContentTitle">
+                        {groupName}
+                        <Button
+                          size="sm"
+                          variant={"default"}
+                          className="layoutClearButton"
+                          onClick={() => handleClearGroup(group)}
+                        >
+                          Remove
+                        </Button>
+                      </CardTitle>
+                    </AccordionTrigger>
+                  </CardHeader>
+                  <StyleContext.Provider
+                    value={{
+                      key: `${selector}-${groupName}`,
+                      name: groupName,
+                      selector,
+                      group,
+                      onRemove: (property: string) => handleStyleChange(selector, property, null),
+                      onChange: handleStyleChange,
+                    }}
+                  >
+                    <AccordionContent className="AccordionContent">
+                      <StyleFactory name={groupName} />
+                    </AccordionContent>
+                  </StyleContext.Provider>
+                </AccordionItem>
+              </Accordion>
+            </div>
           ))}
           <AddStyleProperty
             selector={selector}
