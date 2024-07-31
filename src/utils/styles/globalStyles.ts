@@ -545,6 +545,21 @@ const CaptionSideGroup: StyleGroup = {
     },
   ],
 };
+const ClearGroup: StyleGroup = {
+  groupName: "Clear Property",
+  propertyNames: ["clear"],
+  groups: [
+    {
+      name: "clear",
+      nameForTitle: "Clear",
+      type: "string",
+      description:
+        "Specifies which sides of an element's box are not affected by floating elements.",
+      value: "",
+      options: ["none", "left", "right", "both", "inline-start", "inline-end", ...globalCssOptions],
+    },
+  ],
+};
 
 const ColorGroup: StyleGroup = {
   groupName: "Color Properties",
@@ -2032,6 +2047,7 @@ export const STYLE_GROUP: StyleGroup[] = [
   BoxGroup,
   BreakGroup,
   CaptionSideGroup,
+  ClearGroup,
   ColorGroup,
   ColumnGroup,
   ContainGroup,

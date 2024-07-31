@@ -6,6 +6,7 @@ import BlockSizeProperties from "./styleGroup/BlockSizeProperties";
 import BoxProperties from "./styleGroup/BoxProperties";
 import BreakProperties from "./styleGroup/BreakProperties";
 import CaptionSideProperty from "./styleGroup/CaptionSideProperty";
+import ClearProperty from "./styleGroup/ClearProperty";
 
 import ColorProperties from "./styleGroup/ColorProperties";
 import ColumnProperties from "./styleGroup/ColumnProperties";
@@ -40,6 +41,7 @@ export const styleComponents: {
   "Box Properties": BoxProperties,
   "Break Properties": BreakProperties,
   "Caption Side Property": CaptionSideProperty,
+  "Clear Property": ClearProperty,
   "Color Properties": ColorProperties,
   "Column Properties": ColumnProperties,
   "Contain Properties": ContainProperties,
