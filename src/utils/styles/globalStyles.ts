@@ -531,6 +531,21 @@ const BreakGroup: StyleGroup = {
     },
   ],
 };
+const CaptionSideGroup: StyleGroup = {
+  groupName: "Caption Side Property",
+  propertyNames: ["caption-side"],
+  groups: [
+    {
+      name: "caption-side",
+      nameForTitle: "Caption Side",
+      type: "string",
+      description: "Specifies the placement of the caption for a table element.",
+      value: "",
+      options: ["top", "bottom", ...globalCssOptions],
+    },
+  ],
+};
+
 const ColorGroup: StyleGroup = {
   groupName: "Color Properties",
   propertyNames: ["accent-color", "caret-color", "color", "color-scheme"],
@@ -2016,6 +2031,7 @@ export const STYLE_GROUP: StyleGroup[] = [
   BlockSizeGroup,
   BoxGroup,
   BreakGroup,
+  CaptionSideGroup,
   ColorGroup,
   ColumnGroup,
   ContainGroup,
