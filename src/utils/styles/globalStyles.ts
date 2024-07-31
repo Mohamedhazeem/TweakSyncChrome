@@ -70,11 +70,7 @@ export const GLOBAL_STYLES: Style[] = [
     nameForTitle: "Break Properties",
     value: "",
   },
-  {
-    name: "caption-side",
-    nameForTitle: "Caption Side Property",
-    value: "",
-  },
+
   {
     name: "clear",
     nameForTitle: "Clear Property",
@@ -173,6 +169,11 @@ export const GLOBAL_STYLES: Style[] = [
   {
     name: "position",
     nameForTitle: "Position Properties",
+    value: "",
+  },
+  {
+    name: "empty-cells",
+    nameForTitle: "Table Properties",
     value: "",
   },
   {
@@ -563,20 +564,6 @@ const BreakGroup: StyleGroup = {
       description: "Specifies how page, column, or region breaks should occur inside an element.",
       value: "",
       options: ["auto", "avoid", "avoid-page", "avoid-column", "avoid-region", ...globalCssOptions],
-    },
-  ],
-};
-const CaptionSideGroup: StyleGroup = {
-  groupName: "Caption Side Property",
-  propertyNames: ["caption-side"],
-  groups: [
-    {
-      name: "caption-side",
-      nameForTitle: "Caption Side",
-      type: "string",
-      description: "Specifies the placement of the caption for a table element.",
-      value: "",
-      options: ["top", "bottom", ...globalCssOptions],
     },
   ],
 };
@@ -1759,6 +1746,38 @@ const PositionGroup: StyleGroup = {
     },
   ],
 };
+const TableGroup: StyleGroup = {
+  groupName: "Table Properties",
+  propertyNames: ["empty-cells", "caption-side", "table-layout"],
+  groups: [
+    {
+      name: "caption-side",
+      nameForTitle: "Caption Side",
+      type: "string",
+      description: "Specifies the placement of the caption for a table element.",
+      value: "",
+      options: ["top", "bottom", ...globalCssOptions],
+    },
+    {
+      name: "empty-cells",
+      nameForTitle: "Empty Cells",
+      type: "string",
+      description:
+        "Specifies whether to display or hide borders and backgrounds of empty table cells.",
+      value: "",
+      options: ["show", "hide", ...globalCssOptions],
+    },
+    {
+      name: "table-layout",
+      nameForTitle: "Table Layout",
+      type: "string",
+      description: "Defines the algorithm used to lay out the table cells, rows, and columns.",
+      value: "",
+      options: ["auto", "fixed", ...globalCssOptions],
+    },
+  ],
+};
+
 const TextGroup: StyleGroup = {
   groupName: "Text Properties",
   propertyNames: [
@@ -2161,7 +2180,6 @@ export const STYLE_GROUP: StyleGroup[] = [
   BlockSizeGroup,
   BoxGroup,
   BreakGroup,
-  CaptionSideGroup,
   ClearGroup,
   ColorGroup,
   ColumnGroup,
@@ -2181,6 +2199,7 @@ export const STYLE_GROUP: StyleGroup[] = [
   PaddingGroup,
   PlaceGroup,
   PositionGroup,
+  TableGroup,
   TextGroup,
   WhiteSpaceGroup,
   WidthGroup,

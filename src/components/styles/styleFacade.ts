@@ -5,9 +5,7 @@ import BackgroundProperties from "./styleGroup/BackgroundProperties";
 import BlockSizeProperties from "./styleGroup/BlockSizeProperties";
 import BoxProperties from "./styleGroup/BoxProperties";
 import BreakProperties from "./styleGroup/BreakProperties";
-import CaptionSideProperty from "./styleGroup/CaptionSideProperty";
 import ClearProperty from "./styleGroup/ClearProperty";
-
 import ColorProperties from "./styleGroup/ColorProperties";
 import ColumnProperties from "./styleGroup/ColumnProperties";
 import ContainProperties from "./styleGroup/ContainProperties";
@@ -26,6 +24,7 @@ import OverFlowProperties from "./styleGroup/OverFlowProperties";
 import PaddingProperties from "./styleGroup/PaddingProperties";
 import PlaceProperties from "./styleGroup/PlaceProperties";
 import PositionProperties from "./styleGroup/PositionProperties";
+import TableProperties from "./styleGroup/TableProperties";
 import TextProperties from "./styleGroup/TextProperties";
 import WhiteSpaceProperties from "./styleGroup/WhiteSpaceProperties";
 import WidthProperties from "./styleGroup/WidthProperties";
@@ -42,7 +41,6 @@ export const styleComponents: {
   "Block-Size Properties": BlockSizeProperties,
   "Box Properties": BoxProperties,
   "Break Properties": BreakProperties,
-  "Caption Side Property": CaptionSideProperty,
   "Clear Property": ClearProperty,
   "Color Properties": ColorProperties,
   "Column Properties": ColumnProperties,
@@ -60,6 +58,7 @@ export const styleComponents: {
   "Padding Properties": PaddingProperties,
   "Place Properties": PlaceProperties,
   "Position Properties": PositionProperties,
+  "Table Properties": TableProperties,
   "Text Properties": TextProperties,
   "Outline Properties": OutlineProperties,
   "Overflow Properties": OverFlowProperties,
