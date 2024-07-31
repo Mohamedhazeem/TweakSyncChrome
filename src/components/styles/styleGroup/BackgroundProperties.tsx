@@ -8,8 +8,8 @@ import Position from "../styleComponents/Position";
 function BackgroundProperties() {
   return (
     <div className="inspector-component">
-      <MultiStyleOptionSetter name="background-attachment" />
-      <MultiStyleOptionSetter name="background-blend-mode" />
+      <MultiStyleOptionSetter name="background-attachment" isComma={true} />
+      <MultiStyleOptionSetter name="background-blend-mode" isComma={true} />
       <SingleStyleOptionSetter name="background-clip" isCapitalized={true} />
       <Color colorProp="background-color" />
       <SingleStyleOptionSetter name="background-image" isCapitalized={true} />

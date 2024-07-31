@@ -16,12 +16,18 @@ import { ChevronsUpDown } from "lucide-react";
 import { useClearLayoutContext } from "@/utils/elementContext";
 import { sortOptions } from "@/utils/sortOptions";
 // import BackgroundPosition from "../styleComponents/BackgroundPosition";
+
 interface MultiOptionsStyleProps {
   style: Style;
   customOptionsCallback: (newValue: string | boolean) => void;
+  isComma?: boolean;
 }
 
-const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({ style, customOptionsCallback }) => {
+const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
+  style,
+  customOptionsCallback,
+  isComma,
+}) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [openPopoverIndex, setOpenPopoverIndex] = useState<number | null>(null);
   const [optionCount, setOptionCount] = useState<number>(0);
@@ -45,7 +51,7 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({ style, customOpti
     const updatedOptions = [...selectedOptions];
     updatedOptions[index] = newOption;
     setSelectedOptions(updatedOptions);
-    const updatedValue = updatedOptions.join(", "); // Adjust for style property
+    const updatedValue = updatedOptions.join(isComma ? ", " : " "); // Adjust for style property
     setOpenPopoverIndex(null);
     customOptionsCallback(updatedValue);
   };

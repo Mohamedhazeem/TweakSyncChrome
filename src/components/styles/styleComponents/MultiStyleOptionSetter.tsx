@@ -6,8 +6,9 @@ import StyleLayout from "../StyleLayout";
 
 type MultiStyleOptionSetterProps = {
   name: string;
+  isComma?: boolean;
 };
-const MultiStyleOptionSetter = ({ name }: MultiStyleOptionSetterProps) => {
+const MultiStyleOptionSetter = ({ name, isComma }: MultiStyleOptionSetterProps) => {
   const { selector, group, onChange } = useStyleContext() as IStyleContext;
 
   // const [, setAttachment] = useState<string>("");
@@ -34,7 +35,11 @@ const MultiStyleOptionSetter = ({ name }: MultiStyleOptionSetterProps) => {
     <div>
       {style && (
         <StyleLayout style={style}>
-          <MultiStyleOptions style={style} customOptionsCallback={handleMultiStyleOption} />
+          <MultiStyleOptions
+            style={style}
+            customOptionsCallback={handleMultiStyleOption}
+            isComma={isComma}
+          />
         </StyleLayout>
       )}
     </div>
