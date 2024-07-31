@@ -1,4 +1,4 @@
-import Position from "../styleComponents/Position";
+import DynamicOptionSetter from "../styleComponents/DynamicOptionSetter";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 
 function PositionProperties() {
@@ -6,11 +6,11 @@ function PositionProperties() {
   return (
     <div className="inspector-component">
       <SingleStyleOptionSetter name="position" isCapitalized={true} />
-      <Position name="top" />
-      <Position name="right" />
-      <Position name="bottom" />
-      <Position name="left" />
-      <Position name="z-index" />
+      <DynamicOptionSetter name="top" />
+      <DynamicOptionSetter name="right" />
+      <DynamicOptionSetter name="bottom" />
+      <DynamicOptionSetter name="left" />
+      <DynamicOptionSetter name="z-index" />
     </div>
   );
 }

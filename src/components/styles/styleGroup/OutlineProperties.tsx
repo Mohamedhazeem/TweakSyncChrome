@@ -1,14 +1,14 @@
 import Color from "../styleComponents/Color";
-import Position from "../styleComponents/Position";
+import DynamicOptionSetter from "../styleComponents/DynamicOptionSetter";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 
 function OutlineProperties() {
   return (
     <div className="inspector-component">
       <Color colorProp="outline-color" />
-      <Position name="outline-offset" />
+      <DynamicOptionSetter name="outline-offset" />
       <SingleStyleOptionSetter name="outline-style" isCapitalized={true} />
-      <Position name="outline-width" />
+      <DynamicOptionSetter name="outline-width" />
     </div>
   );
 }

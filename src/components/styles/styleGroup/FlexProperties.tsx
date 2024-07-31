@@ -1,14 +1,14 @@
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
-import Position from "../styleComponents/Position";
+import DynamicOptionSetter from "../styleComponents/DynamicOptionSetter";
 import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
 function FlexProperties() {
   return (
     <div className="inspector-component">
-      <Position name="flex-basis" />
+      <DynamicOptionSetter name="flex-basis" />
       <SingleStyleOptionSetter name="flex-direction" isCapitalized={true} />
       <MultiStyleOptionSetter name="flex-flow" />
-      <Position name="flex-grow" />
-      <Position name="flex-shrink" />
+      <DynamicOptionSetter name="flex-grow" />
+      <DynamicOptionSetter name="flex-shrink" />
       <SingleStyleOptionSetter name="flex-wrap" isCapitalized={true} />
     </div>
   );

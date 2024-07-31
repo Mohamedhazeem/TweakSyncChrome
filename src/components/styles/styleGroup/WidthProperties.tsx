@@ -1,10 +1,10 @@
-import Position from "../styleComponents/Position";
+import DynamicOptionSetter from "../styleComponents/DynamicOptionSetter";
 function WidthProperties() {
   return (
     <div className="inspector-component">
-      <Position name="width" />
-      <Position name="min-width" />
-      <Position name="max-width" />
+      <DynamicOptionSetter name="width" />
+      <DynamicOptionSetter name="min-width" />
+      <DynamicOptionSetter name="max-width" />
     </div>
   );
 }

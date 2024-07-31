@@ -1,10 +1,10 @@
-import Position from "../styleComponents/Position";
+import DynamicOptionSetter from "../styleComponents/DynamicOptionSetter";
 function HeightProperties() {
   return (
     <div className="inspector-component">
-      <Position name="height" />
-      <Position name="min-height" />
-      <Position name="max-height" />
+      <DynamicOptionSetter name="height" />
+      <DynamicOptionSetter name="min-height" />
+      <DynamicOptionSetter name="max-height" />
     </div>
   );
 }

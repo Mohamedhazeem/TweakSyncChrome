@@ -1,15 +1,15 @@
-import Position from "../styleComponents/Position";
+import DynamicOptionSetter from "../styleComponents/DynamicOptionSetter";
 function PaddingProperties() {
   return (
     <div className="inspector-component">
-      <Position name="padding-top" />
-      <Position name="padding-right" />
-      <Position name="padding-bottom" />
-      <Position name="padding-left" />
-      <Position name="padding-block-end" />
-      <Position name="padding-block-start" />
-      <Position name="padding-inline-end" />
-      <Position name="padding-inline-start" />
+      <DynamicOptionSetter name="padding-top" />
+      <DynamicOptionSetter name="padding-right" />
+      <DynamicOptionSetter name="padding-bottom" />
+      <DynamicOptionSetter name="padding-left" />
+      <DynamicOptionSetter name="padding-block-end" />
+      <DynamicOptionSetter name="padding-block-start" />
+      <DynamicOptionSetter name="padding-inline-end" />
+      <DynamicOptionSetter name="padding-inline-start" />
     </div>
   );
 }

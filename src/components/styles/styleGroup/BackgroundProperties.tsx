@@ -1,7 +1,7 @@
 import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
 import Color from "../styleComponents/Color";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
-import Position from "../styleComponents/Position";
+import DynamicOptionSetter from "../styleComponents/DynamicOptionSetter";
 
 // background-image
 // background-position (add edge offset and multiple image positions)
@@ -14,10 +14,10 @@ function BackgroundProperties() {
       <Color colorProp="background-color" />
       <SingleStyleOptionSetter name="background-image" isCapitalized={true} />
       <SingleStyleOptionSetter name="background-origin" isCapitalized={true} />
-      <Position name="background-position-x" />
-      <Position name="background-position-y" />
+      <DynamicOptionSetter name="background-position-x" />
+      <DynamicOptionSetter name="background-position-y" />
       <MultiStyleOptionSetter name="background-repeat" />
-      <Position name="background-size" />
+      <DynamicOptionSetter name="background-size" />
     </div>
   );
 }

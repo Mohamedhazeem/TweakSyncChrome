@@ -1,10 +1,10 @@
-import Position from "../styleComponents/Position";
+import DynamicOptionSetter from "../styleComponents/DynamicOptionSetter";
 function BlockSizeProperties() {
   return (
     <div className="inspector-component">
-      <Position name="block-size" />
-      <Position name="min-block-size" />
-      <Position name="max-block-size" />
+      <DynamicOptionSetter name="block-size" />
+      <DynamicOptionSetter name="min-block-size" />
+      <DynamicOptionSetter name="max-block-size" />
     </div>
   );
 }

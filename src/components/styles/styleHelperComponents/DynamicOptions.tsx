@@ -3,6 +3,7 @@ import { globalCssOptions } from "@/utils/styles/globalStyles";
 import { NumberInput } from "./NumberInput";
 import { Length } from "./Length";
 import { useClearLayoutContext } from "@/utils/elementContext";
+import { TextInput } from "./TextInput";
 
 type PositionUnitType = {
   optionType: string;
@@ -12,7 +13,7 @@ type PositionUnitType = {
   customOptionsCallback: (newValue: string) => void;
 };
 
-export function PositionUnits({
+export function DynamicOptions({
   optionType,
   value,
   unit,
@@ -78,6 +79,8 @@ export function PositionUnits({
     });
   } else if (optionType === "number" && !clearLayout) {
     return NumberInput({ number, setNumber, customOptionsCallback, isRange });
+  } else if (optionType === "text" && !clearLayout) {
+    return TextInput({ string: number, setString: setNumber, customOptionsCallback });
   }
   return <div></div>;
 }

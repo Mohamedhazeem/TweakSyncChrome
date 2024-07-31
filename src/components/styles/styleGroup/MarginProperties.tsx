@@ -1,4 +1,4 @@
-import Position from "../styleComponents/Position";
+import DynamicOptionSetter from "../styleComponents/DynamicOptionSetter";
 
 function MarginProperties() {
   "margin-block-end";
@@ -11,14 +11,14 @@ function MarginProperties() {
   "margin-top";
   return (
     <div className="inspector-component">
-      <Position name="margin-top" />
-      <Position name="margin-right" />
-      <Position name="margin-bottom" />
-      <Position name="margin-left" />
-      <Position name="margin-block-end" />
-      <Position name="margin-block-start" />
-      <Position name="margin-inline-end" />
-      <Position name="margin-inline-start" />
+      <DynamicOptionSetter name="margin-top" />
+      <DynamicOptionSetter name="margin-right" />
+      <DynamicOptionSetter name="margin-bottom" />
+      <DynamicOptionSetter name="margin-left" />
+      <DynamicOptionSetter name="margin-block-end" />
+      <DynamicOptionSetter name="margin-block-start" />
+      <DynamicOptionSetter name="margin-inline-end" />
+      <DynamicOptionSetter name="margin-inline-start" />
     </div>
   );
 }

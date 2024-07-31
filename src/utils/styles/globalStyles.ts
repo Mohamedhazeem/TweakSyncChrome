@@ -560,7 +560,6 @@ const ClearGroup: StyleGroup = {
     },
   ],
 };
-
 const ColorGroup: StyleGroup = {
   groupName: "Color Properties",
   propertyNames: ["accent-color", "caret-color", "color", "color-scheme"],
@@ -754,6 +753,36 @@ const ContainGroup: StyleGroup = {
     },
   ],
 };
+const ContentGroup: StyleGroup = {
+  groupName: "Content Properties",
+  propertyNames: ["content", "content-visibility"],
+  groups: [
+    {
+      name: "content",
+      nameForTitle: "Content",
+      type: "string",
+      description:
+        "Generates content to be inserted before or after an element's content using pseudo-elements.",
+      value: "",
+      options: ["none", "text", ...globalCssOptions], // url()
+    },
+    {
+      name: "content-visibility",
+      nameForTitle: "Content Visibility",
+      type: "string",
+      description:
+        "Controls the visibility and rendering of an element's content, optimizing performance by skipping rendering when content is not visible.",
+      value: "",
+      options: [
+        "auto", // The browser decides whether to render content based on visibility in the viewport.
+        "hidden", // The content is not visible and will not be rendered.
+        "visible", // The default value. The content is visible.
+        ...globalCssOptions,
+      ],
+    },
+  ],
+};
+
 const DisplayGroup: StyleGroup = {
   groupName: "Display Properties",
   propertyNames: ["appearance", "display", "opacity", "visibility"],
@@ -2051,6 +2080,7 @@ export const STYLE_GROUP: StyleGroup[] = [
   ColorGroup,
   ColumnGroup,
   ContainGroup,
+  ContentGroup,
   DisplayGroup,
   FlexGroup,
   HeightGroup,

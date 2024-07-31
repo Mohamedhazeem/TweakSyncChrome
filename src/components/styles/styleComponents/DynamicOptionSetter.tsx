@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { useStyleContext } from "@/utils/elementContext";
 import { IStyleContext } from "@/types/styleTypes";
-import { PositionUnits } from "../styleHelperComponents/PositionUnits";
+import { DynamicOptions } from "../styleHelperComponents/DynamicOptions";
 import { PopOver } from "../styleHelperComponents/PopOver";
 import StyleLayout from "../StyleLayout";
-import { extractUnit, extractValue } from "@/utils/styles/extractUnits";
+import { extractString, extractUnit, extractValue } from "@/utils/styles/extractUnits";
 import { globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
 
 type PositionType = {
   name: string;
   isRange?: boolean;
+  isText?: boolean;
 };
-export default function Position({ name, isRange }: PositionType) {
+export default function DynamicOptionSetter({ name, isRange, isText }: PositionType) {
   const { selector, onChange, group } = useStyleContext() as IStyleContext;
 
   const style = group?.groups.find((style) => style.name === name);
@@ -26,6 +27,9 @@ export default function Position({ name, isRange }: PositionType) {
   }, [selector, style, option]);
 
   function getOptionFromValue(value: string): string {
+    if (isText) {
+      return "text";
+    }
     const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
     if (lengthUnitRegex.test(value)) {
       return "length";
@@ -38,6 +42,7 @@ export default function Position({ name, isRange }: PositionType) {
     if (globalCssOptions.includes(value)) {
       return value;
     }
+
     // Default to an empty string or a default option if needed
     return value;
   }
@@ -50,7 +55,10 @@ export default function Position({ name, isRange }: PositionType) {
   };
   const handleValueChange = (newValue: string) => {
     if (style && style.name) {
+      console.log(style.name);
       onChange(selector, style.name, newValue);
+    } else {
+      console.log("name");
     }
   };
 
@@ -74,9 +82,9 @@ export default function Position({ name, isRange }: PositionType) {
               />
             </div>
             {
-              <PositionUnits
+              <DynamicOptions
                 optionType={option}
-                value={value}
+                value={isText ? extractString(style.value) : value}
                 unit={unit}
                 isRange={isRange}
                 customOptionsCallback={handleValueChange}
