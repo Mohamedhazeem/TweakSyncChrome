@@ -7,7 +7,7 @@ import BoxProperties from "./styleGroup/BoxProperties";
 import BreakProperties from "./styleGroup/BreakProperties";
 import FloatProperties from "./styleGroup/FloatProperties";
 import ColorProperties from "./styleGroup/ColorProperties";
-import ColumnProperties from "./styleGroup/ColumnProperties";
+import ColumnRowProperties from "./styleGroup/ColumnRowProperties";
 import ContainProperties from "./styleGroup/ContainProperties";
 import ContentProperties from "./styleGroup/ContentProperties";
 import CursorProperty from "./styleGroup/CursorProperty";
@@ -42,7 +42,7 @@ export const styleComponents: {
   "Box Properties": BoxProperties,
   "Break Properties": BreakProperties,
   "Color Properties": ColorProperties,
-  "Column Properties": ColumnProperties,
+  "Column-Row Properties": ColumnRowProperties,
   "Contain Properties": ContainProperties,
   "Content Properties": ContentProperties,
   "Cursor Property": CursorProperty,

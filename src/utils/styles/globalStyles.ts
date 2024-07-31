@@ -77,7 +77,7 @@ export const GLOBAL_STYLES: Style[] = [
   },
   {
     name: "column-count",
-    nameForTitle: "Column Properties",
+    nameForTitle: "Column & Row Properties",
     value: "",
   },
   {
@@ -566,7 +566,6 @@ const BreakGroup: StyleGroup = {
     },
   ],
 };
-
 const ColorGroup: StyleGroup = {
   groupName: "Color Properties",
   propertyNames: ["accent-color", "caret-color", "color", "color-scheme"],
@@ -608,11 +607,12 @@ const ColorGroup: StyleGroup = {
   ],
 };
 const ColumnGroup: StyleGroup = {
-  groupName: "Column Properties",
+  groupName: "Column-Row Properties",
   propertyNames: [
     "column-count",
     "column-fill",
     "column-gap",
+    "row-gap",
     "column-rule-color",
     "column-rule-style",
     "column-rule-width",
@@ -641,6 +641,14 @@ const ColumnGroup: StyleGroup = {
       nameForTitle: "Column Gap",
       type: "string",
       description: "Specifies the gap between columns.",
+      value: "",
+      options: ["length", "normal", ...globalCssOptions],
+    },
+    {
+      name: "row-gap",
+      nameForTitle: "Row Gap",
+      type: "length",
+      description: "Specifies the gap between rows in a grid layout.",
       value: "",
       options: ["length", "normal", ...globalCssOptions],
     },
