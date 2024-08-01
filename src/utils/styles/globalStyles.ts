@@ -176,6 +176,11 @@ export const GLOBAL_STYLES: Style[] = [
     value: "",
   },
   {
+    name: "scrollbar-color",
+    nameForTitle: "Scrollbar Properties",
+    value: "",
+  },
+  {
     name: "empty-cells",
     nameForTitle: "Table Properties",
     value: "",
@@ -1586,7 +1591,6 @@ const OverscrollGroup: StyleGroup = {
     },
   ],
 };
-
 const PaddingGroup: StyleGroup = {
   groupName: "Padding Properties",
   propertyNames: [
@@ -1811,6 +1815,37 @@ const PositionGroup: StyleGroup = {
     },
   ],
 };
+const ScrollbarGroup: StyleGroup = {
+  groupName: "Scrollbar Properties",
+  propertyNames: ["scrollbar-color", "scrollbar-gutter", "scrollbar-width"],
+  groups: [
+    {
+      name: "scrollbar-color",
+      nameForTitle: "Scrollbar Color",
+      type: "string",
+      description: "Sets the color of the scrollbar track and thumb.",
+      value: "",
+      options: ["auto", "color", ...globalCssOptions],
+    },
+    {
+      name: "scrollbar-gutter",
+      nameForTitle: "Scrollbar Gutter",
+      type: "string",
+      description: "Controls the presence of scrollbar gutters.",
+      value: "",
+      options: ["auto", "stable", "stable both-edges", ...globalCssOptions],
+    },
+    {
+      name: "scrollbar-width",
+      nameForTitle: "Scrollbar Width",
+      type: "string",
+      description: "Sets the width of the scrollbar.",
+      value: "",
+      options: ["auto", "none", "thin", ...globalCssOptions],
+    },
+  ],
+};
+
 const TableGroup: StyleGroup = {
   groupName: "Table Properties",
   propertyNames: ["empty-cells", "caption-side", "table-layout"],
@@ -2264,6 +2299,7 @@ export const STYLE_GROUP: StyleGroup[] = [
   PaddingGroup,
   PlaceGroup,
   PositionGroup,
+  ScrollbarGroup,
   TableGroup,
   TextGroup,
   WhiteSpaceGroup,

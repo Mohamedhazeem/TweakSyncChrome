@@ -31,6 +31,7 @@ import WidthProperties from "./styleGroup/WidthProperties";
 import WordProperties from "./styleGroup/WordProperties";
 import WritingMode from "./styleGroup/WritingMode";
 import OverScrollProperties from "./styleGroup/OverScrollProperties";
+import ScrollbarProperties from "./styleGroup/ScrollbarProperties";
 
 export const styleComponents: {
   [key: string]: React.ComponentType;
@@ -59,6 +60,7 @@ export const styleComponents: {
   "Padding Properties": PaddingProperties,
   "Place Properties": PlaceProperties,
   "Position Properties": PositionProperties,
+  "Scrollbar Properties": ScrollbarProperties,
   "Table Properties": TableProperties,
   "Text Properties": TextProperties,
   "Outline Properties": OutlineProperties,

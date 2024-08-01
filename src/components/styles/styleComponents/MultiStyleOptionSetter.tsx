@@ -1,6 +1,5 @@
 import { IStyleContext } from "@/types/styleTypes";
 import { useStyleContext } from "@/utils/elementContext";
-import { useEffect } from "react";
 import MultiStyleOptions from "../styleHelperComponents/MultiStyleOptions";
 import StyleLayout from "../StyleLayout";
 
@@ -10,15 +9,7 @@ type MultiStyleOptionSetterProps = {
 };
 const MultiStyleOptionSetter = ({ name, isComma }: MultiStyleOptionSetterProps) => {
   const { selector, group, onChange } = useStyleContext() as IStyleContext;
-
-  // const [, setAttachment] = useState<string>("");
   const style = group?.groups.find((style) => style.name === name);
-
-  useEffect(() => {
-    if (style && style.value) {
-      // setAttachment(style.value);
-    }
-  }, [style]);
 
   const handleMultiStyleOption = (newValue: string | boolean) => {
     if (style) {
