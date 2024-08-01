@@ -7,7 +7,7 @@ import { useOutletContext } from "react-router-dom";
 import StyleLayoutParent from "@/components/styles/StyleLayoutParent";
 // import AddStyleProperty from "@/components/styles/styleHelperComponents/AddStyleProperty";
 import { StyleGroup } from "@/types/styleTypes";
-import { STYLE_GROUP } from "@/utils/styles/globalStyles";
+import { STYLE_GROUPS } from "@/utils/styles/globalStyles";
 import { Button } from "@/components/ui/button";
 
 function StyleInspector() {
@@ -142,7 +142,7 @@ function StyleInspector() {
     for (const property in properties) {
       // const value = properties[property];
       // const group = STYLE_GROUP.find((group) => group.propertyNames.includes(property));
-      STYLE_GROUP.forEach((group) => {
+      STYLE_GROUPS.forEach((group) => {
         if (group.propertyNames.includes(property)) {
           // const styleMeta = group.groups.find((style) => style.name === property);
           groupedStyles[group.groupName] = {

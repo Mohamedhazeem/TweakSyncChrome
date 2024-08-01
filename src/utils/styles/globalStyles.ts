@@ -2289,7 +2289,7 @@ const ZoomGroup: StyleGroup = {
   ],
 };
 
-export const STYLE_GROUP: StyleGroup[] = [
+export const STYLE_GROUPS: StyleGroup[] = [
   AlignGroup,
   AllGroup,
   BackfaceVisibilityGroup,
