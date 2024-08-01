@@ -210,6 +210,11 @@ export const GLOBAL_STYLES: Style[] = [
     nameForTitle: "Writing Property",
     value: "",
   },
+  {
+    name: "zoom",
+    nameForTitle: "Zoom Property",
+    value: "",
+  },
 ];
 const AlignGroup: StyleGroup = {
   groupName: "Alignment Properties",
@@ -1845,7 +1850,6 @@ const ScrollbarGroup: StyleGroup = {
     },
   ],
 };
-
 const TableGroup: StyleGroup = {
   groupName: "Table Properties",
   propertyNames: ["empty-cells", "caption-side", "table-layout"],
@@ -2270,6 +2274,20 @@ const WritingModeGroup: StyleGroup = {
     },
   ],
 };
+const ZoomGroup: StyleGroup = {
+  groupName: "Zoom Property",
+  propertyNames: ["zoom"],
+  groups: [
+    {
+      name: "zoom",
+      nameForTitle: "Zoom",
+      type: "string",
+      description: "Defines the zoom level of the element.",
+      value: "",
+      options: ["length", "number", "normal", "reset", ...globalCssOptions],
+    },
+  ],
+};
 
 export const STYLE_GROUP: StyleGroup[] = [
   AlignGroup,
@@ -2306,4 +2324,5 @@ export const STYLE_GROUP: StyleGroup[] = [
   WidthGroup,
   WordGroup,
   WritingModeGroup,
+  ZoomGroup,
 ];

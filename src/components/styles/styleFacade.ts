@@ -32,6 +32,7 @@ import WordProperties from "./styleGroup/WordProperties";
 import WritingMode from "./styleGroup/WritingMode";
 import OverScrollProperties from "./styleGroup/OverScrollProperties";
 import ScrollbarProperties from "./styleGroup/ScrollbarProperties";
+import ZoomProperty from "./styleGroup/ZoomProperty";
 
 export const styleComponents: {
   [key: string]: React.ComponentType;
@@ -70,4 +71,5 @@ export const styleComponents: {
   "Width Properties": WidthProperties,
   "Word Properties": WordProperties,
   "Writing Property": WritingMode,
+  "Zoom Property": ZoomProperty,
 };
