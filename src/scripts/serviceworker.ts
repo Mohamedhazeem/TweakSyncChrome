@@ -10,16 +10,58 @@ import {
   isSocketOpen,
 } from "./websocket";
 
-chrome.sidePanel
-  .setPanelBehavior({ openPanelOnActionClick: true })
-  .catch((error) => console.error(error));
+chrome.commands.onCommand.addListener((command) => {
+  if (command === "toggle_side_panel") {
+    chrome.runtime.sendMessage({ action: "toggleSidePanel" });
+  }
+});
+function toggleSidePanel() {
+  chrome.sidePanel
+    .getOptions({})
+    .then((options) => {
+      const newState = !options.enabled;
+      chrome.sidePanel.setOptions({ enabled: newState }).catch((error) => console.error(error));
+    })
+    .catch((error) => console.error(error));
+}
+chrome.runtime.onMessage.addListener((message) => {
+  if (message.action === "toggleSidePanel") {
+    toggleSidePanel();
+  }
+  // else if (message.action === "closeSidePanel") {
+  //   closeSidePanel();
+  // }
+});
+function closeSidePanel(tabId: number) {
+  chrome.sidePanel.setOptions({ enabled: false, tabId }).catch((error) => console.error(error));
+}
+// chrome.sidePanel
+//   .setPanelBehavior({ openPanelOnActionClick: true })
+//   .catch((error) => console.error(error));
 
+// function closeSidePanel() {
+//   // chrome.sidePanel.setOptions({ enabled: false }).catch((error) => console.error(error));
+//   window.close();
+// }
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  // Ensure the side panel is closed only if it's open
+  chrome.sidePanel
+    .getOptions({ tabId })
+    .then((options) => {
+      if (options.enabled && changeInfo.status === "loading") {
+        console.log(changeInfo.status);
+        closeSidePanel(tabId);
+      }
+    })
+    .catch((error) => {
+      console.error("Error getting side panel options:", error);
+    });
+});
 chrome.tabs.onUpdated.addListener((_tabId, changeInfo) => {
   if (changeInfo.status === "complete") {
     reinjectContentScript();
   }
 });
-
 chrome.tabs.onRemoved.addListener((tabId) => {
   chrome.storage.local.get([`contentScriptInjected_${tabId}`], (result) => {
     if (result[`contentScriptInjected_${tabId}`]) {
@@ -31,14 +73,11 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 chrome.windows.onRemoved.addListener((windowId) => {
   chrome.tabs.query({ windowId: windowId }, (tabs) => {
     tabs.forEach((tab) => {
-      chrome.storage.local.get(
-        [`contentScriptInjected_${tab.id}`],
-        (result) => {
-          if (result[`contentScriptInjected_${tab.id}`]) {
-            chrome.storage.local.remove([`contentScriptInjected_${tab.id}`]);
-          }
+      chrome.storage.local.get([`contentScriptInjected_${tab.id}`], (result) => {
+        if (result[`contentScriptInjected_${tab.id}`]) {
+          chrome.storage.local.remove([`contentScriptInjected_${tab.id}`]);
         }
-      );
+      });
     });
   });
 });
@@ -65,20 +104,13 @@ function update(message: object, sendResponse: (response?: unknown) => void) {
   });
   return true;
 }
-function apply(
-  tabId: number,
-  sendResponse: (response?: unknown) => void,
-  applyFor: string
-) {
+function apply(tabId: number, sendResponse: (response?: unknown) => void, applyFor: string) {
   chrome.tabs.sendMessage(
     tabId,
     { action: applyFor === "styles" ? "getUpdatedStyle" : "getUpdatedElement" },
     (response) => {
       if (chrome.runtime.lastError) {
-        console.error(
-          "Error sending message to content script:",
-          chrome.runtime.lastError.message
-        );
+        console.error("Error sending message to content script:", chrome.runtime.lastError.message);
         sendResponse({
           status: "error",
           message: chrome.runtime.lastError.message,
@@ -92,9 +124,7 @@ function apply(
         if (isSocketOpen()) {
           console.log("Sending applyStylesToVscode");
           console.log(response);
-          applyFor === "styles"
-            ? applyStylesToVscode(response)
-            : applyElementToVscode(response);
+          applyFor === "styles" ? applyStylesToVscode(response) : applyElementToVscode(response);
           sendResponse({ status: "success" });
         } else {
           console.error("WebSocket is not open");
@@ -104,10 +134,40 @@ function apply(
           });
         }
       } else {
-        console.error(
-          "No response received for apply or an error occurred:",
-          response
-        );
+        console.error("No response received for apply or an error occurred:", response);
+        sendResponse({
+          status: "error",
+          message: "No response received or an error occurred",
+        });
+      }
+    }
+  );
+}
+function getUpdatedDetails(
+  tabId: number,
+  sendResponse: (response?: unknown) => void,
+  applyFor: string
+) {
+  chrome.tabs.sendMessage(
+    tabId,
+    { action: applyFor === "styles" ? "getUpdatedStyle" : "getUpdatedElement" },
+    (response) => {
+      if (chrome.runtime.lastError) {
+        console.error("Error sending message to content script:", chrome.runtime.lastError.message);
+        sendResponse({
+          status: "error",
+          message: chrome.runtime.lastError.message,
+        });
+        return;
+      }
+      if (response && response.status !== "error") {
+        console.log("response.details:", response.details);
+        sendResponse({
+          status: "success",
+          ...(applyFor === "styles" ? { styles: response.styles } : { details: response.details }),
+        });
+      } else {
+        console.error("No response received for getUpdatedDetails or an error occurred:", response);
         sendResponse({
           status: "error",
           message: "No response received or an error occurred",
@@ -160,6 +220,14 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         return;
       }
       apply(tabs[0].id!, sendResponse, message.apply);
+    });
+    return true;
+  } else if (message.action === "getUpdatedDetails") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs.length === 0) {
+        return;
+      }
+      getUpdatedDetails(tabs[0].id!, sendResponse, message.apply);
     });
     return true;
   }
