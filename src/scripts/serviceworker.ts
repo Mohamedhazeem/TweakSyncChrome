@@ -188,6 +188,13 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     console.log("Injecting content script");
   } else if (message.action === "removeContentScript") {
     removeContentScript();
+  } else if (message.action === "addSelector") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id!, {
+        action: "addSelector",
+        selector: message.selector,
+      });
+    });
   } else if (
     message.action === "updateTextContent" ||
     message.action === "updateStyles" ||

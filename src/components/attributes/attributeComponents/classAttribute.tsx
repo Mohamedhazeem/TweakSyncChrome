@@ -10,9 +10,7 @@ function ClassAttribute() {
 
   useEffect(() => {
     if (context?.attribute?.value) {
-      const initialWords = splitStringToArray(
-        context.attribute.value.toString()
-      );
+      const initialWords = splitStringToArray(context.attribute.value.toString());
       setWords(initialWords);
     }
   }, [context?.attribute]);
@@ -40,7 +38,19 @@ function ClassAttribute() {
   const handleAddWord = () => {
     setWords([...words, ""]);
   };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.currentTarget.blur();
+    }
+  };
 
+  const handleBlur = (word: string) => {
+    chrome.runtime.sendMessage({
+      action: "addSelector",
+      selector: `.${word.trim()}`,
+    });
+  };
   return (
     <div key={context?.key} className="flex flex-col gap-2">
       {words.map((word, wordIndex) => (
@@ -48,6 +58,8 @@ function ClassAttribute() {
           <Input
             type="text"
             value={word}
+            onKeyDown={handleKeyDown}
+            onBlur={() => handleBlur(word)}
             onChange={(e) => handleInputChange(wordIndex, e.target.value)}
             autoFocus
             spellCheck="false"
@@ -61,11 +73,7 @@ function ClassAttribute() {
           </Button>
         </div>
       ))}
-      <Button
-        size={"default"}
-        onClick={handleAddWord}
-        className="min-w-32 max-w-48 self-center"
-      >
+      <Button size={"default"} onClick={handleAddWord} className="min-w-32 max-w-48 self-center">
         Add {context?.attribute?.nameForTitle}
       </Button>
     </div>
