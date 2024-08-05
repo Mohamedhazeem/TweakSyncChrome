@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAttributeContext } from "@/utils/elementContext";
 import { splitStringToArray } from "@/utils/splitStringToArray";
+import { ATTRIBUTE_ENUMS } from "@/types/attributeTypes";
 
-function ClassAttribute() {
+function ClassAttribute(attributeEnum: ATTRIBUTE_ENUMS) {
   const context = useAttributeContext();
   const [words, setWords] = useState<string[]>([]);
   const [previousWords, setPreviousWords] = useState<string[]>([]);
@@ -26,11 +27,10 @@ function ClassAttribute() {
     const newWord = newValue.trim();
 
     if (oldWord && oldWord !== newWord) {
-      // renameSelector(`.${oldWord}`, `.${newWord}`);
       chrome.runtime.sendMessage({
         action: "renameSelector",
-        oldSelector: `.${oldWord}`,
-        newSelector: `.${newWord}`,
+        oldSelector: attributeEnum == ATTRIBUTE_ENUMS.class ? `.${oldWord}` : `#${oldWord}`,
+        newSelector: attributeEnum == ATTRIBUTE_ENUMS.class ? `.${newWord}` : `#${newWord}`,
       });
       const updatedPreviousWords = [...previousWords];
       updatedPreviousWords[wordIndex] = newWord;
@@ -63,28 +63,13 @@ function ClassAttribute() {
   };
 
   const handleBlur = (word: string, wordIndex: number) => {
-    // const oldWord = previousWords[wordIndex];
     const newWord = word.trim();
-    // console.log(wordIndex);
     const updatedPreviousWords = [...previousWords];
     updatedPreviousWords[wordIndex] = newWord;
     setPreviousWords(updatedPreviousWords);
-    // if (oldWord && oldWord !== newWord) {
-    //   // renameSelector(`.${oldWord}`, `.${newWord}`);
-    //   chrome.runtime.sendMessage({
-    //     action: "renameSelector",
-    //     oldSelector: `.${oldWord}`,
-    //     newSelector: `.${newWord}`,
-    //   });
-    //   const updatedPreviousWords = [...previousWords];
-    //   updatedPreviousWords[wordIndex] = newWord;
-    //   setPreviousWords(updatedPreviousWords);
-    // } else {
-
-    // }
     chrome.runtime.sendMessage({
       action: "addSelector",
-      selector: `.${newWord}`,
+      selector: attributeEnum == ATTRIBUTE_ENUMS.class ? `.${newWord}` : `#${newWord}`,
     });
   };
 
@@ -110,9 +95,11 @@ function ClassAttribute() {
           </Button>
         </div>
       ))}
-      <Button size={"default"} onClick={handleAddWord} className="min-w-32 max-w-48 self-center">
-        Add {context?.attribute?.nameForTitle}
-      </Button>
+      {attributeEnum !== ATTRIBUTE_ENUMS.id && (
+        <Button size={"default"} onClick={handleAddWord} className="min-w-32 max-w-48 self-center">
+          Add {context?.attribute?.nameForTitle}
+        </Button>
+      )}
     </div>
   );
 }

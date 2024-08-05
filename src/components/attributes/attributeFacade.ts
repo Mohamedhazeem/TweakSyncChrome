@@ -8,6 +8,7 @@ import NumberAttribute from "./attributeComponents/NumberAttribute";
 import OptionsObjectAttribute from "./attributeComponents/OptionsObjectAttribute";
 import AccessKeyAttribute from "./attributeComponents/AccessKeyAttribute";
 import MultiOptionsAttribute from "./attributeComponents/MultiOptionsAttributes";
+import { ATTRIBUTE_ENUMS } from "@/types/attributeTypes";
 
 // not add boolean attributes beacuse it only on attribute layout
 
@@ -61,7 +62,8 @@ const ARIA_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   "aria-valuenow": NumberAttribute,
   "aria-valuetext": StringAttribute,
 };
-const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType<any> } = {
   href: StringAttribute,
   target: OptionsAttribute,
   rel: MultiOptionsAttribute,
@@ -141,16 +143,17 @@ const ELEMENT_SPECIFIC_ATTRIBUTES: { [key: string]: React.ComponentType } = {
   srclang: OptionsAttribute,
   poster: StringAttribute,
 };
-export const attributeComponents: { [key: string]: React.ComponentType } = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const attributeComponents: { [key: string]: React.ComponentType<any> } = {
   ...ARIA_ATTRIBUTES,
   ...ELEMENT_SPECIFIC_ATTRIBUTES,
   accesskey: AccessKeyAttribute,
   autocapitalize: OptionsAttribute,
-  class: ClassAttribute,
+  class: () => ClassAttribute(ATTRIBUTE_ENUMS.class),
   dir: OptionsAttribute,
   enterkeyhint: OptionsAttribute,
   exportparts: ClassAttribute,
-  id: ClassAttribute,
+  id: () => ClassAttribute(ATTRIBUTE_ENUMS.id),
   inputmode: OptionsAttribute,
   lang: OptionsObjectAttribute,
   part: ClassAttribute,

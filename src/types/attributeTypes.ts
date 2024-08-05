@@ -14,6 +14,10 @@ export interface IAttributeContext {
   onChange: (index: number, value: string | object) => void;
   onRemove?: (removeAttribute: string) => void;
 }
+export const enum ATTRIBUTE_ENUMS {
+  class,
+  id,
+}
 export const accessKeylists = [
   "1",
   "2",
