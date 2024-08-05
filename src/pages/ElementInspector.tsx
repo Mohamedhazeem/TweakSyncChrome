@@ -30,12 +30,6 @@ function ElementInspector() {
           }
         });
       }
-      // if (element.attributes && element.attributes[attr.name]) {
-      //   elementAttributes.push({
-      //     ...attr,
-      //     value: element.attributes[attr.name] || "",
-      //   });
-      // }
     });
 
     if (element.attributes) {

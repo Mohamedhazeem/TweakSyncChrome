@@ -23,7 +23,9 @@ export function isValidChromeRuntime(): boolean {
 document.addEventListener("click", (event) => {
   event.preventDefault();
   const targetElement = event.target as HTMLElement;
-
+  if (targetElement.hasAttribute("data-TweakSyncUI")) {
+    return;
+  }
   if (targetElement !== clickedElement) {
     currentElement = null;
     clickedElement = targetElement;
@@ -36,7 +38,7 @@ document.addEventListener("click", (event) => {
   }
 
   lastClickedElement = clickedElement;
-
+  console.log("lastClickedElement - ", lastClickedElement);
   // Ensure the outline element exists
   if (!outlineElement) {
     createOutlineElement();
@@ -86,10 +88,18 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     });
   } else if (message.action === "updateAttributes") {
     updateAttributes({ name: message.name, value: message.value });
-  } else if (message.action === "getUpdatedElement") {
-    getElementDetails(lastClickedElement!)
+  } else if (message.action === "getUpdatedElement" && lastClickedElement) {
+    getElementDetails(lastClickedElement)
       .then((details) => {
-        console.log("Sending details:", details);
+        if (isValidChromeRuntime()) {
+          chrome.runtime.sendMessage({ action: "elementClicked", details }, (response) => {
+            if (chrome.runtime.lastError) {
+              console.error("Error sending message:", chrome.runtime.lastError);
+            } else {
+              console.log("Message sent successfully", response);
+            }
+          });
+        }
         sendResponse(details);
       })
       .catch((error) => {
@@ -97,15 +107,25 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         sendResponse({ status: "error", message: error.message });
       });
     return true;
-  } else if (message.action === "getUpdatedStyle") {
-    getElementStyles(lastClickedElement!)
+  } else if (message.action === "getUpdatedStyle" && lastClickedElement) {
+    getElementStyles(lastClickedElement)
       .then((styles) => {
+        if (isValidChromeRuntime()) {
+          chrome.runtime.sendMessage({ action: "styleClicked", styles }, (response) => {
+            if (chrome.runtime.lastError) {
+              console.error("Error sending message:", chrome.runtime.lastError);
+            } else {
+              console.log("Message sent successfully", response);
+            }
+          });
+        }
         sendResponse(styles);
       })
       .catch((error) => {
         console.error("Error getting element style:", error);
         sendResponse({ status: "error", message: error.message });
       });
+    return true;
   }
   return true;
 });
