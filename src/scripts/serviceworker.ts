@@ -10,11 +10,6 @@ import {
   isSocketOpen,
 } from "./websocket";
 
-chrome.commands.onCommand.addListener((command) => {
-  if (command === "toggle_side_panel") {
-    chrome.runtime.sendMessage({ action: "toggleSidePanel" });
-  }
-});
 function toggleSidePanel() {
   chrome.sidePanel
     .getOptions({})
@@ -24,42 +19,25 @@ function toggleSidePanel() {
     })
     .catch((error) => console.error(error));
 }
-chrome.runtime.onMessage.addListener((message) => {
-  if (message.action === "toggleSidePanel") {
-    toggleSidePanel();
-  }
-  // else if (message.action === "closeSidePanel") {
-  //   closeSidePanel();
-  // }
-});
 function closeSidePanel(tabId: number) {
   chrome.sidePanel.setOptions({ enabled: false, tabId }).catch((error) => console.error(error));
 }
-// chrome.sidePanel
-//   .setPanelBehavior({ openPanelOnActionClick: true })
-//   .catch((error) => console.error(error));
 
-// function closeSidePanel() {
-//   // chrome.sidePanel.setOptions({ enabled: false }).catch((error) => console.error(error));
-//   window.close();
-// }
 chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
-  // Ensure the side panel is closed only if it's open
-  chrome.sidePanel
-    .getOptions({ tabId })
-    .then((options) => {
-      if (options.enabled && changeInfo.status === "loading") {
-        console.log(changeInfo.status);
-        closeSidePanel(tabId);
-      }
-    })
-    .catch((error) => {
-      console.error("Error getting side panel options:", error);
-    });
-});
-chrome.tabs.onUpdated.addListener((_tabId, changeInfo) => {
   if (changeInfo.status === "complete") {
     reinjectContentScript();
+  } else {
+    chrome.sidePanel
+      .getOptions({ tabId })
+      .then((options) => {
+        if (options.enabled && changeInfo.status === "loading") {
+          console.log(changeInfo.status);
+          closeSidePanel(tabId);
+        }
+      })
+      .catch((error) => {
+        console.error("Error getting side panel options:", error);
+      });
   }
 });
 chrome.tabs.onRemoved.addListener((tabId) => {
@@ -176,7 +154,15 @@ function getUpdatedDetails(
     }
   );
 }
+chrome.commands.onCommand.addListener((command) => {
+  if (command === "toggle_side_panel") {
+    chrome.runtime.sendMessage({ action: "toggleSidePanel" });
+  }
+});
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (message.action === "toggleSidePanel") {
+    toggleSidePanel();
+  }
   if (message.action === "connect") {
     initWebSocket();
     console.log("Web socket connected");
