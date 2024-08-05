@@ -4,12 +4,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CheckedState } from "@radix-ui/react-checkbox";
+
 type PTagTypes = {
   tag: ElementDetails;
 };
 
 function TextContent({ tag }: PTagTypes) {
   const [textContent, setTextContent] = useState<string | undefined | null>("");
+  const [isSpellCheckEnabled, setIsSpellCheckEnabled] = useState(false);
   useEffect(() => {
     setTextContent(tag?.textContent);
   }, [tag?.textContent, tag?.path]);
@@ -28,6 +32,14 @@ function TextContent({ tag }: PTagTypes) {
       text: "",
       temporaryId: tag?.temporaryId,
     });
+  };
+  const handleCheckedChange = (checked: CheckedState) => {
+    if (checked === "indeterminate") {
+      // Handle the indeterminate state if necessary
+      setIsSpellCheckEnabled(false); // For simplicity, we'll treat it as unchecked
+    } else {
+      setIsSpellCheckEnabled(checked);
+    }
   };
   const textContentElements = [
     "a",
@@ -142,13 +154,27 @@ function TextContent({ tag }: PTagTypes) {
                 </div>
               </CardTitle>
             </CardHeader>
-            <CardContent className="layoutCardContent">
+            <CardContent className="layoutCardContent textAreaHolder">
+              <div className="flex gap-1">
+                <Checkbox
+                  id="terms"
+                  checked={isSpellCheckEnabled}
+                  onCheckedChange={handleCheckedChange}
+                />
+                <label
+                  htmlFor="terms"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Enable Spell Check
+                </label>
+              </div>
               <Textarea
                 className="resize-y"
                 placeholder="Type your message here."
                 id="message"
                 value={textContent ? textContent : ""}
                 onChange={handleTextContentChange}
+                spellCheck={isSpellCheckEnabled}
               />
             </CardContent>
           </Card>
