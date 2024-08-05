@@ -11,7 +11,7 @@ import {
   updateOutline,
   outlineElementNull,
 } from "./UpdateElementOutlineAtContent";
-import { addSelector } from "@/utils/styles/addSelector";
+import { addSelector, renameSelector } from "@/utils/styles/selectorUtilis";
 
 let clickedElement: HTMLElement | null = null;
 export let currentElement: HTMLElement | null = null;
@@ -91,6 +91,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     updateAttributes({ name: message.name, value: message.value });
   } else if (message.action === "addSelector") {
     addSelector(message.selector);
+  } else if (message.action === "renameSelector") {
+    renameSelector(message.oldSelector, message.newSelector);
   } else if (message.action === "getUpdatedElement" && lastClickedElement) {
     getElementDetails(lastClickedElement)
       .then((details) => {

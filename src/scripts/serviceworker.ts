@@ -195,6 +195,14 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         selector: message.selector,
       });
     });
+  } else if (message.action === "renameSelector") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id!, {
+        action: "renameSelector",
+        oldSelector: message.oldSelector,
+        newSelector: message.newSelector,
+      });
+    });
   } else if (
     message.action === "updateTextContent" ||
     message.action === "updateStyles" ||

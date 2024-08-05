@@ -7,11 +7,13 @@ import { splitStringToArray } from "@/utils/splitStringToArray";
 function ClassAttribute() {
   const context = useAttributeContext();
   const [words, setWords] = useState<string[]>([]);
+  const [previousWords, setPreviousWords] = useState<string[]>([]);
 
   useEffect(() => {
     if (context?.attribute?.value) {
       const initialWords = splitStringToArray(context.attribute.value.toString());
       setWords(initialWords);
+      setPreviousWords(initialWords);
     }
   }, [context?.attribute]);
 
@@ -20,6 +22,20 @@ function ClassAttribute() {
   }
 
   const handleInputChange = (wordIndex: number, newValue: string) => {
+    const oldWord = previousWords[wordIndex];
+    const newWord = newValue.trim();
+
+    if (oldWord && oldWord !== newWord) {
+      // renameSelector(`.${oldWord}`, `.${newWord}`);
+      chrome.runtime.sendMessage({
+        action: "renameSelector",
+        oldSelector: `.${oldWord}`,
+        newSelector: `.${newWord}`,
+      });
+      const updatedPreviousWords = [...previousWords];
+      updatedPreviousWords[wordIndex] = newWord;
+      setPreviousWords(updatedPreviousWords);
+    }
     const updatedWords = [...words];
     updatedWords[wordIndex] = newValue;
     setWords(updatedWords);
@@ -38,6 +54,7 @@ function ClassAttribute() {
   const handleAddWord = () => {
     setWords([...words, ""]);
   };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -45,12 +62,32 @@ function ClassAttribute() {
     }
   };
 
-  const handleBlur = (word: string) => {
+  const handleBlur = (word: string, wordIndex: number) => {
+    // const oldWord = previousWords[wordIndex];
+    const newWord = word.trim();
+    // console.log(wordIndex);
+    const updatedPreviousWords = [...previousWords];
+    updatedPreviousWords[wordIndex] = newWord;
+    setPreviousWords(updatedPreviousWords);
+    // if (oldWord && oldWord !== newWord) {
+    //   // renameSelector(`.${oldWord}`, `.${newWord}`);
+    //   chrome.runtime.sendMessage({
+    //     action: "renameSelector",
+    //     oldSelector: `.${oldWord}`,
+    //     newSelector: `.${newWord}`,
+    //   });
+    //   const updatedPreviousWords = [...previousWords];
+    //   updatedPreviousWords[wordIndex] = newWord;
+    //   setPreviousWords(updatedPreviousWords);
+    // } else {
+
+    // }
     chrome.runtime.sendMessage({
       action: "addSelector",
-      selector: `.${word.trim()}`,
+      selector: `.${newWord}`,
     });
   };
+
   return (
     <div key={context?.key} className="flex flex-col gap-2">
       {words.map((word, wordIndex) => (
@@ -59,7 +96,7 @@ function ClassAttribute() {
             type="text"
             value={word}
             onKeyDown={handleKeyDown}
-            onBlur={() => handleBlur(word)}
+            onBlur={() => handleBlur(word, wordIndex)}
             onChange={(e) => handleInputChange(wordIndex, e.target.value)}
             autoFocus
             spellCheck="false"
