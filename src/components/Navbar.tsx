@@ -4,38 +4,76 @@ import { Outlet, Link } from "react-router-dom";
 import { Button } from "./ui/button";
 
 export const Navbar = () => {
-  const [elementDetails, setElementDetails] = useState<ElementDetails>();
-  const [elementStyle, setElementStyle] = useState<ElementStyles>();
+  const [elementDetails, setElementDetails] = useState<ElementDetails | null>(null);
+  const [elementStyle, setElementStyle] = useState<ElementStyles | null>(null);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMessage = (message: any) => {
     if (message.action === "showElementDetails") {
-      setElementDetails(undefined);
-      setElementDetails(message.details);
+      setElementDetails(message.details || null);
     } else if (message.action === "showElementStyles") {
-      setElementStyle(undefined);
-      setElementStyle(message.styles);
+      setElementStyle(message.styles || null);
     }
   };
-  useEffect(() => {
-    // Add listener immediately when component mounts
-    chrome.runtime.onMessage.addListener(handleMessage);
 
-    // Clean up listener when component unmounts
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(handleMessage);
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessage);
     };
   }, []);
+
+  const getUpdatedElementDetails = () => {
+    chrome.runtime.sendMessage(
+      { action: "getUpdatedDetails", apply: "element" }
+      //, (response) => {
+      // if (response && response.status === "success") {
+      //   setElementDetails(response.details || null);
+      //   console.error("working", response.details || "No response received");
+      // } else {
+      //   console.error(
+      //     "Error getting updated element details:",
+      //     response ? response.message : "No response received"
+      //   );
+      // }
+      // }
+    );
+  };
+
+  const getUpdatedStyleDetails = () => {
+    chrome.runtime.sendMessage({ action: "getUpdatedDetails", apply: "styles" }, (response) => {
+      if (response && response.status === "success") {
+        setElementStyle(response.styles || null);
+      } else {
+        console.error(
+          "Error getting updated style details:",
+          response ? response.message : "No response received"
+        );
+      }
+    });
+  };
+
   return (
     <>
       <div className="flex flex-col fixed bottom-0 w-full z-50">
         <nav className="border-t bg-slate-100 px-4 py-2 flex justify-center gap-4">
-          <Button variant="outline" size="default">
+          <Button variant="outline" size="default" data-TweakSyncUI>
             <Link to={"/"}>Home</Link>
           </Button>
-          <Button variant="outline" size="default">
+          <Button
+            variant="outline"
+            size="default"
+            data-TweakSyncUI
+            onClick={getUpdatedElementDetails}
+          >
             <Link to={"/elementInspector"}>Inspector</Link>
           </Button>
-          <Button variant="outline" size="default">
+          <Button
+            variant="outline"
+            size="default"
+            data-TweakSyncUI
+            onClick={getUpdatedStyleDetails}
+          >
             <Link to={"/styleInspector"}>Style</Link>
           </Button>
         </nav>
@@ -44,6 +82,7 @@ export const Navbar = () => {
     </>
   );
 };
+
 // className="flex sm:flex-row flex-col sm:justify-between justify-center items-center p-5 bg-cyan-800"
 //className="lg:text-lg font-bold"
 // function HomeIcon(props) {
