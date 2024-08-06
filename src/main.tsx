@@ -4,11 +4,10 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.tsx";
 import "../app/globals.css";
 import "./main.css";
-
 import { Navbar } from "./components/Navbar.tsx";
 import ElementInspector from "./pages/ElementInspector.tsx";
 import StyleInspector from "./pages/StyleInspector.tsx";
-
+import { Toaster } from "react-hot-toast";
 const router = createHashRouter([
   {
     path: "/",
@@ -34,6 +33,7 @@ const router = createHashRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <Toaster position="top-center" />
   </React.StrictMode>
 );
 
