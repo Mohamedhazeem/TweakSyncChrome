@@ -2,7 +2,7 @@ import { ElementDetails, ElementStyles } from "@/types/elementTypes";
 import { useEffect, useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { Button } from "./ui/button";
-
+import { toast } from "react-hot-toast";
 export const Navbar = () => {
   const [elementDetails, setElementDetails] = useState<ElementDetails | null>(null);
   const [elementStyle, setElementStyle] = useState<ElementStyles | null>(null);
@@ -13,6 +13,12 @@ export const Navbar = () => {
       setElementDetails(message.details || null);
     } else if (message.action === "showElementStyles") {
       setElementStyle(message.styles || null);
+    } else if (message.action === "webSocketConnectionError") {
+      toast.error(message.toast);
+    } else if (message.action === "webSocketConnectionOpen") {
+      toast.success(message.toast);
+    } else if (message.action === "webSocketConnectionClose") {
+      toast.error(message.toast);
     }
   };
 

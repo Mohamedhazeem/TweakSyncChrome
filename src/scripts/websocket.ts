@@ -1,8 +1,4 @@
-import {
-  APPLY_ELEMENT_TO_VSCODE,
-  APPLY_STYLES_TO_VSCODE,
-  URL,
-} from "../utils/constant";
+import { APPLY_ELEMENT_TO_VSCODE, APPLY_STYLES_TO_VSCODE, URL } from "../utils/constant";
 
 export let ws: WebSocket;
 
@@ -10,19 +6,29 @@ export function initWebSocket() {
   if (!ws || ws.readyState === WebSocket.CLOSED) {
     ws = new WebSocket(URL);
     ws.addEventListener("error", () => {
-      console.error("WebSocket connection error:");
+      chrome.runtime.sendMessage({
+        action: "webSocketConnectionError",
+        toast:
+          "Connection error. Please check your connection on both TweakSync VS Code and the TweakSync Chrome extension.",
+      });
     });
     ws.addEventListener("open", () => {
-      console.log("WebSocket connection established.");
+      chrome.runtime.sendMessage({
+        action: "webSocketConnectionOpen",
+        toast: "Connection established successfully! TweakSync is now connected with VS Code.",
+      });
     });
     ws.addEventListener("close", () => {
-      console.log("WebSocket connection closed xx.");
+      chrome.runtime.sendMessage({
+        action: "webSocketConnectionClose",
+        toast: "Connection Lost. TweakSync is no longer connected with VS Code.",
+      });
     });
     ws.addEventListener("message", () => {
       if (ws.readyState !== WebSocket.CLOSED) {
         console.log("WebSocket connection is open.");
       } else {
-        console.error("WebSocket connection is not open.");
+        console.log("WebSocket connection is not open.");
       }
     });
   }

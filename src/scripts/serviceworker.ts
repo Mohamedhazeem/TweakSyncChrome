@@ -23,15 +23,14 @@ function closeSidePanel(tabId: number) {
   chrome.sidePanel.setOptions({ enabled: false, tabId }).catch((error) => console.error(error));
 }
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
-  if (changeInfo.status === "complete") {
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === "complete" && tab.active) {
     reinjectContentScript();
-  } else {
+  } else if (changeInfo.status === "loading" && tab.active) {
     chrome.sidePanel
       .getOptions({ tabId })
       .then((options) => {
-        if (options.enabled && changeInfo.status === "loading") {
-          console.log(changeInfo.status);
+        if (options.enabled) {
           closeSidePanel(tabId);
         }
       })
@@ -184,7 +183,6 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     sendResponse({ status: message.styles });
   } else if (message.action === "injectContentScript") {
     injectContentScript();
-
     console.log("Injecting content script");
   } else if (message.action === "removeContentScript") {
     removeContentScript();
