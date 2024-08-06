@@ -82,7 +82,10 @@
   @apply text-lg font-semibold flex justify-between items-center;
 }
 .textArea {
-  @apply grid w-full gap-1.5 p-2;
+  @apply grid w-full gap-2 p-2;
+}
+.textAreaHolder {
+  @apply flex flex-col gap-1;
 }
 .addStyleProperty {
   @apply bg-gradient-to-r from-lime-400 to-lime-500;
