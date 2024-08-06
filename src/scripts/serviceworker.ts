@@ -40,9 +40,9 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 });
 chrome.tabs.onRemoved.addListener((tabId) => {
-  chrome.storage.local.get([`contentScriptInjected_${tabId}`], (result) => {
+  chrome.storage.session.get([`contentScriptInjected_${tabId}`], (result) => {
     if (result[`contentScriptInjected_${tabId}`]) {
-      chrome.storage.local.remove([`contentScriptInjected_${tabId}`]);
+      chrome.storage.session.remove([`contentScriptInjected_${tabId}`]);
     }
   });
 });
@@ -50,9 +50,9 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 chrome.windows.onRemoved.addListener((windowId) => {
   chrome.tabs.query({ windowId: windowId }, (tabs) => {
     tabs.forEach((tab) => {
-      chrome.storage.local.get([`contentScriptInjected_${tab.id}`], (result) => {
+      chrome.storage.session.get([`contentScriptInjected_${tab.id}`], (result) => {
         if (result[`contentScriptInjected_${tab.id}`]) {
-          chrome.storage.local.remove([`contentScriptInjected_${tab.id}`]);
+          chrome.storage.session.remove([`contentScriptInjected_${tab.id}`]);
         }
       });
     });

@@ -31,10 +31,10 @@ export function injectContentScript() {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
     if (tabs.length > 0) {
       const currentTab = tabs[0];
-      chrome.storage.local.get([`contentScriptInjected_${currentTab.id}`]).then((result) => {
+      chrome.storage.session.get([`contentScriptInjected_${currentTab.id}`]).then((result) => {
         if (!result[`contentScriptInjected_${currentTab.id}`]) {
           executeContentScript(currentTab.id!, currentTab.url!);
-          chrome.storage.local.set({
+          chrome.storage.session.set({
             [`contentScriptInjected_${currentTab.id}`]: true,
           });
         } else {
@@ -50,10 +50,10 @@ export function injectContentScript() {
 export function reinjectContentScript() {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
     const currentTab = tabs[0];
-    chrome.storage.local.get([`contentScriptInjected_${currentTab.id}`], (result) => {
+    chrome.storage.session.get([`contentScriptInjected_${currentTab.id}`], (result) => {
       if (result[`contentScriptInjected_${currentTab.id}`]) {
-        chrome.storage.local.remove([`contentScriptInjected_${currentTab.id}`]).then(() => {
-          chrome.storage.local.set({
+        chrome.storage.session.remove([`contentScriptInjected_${currentTab.id}`]).then(() => {
+          chrome.storage.session.set({
             [`contentScriptInjected_${currentTab.id}`]: true,
           });
           executeContentScript(currentTab.id!, currentTab.url!);
@@ -65,9 +65,9 @@ export function reinjectContentScript() {
 export function removeContentScript() {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
     const tabId = tabs[0].id;
-    chrome.storage.local.get([`contentScriptInjected_${tabId}`], (result) => {
+    chrome.storage.session.get([`contentScriptInjected_${tabId}`], (result) => {
       if (result[`contentScriptInjected_${tabId}`]) {
-        chrome.storage.local.remove([`contentScriptInjected_${tabId}`]);
+        chrome.storage.session.remove([`contentScriptInjected_${tabId}`]);
         // chrome.tabs.reload(tabId!);
         chrome.tabs.sendMessage(tabId!, {
           action: "isContentScriptEditable",
