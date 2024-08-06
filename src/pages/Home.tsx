@@ -28,7 +28,7 @@ function Home() {
     await chrome.runtime.sendMessage({ action: "connect" });
   }
   function inject() {
-    toast.loading("Initializing... Please wait.", { duration: 1500 });
+    toast.loading("Initializing... Please wait.", { duration: 800 });
     chrome.runtime.sendMessage({ action: "injectContentScript" });
   }
   function removeInject() {
