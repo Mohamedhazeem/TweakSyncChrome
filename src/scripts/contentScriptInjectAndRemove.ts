@@ -33,6 +33,11 @@ export function injectContentScript() {
           chrome.storage.local.set({
             [`contentScriptInjected_${currentTab.id}`]: true,
           });
+        } else {
+          chrome.runtime.sendMessage({
+            action: "contentScriptInjected",
+            toast: "Editing already started",
+          });
         }
       });
     }

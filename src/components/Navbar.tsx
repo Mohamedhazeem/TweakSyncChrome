@@ -30,31 +30,17 @@ export const Navbar = () => {
   }, []);
 
   const getUpdatedElementDetails = () => {
-    chrome.runtime.sendMessage(
-      { action: "getUpdatedDetails", apply: "element" }
-      //, (response) => {
-      // if (response && response.status === "success") {
-      //   setElementDetails(response.details || null);
-      //   console.error("working", response.details || "No response received");
-      // } else {
-      //   console.error(
-      //     "Error getting updated element details:",
-      //     response ? response.message : "No response received"
-      //   );
-      // }
-      // }
-    );
+    chrome.runtime.sendMessage({ action: "getUpdatedDetails", apply: "element" }, (response) => {
+      if (response) {
+        setElementDetails(response.details || null);
+      }
+    });
   };
 
   const getUpdatedStyleDetails = () => {
     chrome.runtime.sendMessage({ action: "getUpdatedDetails", apply: "styles" }, (response) => {
-      if (response && response.status === "success") {
+      if (response) {
         setElementStyle(response.styles || null);
-      } else {
-        console.error(
-          "Error getting updated style details:",
-          response ? response.message : "No response received"
-        );
       }
     });
   };
