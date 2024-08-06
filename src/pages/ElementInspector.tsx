@@ -8,6 +8,7 @@ import { ELEMENT_SPECIFIC_ATTRIBUTES } from "@/utils/attributes/elementSpecificA
 import { GLOBAL_ATTRIBUTES } from "@/utils/attributes/globalAttributes";
 import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import NotFoundInspector from "./NotFoundInspector";
 
 function ElementInspector() {
   const { element } = useOutletContext<OutletContext>();
@@ -134,7 +135,7 @@ function ElementInspector() {
     chrome.runtime.sendMessage({ action: "apply", apply: "element" });
   }
   if (!element) {
-    return <div> Not element selected</div>;
+    return <NotFoundInspector inspectorName="Element Inspector" />;
   }
   return (
     <div className="inspector-container">

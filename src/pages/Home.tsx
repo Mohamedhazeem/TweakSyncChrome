@@ -51,7 +51,7 @@ function Home() {
 
         <>
           <Button size={"lg"} variant={"default"} type="button" id="inject" onClick={inject}>
-            Inject
+            Start Edit
           </Button>
           <Button
             size={"lg"}
@@ -60,7 +60,7 @@ function Home() {
             id="remove_inject"
             onClick={removeInject}
           >
-            Remove Inject
+            Stop Edit
           </Button>
           <Button
             size={"lg"}

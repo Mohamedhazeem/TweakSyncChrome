@@ -9,6 +9,7 @@ import StyleLayoutParent from "@/components/styles/StyleLayoutParent";
 import { StyleGroup } from "@/types/styleTypes";
 import { STYLE_GROUPS } from "@/utils/styles/globalStyles";
 import { Button } from "@/components/ui/button";
+import NotFoundInspector from "./NotFoundInspector";
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();
@@ -190,7 +191,7 @@ function StyleInspector() {
     chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
   }
   if (!style) {
-    return null;
+    return <NotFoundInspector inspectorName="Style Inspector" />;
   }
   return (
     <div className="inspector-container">
