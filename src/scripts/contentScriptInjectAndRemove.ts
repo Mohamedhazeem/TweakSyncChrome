@@ -12,6 +12,10 @@ export function executeContentScript(tabId: number, url: string) {
           action: "contentScriptInjected",
           toast: "Editing has started successfully!",
         });
+        chrome.tabs.sendMessage(tabId, {
+          action: "isContentScriptEditable",
+          isEditable: true,
+        });
       }
     );
   } else {
@@ -60,11 +64,19 @@ export function reinjectContentScript() {
 }
 export function removeContentScript() {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-    const currentTab = tabs[0];
-    chrome.storage.local.get([`contentScriptInjected_${currentTab.id}`], (result) => {
-      if (result[`contentScriptInjected_${currentTab.id}`]) {
-        chrome.storage.local.remove([`contentScriptInjected_${currentTab.id}`]);
-        chrome.tabs.reload(currentTab.id!);
+    const tabId = tabs[0].id;
+    chrome.storage.local.get([`contentScriptInjected_${tabId}`], (result) => {
+      if (result[`contentScriptInjected_${tabId}`]) {
+        chrome.storage.local.remove([`contentScriptInjected_${tabId}`]);
+        // chrome.tabs.reload(tabId!);
+        chrome.tabs.sendMessage(tabId!, {
+          action: "isContentScriptEditable",
+          isEditable: false,
+        });
+        chrome.runtime.sendMessage({
+          action: "contentScriptCantInjected",
+          toast: "Editing stopped.",
+        });
       }
     });
   });

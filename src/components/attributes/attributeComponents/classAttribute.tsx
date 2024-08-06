@@ -83,7 +83,6 @@ function ClassAttribute(attributeEnum: ATTRIBUTE_ENUMS) {
             onKeyDown={handleKeyDown}
             onBlur={() => handleBlur(word, wordIndex)}
             onChange={(e) => handleInputChange(wordIndex, e.target.value)}
-            autoFocus
             spellCheck="false"
           />
           <Button

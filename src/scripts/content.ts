@@ -16,13 +16,16 @@ import { addSelector, renameSelector } from "@/utils/styles/selectorUtilis";
 let clickedElement: HTMLElement | null = null;
 export let currentElement: HTMLElement | null = null;
 export let lastClickedElement: HTMLElement | null = null;
-
+let isEditable: boolean;
 export function isValidChromeRuntime(): boolean {
   return chrome.runtime && !!chrome.runtime.getManifest();
 }
 
 document.addEventListener("click", (event) => {
   event.preventDefault();
+  if (!isEditable) {
+    return;
+  }
   const targetElement = event.target as HTMLElement;
   if (targetElement.hasAttribute("data-TweakSyncUI")) {
     return;
@@ -78,6 +81,12 @@ document.addEventListener("click", (event) => {
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   console.log(message.action);
+  if (message.action === "isContentScriptEditable") {
+    isEditable = message.isEditable;
+    if (!isEditable) {
+      resetContentScript();
+    }
+  }
   if (message.action === "updateTextContent") {
     updateText({ text: message.text, temporaryId: message.temporaryId });
   } else if (message.action === "updateStyles") {
@@ -139,10 +148,13 @@ window.addEventListener("scroll", throttledUpdateOutline);
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
-    if (outlineElement) {
-      outlineElement.remove();
-      outlineElementNull();
-    }
-    currentElement = lastClickedElement = null;
+    resetContentScript();
   }
 });
+const resetContentScript = () => {
+  if (outlineElement) {
+    outlineElement.remove();
+    outlineElementNull();
+  }
+  currentElement = lastClickedElement = null;
+};
