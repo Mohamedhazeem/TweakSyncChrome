@@ -85,7 +85,7 @@ export function injectCSS(tabId: number) {
   chrome.scripting.insertCSS(
     {
       target: { tabId: tabId },
-      files: ["assets/contentcss-lszeYeW9.css"],
+      files: ["assets/contentcss-3YaSVoRQ.css"],
     },
     () => {
       if (chrome.runtime.lastError) {
