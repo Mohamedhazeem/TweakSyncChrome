@@ -77,9 +77,16 @@ function AddStyleProperty({ selector, setStyles, addStyleProperty }: AddStylePro
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="addStyleProperty">
-          Add Style Property
-        </Button>
+        <div className="w-full flex items-center justify-center">
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="addStyleProperty"
+          >
+            Add Style Property
+          </Button>
+        </div>
       </PopoverTrigger>
       <PopoverContent className="w-[250px] p-0">
         <Command>

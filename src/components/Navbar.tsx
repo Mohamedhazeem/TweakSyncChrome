@@ -1,12 +1,13 @@
 import { ElementDetails, ElementStyles } from "@/types/elementTypes";
 import { useEffect, useState } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { toast } from "react-hot-toast";
 export const Navbar = () => {
   const [elementDetails, setElementDetails] = useState<ElementDetails | null>(null);
   const [elementStyle, setElementStyle] = useState<ElementStyles | null>(null);
-
+  const location = useLocation();
+  const [activeButton, setActiveButton] = useState(location.pathname);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMessage = (message: any) => {
     if (message.action === "showElementDetails") {
@@ -44,30 +45,54 @@ export const Navbar = () => {
       }
     });
   };
+  const handleClick = (path: string) => {
+    setActiveButton(path);
+  };
 
   return (
     <>
       <div className="flex flex-col fixed bottom-0 w-full z-50">
-        <nav className="border-t bg-slate-100 px-4 py-2 flex justify-center gap-4">
-          <Button variant="outline" size="default" data-TweakSyncUI>
-            <Link to={"/"}>Home</Link>
-          </Button>
-          <Button
-            variant="outline"
-            size="default"
-            data-TweakSyncUI
-            onClick={getUpdatedElementDetails}
-          >
-            <Link to={"/elementInspector"}>Inspector</Link>
-          </Button>
-          <Button
-            variant="outline"
-            size="default"
-            data-TweakSyncUI
-            onClick={getUpdatedStyleDetails}
-          >
-            <Link to={"/styleInspector"}>Style</Link>
-          </Button>
+        <nav className="border-t bg-[#EEEEEE] px-4 py-2 flex justify-center gap-4">
+          <Link to={"/"}>
+            <Button
+              variant="outline"
+              size="default"
+              data-TweakSyncUI
+              className={activeButton === "/" ? "navbarButton" : ""}
+              onClick={() => handleClick("/")}
+            >
+              Home
+            </Button>
+          </Link>
+          <Link to={"/elementInspector"}>
+            <Button
+              variant="outline"
+              size="default"
+              data-TweakSyncUI
+              className={activeButton === "/elementInspector" ? "navbarButton" : ""}
+              onClick={() => {
+                handleClick("/elementInspector");
+                getUpdatedElementDetails();
+              }}
+              // onClick={getUpdatedElementDetails}
+            >
+              Inspector
+            </Button>
+          </Link>
+          <Link to={"/styleInspector"}>
+            <Button
+              variant="outline"
+              size="default"
+              data-TweakSyncUI
+              className={activeButton === "/styleInspector" ? "navbarButton" : ""}
+              onClick={() => {
+                handleClick("/styleInspector");
+                getUpdatedStyleDetails();
+              }}
+            >
+              Style
+            </Button>
+          </Link>
         </nav>
       </div>
       <Outlet context={{ element: elementDetails, style: elementStyle }} />
