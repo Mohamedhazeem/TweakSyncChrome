@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "VITE",
-  "version": "1.0.0",
-  "description": "VITE CHECKS",
+  "name": "Tweak Sync for Chrome",
+  "version": "0.0.1",
+  "description": "TweakSync empowers front-end developers by enabling real-time styling of web elements directly within Chrome. Effortlessly select any element on a webpage, tweak its styles, and sync changes with your VS Code environment for a seamless development experience.",
   "action": {
     "default_title": "Click to open panel"
   },

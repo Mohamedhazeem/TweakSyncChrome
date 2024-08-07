@@ -3,8 +3,8 @@ import { PopOver } from "./PopOver";
 import { LengthUnit } from "@/utils/styles/globalStyles";
 
 type Length = {
-  number: string;
-  setNumber: React.Dispatch<React.SetStateAction<string>>;
+  newValue: string;
+  setNewValue: React.Dispatch<React.SetStateAction<string>>;
   customOptionsCallback: (newValue: string) => void;
   currentUnit: string;
   open: boolean;
@@ -13,8 +13,8 @@ type Length = {
   isCustomValue: boolean;
 };
 export function Length({
-  number,
-  setNumber,
+  newValue,
+  setNewValue,
   customOptionsCallback,
   currentUnit,
   open,
@@ -25,8 +25,8 @@ export function Length({
   return (
     <div className="flex gap-2">
       <NumberInput
-        number={number}
-        setNumber={setNumber}
+        newValue={newValue}
+        setNewValue={setNewValue}
         customOptionsCallback={customOptionsCallback}
         sign={currentUnit != "length" ? currentUnit : "px"}
       />

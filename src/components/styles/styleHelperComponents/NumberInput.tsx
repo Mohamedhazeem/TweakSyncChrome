@@ -1,14 +1,14 @@
 import { Input } from "@/components/ui/input";
 type NumberInputType = {
-  number: string;
-  setNumber: React.Dispatch<React.SetStateAction<string>>;
+  newValue: string;
+  setNewValue: React.Dispatch<React.SetStateAction<string>>;
   customOptionsCallback: (newValue: string) => void;
   sign?: string;
   isRange?: boolean;
 };
 export function NumberInput({
-  number,
-  setNumber,
+  newValue,
+  setNewValue,
   customOptionsCallback,
   sign,
   isRange,
@@ -21,9 +21,9 @@ export function NumberInput({
         min={`${isRange ? "0" : undefined}`}
         max={`${isRange ? "1" : undefined}`}
         step={`${isRange ? "0.01" : ""}`}
-        value={number}
+        value={newValue}
         onChange={(e) => {
-          setNumber(e.target.value);
+          setNewValue(e.target.value);
           customOptionsCallback(
             `${
               e.target.value != ""
@@ -37,7 +37,7 @@ export function NumberInput({
           );
         }}
       />
-      {isRange && <p className="rangeCount">{number}</p>}
+      {isRange && <p className="rangeCount">{newValue}</p>}
     </div>
   );
 }

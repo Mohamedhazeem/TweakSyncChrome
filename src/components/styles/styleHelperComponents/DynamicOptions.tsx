@@ -5,7 +5,7 @@ import { Length } from "./Length";
 import { useClearLayoutContext } from "@/utils/elementContext";
 import { TextInput } from "./TextInput";
 
-type PositionUnitType = {
+type DynamicOptionType = {
   optionType: string;
   value: string;
   unit: string;
@@ -21,17 +21,17 @@ export function DynamicOptions({
   isRange,
   isDoubleQuotesText,
   customOptionsCallback,
-}: PositionUnitType) {
-  const [number, setNumber] = useState<string>(value);
+}: DynamicOptionType) {
+  const [newValue, setNewValue] = useState<string>(value);
   const [currentUnit, setCurrentUnit] = useState<string>(unit);
   const [open, setOpen] = useState(false);
   const clearLayout = useClearLayoutContext();
 
   useEffect(() => {
     if (clearLayout) {
-      setNumber("");
+      setNewValue("");
     } else {
-      setNumber(value);
+      setNewValue(value);
     }
   }, [value, isRange, clearLayout]);
 
@@ -53,16 +53,16 @@ export function DynamicOptions({
 
   const handleApplyUnitChanges = () => {
     if (optionType === "length") {
-      customOptionsCallback(`${number}${currentUnit}`);
+      customOptionsCallback(`${newValue}${currentUnit}`);
     } else if (optionType === "number") {
-      customOptionsCallback(`${number}`);
+      customOptionsCallback(`${newValue}`);
     }
   };
 
   const handleUnitSelect = (unit: string) => {
     setCurrentUnit(unit);
     if (optionType === "length") {
-      customOptionsCallback(`${number}${unit}`);
+      customOptionsCallback(`${newValue}${unit}`);
     }
     setOpen(false);
   };
@@ -70,8 +70,8 @@ export function DynamicOptions({
   const isCustomValue = !globalCssOptions.includes(currentUnit);
   if (optionType === "length" && !clearLayout) {
     return Length({
-      number,
-      setNumber,
+      newValue,
+      setNewValue,
       customOptionsCallback,
       currentUnit,
       open,
@@ -80,11 +80,16 @@ export function DynamicOptions({
       isCustomValue,
     });
   } else if (optionType === "number" && !clearLayout) {
-    return NumberInput({ number, setNumber, customOptionsCallback, isRange });
+    return NumberInput({
+      newValue,
+      setNewValue,
+      customOptionsCallback,
+      isRange,
+    });
   } else if (optionType === "text" && !clearLayout) {
     return TextInput({
-      string: number,
-      setString: setNumber,
+      newValue,
+      setNewValue,
       customOptionsCallback,
       isDoubleQuotesText,
     });

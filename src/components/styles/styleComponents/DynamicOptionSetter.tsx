@@ -22,14 +22,19 @@ export default function DynamicOptionSetter({
   const style = group?.groups.find((style) => style.name === name);
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState("");
+  const [values, setValues] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     if (!option && style?.value) {
       const initialOption = getOptionFromValue(style.value);
       setOption(initialOption);
+      setValues((prevValues) => ({
+        ...prevValues,
+        [initialOption]: style.value,
+      }));
     }
   }, [selector, style, option]);
-
+  const dynamicOptions = ["text", "length", "number"];
   function getOptionFromValue(value: string): string {
     if (isDoubleQuotesText) {
       return "text";
@@ -42,17 +47,18 @@ export default function DynamicOptionSetter({
     if (numberRegex.test(value)) {
       return "number";
     }
-    // Check if value is in global CSS options
     if (globalCssOptions.includes(value)) {
       return value;
     }
-
-    // Default to an empty string or a default option if needed
     return value;
   }
   const handlePopOverSelect = (newValue: string) => {
     if (style && style.name) {
-      onChange(selector, style.name, newValue);
+      if (dynamicOptions.includes(newValue)) {
+        onChange(selector, style.name, values[newValue] || " ");
+      } else {
+        onChange(selector, style.name, newValue);
+      }
     }
     setOption(newValue);
     setOpen(false);
@@ -61,6 +67,10 @@ export default function DynamicOptionSetter({
     if (style && style.name) {
       console.log(style.name);
       onChange(selector, style.name, newValue);
+      setValues((prevValues) => ({
+        ...prevValues,
+        [option]: newValue,
+      }));
     } else {
       console.log("name");
     }
@@ -85,6 +95,8 @@ export default function DynamicOptionSetter({
                 option={option}
               />
             </div>
+            {`style value: ${style.value}`}
+            {`value: ${value}`}
             {
               <DynamicOptions
                 optionType={option}

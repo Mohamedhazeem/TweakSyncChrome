@@ -1,14 +1,14 @@
 import { Textarea } from "@/components/ui/textarea";
 // import { extractString } from "@/utils/styles/extractUnits";
 type TextInputType = {
-  string: string;
-  setString: React.Dispatch<React.SetStateAction<string>>;
+  newValue: string;
+  setNewValue: React.Dispatch<React.SetStateAction<string>>;
   customOptionsCallback: (newValue: string) => void;
   isDoubleQuotesText?: boolean;
 };
 export function TextInput({
-  string,
-  setString,
+  newValue,
+  setNewValue,
   customOptionsCallback,
   isDoubleQuotesText,
 }: TextInputType) {
@@ -18,10 +18,10 @@ export function TextInput({
         className="resize-y"
         placeholder="Type your message here."
         id="message"
-        value={string || ""}
+        value={newValue || ""}
         onChange={(e) => {
           const value = e.target.value;
-          setString(value);
+          setNewValue(value);
           customOptionsCallback(isDoubleQuotesText ? `"${value}"` : value);
         }}
       />
