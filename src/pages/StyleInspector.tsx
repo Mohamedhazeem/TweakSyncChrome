@@ -170,6 +170,21 @@ function StyleInspector() {
   const isEmpty = (obj: { [key: string]: any }): boolean => {
     return Object.keys(obj).length === 0;
   };
+  const getHasStyles = (styles: ElementStyles): { [key: number]: boolean } => {
+    return {
+      0: styles.external.classes && Object.keys(styles.external.classes).length > 0,
+      1: styles.external.ids && Object.keys(styles.external.ids).length > 0,
+      2: styles.external.tags && Object.keys(styles.external.tags).length > 0,
+      3: styles.external.attribute && Object.keys(styles.external.attribute).length > 0,
+      4: styles.external.descendant && Object.keys(styles.external.descendant).length > 0,
+      5:
+        styles.external.pseudoElementStyles &&
+        Object.keys(styles.external.pseudoElementStyles).length > 0,
+      6:
+        styles.external.pseudoClassStyles &&
+        Object.keys(styles.external.pseudoClassStyles).length > 0,
+    };
+  };
   const renderStyles = (styles: { [key: string]: { [key: string]: string } }) => {
     if (isEmpty(styles)) {
       return <NoStylesMessage verticalStyleNavbarIndex={verticalStyleNavbarIndex} />;
@@ -231,6 +246,7 @@ function StyleInspector() {
             isVerticalStyleNavbarOpen={isVerticalStyleNavbarOpen}
             handleVerticalStyleNavbarOpen={handleVerticalStyleNavbarOpen}
             handleVerticalStyleNavbarIndex={handleVerticalStyleNavbarIndex}
+            hasStyles={getHasStyles(styles)}
           />
           <div
             className={`styleInspectorTransition-VerticalNavbarOpen ${
