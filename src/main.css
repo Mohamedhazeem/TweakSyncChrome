@@ -18,6 +18,9 @@
 .inspector-component {
   @apply flex flex-col gap-1;
 }
+.inspector-VerticalNavbarAndStylesContainer {
+  @apply flex flex-row gap-1 w-full;
+}
 .inspector-header {
   @apply flex flex-row justify-between items-center rounded px-3 h-9 bg-[#222831]; /*bg-gradient-to-r from-indigo-500 to-blue-500*/
 }
@@ -106,3 +109,27 @@
   @apply w-8 h-6 text-center text-sm border-2;
 }
 /* #endregion PositionComponentStyles */
+
+/* #region VerticalNavbarStyles */
+.verticalNavbarStyleOpenDuration {
+  @apply duration-300;
+}
+.styleInspectorTransition-VerticalNavbarOpen {
+  @apply inspector-component w-full  transition-all verticalNavbarStyleOpenDuration;
+}
+.verticalNavbarContainer {
+  @apply fixed top-0 left-0 flex items-center h-dvh transition-all verticalNavbarStyleOpenDuration;
+}
+.verticalNavbarButtonHolder {
+  @apply bg-slate-400 flex flex-col items-center justify-center gap-2 p-1 rounded-md transition-all verticalNavbarStyleOpenDuration;
+}
+.verticalNavbarStyleTriggerButton {
+  @apply h-16 font-bold text-base transition-transform verticalNavbarStyleOpenDuration;
+}
+.verticalNavbarStyleOpen {
+  @apply w-4 bg-green-500 hover:bg-green-600;
+}
+.verticalNavbarStyleClose {
+  @apply w-4 -ml-1 bg-red-500 hover:bg-red-600;
+}
+/* #endregion VerticalNavbarStyles */

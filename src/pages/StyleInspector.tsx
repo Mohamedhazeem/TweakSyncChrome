@@ -10,6 +10,7 @@ import { StyleGroup } from "@/types/styleTypes";
 import { STYLE_GROUPS } from "@/utils/styles/globalStyles";
 import { Button } from "@/components/ui/button";
 import NotFoundInspector from "./NotFoundInspector";
+import VerticalStyleNavbar from "@/components/VerticalStyleNavbar";
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();
@@ -29,19 +30,24 @@ function StyleInspector() {
   };
 
   const [styles, setStyles] = useState<ElementStyles>(initialStyles);
+  const [isVerticalStyleNavbarOpen, setIsVerticalStyleNavbarOpen] = useState<boolean>(true);
+  const [verticalStyleNavbarIndex, setVerticalStyleNavbarIndex] = useState<number>(0);
 
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (style) {
       console.log("Received style:", style);
-
+      setIsVerticalStyleNavbarOpen(true);
       setStyles(style);
     }
   }, [style]); // Check if style needs to be updated when tag.path changes
-
-  console.log("Rendering ColorStyle with styles:", styles);
-
+  const handleVerticalStyleNavbarOpen = (isopen: boolean) => {
+    setIsVerticalStyleNavbarOpen(isopen);
+  };
+  const handleVerticalStyleNavbarIndex = (index: number) => {
+    setVerticalStyleNavbarIndex(index);
+  };
   const handleStyleChange = (selector: string, property: string, newValue: string | null) => {
     setStyles((prevStyles) => {
       const updatedStyles = { ...prevStyles };
@@ -211,7 +217,19 @@ function StyleInspector() {
             </Button>
           </div>
         </div>
-        {/* {styles.inline &&
+        <div className="inspector-VerticalNavbarAndStylesContainer">
+          <VerticalStyleNavbar
+            verticalStyleNavbarIndex={verticalStyleNavbarIndex}
+            isVerticalStyleNavbarOpen={isVerticalStyleNavbarOpen}
+            handleVerticalStyleNavbarOpen={handleVerticalStyleNavbarOpen}
+            handleVerticalStyleNavbarIndex={handleVerticalStyleNavbarIndex}
+          />
+          <div
+            className={`styleInspectorTransition-VerticalNavbarOpen ${
+              isVerticalStyleNavbarOpen ? "ml-[60px]" : "ml-3"
+            }`}
+          >
+            {/* {styles.inline &&
         Object.entries(styles.inline).map(([property, value]) =>
           property === "color" ? (
             <Color
@@ -224,17 +242,17 @@ function StyleInspector() {
             />
           ) : null
         )} */}
-        {styles.external && (
-          <>
-            {renderStyles(styles.external.classes)}
-            {renderStyles(styles.external.ids)}
-            {renderStyles(styles.external.tags)}
-            {renderStyles(styles.external.attribute)}
-            {renderStyles(styles.external.descendant)}
-            {renderStyles(styles.external.pseudoElementStyles)}
-            {renderStyles(styles.external.pseudoClassStyles)}
-            {/* {renderAtRules(styles.external.atRules)} */}
-            {/* {styles.external.atRules &&
+            {styles.external && (
+              <>
+                {verticalStyleNavbarIndex == 0 && renderStyles(styles.external.classes)}
+                {verticalStyleNavbarIndex == 1 && renderStyles(styles.external.ids)}
+                {verticalStyleNavbarIndex == 2 && renderStyles(styles.external.tags)}
+                {verticalStyleNavbarIndex == 3 && renderStyles(styles.external.attribute)}
+                {verticalStyleNavbarIndex == 4 && renderStyles(styles.external.descendant)}
+                {verticalStyleNavbarIndex == 5 && renderStyles(styles.external.pseudoElementStyles)}
+                {verticalStyleNavbarIndex == 6 && renderStyles(styles.external.pseudoClassStyles)}
+                {/* {renderAtRules(styles.external.atRules)} */}
+                {/* {styles.external.atRules &&
             Object.entries(styles.external.atRules).map(
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               ([, nestedSelectors]) =>
@@ -242,8 +260,10 @@ function StyleInspector() {
                   renderStyles({ [selector]: properties })
                 )
             )} */}
-          </>
-        )}
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
