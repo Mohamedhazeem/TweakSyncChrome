@@ -13,11 +13,23 @@ function NoStylesMessage({ verticalStyleNavbarIndex }: NoStylesMessageType) {
             </p>
             <p className="text-gray-600 mt-2">
               <strong>To get started:</strong>{" "}
-              {verticalStyleNavbarIndex == 0
-                ? "Add new class in Element Inspector"
-                : verticalStyleNavbarIndex == 1
-                ? "Add an Id in Element Inspector"
-                : "Create and add new styles in your stylesheet."}
+              {verticalStyleNavbarIndex == 0 ? (
+                <>
+                  <span className="text-base text-black font-semibold px-1 rounded-lg layoutCardHeaderActive">
+                    Add new class
+                  </span>
+                  in Element Inspector
+                </>
+              ) : verticalStyleNavbarIndex == 1 ? (
+                <>
+                  <span className="text-base text-black font-semibold px-1 rounded-lg layoutCardHeaderActive">
+                    Add an Id
+                  </span>{" "}
+                  in Element Inspector
+                </>
+              ) : (
+                "Create and add new styles in your stylesheet."
+              )}
             </p>
             <p className="text-gray-600 mt-2">
               {verticalStyleNavbarIndex == 0
