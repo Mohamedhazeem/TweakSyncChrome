@@ -11,6 +11,7 @@ import { STYLE_GROUPS } from "@/utils/styles/globalStyles";
 import { Button } from "@/components/ui/button";
 import NotFoundInspector from "./NotFoundInspector";
 import VerticalStyleNavbar from "@/components/VerticalStyleNavbar";
+import NoStylesMessage from "@/components/NoStylesMessage";
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();
@@ -165,7 +166,14 @@ function StyleInspector() {
 
     return groupedStyles;
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isEmpty = (obj: { [key: string]: any }): boolean => {
+    return Object.keys(obj).length === 0;
+  };
   const renderStyles = (styles: { [key: string]: { [key: string]: string } }) => {
+    if (isEmpty(styles)) {
+      return <NoStylesMessage verticalStyleNavbarIndex={verticalStyleNavbarIndex} />;
+    }
     // Group properties by selector
     const groupedStyles = Object.entries(styles).reduce((acc, [selector, properties]) => {
       acc[selector] = acc[selector] || [];
