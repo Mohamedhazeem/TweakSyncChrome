@@ -99,7 +99,6 @@ function apply(tabId: number, sendResponse: (response?: unknown) => void, applyF
 
       if (response && response.status !== "error") {
         if (isSocketOpen()) {
-          console.log("Sending applyStylesToVscode");
           console.log(response);
           applyFor === "styles" ? applyStylesToVscode(response) : applyElementToVscode(response);
           sendResponse({ status: "success" });
@@ -182,7 +181,6 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     sendResponse({ status: message.styles });
   } else if (message.action === "injectContentScript") {
     injectContentScript();
-    console.log("Injecting content script");
   } else if (message.action === "removeContentScript") {
     removeContentScript();
   } else if (message.action === "addSelector") {
@@ -192,6 +190,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         selector: message.selector,
       });
     });
+    return true;
   } else if (message.action === "renameSelector") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.tabs.sendMessage(tabs[0].id!, {
@@ -200,6 +199,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         newSelector: message.newSelector,
       });
     });
+    return true;
   } else if (
     message.action === "updateTextContent" ||
     message.action === "updateStyles" ||
