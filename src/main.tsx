@@ -36,12 +36,3 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Toaster position="top-center" />
   </React.StrictMode>
 );
-
-// {
-//   path: "/searchresults",
-//   element: <SearchResults />,
-// },
-// {
-//   path: "/details/:mediaType/:id",
-//   element: <Details />,
-// },

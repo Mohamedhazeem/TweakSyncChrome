@@ -9,18 +9,14 @@ import {
   initWebSocket,
   isSocketOpen,
 } from "./websocket";
+chrome.sidePanel
+  .setPanelBehavior({ openPanelOnActionClick: true })
+  .catch((error) => console.error(error));
 
-function toggleSidePanel() {
+function closeSidePanel() {
   chrome.sidePanel
-    .getOptions({})
-    .then((options) => {
-      const newState = !options.enabled;
-      chrome.sidePanel.setOptions({ enabled: newState }).catch((error) => console.error(error));
-    })
+    .setPanelBehavior({ openPanelOnActionClick: true })
     .catch((error) => console.error(error));
-}
-function closeSidePanel(tabId: number) {
-  chrome.sidePanel.setOptions({ enabled: false, tabId }).catch((error) => console.error(error));
 }
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
@@ -31,7 +27,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       .getOptions({ tabId })
       .then((options) => {
         if (options.enabled) {
-          closeSidePanel(tabId);
+          closeSidePanel();
         }
       })
       .catch((error) => {
@@ -151,15 +147,7 @@ function getUpdatedDetails(
     }
   );
 }
-chrome.commands.onCommand.addListener((command) => {
-  if (command === "toggle_side_panel") {
-    chrome.runtime.sendMessage({ action: "toggleSidePanel" });
-  }
-});
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  if (message.action === "toggleSidePanel") {
-    toggleSidePanel();
-  }
   if (message.action === "connect") {
     initWebSocket();
     console.log("Web socket connected");
