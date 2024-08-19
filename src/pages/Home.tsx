@@ -1,3 +1,4 @@
+import { TweakSyncIcon } from "@/components/Icons/TweakSyncIcon";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
@@ -33,54 +34,47 @@ function Home() {
   function removeInject() {
     chrome.runtime.sendMessage({ action: "removeContentScript" });
   }
-  function applyElement() {
-    chrome.runtime.sendMessage({ action: "apply", apply: "element" });
-  }
-  function applyStyles() {
-    chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
-  }
 
   return (
     <div className="inspector-container">
       <div className="inspector-home">
-        <span className="tweak-sync-logo">Tweak Sync</span>
+        <span className="tweak-sync-logo">
+          <TweakSyncIcon />
+          TweakSync
+        </span>
+        <div className="homePageButtons">
+          <Button
+            size={"lg"}
+            variant={"default"}
+            type="button"
+            className="connect hover:bg-[#318b8bf6]"
+            id="connect"
+            onClick={connected}
+          >
+            Connect
+          </Button>
 
-        <Button size={"lg"} variant={"default"} type="button" id="connect" onClick={connected}>
-          Connect
-        </Button>
-
-        <>
-          <Button size={"lg"} variant={"default"} type="button" id="inject" onClick={inject}>
+          <Button
+            size={"lg"}
+            variant={"default"}
+            type="button"
+            className="startEdit hover:bg-[#0055d4bf]"
+            id="inject"
+            onClick={inject}
+          >
             Start Edit
           </Button>
           <Button
             size={"lg"}
             variant={"default"}
             type="button"
+            className="stopEdit hover:bg-[#e44141f3]"
             id="remove_inject"
             onClick={removeInject}
           >
             Stop Edit
           </Button>
-          <Button
-            size={"lg"}
-            variant={"default"}
-            type="button"
-            id="applyElement"
-            onClick={applyElement}
-          >
-            Apply Element
-          </Button>
-          <Button
-            size={"lg"}
-            variant={"default"}
-            type="button"
-            id="applyStyles"
-            onClick={applyStyles}
-          >
-            Apply styles
-          </Button>
-        </>
+        </div>
       </div>
     </div>
   );

@@ -7,13 +7,13 @@
 } */
 /* #region InspectorStyles */
 .inspector-container {
-  @apply w-full h-[calc(100vh-65px)] flex items-center justify-center;
+  @apply w-full h-[calc(100vh-65px)] flex items-center justify-center bg-gradient-to-r from-indigo-500 to-red-400;
 }
 .inspector-scroll {
   @apply flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-1;
 }
 .inspector-home {
-  @apply flex flex-col space-y-4 overflow-y-auto h-full w-full p-4 items-center justify-center;
+  @apply flex flex-col space-y-4 overflow-y-auto h-full w-full pt-20 items-center;
 }
 .inspector-component {
   @apply flex flex-col gap-1;
@@ -31,7 +31,7 @@
   @apply bg-[#EEEEEE] py-1 h-7 text-black; /*bg-gradient-to-r from-amber-200 to-yellow-500 */
 }
 .tweak-sync-logo {
-  @apply bg-gradient-to-r from-emerald-300 to-lime-500 rounded-md font-semibold p-2 text-4xl cursor-default;
+  @apply bg-[#101010ae] rounded-md font-semibold py-3 px-7 text-2xl text-white cursor-default flex flex-col gap-2 justify-center items-center;
 }
 .navbarButton {
   @apply bg-[#222831] text-yellow-200 hover:text-[#EEEEEE];
@@ -39,14 +39,14 @@
 /* #endregion InspectorStyles */
 
 /* #region LayoutStyles */
-.layoutCard {
+/* .layoutCard {
   @apply border-2 border-t-neutral-200;
-}
+} */
 .layoutCardHeader {
   @apply p-2 py-1 rounded;
 }
 .layoutCardHeaderActive {
-  @apply bg-[#00ADB5]; /*bg-gradient-to-r from-emerald-300 to-lime-500*/
+  @apply bg-[#24adf2]; /*bg-gradient-to-r from-emerald-300 to-lime-500bg-[#00ADB5] */
 }
 .layoutCardHeaderInActive {
   @apply bg-gradient-to-r from-zinc-300 to-slate-500;
@@ -73,13 +73,13 @@
   @apply p-2;
 }
 .layoutParentCardHeader {
-  @apply p-1 rounded bg-gradient-to-r from-pink-500 to-amber-500;
+  @apply p-1 rounded bg-[#faa834];
 }
 .layoutParentCardContent {
-  @apply p-0 pb-2 py-1 px-1 m-0 flex flex-col gap-2;
+  @apply py-1 pb-2 px-1 m-0 flex flex-col gap-2;
 }
 .layoutParentCardContentHeader {
-  @apply p-2 rounded bg-[#393E46]; /*bg-gradient-to-r from-purple-400 to-purple-700*/
+  @apply p-2 rounded bg-[#393E46];
 }
 .layoutParentCardContentTitle {
   @apply flex justify-between items-center text-base font-medium w-full text-[#EEEEEE];
@@ -94,7 +94,7 @@
   @apply flex flex-col gap-1;
 }
 .addStyleProperty {
-  @apply bg-gradient-to-r from-lime-400 to-lime-500 w-1/2;
+  @apply bg-green-500 hover:bg-green-600 w-1/2;
 }
 /* #endregion LayoutStyles */
 
@@ -133,3 +133,19 @@
   @apply w-4 -ml-1 bg-red-500 hover:bg-red-600;
 }
 /* #endregion VerticalNavbarStyles */
+
+/* #region HomePage*/
+
+.connect {
+  @apply bg-[#1ecaadec] min-w-36 min-h-11 text-[#3d0000e5] text-lg font-bold;
+}
+.startEdit {
+  @apply bg-[#0055d491] min-w-36 min-h-11 text-[#3d0000e5] text-lg font-bold;
+}
+.stopEdit {
+  @apply bg-[#ff4141e5] min-w-36 min-h-11 text-[#3d0000e5] text-lg font-bold;
+}
+.homePageButtons {
+  @apply flex flex-col gap-2 py-2;
+}
+/* #endregion HomePage*/

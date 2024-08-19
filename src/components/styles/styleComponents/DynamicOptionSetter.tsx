@@ -95,8 +95,6 @@ export default function DynamicOptionSetter({
                 option={option}
               />
             </div>
-            {`style value: ${style.value}`}
-            {`value: ${value}`}
             {
               <DynamicOptions
                 optionType={option}

@@ -234,7 +234,7 @@ function StyleInspector() {
               type="button"
               id="applyElement"
               onClick={applyStyles}
-              className="inspector-applyButton"
+              className="inspector-applyButton hover:bg-[#fbf6f6]"
             >
               Apply
             </Button>

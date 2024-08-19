@@ -12,7 +12,7 @@ function NotFoundInspector({ inspectorName }: NotFoundInspectorType) {
           </div>
         </div>
         <div className="w-full h-full flex flex-col gap-3 justify-center items-center">
-          <div className="border-4 border-gray-400 rounded-lg">
+          <div className="border-4 border-[#EEEEEE] rounded-lg">
             <div className="flex gap-2 items-center font-medium p-2 text-sm">
               <Info size={50} color="darkorange" />
               <div className="text-justify">

@@ -126,7 +126,6 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
         className="h-7 self-center"
         disabled={maxOptionCounts ? optionCount >= maxOptionCounts : false}
       >
-        {/* Add */}
         Add {nameForTitle}
       </Button>
     </div>

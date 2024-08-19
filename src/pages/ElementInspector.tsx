@@ -149,7 +149,7 @@ function ElementInspector() {
               type="button"
               id="applyElement"
               onClick={applyElement}
-              className="inspector-applyButton"
+              className="inspector-applyButton hover:bg-[#fbf6f6]"
             >
               Apply
             </Button>

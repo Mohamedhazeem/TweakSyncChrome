@@ -14,10 +14,7 @@ function DataAttribute() {
   const [showAddFields, setShowAddFields] = useState<boolean>(false);
 
   useEffect(() => {
-    if (
-      context?.attribute?.value &&
-      typeof context.attribute.value === "object"
-    ) {
+    if (context?.attribute?.value && typeof context.attribute.value === "object") {
       setAttributes(context.attribute.value as AttributeValue);
     }
   }, [context?.attribute]);
@@ -108,11 +105,7 @@ function DataAttribute() {
             <Button
               className="flex-grow"
               onClick={handleAddDataAttribute}
-              disabled={
-                !newAttrKey.startsWith("data-") ||
-                newAttrKey === "data-" ||
-                !newAttrValue
-              }
+              disabled={!newAttrKey.startsWith("data-") || newAttrKey === "data-" || !newAttrValue}
             >
               Add
             </Button>
@@ -123,9 +116,14 @@ function DataAttribute() {
         </div>
       )}
       {!showAddFields && (
-        <Button onClick={() => setShowAddFields(true)}>
-          Add Data Attribute
-        </Button>
+        <div className="w-full flex items-center justify-center">
+          <Button
+            onClick={() => setShowAddFields(true)}
+            className="addStyleProperty hover:bg-green-600 text-black"
+          >
+            Add Data Attribute
+          </Button>
+        </div>
       )}
     </div>
   );
