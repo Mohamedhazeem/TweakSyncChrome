@@ -97,12 +97,21 @@ function apply(tabId: number, sendResponse: (response?: unknown) => void, applyF
         if (isSocketOpen()) {
           console.log(response);
           applyFor === "styles" ? applyStylesToVscode(response) : applyElementToVscode(response);
+          chrome.runtime.sendMessage({
+            action: applyFor == "styles" ? "stylesApplied" : "elementApplied",
+            toast: "Applied Sucessfully.",
+          });
           sendResponse({ status: "success" });
         } else {
-          console.error("WebSocket is not open");
+          console.log("Connection is not open");
+          chrome.runtime.sendMessage({
+            action: "webSocketConnectionError",
+            toast:
+              "Connection error. Please check your connection on both TweakSync VS Code and the TweakSync Chrome extension before apply.",
+          });
           sendResponse({
             status: "error",
-            message: "WebSocket is not open",
+            message: "Connection is not open",
           });
         }
       } else {
@@ -152,13 +161,10 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     initWebSocket();
     console.log("Web socket connected");
   } else if (message.action === "elementClicked") {
-    console.log("Clicked element details:", message.details);
-
     chrome.runtime.sendMessage({
       action: "showElementDetails",
       details: message.details,
     });
-    sendResponse({ status: "element details received" });
   } else if (message.action === "styleClicked") {
     console.log("Clicked element styles:", message.styles);
 
@@ -193,7 +199,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     message.action === "updateStyles" ||
     message.action === "updateAttributes"
   ) {
-    console.log(message.name);
+    console.log("updateStyles");
     if (message.name === "data-*") {
       Object.entries(message.value).map(([key, value], index) =>
         console.log(`key: ${key}, value: ${value} and index: ${index}`)
