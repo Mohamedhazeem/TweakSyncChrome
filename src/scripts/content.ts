@@ -56,24 +56,13 @@ document.addEventListener("click", (event) => {
   if (currentElement) {
     getElementDetails(currentElement).then((details) => {
       if (isValidChromeRuntime()) {
-        chrome.runtime.sendMessage({ action: "elementClicked", details }, (response) => {
-          if (chrome.runtime.lastError) {
-            console.error("Error sending message:", chrome.runtime.lastError);
-          } else {
-            console.log("Message sent successfully", response);
-          }
-        });
+        chrome.runtime.sendMessage({ action: "elementClicked", details });
       }
     });
     getElementStyles(currentElement).then((styles) => {
       if (isValidChromeRuntime()) {
-        chrome.runtime.sendMessage({ action: "styleClicked", styles }, (response) => {
-          if (chrome.runtime.lastError) {
-            console.error("Error sending message:", chrome.runtime.lastError);
-          } else {
-            console.log("Message sent successfully", response);
-          }
-        });
+        console.log(styles);
+        chrome.runtime.sendMessage({ action: "styleClicked", styles });
       }
     });
   }
@@ -86,6 +75,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     if (!isEditable) {
       resetContentScript();
     }
+    return true;
   }
   if (message.action === "updateTextContent") {
     updateText({ text: message.text, temporaryId: message.temporaryId });
@@ -96,23 +86,21 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       property: message.property,
       temporaryId: message.temporaryId,
     });
+    return true;
   } else if (message.action === "updateAttributes") {
     updateAttributes({ name: message.name, value: message.value });
+    return true;
   } else if (message.action === "addSelector") {
     addSelector(message.selector);
+    return true;
   } else if (message.action === "renameSelector") {
     renameSelector(message.oldSelector, message.newSelector);
+    return true;
   } else if (message.action === "getUpdatedElement" && lastClickedElement) {
     getElementDetails(lastClickedElement)
       .then((details) => {
         if (isValidChromeRuntime()) {
-          chrome.runtime.sendMessage({ action: "elementClicked", details }, (response) => {
-            if (chrome.runtime.lastError) {
-              console.error("Error sending message:", chrome.runtime.lastError);
-            } else {
-              console.log("Message sent successfully", response);
-            }
-          });
+          chrome.runtime.sendMessage({ action: "elementClicked", details });
         }
         sendResponse(details);
       })
@@ -125,13 +113,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     getElementStyles(lastClickedElement)
       .then((styles) => {
         if (isValidChromeRuntime()) {
-          chrome.runtime.sendMessage({ action: "styleClicked", styles }, (response) => {
-            if (chrome.runtime.lastError) {
-              console.error("Error sending message:", chrome.runtime.lastError);
-            } else {
-              console.log("Message sent successfully", response);
-            }
-          });
+          chrome.runtime.sendMessage({ action: "styleClicked", styles });
         }
         sendResponse(styles);
       })
