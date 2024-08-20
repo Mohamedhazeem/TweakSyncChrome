@@ -3,9 +3,16 @@ import { ElementStyles } from "../../types/elementTypes";
 import { styles } from "./styleConstants";
 
 export function processRule({ rule, context }: ProcessRules) {
-  for (let i = 0; i < rule.style.length; i++) {
-    const propertyName = rule.style[i];
-    context[propertyName] = rule.style.getPropertyValue(propertyName);
+  // for (let i = 0; i < rule.style.length; i++) {
+  //   const propertyName = rule.style[i];
+  //   context[propertyName] = rule.style.getPropertyValue(propertyName);
+  // }
+  if (context) {
+    const ruleStyles = rule.style;
+    for (let i = 0; i < ruleStyles.length; i++) {
+      const property = ruleStyles[i];
+      context[property] = ruleStyles.getPropertyValue(property);
+    }
   }
 }
 
