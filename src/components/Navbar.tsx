@@ -18,7 +18,11 @@ export const Navbar = () => {
       toast.error(message.toast);
     } else if (message.action === "webSocketConnectionOpen") {
       toast.success(message.toast);
-    } else if (message.action === "webSocketConnectionClose") {
+    }
+    //  else if (message.action === "webSocketConnectionClose") {
+    //   toast.error(message.toast);
+    // }
+    else if (message.action === "webSocketReconnectionFailed") {
       toast.error(message.toast);
     }
   };
