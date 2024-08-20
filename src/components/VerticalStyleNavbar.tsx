@@ -1,4 +1,11 @@
+import { TagIcon } from "./Icons/TagIcon";
+import { ClassIcon } from "./Icons/ClassIcon";
+import { IdIcon } from "./Icons/IdIcon";
 import { Button } from "./ui/button";
+import { AttributeIcon } from "./Icons/AttributeIcon";
+import { DescendantIcon } from "./Icons/DesendantIcon";
+import { PseudoElementIcon } from "./Icons/PseudoElementIcon";
+import { PseudoClassIcon } from "./Icons/PseudoClassIcon";
 type VerticalStyleNavbarType = {
   isVerticalStyleNavbarOpen: boolean;
   verticalStyleNavbarIndex: number;
@@ -15,6 +22,7 @@ function VerticalStyleNavbar({
   handleVerticalStyleNavbarIndex,
   hasStyles,
 }: VerticalStyleNavbarType) {
+  const selectedIconColor = "#fef08a";
   return (
     //fixed top-0 left-0
     <div
@@ -29,7 +37,7 @@ function VerticalStyleNavbar({
           className={`relative ${verticalStyleNavbarIndex === 0 ? "navbarButton" : ""}`}
           onClick={() => handleVerticalStyleNavbarIndex(0)}
         >
-          Class
+          <ClassIcon fill={verticalStyleNavbarIndex === 0 ? selectedIconColor : undefined} />
           <NotificationDot show={hasStyles[0]} />
         </Button>
         <Button
@@ -39,7 +47,7 @@ function VerticalStyleNavbar({
           className={`relative ${verticalStyleNavbarIndex === 1 ? "navbarButton" : ""}`}
           onClick={() => handleVerticalStyleNavbarIndex(1)}
         >
-          Id
+          <IdIcon fill={verticalStyleNavbarIndex === 1 ? selectedIconColor : undefined} />
           <NotificationDot show={hasStyles[1]} />
         </Button>
         <Button
@@ -49,7 +57,7 @@ function VerticalStyleNavbar({
           className={`relative ${verticalStyleNavbarIndex === 2 ? "navbarButton" : ""}`}
           onClick={() => handleVerticalStyleNavbarIndex(2)}
         >
-          Tag
+          <TagIcon fill={verticalStyleNavbarIndex === 2 ? selectedIconColor : undefined} />
           <NotificationDot show={hasStyles[2]} />
         </Button>
         <Button
@@ -59,7 +67,7 @@ function VerticalStyleNavbar({
           className={`relative ${verticalStyleNavbarIndex === 3 ? "navbarButton" : ""}`}
           onClick={() => handleVerticalStyleNavbarIndex(3)}
         >
-          Attr
+          <AttributeIcon fill={verticalStyleNavbarIndex === 3 ? selectedIconColor : undefined} />
           <NotificationDot show={hasStyles[3]} />
         </Button>
         <Button
@@ -69,7 +77,7 @@ function VerticalStyleNavbar({
           className={`relative ${verticalStyleNavbarIndex === 4 ? "navbarButton" : ""}`}
           onClick={() => handleVerticalStyleNavbarIndex(4)}
         >
-          Desc
+          <DescendantIcon fill={verticalStyleNavbarIndex === 4 ? selectedIconColor : undefined} />
           <NotificationDot show={hasStyles[4]} />
         </Button>
         <Button
@@ -79,7 +87,9 @@ function VerticalStyleNavbar({
           className={`relative ${verticalStyleNavbarIndex === 5 ? "navbarButton" : ""}`}
           onClick={() => handleVerticalStyleNavbarIndex(5)}
         >
-          PEle
+          <PseudoElementIcon
+            fill={verticalStyleNavbarIndex === 5 ? selectedIconColor : undefined}
+          />
           <NotificationDot show={hasStyles[5]} />
         </Button>
         <Button
@@ -89,7 +99,7 @@ function VerticalStyleNavbar({
           className={`relative ${verticalStyleNavbarIndex === 6 ? "navbarButton" : ""}`}
           onClick={() => handleVerticalStyleNavbarIndex(6)}
         >
-          PClas
+          <PseudoClassIcon fill={verticalStyleNavbarIndex === 6 ? selectedIconColor : undefined} />
           <NotificationDot show={hasStyles[6]} />
         </Button>
         {/* <Button>@Rules</Button> */}
@@ -119,8 +129,6 @@ const NotificationDot: React.FC<NotificationDotProps> = ({ show }) => {
   if (!show) return null;
 
   return (
-    <span
-      className={`absolute top-[2px] right-[2px] block w-1.5 h-1.5 bg-red-600 rounded-full`}
-    ></span>
+    <span className={`absolute top-[2px] right-[2px] block size-2 bg-red-600 rounded-full`}></span>
   );
 };

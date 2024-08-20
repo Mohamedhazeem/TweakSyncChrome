@@ -82,17 +82,8 @@ export function removeContentScript() {
   });
 }
 export function injectCSS(tabId: number) {
-  chrome.scripting.insertCSS(
-    {
-      target: { tabId: tabId },
-      files: ["assets/contentcss-3YaSVoRQ.css"],
-    },
-    () => {
-      if (chrome.runtime.lastError) {
-        console.error(chrome.runtime.lastError);
-      } else {
-        console.log("CSS injected successfully.");
-      }
-    }
-  );
+  chrome.scripting.insertCSS({
+    target: { tabId: tabId },
+    files: ["assets/contentcss-3YaSVoRQ.css"],
+  });
 }

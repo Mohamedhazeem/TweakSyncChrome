@@ -83,7 +83,6 @@ function apply(tabId: number, sendResponse: (response?: unknown) => void, applyF
     { action: applyFor === "styles" ? "getUpdatedStyle" : "getUpdatedElement" },
     (response) => {
       if (chrome.runtime.lastError) {
-        console.error("Error sending message to content script:", chrome.runtime.lastError.message);
         sendResponse({
           status: "error",
           message: chrome.runtime.lastError.message,
