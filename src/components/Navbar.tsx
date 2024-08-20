@@ -18,11 +18,13 @@ export const Navbar = () => {
       toast.error(message.toast);
     } else if (message.action === "webSocketConnectionOpen") {
       toast.success(message.toast);
-    }
-    //  else if (message.action === "webSocketConnectionClose") {
-    //   toast.error(message.toast);
-    // }
-    else if (message.action === "webSocketReconnectionFailed") {
+    } else if (message.action === "stylesApplied") {
+      // getUpdatedStyleDetails();
+      toast.success(message.toast);
+    } else if (message.action === "elementApplied") {
+      // getUpdatedElementDetails();
+      toast.success(message.toast);
+    } else if (message.action === "webSocketReconnectionFailed") {
       toast.error(message.toast);
     }
   };
