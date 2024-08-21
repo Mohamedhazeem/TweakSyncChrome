@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { toast } from "react-hot-toast";
+import { HomeIcon } from "./Icons/HomeIcon";
+import { HtmlInspectorIcon } from "./Icons/HtmlInspectorIcon";
+import { StyleInspectorIcon } from "./Icons/StyleInspector";
 export const Navbar = () => {
   const [elementDetails, setElementDetails] = useState<ElementDetails | null>(null);
   const [elementStyle, setElementStyle] = useState<ElementStyles | null>(null);
@@ -67,7 +70,7 @@ export const Navbar = () => {
               className={activeButton === "/" ? "navbarButton" : ""}
               onClick={() => handleClick("/")}
             >
-              Home
+              <HomeIcon fill={activeButton === "/" ? "#fef08a" : undefined} />
             </Button>
           </Link>
           <Link to={"/elementInspector"}>
@@ -82,7 +85,9 @@ export const Navbar = () => {
               }}
               // onClick={getUpdatedElementDetails}
             >
-              Inspector
+              <HtmlInspectorIcon
+                fill={activeButton === "/elementInspector" ? "#fef08a" : undefined}
+              />
             </Button>
           </Link>
           <Link to={"/styleInspector"}>
@@ -96,7 +101,9 @@ export const Navbar = () => {
                 getUpdatedStyleDetails();
               }}
             >
-              Style
+              <StyleInspectorIcon
+                fill={activeButton === "/styleInspector" ? "#fef08a" : undefined}
+              />
             </Button>
           </Link>
         </nav>
