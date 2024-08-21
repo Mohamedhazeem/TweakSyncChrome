@@ -137,13 +137,16 @@
 /* #region HomePage*/
 
 .connect {
-  @apply bg-[#1ecaadec] min-w-36 min-h-11 text-[#3d0000e5] hover:text-white text-lg font-bold;
+  /* 2d9c9cd3 */
+  @apply bg-[#1ecaadec] hover:bg-slate-600 min-w-36 min-h-11 text-[#3d0000e5] hover:text-white hover:scale-105 text-lg font-bold;
 }
 .startEdit {
-  @apply bg-[#0055d491] min-w-36 min-h-11 text-[#3d0000e5] hover:text-white text-lg font-bold;
+  /* 0055d491 */
+  @apply bg-[#0055d4bf] min-w-36 min-h-11 text-[#3d0000e5] hover:text-white hover:scale-105 text-lg font-bold;
 }
 .stopEdit {
-  @apply bg-[#ff4141e5] min-w-36 min-h-11 text-[#3d0000e5] hover:text-white text-lg font-bold;
+  /* fc4747a3 */
+  @apply bg-[#f74848] min-w-36 min-h-11 text-[#3d0000e5] hover:text-white hover:scale-105 text-lg font-bold;
 }
 .homePageButtons {
   @apply flex flex-col gap-2 py-2;

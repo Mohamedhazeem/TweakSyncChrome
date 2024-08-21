@@ -47,7 +47,7 @@ function Home() {
             size={"lg"}
             variant={"default"}
             type="button"
-            className="connect hover:bg-[#318b8bf6]"
+            className="connect hover:bg-[#1ecaadec]"
             id="connect"
             onClick={connected}
           >
@@ -68,7 +68,7 @@ function Home() {
             size={"lg"}
             variant={"default"}
             type="button"
-            className="stopEdit hover:bg-[#e44141f3]"
+            className="stopEdit hover:bg-[#f74848]"
             id="remove_inject"
             onClick={removeInject}
           >
