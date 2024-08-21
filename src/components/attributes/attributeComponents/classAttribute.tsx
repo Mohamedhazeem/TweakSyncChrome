@@ -94,7 +94,7 @@ function ClassAttribute(attributeEnum: ATTRIBUTE_ENUMS) {
           </Button>
         </div>
       ))}
-      {attributeEnum !== ATTRIBUTE_ENUMS.id && (
+      {attributeEnum !== ATTRIBUTE_ENUMS.id ? (
         <Button
           size={"default"}
           onClick={handleAddWord}
@@ -102,7 +102,9 @@ function ClassAttribute(attributeEnum: ATTRIBUTE_ENUMS) {
         >
           Add {context?.attribute?.nameForTitle}
         </Button>
-      )}
+      ) : words.length === 0 ? (
+        (handleAddWord(), null)
+      ) : null}
     </div>
   );
 }

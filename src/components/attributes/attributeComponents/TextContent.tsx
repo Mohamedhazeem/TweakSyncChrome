@@ -127,7 +127,7 @@ function TextContent({ tag }: PTagTypes) {
               } `}
             >
               <CardTitle className="layoutCardTitle">
-                Text Content
+                Text
                 <div className="layoutHoverCardHolder">
                   <HoverCard>
                     <HoverCardTrigger asChild>
