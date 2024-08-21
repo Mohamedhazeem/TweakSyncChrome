@@ -41,13 +41,27 @@ function StyleInspector() {
       console.log("Received style:", style);
       setIsVerticalStyleNavbarOpen(true);
       setStyles(style);
+      showFirstStyledContent(style);
     }
   }, [style]); // Check if style needs to be updated when tag.path changes
+  const totalButtonCount = 7;
+
   const handleVerticalStyleNavbarOpen = (isopen: boolean) => {
     setIsVerticalStyleNavbarOpen(isopen);
   };
   const handleVerticalStyleNavbarIndex = (index: number) => {
     setVerticalStyleNavbarIndex(index);
+  };
+  const showFirstStyledContent = (styles: ElementStyles) => {
+    let i = 0;
+    while (i < totalButtonCount) {
+      if (getHasStyles(styles)[i]) {
+        handleVerticalStyleNavbarIndex(i);
+        return;
+      } else {
+        i++;
+      }
+    }
   };
   const handleStyleChange = (selector: string, property: string, newValue: string | null) => {
     setStyles((prevStyles) => {
@@ -216,6 +230,7 @@ function StyleInspector() {
       );
     });
   };
+
   function applyStyles() {
     chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
   }
