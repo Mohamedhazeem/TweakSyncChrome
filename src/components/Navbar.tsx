@@ -11,6 +11,8 @@ export const Navbar = () => {
   const [elementStyle, setElementStyle] = useState<ElementStyles | null>(null);
   const location = useLocation();
   const [activeButton, setActiveButton] = useState(location.pathname);
+
+  const selectedIconColor = "#fef08a";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMessage = (message: any) => {
     if (message.action === "showElementDetails") {
@@ -70,7 +72,7 @@ export const Navbar = () => {
               className={activeButton === "/" ? "navbarButton" : ""}
               onClick={() => handleClick("/")}
             >
-              <HomeIcon fill={activeButton === "/" ? "#fef08a" : undefined} />
+              <HomeIcon fill={activeButton === "/" ? selectedIconColor : undefined} />
             </Button>
           </Link>
           <Link to={"/elementInspector"}>
@@ -86,7 +88,7 @@ export const Navbar = () => {
               // onClick={getUpdatedElementDetails}
             >
               <HtmlInspectorIcon
-                fill={activeButton === "/elementInspector" ? "#fef08a" : undefined}
+                fill={activeButton === "/elementInspector" ? selectedIconColor : undefined}
               />
             </Button>
           </Link>
@@ -102,7 +104,7 @@ export const Navbar = () => {
               }}
             >
               <StyleInspectorIcon
-                fill={activeButton === "/styleInspector" ? "#fef08a" : undefined}
+                fill={activeButton === "/styleInspector" ? selectedIconColor : undefined}
               />
             </Button>
           </Link>
