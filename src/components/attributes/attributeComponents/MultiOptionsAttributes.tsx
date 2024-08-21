@@ -105,9 +105,15 @@ function MultiOptionsAttribute() {
           </Button>
         </div>
       ))}
-      <Button size={"default"} onClick={handleAddOption} className="min-w-32 max-w-48 self-center">
-        Add {nameForTitle}
-      </Button>
+      <div className="w-full flex items-center justify-center">
+        <Button
+          size={"default"}
+          onClick={handleAddOption}
+          className="addMultiPropertyOrAttribute hover:bg-green-600 "
+        >
+          Add {nameForTitle}
+        </Button>
+      </div>
     </div>
   );
 }

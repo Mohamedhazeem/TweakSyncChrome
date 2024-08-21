@@ -120,14 +120,16 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
           </div>
         </div>
       ))}
-      <Button
-        size="sm"
-        onClick={handleAddOption}
-        className="h-7 self-center"
-        disabled={maxOptionCounts ? optionCount >= maxOptionCounts : false}
-      >
-        Add {nameForTitle}
-      </Button>
+      <div className="w-full flex items-center justify-center">
+        <Button
+          size="sm"
+          onClick={handleAddOption}
+          className="h-7 self-center addMultiPropertyOrAttribute hover:bg-green-600"
+          disabled={maxOptionCounts ? optionCount >= maxOptionCounts : false}
+        >
+          Add {nameForTitle}
+        </Button>
+      </div>
     </div>
   );
 };

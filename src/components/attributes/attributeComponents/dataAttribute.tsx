@@ -119,7 +119,7 @@ function DataAttribute() {
         <div className="w-full flex items-center justify-center">
           <Button
             onClick={() => setShowAddFields(true)}
-            className="addStyleProperty hover:bg-green-600 text-black"
+            className="addMultiPropertyOrAttribute hover:bg-green-600"
           >
             Add Data Attribute
           </Button>

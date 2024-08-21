@@ -83,7 +83,7 @@ function AddStyleProperty({ selector, setStyles, addStyleProperty }: AddStylePro
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="addStyleProperty"
+            className="addStyleProperty hover:bg-[#faa834]"
           >
             Add Style
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

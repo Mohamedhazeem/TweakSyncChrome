@@ -35,7 +35,7 @@ function AttributeLayout({
     <div id={attribute.name}>
       <Card className="layoutCard">
         <CardHeader
-          className={`layoutCardHeader ${
+          className={`layoutCardHeader rounded-t-md ${
             attribute.value ? "layoutCardHeaderActive" : "layoutCardHeaderInActive"
           } `}
         >

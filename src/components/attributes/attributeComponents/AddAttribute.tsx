@@ -71,7 +71,7 @@ function AddAttribute({ selectedAttributeName, setAttributes, addAttribute }: Ad
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="addStyleProperty"
+            className="addStyleProperty hover:bg-[#faa834]"
           >
             Add Attributes
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />

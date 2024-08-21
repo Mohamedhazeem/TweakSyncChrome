@@ -82,7 +82,10 @@ const Color = ({ colorProp }: ColorPropType) => {
                 presetColors={showMoreColor ? presetColors : undefined}
                 onChange={(e) => handleColorChange(e)}
               />
-              <Button className="w-full" onClick={() => setShowMoreColor(!showMoreColor)}>
+              <Button
+                className="addMultiPropertyOrAttribute hover:bg-green-600"
+                onClick={() => setShowMoreColor(!showMoreColor)}
+              >
                 {showMoreColor ? "Show Less Colors" : "Show More Colors"}
               </Button>
             </div>

@@ -34,7 +34,7 @@
   @apply bg-[#101010ae] rounded-md font-semibold py-3 px-7 text-2xl text-white cursor-default flex flex-col gap-2 justify-center items-center;
 }
 .navbarButton {
-  @apply bg-[#222831] text-yellow-200 hover:text-[#EEEEEE];
+  @apply bg-[#222831];
 }
 /* #endregion InspectorStyles */
 
@@ -93,8 +93,11 @@
 .textAreaHolder {
   @apply flex flex-col gap-1;
 }
+.addMultiPropertyOrAttribute {
+  @apply bg-green-500 font-bold text-[#222831] hover:text-[#EEEEEE];
+}
 .addStyleProperty {
-  @apply bg-green-500 hover:bg-green-600 w-1/2;
+  @apply bg-[#faa834] font-bold text-[#222831] hover:text-[#EEEEEE] w-1/2;
 }
 /* #endregion LayoutStyles */
 

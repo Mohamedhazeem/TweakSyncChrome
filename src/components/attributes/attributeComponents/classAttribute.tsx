@@ -95,7 +95,11 @@ function ClassAttribute(attributeEnum: ATTRIBUTE_ENUMS) {
         </div>
       ))}
       {attributeEnum !== ATTRIBUTE_ENUMS.id && (
-        <Button size={"default"} onClick={handleAddWord} className="min-w-32 max-w-48 self-center">
+        <Button
+          size={"default"}
+          onClick={handleAddWord}
+          className="self-center addMultiPropertyOrAttribute hover:bg-green-600"
+        >
           Add {context?.attribute?.nameForTitle}
         </Button>
       )}
