@@ -10,6 +10,8 @@ import {
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 import { Button } from "../ui/button";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "../ui/accordion";
+import { useState } from "react";
 
 function AttributeLayout({
   key,
@@ -19,6 +21,8 @@ function AttributeLayout({
   onChange,
   onRemove,
 }: IAttributeContext) {
+  const [isOpen, setIsOpen] = useState(attribute.value ? attribute.name : undefined);
+
   function handleRemoveClick(): void {
     if (attribute.name === "data-*") {
       onChange(index, {});
@@ -33,41 +37,64 @@ function AttributeLayout({
 
   return (
     <div id={attribute.name}>
-      <Card className="layoutCard">
-        <CardHeader
-          className={`layoutCardHeader rounded-t-md ${
-            attribute.value ? "layoutCardHeaderActive" : "layoutCardHeaderInActive"
-          } `}
-        >
-          <CardTitle className="layoutCardTitle">
-            {attribute.nameForTitle}
-            <div className="layoutHoverCardHolder">
-              <HoverCard>
-                <HoverCardTrigger asChild>
-                  <Button variant="outline" size={"sm"} className="layoutHoverCardTriggerButton">
-                    ?
-                  </Button>
-                </HoverCardTrigger>
-                <HoverCardContent className="layoutHoverCardContent">
-                  <div className="">
-                    <p className="layoutHoverCardContentDiscription">{attribute.description}</p>
+      <Accordion
+        type="single"
+        defaultValue={attribute.value ? attribute.name : undefined}
+        collapsible
+        onValueChange={(value) => setIsOpen(value)}
+      >
+        <AccordionItem value={attribute.name}>
+          <Card className="layoutCard">
+            <CardHeader
+              className={`layoutCardHeader ${isOpen ? "rounded-t-md" : "rounded-md"} ${
+                attribute.value ? "layoutCardHeaderActive" : "layoutCardHeaderInActive"
+              } `}
+            >
+              <AccordionTrigger className="AccordionTrigger">
+                <CardTitle className="layoutCardTitle">
+                  {attribute.nameForTitle}
+                  <div className="layoutHoverCardHolder">
+                    <HoverCard>
+                      <HoverCardTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size={"sm"}
+                          className="layoutHoverCardTriggerButton"
+                        >
+                          ?
+                        </Button>
+                      </HoverCardTrigger>
+                      <HoverCardContent className="layoutHoverCardContent">
+                        <div className="">
+                          <p className="layoutHoverCardContentDiscription">
+                            {attribute.description}
+                          </p>
+                        </div>
+                      </HoverCardContent>
+                    </HoverCard>
+                    <Button
+                      size="sm"
+                      className="layoutClearButton"
+                      onClick={() => handleRemoveClick()}
+                    >
+                      Clear
+                    </Button>
                   </div>
-                </HoverCardContent>
-              </HoverCard>
-              <Button size="sm" className="layoutClearButton" onClick={() => handleRemoveClick()}>
-                Clear
-              </Button>
-            </div>
-          </CardTitle>
-        </CardHeader>
-        {attribute.type !== "boolean" && (
-          <CardContent className="layoutCardContent">
-            <AttributeContext.Provider value={{ key, attribute, index, onChange }}>
-              {children}
-            </AttributeContext.Provider>
-          </CardContent>
-        )}
-      </Card>
+                </CardTitle>
+              </AccordionTrigger>
+            </CardHeader>
+            {attribute.type !== "boolean" && (
+              <AccordionContent>
+                <CardContent className="layoutCardContent">
+                  <AttributeContext.Provider value={{ key, attribute, index, onChange }}>
+                    {children}
+                  </AttributeContext.Provider>
+                </CardContent>
+              </AccordionContent>
+            )}
+          </Card>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 }
