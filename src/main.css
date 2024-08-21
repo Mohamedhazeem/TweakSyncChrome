@@ -39,17 +39,17 @@
 /* #endregion InspectorStyles */
 
 /* #region LayoutStyles */
-/* .layoutCard {
-  @apply border-2 border-t-neutral-200;
-} */
+.layoutCard {
+  @apply border-0;
+}
 .layoutCardHeader {
-  @apply p-2 py-1 rounded;
+  @apply px-2 py-1;
 }
 .layoutCardHeaderActive {
-  @apply bg-[#24adf2]; /*bg-gradient-to-r from-emerald-300 to-lime-500bg-[#00ADB5] */
+  @apply bg-[#24adf2];
 }
 .layoutCardHeaderInActive {
-  @apply bg-gradient-to-r from-zinc-300 to-slate-500;
+  @apply bg-zinc-300;
 }
 .layoutCardTitle {
   @apply flex justify-between items-center text-base font-medium w-full;
@@ -67,19 +67,19 @@
   @apply text-sm;
 }
 .layoutClearButton {
-  @apply bg-red-500 text-xs p-1 h-5 tracking-wider hover:bg-red-600;
+  @apply bg-red-500 text-xs p-1 h-5 tracking-wider;
 }
 .layoutCardContent {
   @apply p-2;
 }
 .layoutParentCardHeader {
-  @apply p-1 rounded bg-[#faa834];
+  @apply p-1 rounded-t-lg bg-[#faa834];
 }
 .layoutParentCardContent {
-  @apply py-1 pb-2 px-1 m-0 flex flex-col gap-2;
+  @apply py-1 px-1 m-0 flex flex-col gap-2 rounded-b-lg bg-slate-400;
 }
 .layoutParentCardContentHeader {
-  @apply p-2 rounded bg-[#393E46];
+  @apply p-2 rounded bg-[#222831];
 }
 .layoutParentCardContentTitle {
   @apply flex justify-between items-center text-base font-medium w-full text-[#EEEEEE];
@@ -124,26 +124,26 @@
   @apply bg-slate-400 flex flex-col items-center justify-center gap-2 p-1 rounded-md transition-all verticalNavbarStyleOpenDuration;
 }
 .verticalNavbarStyleTriggerButton {
-  @apply h-16 font-bold text-base transition-transform verticalNavbarStyleOpenDuration;
+  @apply h-16 font-extrabold text-base transition-transform verticalNavbarStyleOpenDuration;
 }
 .verticalNavbarStyleOpen {
   @apply w-4 bg-green-500 hover:bg-green-600;
 }
 .verticalNavbarStyleClose {
-  @apply w-4 -ml-1 bg-red-500 hover:bg-red-600;
+  @apply w-4 bg-red-500 hover:bg-red-600;
 }
 /* #endregion VerticalNavbarStyles */
 
 /* #region HomePage*/
 
 .connect {
-  @apply bg-[#1ecaadec] min-w-36 min-h-11 text-[#3d0000e5] text-lg font-bold;
+  @apply bg-[#1ecaadec] min-w-36 min-h-11 text-[#3d0000e5] hover:text-white text-lg font-bold;
 }
 .startEdit {
-  @apply bg-[#0055d491] min-w-36 min-h-11 text-[#3d0000e5] text-lg font-bold;
+  @apply bg-[#0055d491] min-w-36 min-h-11 text-[#3d0000e5] hover:text-white text-lg font-bold;
 }
 .stopEdit {
-  @apply bg-[#ff4141e5] min-w-36 min-h-11 text-[#3d0000e5] text-lg font-bold;
+  @apply bg-[#ff4141e5] min-w-36 min-h-11 text-[#3d0000e5] hover:text-white text-lg font-bold;
 }
 .homePageButtons {
   @apply flex flex-col gap-2 py-2;

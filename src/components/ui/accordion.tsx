@@ -14,10 +14,14 @@ const AccordionItem = React.forwardRef<
 ));
 AccordionItem.displayName = "AccordionItem";
 
+interface AccordionTriggerProps
+  extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> {
+  chevronColor?: string; // Add chevronColor as a prop
+}
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+  AccordionTriggerProps
+>(({ className, children, chevronColor, ...props }, ref) => (
   <AccordionPrimitive.Header className="flex">
     <AccordionPrimitive.Trigger
       ref={ref}
@@ -27,7 +31,11 @@ const AccordionTrigger = React.forwardRef<
       )}
       {...props}
     >
-      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+      <ChevronDown
+        className={`h-4 w-4 shrink-0 transition-transform duration-200`}
+        stroke={chevronColor || "#222831"}
+        strokeWidth={3}
+      />
       {children}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>

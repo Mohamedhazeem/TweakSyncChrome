@@ -250,7 +250,7 @@ function StyleInspector() {
           />
           <div
             className={`styleInspectorTransition-VerticalNavbarOpen ${
-              isVerticalStyleNavbarOpen ? "ml-[60px]" : "ml-3"
+              isVerticalStyleNavbarOpen ? "ml-[70px]" : "ml-3"
             }`}
           >
             {/* {styles.inline &&

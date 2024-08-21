@@ -43,19 +43,20 @@ const StyleLayoutParent: React.FC<StyleLayoutParentProps> = ({
             <div key={`${selector}-${groupName}`}>
               <Accordion
                 type="multiple"
-                defaultValue={
-                  group.groups.some((style) => style.value) ? [`${selector}-${groupName}`] : []
-                }
+                defaultValue={[`${selector}-${groupName}`]}
+                // defaultValue={
+                //   group.groups.some((style) => style.value) ? [`${selector}-${groupName}`] : []
+                // }
               >
                 <AccordionItem value={`${selector}-${groupName}`}>
                   <CardHeader className={"layoutParentCardContentHeader"}>
-                    <AccordionTrigger className="AccordionTrigger">
+                    <AccordionTrigger className="AccordionTrigger" chevronColor="#EEEEEE">
                       <CardTitle className="layoutParentCardContentTitle">
                         {groupName}
                         <Button
                           size="sm"
                           variant={"default"}
-                          className="layoutClearButton"
+                          className="layoutClearButton hover:bg-red-600"
                           onClick={() => handleClearGroup(group)}
                         >
                           Remove
@@ -73,7 +74,7 @@ const StyleLayoutParent: React.FC<StyleLayoutParentProps> = ({
                       onChange: handleStyleChange,
                     }}
                   >
-                    <AccordionContent className="AccordionContent">
+                    <AccordionContent className="pt-1">
                       <StyleFactory name={groupName} />
                     </AccordionContent>
                   </StyleContext.Provider>

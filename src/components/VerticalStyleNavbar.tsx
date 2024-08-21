@@ -6,6 +6,7 @@ import { AttributeIcon } from "./Icons/AttributeIcon";
 import { DescendantIcon } from "./Icons/DesendantIcon";
 import { PseudoElementIcon } from "./Icons/PseudoElementIcon";
 import { PseudoClassIcon } from "./Icons/PseudoClassIcon";
+import { ChevronDown } from "lucide-react";
 type VerticalStyleNavbarType = {
   isVerticalStyleNavbarOpen: boolean;
   verticalStyleNavbarIndex: number;
@@ -114,7 +115,19 @@ function VerticalStyleNavbar({
           isVerticalStyleNavbarOpen ? "verticalNavbarStyleClose" : "verticalNavbarStyleOpen"
         } verticalNavbarStyleTriggerButton`}
       >
-        {isVerticalStyleNavbarOpen ? `<` : `>`}
+        {isVerticalStyleNavbarOpen ? (
+          <ChevronDown
+            className={`h-4 w-4 shrink-0 transition-transform duration-200 rotate-90`}
+            stroke={"#222831"}
+            strokeWidth={3}
+          />
+        ) : (
+          <ChevronDown
+            className={`h-4 w-4 shrink-0 transition-transform duration-200 -rotate-90`}
+            stroke={"#222831"}
+            strokeWidth={3}
+          />
+        )}
       </Button>
     </div>
   );

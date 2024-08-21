@@ -2103,15 +2103,7 @@ const TextGroup: StyleGroup = {
       type: "string",
       description: "Defines how text should be transformed, such as uppercase or lowercase.",
       value: "",
-      options: [
-        "none",
-        "capitalize",
-        "uppercase",
-        "lowercase",
-        "full-width",
-        "full-size-kana",
-        ...globalCssOptions,
-      ],
+      options: ["none", "capitalize", "uppercase", "lowercase", ...globalCssOptions],
     },
     {
       name: "text-underline-offset",
