@@ -145,10 +145,10 @@ function TextContent({ tag }: PTagTypes) {
                     <Button
                       size="sm"
                       variant={"default"}
-                      className="layoutClearButton"
+                      className="layoutClearButton hover:bg-red-600"
                       onClick={() => handleRemoveClick()}
                     >
-                      CLEAR
+                      Clear
                     </Button>
                   )}
                 </div>

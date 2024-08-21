@@ -74,7 +74,7 @@ function AttributeLayout({
                     </HoverCard>
                     <Button
                       size="sm"
-                      className="layoutClearButton"
+                      className="layoutClearButton hover:bg-red-600"
                       onClick={() => handleRemoveClick()}
                     >
                       Clear
