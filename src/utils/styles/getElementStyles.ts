@@ -23,7 +23,7 @@ export function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
     const classList = Array.from(element.classList);
     const elementId = element.id;
     const tagName = element.tagName.toLowerCase();
-    styles.temporaryId = element.getAttribute("data-temporaryid") || null;
+    styles.temporaryId = element.getAttribute("data-tweaksync-id") || null;
 
     // Collect inline styles
     const inlineStyles = element.style;

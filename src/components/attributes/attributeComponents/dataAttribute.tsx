@@ -67,7 +67,7 @@ function DataAttribute() {
         >
           <div className="flex justify-between px-2">
             <Label htmlFor={key}>{key}</Label>
-            {key !== "data-temporaryid" && (
+            {key !== "data-tweaksync-id" && (
               <Button
                 size="sm"
                 className="bg-red-500 hover:bg-red-600 rounded-full text-xs p-1 w-4 h-4"
@@ -82,7 +82,7 @@ function DataAttribute() {
             id={key}
             value={value}
             onChange={(e) => handleInputChange(key, e.target.value)}
-            disabled={key == "data-temporaryid"}
+            disabled={key == "data-tweaksync-id"}
           />
         </div>
       ))}
