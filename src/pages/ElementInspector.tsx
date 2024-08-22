@@ -134,6 +134,14 @@ function ElementInspector() {
   function applyElement() {
     chrome.runtime.sendMessage({ action: "apply", apply: "element" });
   }
+  const hasTweakSyncId = attributes?.some((attr) => {
+    if (attr.name === "data-*") {
+      // Check if any of the data-* attributes include the `data-tweaksync-id`
+      return Object.keys(attr.value).includes("data-tweaksync-id");
+    }
+    return attr.name === "data-tweaksync-id";
+  });
+
   if (!element) {
     return (
       <Suspense fallback={<div>Loading Inspector...</div>}>
@@ -147,16 +155,18 @@ function ElementInspector() {
         <div className="inspector-component">
           <div className="inspector-header">
             <span className="inspector-title">Element Inspector</span>
-            <Button
-              size={"default"}
-              variant={"default"}
-              type="button"
-              id="applyElement"
-              onClick={applyElement}
-              className="inspector-applyButton hover:bg-[#fbf6f6]"
-            >
-              Apply
-            </Button>
+            {hasTweakSyncId && (
+              <Button
+                size={"default"}
+                variant={"default"}
+                type="button"
+                id="applyElement"
+                onClick={applyElement}
+                className="inspector-applyButton hover:bg-[#fbf6f6]"
+              >
+                Apply
+              </Button>
+            )}
           </div>
           <TextContent tag={element} />
           {attributes?.length ? (
