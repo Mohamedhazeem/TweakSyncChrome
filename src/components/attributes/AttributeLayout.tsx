@@ -11,7 +11,6 @@ import {
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 import { Button } from "../ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "../ui/accordion";
-import { useState } from "react";
 
 function AttributeLayout({
   key,
@@ -21,8 +20,6 @@ function AttributeLayout({
   onChange,
   onRemove,
 }: IAttributeContext) {
-  const [isOpen, setIsOpen] = useState(attribute.value ? attribute.name : undefined);
-
   function handleRemoveClick(): void {
     if (attribute.name === "data-*") {
       onChange(index, {});
@@ -37,20 +34,53 @@ function AttributeLayout({
 
   return (
     <div id={attribute.name}>
-      <Accordion
-        type="single"
-        defaultValue={attribute.value ? attribute.name : undefined}
-        collapsible
-        onValueChange={(value) => setIsOpen(value)}
-      >
+      <Accordion type="single" defaultValue={attribute.name || undefined} collapsible>
         <AccordionItem value={attribute.name}>
           <Card className="layoutCard">
             <CardHeader
-              className={`layoutCardHeader ${isOpen ? "rounded-t-md" : "rounded-md"} ${
-                attribute.value ? "layoutCardHeaderActive" : "layoutCardHeaderInActive"
+              className={`layoutCardHeader ${
+                attribute.type == "boolean" ? "rounded-md" : "rounded-t-md"
+              } ${
+                attribute.value || attribute.type == "boolean"
+                  ? "layoutCardHeaderActive"
+                  : "layoutCardHeaderInActive"
               } `}
             >
-              <AccordionTrigger className="AccordionTrigger">
+              {attribute.type !== "boolean" ? (
+                <AccordionTrigger className="AccordionTrigger">
+                  <CardTitle className="layoutCardTitle">
+                    {attribute.nameForTitle}
+                    <div className="layoutHoverCardHolder">
+                      <HoverCard>
+                        <HoverCardTrigger asChild>
+                          <Button
+                            variant="outline"
+                            size={"sm"}
+                            className="layoutHoverCardTriggerButton"
+                          >
+                            ?
+                          </Button>
+                        </HoverCardTrigger>
+                        <HoverCardContent className="layoutHoverCardContent">
+                          <div className="">
+                            <p className="layoutHoverCardContentDiscription">
+                              {attribute.description}
+                            </p>
+                          </div>
+                        </HoverCardContent>
+                      </HoverCard>
+
+                      <Button
+                        size="sm"
+                        className="layoutClearButton hover:bg-red-600"
+                        onClick={() => handleRemoveClick()}
+                      >
+                        Clear
+                      </Button>
+                    </div>
+                  </CardTitle>
+                </AccordionTrigger>
+              ) : (
                 <CardTitle className="layoutCardTitle">
                   {attribute.nameForTitle}
                   <div className="layoutHoverCardHolder">
@@ -81,7 +111,7 @@ function AttributeLayout({
                     </Button>
                   </div>
                 </CardTitle>
-              </AccordionTrigger>
+              )}
             </CardHeader>
             {attribute.type !== "boolean" && (
               <AccordionContent>

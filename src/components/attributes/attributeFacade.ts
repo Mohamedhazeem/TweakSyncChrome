@@ -158,8 +158,8 @@ export const attributeComponents: { [key: string]: React.ComponentType<any> } = 
   lang: OptionsObjectAttribute,
   part: ClassAttribute,
   popover: OptionsAttribute,
-  tabindex: OptionsObjectAttribute,
   role: OptionsAttribute,
+  tabindex: OptionsObjectAttribute,
   title: StringAttribute,
   translate: OptionsAttribute,
 };

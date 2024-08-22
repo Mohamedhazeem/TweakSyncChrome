@@ -157,7 +157,7 @@ function ElementInspector() {
           <TextContent tag={element} />
           {attributes?.length ? (
             attributes.map((attribute, index) => (
-              <div>
+              <div key={attribute.name}>
                 <AttributeFactory
                   key={index}
                   index={index}
