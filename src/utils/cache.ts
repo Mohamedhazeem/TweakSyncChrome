@@ -6,12 +6,21 @@ export function getCachedElement({ temporaryId }: getElementTypes) {
   return () => {
     if (!(temporaryId in elementCache)) {
       console.log("Caching element");
-      elementCache[temporaryId] = document.querySelector(`[data-temporaryid="${temporaryId}"]`);
+      let element = document.querySelector(
+        `[data-tweaksync-id="${temporaryId}"]`
+      ) as HTMLElement | null;
+      if (!element) {
+        element = document.querySelector(
+          `[data-tweaksync-temporaryid="${temporaryId}"]`
+        ) as HTMLElement | null;
+        console.log(element);
+      }
+      elementCache[temporaryId] = element;
     }
 
     const element = elementCache[temporaryId];
     if (!element) {
-      console.error(`Element with id ${temporaryId} not found`);
+      console.log(`Element with id ${temporaryId} not found`);
       return;
     } else {
       return element;
