@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { ElementStyles, ExternalStyles } from "../types/elementTypes";
 import { OutletContext } from "@/types/outletContext";
 import { useOutletContext } from "react-router-dom";
@@ -9,9 +9,9 @@ import StyleLayoutParent from "@/components/styles/StyleLayoutParent";
 import { StyleGroup } from "@/types/styleTypes";
 import { STYLE_GROUPS } from "@/utils/styles/globalStyles";
 import { Button } from "@/components/ui/button";
-import NotFoundInspector from "./NotFoundInspector";
-import VerticalStyleNavbar from "@/components/VerticalStyleNavbar";
-import NoStylesMessage from "@/components/NoStylesMessage";
+const VerticalStyleNavbar = lazy(() => import("@/components/VerticalStyleNavbar.tsx"));
+const NoStylesMessage = lazy(() => import("@/components/NoStylesMessage.tsx"));
+const NotFoundInspector = lazy(() => import("./NotFoundInspector.tsx"));
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();
@@ -201,7 +201,10 @@ function StyleInspector() {
   };
   const renderStyles = (styles: { [key: string]: { [key: string]: string } }) => {
     if (isEmpty(styles)) {
-      return <NoStylesMessage verticalStyleNavbarIndex={verticalStyleNavbarIndex} />;
+      return;
+      <Suspense fallback={<div>Loading Styles...</div>}>
+        <NoStylesMessage verticalStyleNavbarIndex={verticalStyleNavbarIndex} />;
+      </Suspense>;
     }
     // Group properties by selector
     const groupedStyles = Object.entries(styles).reduce((acc, [selector, properties]) => {
@@ -235,7 +238,11 @@ function StyleInspector() {
     chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
   }
   if (!style) {
-    return <NotFoundInspector inspectorName="Style Inspector" />;
+    return (
+      <Suspense fallback={<div>Loading Inspector...</div>}>
+        <NotFoundInspector inspectorName="Element Inspector" />
+      </Suspense>
+    );
   }
   return (
     <div className="inspector-container">
@@ -256,13 +263,16 @@ function StyleInspector() {
           </div>
         </div>
         <div className="inspector-VerticalNavbarAndStylesContainer">
-          <VerticalStyleNavbar
-            verticalStyleNavbarIndex={verticalStyleNavbarIndex}
-            isVerticalStyleNavbarOpen={isVerticalStyleNavbarOpen}
-            handleVerticalStyleNavbarOpen={handleVerticalStyleNavbarOpen}
-            handleVerticalStyleNavbarIndex={handleVerticalStyleNavbarIndex}
-            hasStyles={getHasStyles(styles)}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <VerticalStyleNavbar
+              verticalStyleNavbarIndex={verticalStyleNavbarIndex}
+              isVerticalStyleNavbarOpen={isVerticalStyleNavbarOpen}
+              handleVerticalStyleNavbarOpen={handleVerticalStyleNavbarOpen}
+              handleVerticalStyleNavbarIndex={handleVerticalStyleNavbarIndex}
+              hasStyles={getHasStyles(styles)}
+            />
+          </Suspense>
+
           <div
             className={`styleInspectorTransition-VerticalNavbarOpen ${
               isVerticalStyleNavbarOpen ? "ml-[70px]" : "ml-3"

@@ -22,7 +22,7 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
-    chunkSizeWarningLimit: 1024,
+    // chunkSizeWarningLimit: 1024,
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),

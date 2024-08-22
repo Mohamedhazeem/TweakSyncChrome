@@ -1,13 +1,15 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home.tsx";
 import "../app/globals.css";
 import "./main.css";
 import { Navbar } from "./components/Navbar.tsx";
-import ElementInspector from "./pages/ElementInspector.tsx";
-import StyleInspector from "./pages/StyleInspector.tsx";
 import { Toaster } from "react-hot-toast";
+
+const Home = lazy(() => import("./pages/Home.tsx"));
+const ElementInspector = lazy(() => import("./pages/ElementInspector.tsx"));
+const StyleInspector = lazy(() => import("./pages/StyleInspector.tsx"));
+
 const router = createHashRouter([
   {
     path: "/",
@@ -16,15 +18,27 @@ const router = createHashRouter([
       {
         index: true,
 
-        element: <Home />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Home />
+          </Suspense>
+        ),
       },
       {
         path: "/elementInspector",
-        element: <ElementInspector />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <ElementInspector />
+          </Suspense>
+        ),
       },
       {
         path: "/styleInspector",
-        element: <StyleInspector />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <StyleInspector />
+          </Suspense>
+        ),
       },
     ],
   },
