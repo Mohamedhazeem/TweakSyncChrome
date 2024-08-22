@@ -27,7 +27,7 @@ document.addEventListener("click", (event) => {
     return;
   }
   const targetElement = event.target as HTMLElement;
-  if (targetElement.hasAttribute("data-TweakSyncUI")) {
+  if (targetElement?.hasAttribute("data-tweaksyncui")) {
     return;
   }
   if (targetElement !== clickedElement) {

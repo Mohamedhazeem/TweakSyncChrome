@@ -68,7 +68,7 @@ export const Navbar = () => {
             <Button
               variant="outline"
               size="default"
-              data-TweakSyncUI
+              data-tweaksyncui
               className={activeButton === "/" ? "navbarButton" : ""}
               onClick={() => handleClick("/")}
             >
@@ -79,7 +79,7 @@ export const Navbar = () => {
             <Button
               variant="outline"
               size="default"
-              data-TweakSyncUI
+              data-tweaksyncui
               className={activeButton === "/elementInspector" ? "navbarButton" : ""}
               onClick={() => {
                 handleClick("/elementInspector");
@@ -96,7 +96,7 @@ export const Navbar = () => {
             <Button
               variant="outline"
               size="default"
-              data-TweakSyncUI
+              data-tweaksyncui
               className={activeButton === "/styleInspector" ? "navbarButton" : ""}
               onClick={() => {
                 handleClick("/styleInspector");
