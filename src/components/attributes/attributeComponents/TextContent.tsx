@@ -14,15 +14,22 @@ type PTagTypes = {
 function TextContent({ tag }: PTagTypes) {
   const [textContent, setTextContent] = useState<string | undefined | null>("");
   const [isSpellCheckEnabled, setIsSpellCheckEnabled] = useState(false);
+  const [elementTemporaryId, setElementTemporaryId] = useState();
+  const [onClick, setOnClick] = useState<boolean>();
   useEffect(() => {
     setTextContent(tag?.textContent);
-  }, [tag?.textContent, tag?.path]);
+    chrome.runtime.sendMessage({ action: "getElementTemporaryId" }, (response) => {
+      if (response) {
+        setElementTemporaryId(response.temporaryId);
+      }
+    });
+  }, [tag?.textContent, tag?.path, onClick]);
   const handleTextContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextContent(e.target.value);
     chrome.runtime.sendMessage({
       action: "updateTextContent",
       text: e.target.value,
-      temporaryId: tag?.temporaryId,
+      temporaryId: elementTemporaryId || tag?.temporaryId,
     });
   };
   const handleRemoveClick = () => {
@@ -30,7 +37,7 @@ function TextContent({ tag }: PTagTypes) {
     chrome.runtime.sendMessage({
       action: "updateTextContent",
       text: "",
-      temporaryId: tag?.temporaryId,
+      temporaryId: elementTemporaryId || tag?.temporaryId,
     });
   };
   const handleCheckedChange = (checked: CheckedState) => {
@@ -168,12 +175,15 @@ function TextContent({ tag }: PTagTypes) {
                   Enable Spell Check
                 </label>
               </div>
+              {elementTemporaryId}
               <Textarea
                 className="resize-y"
                 placeholder="Type your message here."
                 id="message"
                 value={textContent ? textContent : ""}
                 onChange={handleTextContentChange}
+                onClick={() => setOnClick(true)}
+                onBlur={() => setOnClick(false)}
                 spellCheck={isSpellCheckEnabled}
               />
             </CardContent>

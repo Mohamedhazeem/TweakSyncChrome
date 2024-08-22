@@ -198,7 +198,6 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     message.action === "updateStyles" ||
     message.action === "updateAttributes"
   ) {
-    console.log("updateStyles");
     if (message.name === "data-*") {
       Object.entries(message.value).map(([key, value], index) =>
         console.log(`key: ${key}, value: ${value} and index: ${index}`)
@@ -219,6 +218,19 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         return;
       }
       getUpdatedDetails(tabs[0].id!, sendResponse, message.apply);
+    });
+    return true;
+  } else if (message.action === "getElementTemporaryId") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(
+        tabs[0].id!,
+        {
+          action: "getElementTemporaryId",
+        },
+        (response) => {
+          sendResponse({ temporaryId: response?.temporaryId || null });
+        }
+      );
     });
     return true;
   }

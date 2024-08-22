@@ -1,7 +1,7 @@
 import { generateTemporaryId } from "../utils/generateTemporaryId";
 import { updateStyles } from "../utils/styles/updateStyles";
 import { updateText } from "../utils/elementTextContent";
-import { getElementDetails } from "../utils/getElementDetails";
+import { getElementDetails, getElementTemporaryId } from "../utils/getElementDetails";
 import { getElementStyles } from "../utils/styles/getElementStyles";
 import { updateAttributes } from "../utils/attributes/updateAttributes";
 import {
@@ -17,6 +17,8 @@ let clickedElement: HTMLElement | null = null;
 export let currentElement: HTMLElement | null = null;
 export let lastClickedElement: HTMLElement | null = null;
 let isEditable: boolean;
+let temporaryId: string;
+
 export function isValidChromeRuntime(): boolean {
   return chrome.runtime && !!chrome.runtime.getManifest();
 }
@@ -42,20 +44,22 @@ document.addEventListener("click", (event) => {
   }
 
   lastClickedElement = clickedElement;
-  console.log("lastClickedElement - ", lastClickedElement);
   // Ensure the outline element exists
   if (!outlineElement) {
     createOutlineElement();
   }
   updateOutline(currentElement!);
 
-  if (!clickedElement.hasAttribute("data-temporaryid")) {
-    const temporaryId = generateTemporaryId();
-    clickedElement.setAttribute("data-temporaryid", temporaryId);
+  if (!clickedElement.hasAttribute("data-tweaksync-id")) {
+    temporaryId = generateTemporaryId();
+    clickedElement.setAttribute("data-tweaksync-temporaryid", temporaryId);
   }
   if (currentElement) {
     getElementDetails(currentElement).then((details) => {
       if (isValidChromeRuntime()) {
+        if (details.temporaryId == null) {
+          details.temporaryId = `${temporaryId}`;
+        }
         chrome.runtime.sendMessage({ action: "elementClicked", details });
       }
     });
@@ -95,6 +99,11 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     return true;
   } else if (message.action === "renameSelector") {
     renameSelector(message.oldSelector, message.newSelector);
+    return true;
+  } else if (message.action === "getElementTemporaryId" && lastClickedElement) {
+    getElementTemporaryId(lastClickedElement).then((detail) => {
+      sendResponse({ temporaryId: detail });
+    });
     return true;
   } else if (message.action === "getUpdatedElement" && lastClickedElement) {
     getElementDetails(lastClickedElement)
