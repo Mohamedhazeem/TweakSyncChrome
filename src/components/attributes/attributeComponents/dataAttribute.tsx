@@ -55,7 +55,7 @@ function DataAttribute() {
   const handleAttrNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputVal = e.target.value;
     if (inputVal.startsWith("data-")) {
-      setNewAttrKey(inputVal);
+      setNewAttrKey(inputVal.toLowerCase());
     }
   };
   return (
