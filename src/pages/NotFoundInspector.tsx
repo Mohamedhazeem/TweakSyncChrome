@@ -14,7 +14,7 @@ function NotFoundInspector({ inspectorName }: NotFoundInspectorType) {
         <div className="w-full h-full flex flex-col gap-3 justify-center items-center">
           <div className="border-4 border-[#EEEEEE] rounded-lg">
             <div className="flex gap-2 items-center font-medium p-2 text-sm">
-              <Info size={50} color="darkorange" />
+              <Info size={50} color="red" />
               <div className="text-justify">
                 Ready to edit? Click
                 <span className="text-base font-semibold px-1 rounded-lg layoutCardHeaderActive">
