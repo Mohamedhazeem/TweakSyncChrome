@@ -48,6 +48,11 @@ export function initWebSocket() {
     } catch (error) {
       reconnectWebSocket();
     }
+  } else if (isSocketOpen()) {
+    chrome.runtime.sendMessage({
+      action: "webSocketConnectionOpen",
+      toast: "TweakSync is already connected to VS Code.",
+    });
   }
 }
 
