@@ -158,7 +158,6 @@ function getUpdatedDetails(
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.action === "connect") {
     initWebSocket();
-    console.log("Web socket connected");
   } else if (message.action === "elementClicked") {
     chrome.runtime.sendMessage({
       action: "showElementDetails",

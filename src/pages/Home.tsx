@@ -25,7 +25,6 @@ function Home() {
     };
   }, []);
   async function connected() {
-    console.log("initWebSocket");
     await chrome.runtime.sendMessage({ action: "connect" });
   }
   function inject() {
