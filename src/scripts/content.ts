@@ -23,54 +23,59 @@ export function isValidChromeRuntime(): boolean {
   return chrome.runtime && !!chrome.runtime.getManifest();
 }
 
-document.addEventListener("click", (event) => {
-  event.preventDefault();
-  if (!isEditable) {
-    return;
-  }
-  const targetElement = event.target as HTMLElement;
-  if (targetElement?.hasAttribute("data-tweaksyncui")) {
-    return;
-  }
-  if (targetElement !== clickedElement) {
-    currentElement = null;
-    clickedElement = targetElement;
-  }
+document.addEventListener(
+  "click",
+  (event) => {
+    if (!isEditable) {
+      return;
+    }
+    event.stopPropagation();
+    event.preventDefault();
+    const targetElement = event.target as HTMLElement;
+    if (targetElement?.hasAttribute("data-tweaksyncui")) {
+      return;
+    }
+    if (targetElement !== clickedElement) {
+      currentElement = null;
+      clickedElement = targetElement;
+    }
 
-  if (!currentElement) {
-    currentElement = targetElement;
-  } else {
-    currentElement = currentElement.parentElement;
-  }
+    if (!currentElement) {
+      currentElement = targetElement;
+    } else {
+      currentElement = currentElement.parentElement;
+    }
 
-  lastClickedElement = clickedElement;
-  // Ensure the outline element exists
-  if (!outlineElement) {
-    createOutlineElement();
-  }
-  updateOutline(currentElement!);
+    lastClickedElement = clickedElement;
+    // Ensure the outline element exists
+    if (!outlineElement) {
+      createOutlineElement();
+    }
+    updateOutline(currentElement!);
 
-  if (!clickedElement.hasAttribute("data-tweaksync-id")) {
-    temporaryId = generateTemporaryId();
-    clickedElement.setAttribute("data-tweaksync-temporaryid", temporaryId);
-  }
-  if (currentElement) {
-    getElementDetails(currentElement).then((details) => {
-      if (isValidChromeRuntime()) {
-        if (details.temporaryId == null) {
-          details.temporaryId = `${temporaryId}`;
+    if (!clickedElement.hasAttribute("data-tweaksync-id")) {
+      temporaryId = generateTemporaryId();
+      clickedElement.setAttribute("data-tweaksync-temporaryid", temporaryId);
+    }
+    if (currentElement) {
+      getElementDetails(currentElement).then((details) => {
+        if (isValidChromeRuntime()) {
+          if (details.temporaryId == null) {
+            details.temporaryId = `${temporaryId}`;
+          }
+          chrome.runtime.sendMessage({ action: "elementClicked", details });
         }
-        chrome.runtime.sendMessage({ action: "elementClicked", details });
-      }
-    });
-    getElementStyles(currentElement).then((styles) => {
-      if (isValidChromeRuntime()) {
-        console.log(styles);
-        chrome.runtime.sendMessage({ action: "styleClicked", styles });
-      }
-    });
-  }
-});
+      });
+      getElementStyles(currentElement).then((styles) => {
+        if (isValidChromeRuntime()) {
+          console.log(styles);
+          chrome.runtime.sendMessage({ action: "styleClicked", styles });
+        }
+      });
+    }
+  },
+  true
+);
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   console.log(message.action);
