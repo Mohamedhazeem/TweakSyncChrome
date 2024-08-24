@@ -83,10 +83,12 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     if (!isEditable) {
       resetContentScript();
     }
+    sendResponse();
     return true;
   }
   if (message.action === "updateTextContent") {
     updateText({ text: message.text, temporaryId: message.temporaryId });
+    sendResponse();
     return true;
   } else if (message.action === "updateStyles") {
     updateStyles({
@@ -95,49 +97,68 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       property: message.property,
       temporaryId: message.temporaryId,
     });
+    sendResponse();
     return true;
   } else if (message.action === "updateAttributes") {
     updateAttributes({ name: message.name, value: message.value });
+    sendResponse();
     return true;
   } else if (message.action === "addSelector") {
     addSelector(message.selector);
+    sendResponse();
     return true;
   } else if (message.action === "renameSelector") {
     renameSelector(message.oldSelector, message.newSelector);
+    sendResponse();
     return true;
   } else if (message.action === "getElementTemporaryId" && lastClickedElement) {
-    getElementTemporaryId(lastClickedElement).then((detail) => {
-      sendResponse({ temporaryId: detail });
-    });
-    return true;
-  } else if (message.action === "getUpdatedElement" && lastClickedElement) {
-    getElementDetails(lastClickedElement)
-      .then((details) => {
-        if (isValidChromeRuntime()) {
-          chrome.runtime.sendMessage({ action: "elementClicked", details });
-        }
-        sendResponse(details);
+    getElementTemporaryId(lastClickedElement)
+      .then((detail) => {
+        sendResponse({ temporaryId: detail });
       })
       .catch((error) => {
-        console.error("Error getting element details:", error);
-        sendResponse({ status: "error", message: error.message });
+        console.log("Error getting element temporary ID:", error);
+        sendResponse();
       });
     return true;
-  } else if (message.action === "getUpdatedStyle" && lastClickedElement) {
-    getElementStyles(lastClickedElement)
-      .then((styles) => {
-        if (isValidChromeRuntime()) {
-          chrome.runtime.sendMessage({ action: "styleClicked", styles });
-        }
-        sendResponse(styles);
-      })
-      .catch((error) => {
-        console.error("Error getting element style:", error);
-        sendResponse({ status: "error", message: error.message });
-      });
+  } else if (message.action === "getUpdatedElement") {
+    if (lastClickedElement) {
+      getElementDetails(lastClickedElement)
+        .then((details) => {
+          if (isValidChromeRuntime()) {
+            chrome.runtime.sendMessage({ action: "elementClicked", details });
+          }
+          sendResponse(details);
+        })
+        .catch((error) => {
+          console.log("Error getting element details:", error);
+          sendResponse({ message: "Error getting element details: " + error.message });
+        });
+    } else {
+      sendResponse({ message: "No element selected" });
+    }
+    return true;
+  } else if (message.action === "getUpdatedStyle") {
+    if (lastClickedElement) {
+      getElementStyles(lastClickedElement)
+        .then((styles) => {
+          if (isValidChromeRuntime()) {
+            chrome.runtime.sendMessage({ action: "styleClicked", styles });
+          }
+          sendResponse(styles);
+        })
+        .catch((error) => {
+          console.log("Error getting element style:", error);
+          sendResponse({ message: "Error getting element style: " + error.message });
+        });
+    } else {
+      sendResponse({ message: "No element selected" });
+    }
+    return true;
+  } else {
+    sendResponse({ message: "No element selected or invalid action" });
     return true;
   }
-  return true;
 });
 window.addEventListener("resize", throttledUpdateOutline);
 window.addEventListener("scroll", throttledUpdateOutline);
