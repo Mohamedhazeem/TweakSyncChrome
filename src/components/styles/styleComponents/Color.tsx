@@ -1,12 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { IStyleContext } from "@/types/styleTypes";
 import { useClearLayoutContext, useStyleContext } from "@/utils/elementContext";
-import { useEffect, useState } from "react";
-import { SketchPicker, ColorResult, HSLColor, RGBColor } from "react-color";
+import { lazy, Suspense, useEffect, useState } from "react";
+import { ColorResult, HSLColor, RGBColor } from "react-color";
 import { presetColors } from "@/utils/styles/colorUtils";
-import SingleStyleOptions from "../styleHelperComponents/SingleStyleOptions";
 import StyleLayout from "../StyleLayout";
 import { globalCssOptions } from "@/utils/styles/globalStyles";
+
+const SketchPicker = lazy(() =>
+  import("react-color").then((module) => ({ default: module.SketchPicker }))
+);
+const SingleStyleOptions = lazy(() => import("../styleHelperComponents/SingleStyleOptions"));
 
 type ColorPropType = {
   colorProp: string;
@@ -60,34 +64,35 @@ const Color = ({ colorProp }: ColorPropType) => {
   const handleShowColor = (newValue: string | boolean) => {
     if (typeof newValue === "boolean") {
       setShowColor(newValue);
-    } else {
-      console.log("Unexpected boolean value for color interpolation");
     }
   };
   return (
     <div>
       {style && (
         <StyleLayout style={style}>
-          <SingleStyleOptions
-            style={style}
-            customOptionsCallback={handleShowColor}
-            isCapitalized={true}
-          />
-
+          <Suspense fallback={<div></div>}>
+            <SingleStyleOptions
+              style={style}
+              customOptionsCallback={handleShowColor}
+              isCapitalized={true}
+            />
+          </Suspense>
           {showColor && (
             <div className="flex flex-col gap-1">
-              <SketchPicker
-                color={color}
-                width="w-full"
-                presetColors={showMoreColor ? presetColors : undefined}
-                onChange={(e) => handleColorChange(e)}
-              />
-              <Button
-                className="addMultiPropertyOrAttribute hover:bg-green-600"
-                onClick={() => setShowMoreColor(!showMoreColor)}
-              >
-                {showMoreColor ? "Show Less Colors" : "Show More Colors"}
-              </Button>
+              <Suspense fallback={<div></div>}>
+                <SketchPicker
+                  color={color}
+                  width="w-full"
+                  presetColors={showMoreColor ? presetColors : undefined}
+                  onChange={(e) => handleColorChange(e)}
+                />
+                <Button
+                  className="addMultiPropertyOrAttribute hover:bg-green-600"
+                  onClick={() => setShowMoreColor(!showMoreColor)}
+                >
+                  {showMoreColor ? "Show Less Colors" : "Show More Colors"}
+                </Button>
+              </Suspense>
             </div>
           )}
         </StyleLayout>

@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useStyleContext } from "@/utils/elementContext";
 import { IStyleContext } from "@/types/styleTypes";
 import { DynamicOptions } from "../styleHelperComponents/DynamicOptions";
-import { PopOver } from "../styleHelperComponents/PopOver";
 import StyleLayout from "../StyleLayout";
 import { extractString, extractUnit, extractValue } from "@/utils/styles/extractUnits";
 import { globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
+const PopOver = lazy(() => import("../styleHelperComponents/PopOver"));
 
 type DynamicOptionType = {
   name: string;
@@ -85,15 +85,17 @@ export default function DynamicOptionSetter({
         <StyleLayout style={style}>
           <div className="position">
             <div key={`option-${option}`} className="positionAndUnits">
-              <PopOver
-                open={open}
-                setOpen={setOpen}
-                style={style}
-                handleSelect={handlePopOverSelect}
-                isCustomValue={isCustomValue}
-                isCaptilized={true}
-                option={option}
-              />
+              <Suspense fallback={<div></div>}>
+                <PopOver
+                  open={open}
+                  setOpen={setOpen}
+                  style={style}
+                  handleSelect={handlePopOverSelect}
+                  isCustomValue={isCustomValue}
+                  isCaptilized={true}
+                  option={option}
+                />
+              </Suspense>
             </div>
             {
               <DynamicOptions

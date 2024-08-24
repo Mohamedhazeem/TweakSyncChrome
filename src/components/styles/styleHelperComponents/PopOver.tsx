@@ -28,7 +28,7 @@ type PopOverType = {
   option: string;
 };
 
-export function PopOver({
+export default function PopOver({
   open,
   setOpen,
 

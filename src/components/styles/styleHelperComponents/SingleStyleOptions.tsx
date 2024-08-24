@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useClearLayoutContext, useStyleContext } from "@/utils/elementContext";
 import { IStyleContext, Style } from "@/types/styleTypes";
-import { PopOver } from "./PopOver";
 import { globalCssOptions } from "@/utils/styles/globalStyles";
 import { isColor } from "@/utils/styles/colorUtils";
+
+const PopOver = lazy(() => import("./PopOver"));
 type Options = {
   style: Style;
   customOptionsCallback: (newValue: string | boolean) => void;
@@ -42,15 +43,17 @@ function SingleStyleOptions({ style, isCapitalized, customOptionsCallback }: Opt
   const isCustomValue = !globalCssOptions.includes(option);
   return (
     <>
-      <PopOver
-        open={open}
-        setOpen={setOpen}
-        style={style}
-        handleSelect={handleSelect}
-        isCustomValue={isCustomValue}
-        isCaptilized={isCapitalized}
-        option={option}
-      />
+      <Suspense fallback={<div></div>}>
+        <PopOver
+          open={open}
+          setOpen={setOpen}
+          style={style}
+          handleSelect={handleSelect}
+          isCustomValue={isCustomValue}
+          isCaptilized={isCapitalized}
+          option={option}
+        />
+      </Suspense>
     </>
   );
 }

@@ -1,6 +1,7 @@
+import { lazy, Suspense } from "react";
 import { NumberInput } from "./NumberInput";
-import { PopOver } from "./PopOver";
 import { LengthUnit } from "@/utils/styles/globalStyles";
+const PopOver = lazy(() => import("./PopOver"));
 
 type Length = {
   newValue: string;
@@ -30,15 +31,17 @@ export function Length({
         customOptionsCallback={customOptionsCallback}
         sign={currentUnit != "length" ? currentUnit : "px"}
       />
-      <PopOver
-        open={open}
-        setOpen={setOpen}
-        style={LengthUnit}
-        handleSelect={handleUnitSelect}
-        isCustomValue={isCustomValue}
-        isCaptilized={false}
-        option={currentUnit != "length" ? currentUnit : "px"}
-      />
+      <Suspense fallback={<div></div>}>
+        <PopOver
+          open={open}
+          setOpen={setOpen}
+          style={LengthUnit}
+          handleSelect={handleUnitSelect}
+          isCustomValue={isCustomValue}
+          isCaptilized={false}
+          option={currentUnit != "length" ? currentUnit : "px"}
+        />
+      </Suspense>
     </div>
   );
 }
