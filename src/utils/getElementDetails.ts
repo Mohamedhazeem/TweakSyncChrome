@@ -48,8 +48,7 @@ export function getElementDetails(element: HTMLElement): Promise<ElementDetails>
       temporaryId: element.getAttribute("data-tweaksync-id") || null,
       path: getElementPath(element),
     };
-
-    console.log("Element details resolved:", details);
+    // console.log("Element details resolved:", details);
     resolve(details);
   });
 }
@@ -60,10 +59,7 @@ export function getElementTemporaryId(element: HTMLElement): Promise<string | nu
       reject(new Error("Element is null"));
       return;
     }
-
     const temporaryId = element.getAttribute("data-tweaksync-temporaryid") || null;
-
-    console.log("Element temporaryId :", temporaryId);
     resolve(temporaryId);
   });
 }
