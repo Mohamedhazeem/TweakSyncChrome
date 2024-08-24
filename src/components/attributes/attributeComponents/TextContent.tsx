@@ -175,7 +175,7 @@ function TextContent({ tag }: PTagTypes) {
                   Enable Spell Check
                 </label>
               </div>
-              {elementTemporaryId}
+              {/* {elementTemporaryId} */}
               <Textarea
                 className="resize-y"
                 placeholder="Type your message here."

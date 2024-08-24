@@ -126,10 +126,10 @@ export function getElementStyles(element: HTMLElement): Promise<ElementStyles> {
             }
           }
         } else {
-          console.warn("Skipping cross-origin stylesheet:", sheet.href);
+          console.log("Skipping cross-origin stylesheet:", sheet.href);
         }
       } catch (e) {
-        console.warn("Could not access stylesheet rules:", e);
+        console.log("Could not access stylesheet rules:", e);
       }
     }
 

@@ -111,15 +111,19 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     renameSelector(message.oldSelector, message.newSelector);
     sendResponse();
     return true;
-  } else if (message.action === "getElementTemporaryId" && lastClickedElement) {
-    getElementTemporaryId(lastClickedElement)
-      .then((detail) => {
-        sendResponse({ temporaryId: detail });
-      })
-      .catch((error) => {
-        console.log("Error getting element temporary ID:", error);
-        sendResponse();
-      });
+  } else if (message.action === "getElementTemporaryId") {
+    if (lastClickedElement) {
+      getElementTemporaryId(lastClickedElement)
+        .then((detail) => {
+          sendResponse({ temporaryId: detail });
+        })
+        .catch((error) => {
+          console.log("Error getting element temporary ID:", error);
+          sendResponse();
+        });
+    } else {
+      sendResponse({ message: "No temporary ID" });
+    }
     return true;
   } else if (message.action === "getUpdatedElement") {
     if (lastClickedElement) {
