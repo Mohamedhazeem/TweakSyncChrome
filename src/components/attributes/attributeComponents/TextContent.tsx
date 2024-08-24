@@ -129,7 +129,7 @@ function TextContent({ tag }: PTagTypes) {
         <>
           <Card className="layoutCard">
             <CardHeader
-              className={`layoutCardHeader ${
+              className={`layoutCardHeader rounded-t-md ${
                 textContent ? "layoutCardHeaderActive" : "layoutCardHeaderInActive"
               } `}
             >

@@ -91,7 +91,7 @@
   @apply flex flex-col gap-1;
 }
 .addMultiPropertyOrAttribute {
-  @apply bg-green-500 font-bold text-[#222831] hover:text-[#EEEEEE];
+  @apply bg-green-400 font-bold text-[#222831] hover:text-[#EEEEEE];
 }
 .addStyleProperty {
   @apply bg-[#faa834] font-bold text-[#222831] hover:text-[#EEEEEE] w-1/2;

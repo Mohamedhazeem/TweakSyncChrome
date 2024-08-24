@@ -82,16 +82,6 @@ function apply(tabId: number, sendResponse: (response?: unknown) => void, applyF
     tabId,
     { action: applyFor === "styles" ? "getUpdatedStyle" : "getUpdatedElement" },
     (response) => {
-      if (chrome.runtime.lastError) {
-        sendResponse({
-          status: "error",
-          message: chrome.runtime.lastError.message,
-        });
-        return;
-      }
-
-      console.log("Response from content script:", response);
-
       if (response && response.status !== "error") {
         if (isSocketOpen()) {
           console.log(response);
@@ -132,13 +122,6 @@ function getUpdatedDetails(
     tabId,
     { action: applyFor === "styles" ? "getUpdatedStyle" : "getUpdatedElement" },
     (response) => {
-      if (chrome.runtime.lastError) {
-        sendResponse({
-          status: "error",
-          message: chrome.runtime.lastError.message,
-        });
-        return;
-      }
       if (response && response.status !== "error") {
         console.log("response.details:", response.details);
         sendResponse({
