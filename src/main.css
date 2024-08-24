@@ -30,9 +30,6 @@
 .inspector-applyButton {
   @apply bg-[#EEEEEE] py-1 h-7 text-black; /*bg-gradient-to-r from-amber-200 to-yellow-500 */
 }
-.tweak-sync-logo {
-  @apply bg-[#101010ae] rounded-md font-semibold py-3 px-7 text-2xl text-white cursor-default flex flex-col gap-2 justify-center items-center;
-}
 .navbarButton {
   @apply bg-[#222831];
 }
@@ -150,6 +147,9 @@
 .stopEdit {
   /* fc4747a3 */
   @apply bg-[#f74848] min-w-36 min-h-11 text-[#3d0000e5] hover:text-white hover:scale-105 text-lg font-bold;
+}
+.tweak-sync-logo {
+  @apply bg-[#101010ae] rounded-md font-semibold py-3 px-7 text-2xl text-white cursor-default flex flex-col gap-2 justify-center items-center;
 }
 .homePageButtons {
   @apply flex flex-col gap-2 py-2;
