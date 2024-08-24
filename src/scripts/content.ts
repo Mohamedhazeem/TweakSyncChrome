@@ -78,7 +78,6 @@ document.addEventListener(
 );
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  console.log(message.action);
   if (message.action === "isContentScriptEditable") {
     isEditable = message.isEditable;
     if (!isEditable) {
@@ -88,6 +87,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   }
   if (message.action === "updateTextContent") {
     updateText({ text: message.text, temporaryId: message.temporaryId });
+    return true;
   } else if (message.action === "updateStyles") {
     updateStyles({
       newStyleValue: message.value,

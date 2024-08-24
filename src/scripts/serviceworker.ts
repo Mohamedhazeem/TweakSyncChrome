@@ -141,23 +141,27 @@ function getUpdatedDetails(
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.action === "connect") {
     initWebSocket();
+    return true;
   } else if (message.action === "elementClicked") {
     chrome.runtime.sendMessage({
       action: "showElementDetails",
       details: message.details,
     });
+    return true;
   } else if (message.action === "styleClicked") {
     console.log("Clicked element styles:", message.styles);
-
     chrome.runtime.sendMessage({
       action: "showElementStyles",
       styles: message.styles,
     });
     sendResponse({ status: message.styles });
+    return true;
   } else if (message.action === "injectContentScript") {
     injectContentScript();
+    return true;
   } else if (message.action === "removeContentScript") {
     removeContentScript();
+    return true;
   } else if (message.action === "addSelector") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.tabs.sendMessage(tabs[0].id!, {
@@ -186,6 +190,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       );
     }
     update(message, sendResponse);
+    return true;
   } else if (message.action === "apply") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs.length === 0) {
