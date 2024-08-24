@@ -122,17 +122,28 @@ function getUpdatedDetails(
     tabId,
     { action: applyFor === "styles" ? "getUpdatedStyle" : "getUpdatedElement" },
     (response) => {
-      if (response && response.status !== "error") {
-        console.log("response.details:", response.details);
+      if (chrome.runtime.lastError) {
         sendResponse({
-          status: "success",
-          ...(applyFor === "styles" ? { styles: response.styles } : { details: response.details }),
+          message: "Runtime error",
         });
+        return;
+      }
+      if (response) {
+        if (response.status !== "error") {
+          sendResponse({
+            status: "success",
+            ...(applyFor === "styles"
+              ? { styles: response.styles }
+              : { details: response.details }),
+          });
+        } else {
+          sendResponse({
+            message: "Error occurred: " + response.message,
+          });
+        }
       } else {
-        console.error("No response received for getUpdatedDetails or an error occurred:", response);
         sendResponse({
-          status: "error",
-          message: "No response received or an error occurred",
+          message: "No response received",
         });
       }
     }
@@ -141,12 +152,14 @@ function getUpdatedDetails(
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.action === "connect") {
     initWebSocket();
+    sendResponse();
     return true;
   } else if (message.action === "elementClicked") {
     chrome.runtime.sendMessage({
       action: "showElementDetails",
       details: message.details,
     });
+    sendResponse();
     return true;
   } else if (message.action === "styleClicked") {
     console.log("Clicked element styles:", message.styles);
@@ -158,9 +171,11 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     return true;
   } else if (message.action === "injectContentScript") {
     injectContentScript();
+    sendResponse();
     return true;
   } else if (message.action === "removeContentScript") {
     removeContentScript();
+    sendResponse();
     return true;
   } else if (message.action === "addSelector") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -169,6 +184,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         selector: message.selector,
       });
     });
+    sendResponse();
     return true;
   } else if (message.action === "renameSelector") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -178,6 +194,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         newSelector: message.newSelector,
       });
     });
+    sendResponse();
     return true;
   } else if (
     message.action === "updateTextContent" ||
@@ -190,6 +207,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       );
     }
     update(message, sendResponse);
+    sendResponse();
     return true;
   } else if (message.action === "apply") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -198,6 +216,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       }
       apply(tabs[0].id!, sendResponse, message.apply);
     });
+    sendResponse();
     return true;
   } else if (message.action === "getUpdatedDetails") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -206,6 +225,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       }
       getUpdatedDetails(tabs[0].id!, sendResponse, message.apply);
     });
+    sendResponse();
     return true;
   } else if (message.action === "getElementTemporaryId") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -219,6 +239,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         }
       );
     });
+    sendResponse();
     return true;
   }
 });
