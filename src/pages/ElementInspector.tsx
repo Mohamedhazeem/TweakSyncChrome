@@ -3,7 +3,7 @@ import TextContent from "@/components/attributes/attributeComponents/TextContent
 import { AddAttribute } from "@/components/attributes/attributeFacade";
 import { Button } from "@/components/ui/button";
 import { Attribute } from "@/types/attributeTypes";
-import { OutletContext } from "@/types/outletContext.ts";
+import { OutletContext } from "../types/OutletContext";
 import { ELEMENT_SPECIFIC_ATTRIBUTES } from "@/utils/attributes/elementSpecificAttributes";
 import { GLOBAL_ATTRIBUTES } from "@/utils/attributes/globalAttributes";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";

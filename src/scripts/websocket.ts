@@ -44,6 +44,33 @@ export function initWebSocket() {
 
       ws.addEventListener("message", (event) => {
         console.log("Received message from WebSocket:", event.data);
+        try {
+          const message = JSON.parse(event.data);
+
+          switch (message.action) {
+            case "noSelectedCssFiles":
+              chrome.runtime.sendMessage({
+                action: "noSelectedCssFiles",
+                toast: message.message,
+              });
+              break;
+            case "appliedElementSucessfully":
+              chrome.runtime.sendMessage({
+                action: "appliedElementSucessfully",
+                toast: message.message,
+              });
+              break;
+            case "appliedStyleSucessfully":
+              chrome.runtime.sendMessage({
+                action: "appliedStyleSucessfully",
+                toast: message.message,
+              });
+              break;
+            default:
+          }
+        } catch (error) {
+          console.log("Error processing message from TweakSync for VS Code:", error);
+        }
       });
     } catch (error) {
       reconnectWebSocket();

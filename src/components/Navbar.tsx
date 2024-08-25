@@ -31,6 +31,12 @@ export const Navbar = () => {
       toast.success(message.toast);
     } else if (message.action === "webSocketReconnectionFailed") {
       toast.error(message.toast);
+    } else if (message.action === "noSelectedCssFiles") {
+      toast.error(message.toast);
+    } else if (message.action === "appliedElementSucessfully") {
+      toast.success(message.toast);
+    } else if (message.action === "appliedStyleSucessfully") {
+      toast.success(message.toast);
     }
   };
 

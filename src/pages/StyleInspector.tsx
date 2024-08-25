@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { ElementStyles, ExternalStyles } from "../types/elementTypes";
-import { OutletContext } from "@/types/outletContext";
+import { OutletContext } from "../types/OutletContext";
 import { useOutletContext } from "react-router-dom";
 // import StyleFactory from "@/components/styles/StyleFactory";
 // import { StyleContext } from "@/utils/elementContext";

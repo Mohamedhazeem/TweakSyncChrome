@@ -86,10 +86,6 @@ function apply(tabId: number, sendResponse: (response?: unknown) => void, applyF
         if (isSocketOpen()) {
           console.log(response);
           applyFor === "styles" ? applyStylesToVscode(response) : applyElementToVscode(response);
-          chrome.runtime.sendMessage({
-            action: applyFor == "styles" ? "stylesApplied" : "elementApplied",
-            toast: "Applied Sucessfully.",
-          });
           sendResponse({ status: "success" });
         } else {
           console.log("Connection is not open");
