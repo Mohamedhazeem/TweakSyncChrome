@@ -11,6 +11,7 @@ import {
 } from "./websocket";
 chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
+  .then(() => initWebSocket())
   .catch((error) => console.error(error));
 
 function closeSidePanel() {

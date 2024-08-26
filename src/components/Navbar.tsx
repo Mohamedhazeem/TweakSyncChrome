@@ -23,11 +23,11 @@ export const Navbar = () => {
       toast.error(message.toast);
     } else if (message.action === "webSocketConnectionOpen") {
       toast.success(message.toast);
+    } else if (message.action === "webSocketConnectionClose") {
+      toast.error(message.toast);
     } else if (message.action === "stylesApplied") {
-      // getUpdatedStyleDetails();
       toast.success(message.toast);
     } else if (message.action === "elementApplied") {
-      // getUpdatedElementDetails();
       toast.success(message.toast);
     } else if (message.action === "webSocketReconnectionFailed") {
       toast.error(message.toast);
@@ -37,6 +37,8 @@ export const Navbar = () => {
       toast.success(message.toast);
     } else if (message.action === "appliedStyleSucessfully") {
       toast.success(message.toast);
+    } else if (message.action === "failedToApply") {
+      toast.error(message.toast);
     }
   };
 
@@ -46,7 +48,6 @@ export const Navbar = () => {
       chrome.runtime.onMessage.removeListener(handleMessage);
     };
   }, []);
-
   const getUpdatedElementDetails = () => {
     chrome.runtime.sendMessage({ action: "getUpdatedDetails", apply: "element" }, (response) => {
       if (response) {

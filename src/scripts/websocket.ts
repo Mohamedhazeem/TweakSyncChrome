@@ -66,12 +66,27 @@ export function initWebSocket() {
                 toast: message.message,
               });
               break;
+            case "failedToApply":
+              chrome.runtime.sendMessage({
+                action: "failedToApply",
+                toast: message.message,
+              });
+              break;
             default:
           }
         } catch (error) {
           console.log("Error processing message from TweakSync for VS Code:", error);
         }
       });
+
+      if (ws) {
+        ws.onclose = () => {
+          chrome.runtime.sendMessage({
+            action: "webSocketConnectionClose",
+            toast: "Connection Lost. TweakSync is no longer connected with VS Code.",
+          });
+        };
+      }
     } catch (error) {
       reconnectWebSocket();
     }
