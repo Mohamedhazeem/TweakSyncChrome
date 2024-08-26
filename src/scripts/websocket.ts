@@ -11,8 +11,7 @@ export function initWebSocket() {
     try {
       ws = new WebSocket(URL);
 
-      ws.addEventListener("error", (error) => {
-        console.log("WebSocket connection error:", error);
+      ws.addEventListener("error", () => {
         if (reconnectAttempts == 0) {
           chrome.runtime.sendMessage({
             action: "webSocketConnectionError",
@@ -31,15 +30,6 @@ export function initWebSocket() {
         });
 
         reconnectAttempts = 0; // Reset attempts on successful connection
-      });
-
-      ws.addEventListener("close", () => {
-        console.log("TweakSync connection closed.");
-        // chrome.runtime.sendMessage({
-        //   action: "webSocketConnectionClose",
-        //   toast: "Connection Lost. TweakSync is no longer connected with VS Code.",
-        // });
-        // reconnectWebSocket();
       });
 
       ws.addEventListener("message", (event) => {
@@ -79,7 +69,7 @@ export function initWebSocket() {
         }
       });
 
-      if (ws) {
+      if (ws && reconnectAttempts == 0) {
         ws.onclose = () => {
           chrome.runtime.sendMessage({
             action: "webSocketConnectionClose",

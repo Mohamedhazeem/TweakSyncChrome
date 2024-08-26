@@ -8,10 +8,15 @@ import {
   applyStylesToVscode,
   initWebSocket,
   isSocketOpen,
+  ws,
 } from "./websocket";
 chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
-  .then(() => initWebSocket())
+  .then(() => {
+    if (ws) {
+      initWebSocket();
+    }
+  })
   .catch((error) => console.error(error));
 
 function closeSidePanel() {
