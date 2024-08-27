@@ -173,7 +173,6 @@ function ElementInspector() {
             attributes.map((attribute, index) => (
               <div key={attribute.name}>
                 <AttributeFactory
-                  key={index}
                   index={index}
                   attribute={attribute}
                   onChange={handleAttributeChange}

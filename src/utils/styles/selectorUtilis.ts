@@ -88,6 +88,6 @@ export function renameSelector(oldSelector: string, newSelector: string) {
     styleSheet.deleteRule(oldRuleIndex);
     delete cachedRules[oldSelector];
   } catch (error) {
-    console.error("Error in renameSelector function:", error);
+    // console.error("Error in renameSelector function:", error);
   }
 }

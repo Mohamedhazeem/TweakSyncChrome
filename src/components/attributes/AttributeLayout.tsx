@@ -12,14 +12,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
 import { Button } from "../ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "../ui/accordion";
 
-function AttributeLayout({
-  key,
-  attribute,
-  index,
-  children,
-  onChange,
-  onRemove,
-}: IAttributeContext) {
+function AttributeLayout({ attribute, index, children, onChange, onRemove }: IAttributeContext) {
   function handleRemoveClick(): void {
     if (attribute.name === "data-*") {
       onChange(index, {});
@@ -95,7 +88,7 @@ function AttributeLayout({
                         </Button>
                       </HoverCardTrigger>
                       <HoverCardContent className="layoutHoverCardContent">
-                        <div className="">
+                        <div>
                           <p className="layoutHoverCardContentDiscription">
                             {attribute.description}
                           </p>
@@ -116,7 +109,7 @@ function AttributeLayout({
             {attribute.type !== "boolean" && (
               <AccordionContent>
                 <CardContent className="layoutCardContent">
-                  <AttributeContext.Provider value={{ key, attribute, index, onChange }}>
+                  <AttributeContext.Provider value={{ attribute, index, onChange }}>
                     {children}
                   </AttributeContext.Provider>
                 </CardContent>

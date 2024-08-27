@@ -11,7 +11,7 @@ export interface Style {
 }
 
 export interface IStyleContext {
-  key: string | number;
+  // key: string | number;
   name: string;
   selector: string;
   children?: React.ReactNode;

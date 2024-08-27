@@ -7,7 +7,7 @@ export interface Attribute {
   options?: string[] | { [key: string]: string }; // For enum type attributes
 }
 export interface IAttributeContext {
-  key: number;
+  // key: number;
   index: number;
   attribute: Attribute;
   children?: React.ReactNode;
