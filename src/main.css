@@ -46,7 +46,7 @@
   @apply bg-[#24adf2];
 }
 .layoutCardHeaderInActive {
-  @apply bg-zinc-300;
+  @apply bg-zinc-400;
 }
 .layoutCardTitle {
   @apply flex justify-between items-center text-base font-medium w-full;
@@ -73,7 +73,7 @@
   @apply p-1 rounded-t-lg bg-[#faa834];
 }
 .layoutParentCardContent {
-  @apply py-1 px-1 m-0 flex flex-col gap-2 rounded-b-lg bg-slate-400;
+  @apply py-1 px-1 m-0 flex flex-col gap-2 rounded-b-lg bg-yellow-200;
 }
 .layoutParentCardContentHeader {
   @apply p-2 rounded bg-[#222831];
