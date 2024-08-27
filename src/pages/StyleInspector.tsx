@@ -55,7 +55,9 @@ function StyleInspector() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMessage = (message: any) => {
-    if (message.action === "appliedStyleSucessfully") {
+    if (message.action === "noSelectedCssFiles") {
+      setShowApplyButton(true);
+    } else if (message.action === "appliedStyleSucessfully") {
       setShowApplyButton(true);
     } else if (message.action === "failedToApply") {
       setShowApplyButton(true);
