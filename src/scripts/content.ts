@@ -114,8 +114,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   } else if (message.action === "getElementTemporaryId") {
     if (lastClickedElement) {
       getElementTemporaryId(lastClickedElement)
-        .then((detail) => {
-          sendResponse({ temporaryId: detail });
+        .then((details) => {
+          sendResponse(details);
         })
         .catch((error) => {
           console.log("Error getting element temporary ID:", error);

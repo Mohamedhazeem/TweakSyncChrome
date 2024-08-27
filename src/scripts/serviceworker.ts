@@ -237,11 +237,10 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
           action: "getElementTemporaryId",
         },
         (response) => {
-          sendResponse({ temporaryId: response?.temporaryId || null });
+          sendResponse({ temporaryId: response.temporaryId, textContent: response.textContent });
         }
       );
     });
-    sendResponse();
     return true;
   }
 });

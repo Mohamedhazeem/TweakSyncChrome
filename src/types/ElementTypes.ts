@@ -8,6 +8,10 @@ export interface ElementDetails {
   temporaryId?: string | null;
   path?: string;
 }
+export interface TemporaryElementDetails {
+  textContent?: string | null;
+  temporaryId?: string | null;
+}
 export type getElementTypes = {
   temporaryId: string;
   text?: string;

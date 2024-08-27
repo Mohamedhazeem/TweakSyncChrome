@@ -1,4 +1,4 @@
-import { ElementDetails } from "../types/elementTypes";
+import { ElementDetails, TemporaryElementDetails } from "../types/elementTypes";
 import { getCurrentElementText } from "./elementTextContent";
 import { getElementPath } from "./getElementPath";
 
@@ -52,14 +52,17 @@ export function getElementDetails(element: HTMLElement): Promise<ElementDetails>
     resolve(details);
   });
 }
-export function getElementTemporaryId(element: HTMLElement): Promise<string | null> {
+export function getElementTemporaryId(element: HTMLElement): Promise<TemporaryElementDetails> {
   return new Promise((resolve, reject) => {
     if (!element) {
       console.log("Element is null");
       reject(new Error("Element is null"));
       return;
     }
-    const temporaryId = element.getAttribute("data-tweaksync-temporaryid") || null;
-    resolve(temporaryId);
+    const details = {
+      temporaryId: element.getAttribute("data-tweaksync-temporaryid") || null,
+      textContent: getCurrentElementText(element),
+    };
+    resolve(details);
   });
 }
