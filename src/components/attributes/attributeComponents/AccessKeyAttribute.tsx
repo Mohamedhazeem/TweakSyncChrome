@@ -40,9 +40,8 @@ function AccessKeyAttribute() {
   };
 
   return (
-    <div key={context?.key} className="flex flex-col gap-2">
-      <div key={`div-${context?.key}`} className="flex flex-col gap-2">
-        {/* Numbers */}
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         {numberOptions.length > 0 && (
           <div className="grid grid-cols-[repeat(auto-fill,minmax(45px,1fr))] gap-1">
             {numberOptions.map((option) => (

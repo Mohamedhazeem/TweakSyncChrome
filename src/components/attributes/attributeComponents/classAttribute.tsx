@@ -74,7 +74,7 @@ function ClassAttribute(attributeEnum: ATTRIBUTE_ENUMS) {
   };
 
   return (
-    <div key={context?.key} className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       {words.map((word, wordIndex) => (
         <div key={`div-${wordIndex}`} className="flex gap-2 items-center">
           <Input

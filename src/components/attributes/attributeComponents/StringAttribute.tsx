@@ -21,8 +21,8 @@ function StringAttribute() {
     context.onChange(context.index!, newValue);
   };
   return (
-    <div key={context?.key} className="flex flex-col gap-2">
-      <div key={`div-${context?.key}`} className="flex gap-2 items-center">
+    <div className="flex flex-col gap-2">
+      <div className="flex gap-2 items-center">
         <Input
           type="text"
           value={sentence}

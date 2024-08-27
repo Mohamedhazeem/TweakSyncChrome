@@ -11,11 +11,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
 function OptionsObjectAttribute() {
@@ -39,12 +35,8 @@ function OptionsObjectAttribute() {
   const getButtonText = (): string => {
     if (value && options) {
       if (typeof options === "object" && !Array.isArray(options)) {
-        const selectedKey = Object.keys(options).find(
-          (key) => options[key] === value
-        );
-        return selectedKey
-          ? capitalizeFirstLetter(selectedKey)
-          : `Select ${nameForTitle}...`;
+        const selectedKey = Object.keys(options).find((key) => options[key] === value);
+        return selectedKey ? capitalizeFirstLetter(selectedKey) : `Select ${nameForTitle}...`;
       } else {
         return `Select ${nameForTitle}...`;
       }
@@ -68,7 +60,6 @@ function OptionsObjectAttribute() {
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandList>
-            {/* <CommandEmpty>No framework found.</CommandEmpty> */}
             <CommandGroup>
               {typeof options === "object" &&
                 Object.entries(options).map(([key, val], index) => (
@@ -78,10 +69,7 @@ function OptionsObjectAttribute() {
                     onSelect={() => handleSelect(val)}
                   >
                     <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        value === val ? "opacity-100" : "opacity-0"
-                      )}
+                      className={cn("mr-2 h-4 w-4", value === val ? "opacity-100" : "opacity-0")}
                     />
                     {key}
                   </CommandItem>
