@@ -66,7 +66,6 @@ const StyleLayoutParent: React.FC<StyleLayoutParentProps> = ({
                   </CardHeader>
                   <StyleContext.Provider
                     value={{
-                      key: `${selector}-${groupName}`,
                       name: groupName,
                       selector,
                       group,

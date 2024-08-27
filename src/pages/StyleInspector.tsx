@@ -15,6 +15,7 @@ const NotFoundInspector = lazy(() => import("./NotFoundInspector.tsx"));
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();
+  const totalButtonCount = 7;
   const initialStyles: ElementStyles = {
     inline: {},
     external: {
@@ -33,6 +34,7 @@ function StyleInspector() {
   const [styles, setStyles] = useState<ElementStyles>(initialStyles);
   const [isVerticalStyleNavbarOpen, setIsVerticalStyleNavbarOpen] = useState<boolean>(true);
   const [verticalStyleNavbarIndex, setVerticalStyleNavbarIndex] = useState<number>(0);
+  const [showApplyButton, setShowApplyButton] = useState<boolean>(true);
 
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -44,7 +46,21 @@ function StyleInspector() {
       showFirstStyledContent(style);
     }
   }, [style]); // Check if style needs to be updated when tag.path changes
-  const totalButtonCount = 7;
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(handleMessage);
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
+  }, []);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleMessage = (message: any) => {
+    if (message.action === "appliedStyleSucessfully") {
+      setShowApplyButton(true);
+    } else if (message.action === "failedToApply") {
+      setShowApplyButton(true);
+    }
+  };
 
   const handleVerticalStyleNavbarOpen = (isopen: boolean) => {
     setIsVerticalStyleNavbarOpen(isopen);
@@ -235,6 +251,7 @@ function StyleInspector() {
   };
 
   function applyStyles() {
+    setShowApplyButton(false);
     chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
   }
   if (!style) {
@@ -257,8 +274,9 @@ function StyleInspector() {
               id="applyElement"
               onClick={applyStyles}
               className="inspector-applyButton hover:bg-[#fbf6f6]"
+              disabled={showApplyButton ? false : true}
             >
-              Apply
+              {showApplyButton ? "Apply" : "Loading"}
             </Button>
           </div>
         </div>

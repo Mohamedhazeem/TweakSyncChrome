@@ -14,7 +14,7 @@ function ElementInspector() {
   const { element } = useOutletContext<OutletContext>();
   const [attributes, setAttributes] = useState<Attribute[] | undefined>(undefined);
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
-
+  const [showApplyButton, setShowApplyButton] = useState<boolean>(true);
   useEffect(() => {
     if (!element) return;
     const elementAttributes: Attribute[] = [];
@@ -67,6 +67,21 @@ function ElementInspector() {
       }
     }, 50);
   }, [element]);
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(handleMessage);
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
+  }, []);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleMessage = (message: any) => {
+    if (message.action === "appliedElementSucessfully") {
+      setShowApplyButton(true);
+    } else if (message.action === "failedToApply") {
+      setShowApplyButton(true);
+    }
+  };
 
   const handleAttributeChange = (index: number, newValue: string | object) => {
     setAttributes((prevAttributes) => {
@@ -132,6 +147,7 @@ function ElementInspector() {
     });
   };
   function applyElement() {
+    setShowApplyButton(false);
     chrome.runtime.sendMessage({ action: "apply", apply: "element" });
   }
   const hasTweakSyncId = attributes?.some((attr) => {
@@ -163,8 +179,9 @@ function ElementInspector() {
                 id="applyElement"
                 onClick={applyElement}
                 className="inspector-applyButton hover:bg-[#fbf6f6]"
+                disabled={showApplyButton ? false : true}
               >
-                Apply
+                {showApplyButton ? "Apply" : "Loading"}
               </Button>
             )}
           </div>

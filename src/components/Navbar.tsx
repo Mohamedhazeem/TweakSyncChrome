@@ -9,6 +9,7 @@ import { StyleInspectorIcon } from "./Icons/StyleInspector";
 export const Navbar = () => {
   const [elementDetails, setElementDetails] = useState<ElementDetails | null>(null);
   const [elementStyle, setElementStyle] = useState<ElementStyles | null>(null);
+
   const location = useLocation();
   const [activeButton, setActiveButton] = useState(location.pathname);
 
@@ -25,11 +26,13 @@ export const Navbar = () => {
       toast.success(message.toast);
     } else if (message.action === "webSocketConnectionClose") {
       toast.error(message.toast);
-    } else if (message.action === "stylesApplied") {
-      toast.success(message.toast);
-    } else if (message.action === "elementApplied") {
-      toast.success(message.toast);
-    } else if (message.action === "webSocketReconnectionFailed") {
+    }
+    // else if (message.action === "stylesApplied") {
+    //   toast.success(message.toast);
+    // } else if (message.action === "elementApplied") {
+    //   toast.success(message.toast);
+    // }
+    else if (message.action === "webSocketReconnectionFailed") {
       toast.error(message.toast);
     } else if (message.action === "noSelectedCssFiles") {
       toast.error(message.toast);
