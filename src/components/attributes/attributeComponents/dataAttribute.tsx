@@ -59,7 +59,7 @@ function DataAttribute() {
     }
   };
   return (
-    <div key={context?.key} className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       {Object.entries(attributes).map(([key, value], index) => (
         <div
           key={index}
