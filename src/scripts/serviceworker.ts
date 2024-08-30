@@ -8,7 +8,6 @@ import {
   applyStylesToVscode,
   initWebSocket,
   isSocketOpen,
-  ws,
 } from "./websocket";
 // chrome.sidePanel
 //   .setPanelBehavior({ openPanelOnActionClick: true })
@@ -32,19 +31,24 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" && tab.active) {
     reinjectContentScript();
   } else if (changeInfo.status === "loading" && tab.active) {
-    chrome.runtime.sendMessage({
-      action: "resetInspector",
-      message: null,
-    });
     chrome.sidePanel
       .getOptions({ tabId })
       .then((options) => {
         if (options.enabled) {
           // closeSidePanel();
+
+          chrome.runtime
+            .sendMessage({
+              action: "resetInspector",
+              message: null,
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
       })
       .catch((error) => {
-        console.error("Error getting side panel options:", error);
+        console.log("Error getting side panel:", error);
       });
   }
 });
@@ -75,15 +79,8 @@ chrome.action.onClicked.addListener(() => {
       chrome.sidePanel.setOptions({
         tabId: currentTab.id,
         path: "index.html",
-        enabled: true,
       });
       chrome.sidePanel.open({ tabId: currentTab.id || 0 });
-      if (ws) {
-        console.log("Try to open websocket connection");
-        initWebSocket();
-      } else {
-        console.log("Try to open websocket connection failed");
-      }
     }
   });
 });
