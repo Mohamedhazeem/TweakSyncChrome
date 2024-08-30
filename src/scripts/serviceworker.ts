@@ -10,30 +10,37 @@ import {
   isSocketOpen,
   ws,
 } from "./websocket";
-chrome.sidePanel
-  .setPanelBehavior({ openPanelOnActionClick: true })
-  .then(() => {
-    if (ws) {
-      initWebSocket();
-    }
-  })
-  .catch((error) => console.error(error));
+// chrome.sidePanel
+//   .setPanelBehavior({ openPanelOnActionClick: true })
+//   .then(() => {
+//     if (ws) {
+//       console.log("WebSocket-0");
+//       initWebSocket();
+//     } else {
+//       console.log("WebSocket-1");
+//     }
+//   })
+//   .catch((error) => console.error(error));
 
-function closeSidePanel() {
-  chrome.sidePanel
-    .setPanelBehavior({ openPanelOnActionClick: true })
-    .catch((error) => console.error(error));
-}
+// function closeSidePanel() {
+//   chrome.sidePanel
+//     .setPanelBehavior({ openPanelOnActionClick: true })
+//     .catch((error) => console.error(error));
+// }
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" && tab.active) {
     reinjectContentScript();
   } else if (changeInfo.status === "loading" && tab.active) {
+    chrome.runtime.sendMessage({
+      action: "resetInspector",
+      message: null,
+    });
     chrome.sidePanel
       .getOptions({ tabId })
       .then((options) => {
         if (options.enabled) {
-          closeSidePanel();
+          // closeSidePanel();
         }
       })
       .catch((error) => {
@@ -70,9 +77,17 @@ chrome.action.onClicked.addListener(() => {
         path: "index.html",
         enabled: true,
       });
+      chrome.sidePanel.open({ tabId: currentTab.id || 0 });
+      if (ws) {
+        console.log("Try to open websocket connection");
+        initWebSocket();
+      } else {
+        console.log("Try to open websocket connection failed");
+      }
     }
   });
 });
+
 function update(message: object, sendResponse: (response?: unknown) => void) {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     if (tabs[0]?.id) {
