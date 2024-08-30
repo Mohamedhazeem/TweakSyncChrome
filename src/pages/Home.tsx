@@ -2,6 +2,7 @@ import { TweakSyncIcon } from "@/components/Icons/TweakSyncIcon";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 function Home() {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,6 +37,20 @@ function Home() {
 
   return (
     <div className="inspector-container">
+      <div className="w-full flex flex-row justify-end p-3">
+        <Link to={"/tutorial"}>
+          <Button
+            variant="outline"
+            size="sm"
+            data-tweaksyncui
+            className="tutorialButton"
+            title="Tutorial"
+          >
+            ?
+          </Button>
+        </Link>
+      </div>
+
       <div className="inspector-home">
         <span className="tweak-sync-logo">
           <TweakSyncIcon />

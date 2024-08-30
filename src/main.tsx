@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
@@ -9,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 const Home = lazy(() => import("./pages/Home.tsx"));
 const ElementInspector = lazy(() => import("./pages/ElementInspector.tsx"));
 const StyleInspector = lazy(() => import("./pages/StyleInspector.tsx"));
+const TutorialPage = lazy(() => import("./pages/TutorialPage.tsx"));
 
 const router = createHashRouter([
   {
@@ -37,6 +39,14 @@ const router = createHashRouter([
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <StyleInspector />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/tutorial",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <TutorialPage />
           </Suspense>
         ),
       },

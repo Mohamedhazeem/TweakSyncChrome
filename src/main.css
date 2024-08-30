@@ -7,7 +7,7 @@
 } */
 /* #region InspectorStyles */
 .inspector-container {
-  @apply w-full h-[calc(100vh-65px)] flex items-center justify-center bg-gradient-to-r from-indigo-500 to-red-400;
+  @apply w-full h-[calc(100vh-65px)] flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 to-red-400;
 }
 .inspector-scroll {
   @apply flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-1;
@@ -155,3 +155,26 @@
   @apply flex flex-col gap-2 py-2;
 }
 /* #endregion HomePage*/
+/*#region Tutorial*/
+.tutorialContainer {
+  @apply w-full h-full px-6 py-5 pb-20;
+}
+.tutorialButton {
+  @apply bg-zinc-100 rounded-xl text-sm p-1 w-6 h-6 hover:scale-110;
+}
+.orderedList {
+  @apply text-lg flex flex-col gap-2 justify-center;
+}
+.tutorialTitle {
+  @apply text-darkBlue font-bold;
+}
+.tutorialSubTitle {
+  @apply text-darkRed text-base font-semibold underline py-2;
+}
+.listDisc {
+  @apply list-disc pl-4;
+}
+.listSquare {
+  @apply px-1 text-black text-base text-left font-medium;
+}
+/*#endregion Tutorial*/

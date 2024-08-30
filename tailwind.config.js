@@ -70,6 +70,16 @@ export const theme = {
       "accordion-down": "accordion-down 0.2s ease-out",
       "accordion-up": "accordion-up 0.2s ease-out",
     },
+    textColor:{
+      darkRed: "#3d0000e5",
+      darkBlue :"#2d2651ff"
+    },
+    backgroundColor:{
+      connect: "#1ecaadec",
+      startEdit: "#0055d4bf",
+      stopEdit: "#f74848",
+      apply: "#EEEEEE"
+    }
   },
 };
 export const plugins = [import("tailwindcss-animate")];

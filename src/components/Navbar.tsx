@@ -76,7 +76,7 @@ export const Navbar = () => {
   return (
     <>
       <div className="flex flex-col fixed bottom-0 w-full z-50">
-        <nav className="border-t bg-[#EEEEEE] px-4 py-2 flex justify-center gap-4">
+        <nav className="border-t bg-[#EEEEEE] px-4 py-2 flex justify-center items-center gap-4">
           <Link to={"/"}>
             <Button
               variant="outline"
