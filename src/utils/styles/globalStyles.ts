@@ -37,187 +37,182 @@ export const LengthUnit: Style = {
 export const GLOBAL_STYLES: Style[] = [
   {
     name: "align-content",
-    nameForTitle: "Alignment Properties",
+    nameForTitle: "Alignment",
     value: "",
   },
   {
     name: "all",
-    nameForTitle: "All Property",
+    nameForTitle: "All",
     value: "",
   },
   {
     name: "backface-visibility",
-    nameForTitle: "Backface Visibility Property",
+    nameForTitle: "Backface Visibility",
     value: "",
   },
   {
     name: "background-color",
-    nameForTitle: "Background Properties",
+    nameForTitle: "Background",
     value: "",
   },
   {
     name: "block-size",
-    nameForTitle: "Block-Size Properties",
+    nameForTitle: "Block-Size",
     value: "",
   },
   {
     name: "box-sizing",
-    nameForTitle: "Box Properties",
+    nameForTitle: "Box",
     value: "",
   },
   {
     name: "break-after",
-    nameForTitle: "Break Properties",
+    nameForTitle: "Break",
     value: "",
   },
   {
     name: "color",
-    nameForTitle: "Color Properties",
+    nameForTitle: "Color",
     value: "",
   },
   {
     name: "column-count",
-    nameForTitle: "Column & Row Properties",
+    nameForTitle: "Column and Row",
     value: "",
   },
   {
     name: "contain",
-    nameForTitle: "Contain Properties",
+    nameForTitle: "Contain",
     value: "",
   },
   {
     name: "content",
-    nameForTitle: "Content Properties",
+    nameForTitle: "Content",
     value: "",
   },
   {
     name: "cursor",
-    nameForTitle: "Cursor Property",
+    nameForTitle: "Cursor",
     value: "",
   },
   {
     name: "display",
-    nameForTitle: "Display Properties",
-    value: "",
-  },
-  {
-    name: "display",
-    nameForTitle: "Display Properties",
+    nameForTitle: "Display",
     value: "",
   },
   {
     name: "flex-basis",
-    nameForTitle: "Flex Properties",
+    nameForTitle: "Flex",
     value: "",
   },
   {
     name: "float",
-    nameForTitle: "Float Properties",
+    nameForTitle: "Float",
     value: "",
   },
   {
     name: "height",
-    nameForTitle: "Height Properties",
+    nameForTitle: "Height",
     value: "",
   },
   {
     name: "inline-size",
-    nameForTitle: "Inline-Size Properties",
+    nameForTitle: "Inline-Size",
     value: "",
   },
   {
     name: "justify-content",
-    nameForTitle: "Justify Properties",
+    nameForTitle: "Justify",
     value: "",
   },
   {
     name: "line-break",
-    nameForTitle: "Line Properties",
+    nameForTitle: "Line",
     value: "",
   },
   {
     name: "list-style-image",
-    nameForTitle: "List Properties",
+    nameForTitle: "List",
     value: "",
   },
   {
     name: "margin-top",
-    nameForTitle: "Margin Properties",
+    nameForTitle: "Margin",
     value: "",
   },
   {
     name: "outline-color",
-    nameForTitle: "Outline Properties",
+    nameForTitle: "Outline",
     value: "",
   },
   {
     name: "overflow-anchor",
-    nameForTitle: "Overflow Properties",
+    nameForTitle: "Overflow",
     value: "",
   },
   {
     name: "overscroll-behavior-x",
-    nameForTitle: "Overscroll Properties",
+    nameForTitle: "Overscroll",
     value: "",
   },
   {
     name: "padding-top",
-    nameForTitle: "Padding Properties",
+    nameForTitle: "Padding",
     value: "",
   },
   {
     name: "place-content",
-    nameForTitle: "Place Properties",
+    nameForTitle: "Place",
     value: "",
   },
   {
     name: "position",
-    nameForTitle: "Position Properties",
+    nameForTitle: "Position",
     value: "",
   },
   {
     name: "scrollbar-color",
-    nameForTitle: "Scrollbar Properties",
+    nameForTitle: "Scrollbar",
     value: "",
   },
   {
     name: "empty-cells",
-    nameForTitle: "Table Properties",
+    nameForTitle: "Table",
     value: "",
   },
   {
     name: "text-align",
-    nameForTitle: "Text Properties",
+    nameForTitle: "Text",
     value: "",
   },
   {
     name: "white-space",
-    nameForTitle: "White-Space Properties",
+    nameForTitle: "White-Space",
     value: "",
   },
   {
     name: "width",
-    nameForTitle: "Width Properties",
+    nameForTitle: "Width",
     value: "",
   },
   {
     name: "word-break",
-    nameForTitle: "Word Properties",
+    nameForTitle: "Word",
     value: "",
   },
   {
     name: "writing-mode",
-    nameForTitle: "Writing Property",
+    nameForTitle: "Writing",
     value: "",
   },
   {
     name: "zoom",
-    nameForTitle: "Zoom Property",
+    nameForTitle: "Zoom",
     value: "",
   },
 ];
 const AlignGroup: StyleGroup = {
-  groupName: "Alignment Properties",
+  groupName: "Alignment",
   propertyNames: ["align-content", "align-items", "align-self"],
   groups: [
     {
@@ -302,7 +297,7 @@ const AlignGroup: StyleGroup = {
   ],
 };
 const AllGroup: StyleGroup = {
-  groupName: "All Property",
+  groupName: "All",
   propertyNames: ["all"],
   groups: [
     {
@@ -316,7 +311,7 @@ const AllGroup: StyleGroup = {
   ],
 };
 const BackfaceVisibilityGroup: StyleGroup = {
-  groupName: "Backface Visibility Property",
+  groupName: "Backface Visibility",
   propertyNames: ["backface-visibility"],
   groups: [
     {
@@ -330,7 +325,7 @@ const BackfaceVisibilityGroup: StyleGroup = {
   ],
 };
 const BackgroundGroup: StyleGroup = {
-  groupName: "Background Properties",
+  groupName: "Background",
   propertyNames: [
     "background",
     "background-color",
@@ -459,7 +454,7 @@ const BackgroundGroup: StyleGroup = {
   ],
 };
 const BlockSizeGroup: StyleGroup = {
-  groupName: "Block-Size Properties",
+  groupName: "Block-Size",
   propertyNames: ["block-size", "min-block-size", "max-block-size"],
   groups: [
     {
@@ -489,7 +484,7 @@ const BlockSizeGroup: StyleGroup = {
   ],
 };
 const BoxGroup: StyleGroup = {
-  groupName: "Box Properties",
+  groupName: "Box",
   propertyNames: ["-webkit-box-decoration-break", "box-shadow", "box-sizing"],
   groups: [
     {
@@ -520,7 +515,7 @@ const BoxGroup: StyleGroup = {
   ],
 };
 const BreakGroup: StyleGroup = {
-  groupName: "Break Properties",
+  groupName: "Break",
   propertyNames: ["break-after", "break-before", "break-inside"],
   groups: [
     {
@@ -582,7 +577,7 @@ const BreakGroup: StyleGroup = {
   ],
 };
 const ColorGroup: StyleGroup = {
-  groupName: "Color Properties",
+  groupName: "Color",
   propertyNames: ["accent-color", "caret-color", "color", "color-scheme"],
   groups: [
     {
@@ -622,7 +617,7 @@ const ColorGroup: StyleGroup = {
   ],
 };
 const ColumnGroup: StyleGroup = {
-  groupName: "Column-Row Properties",
+  groupName: "Column and Row",
   propertyNames: [
     "column-count",
     "column-fill",
@@ -722,7 +717,7 @@ const ColumnGroup: StyleGroup = {
   ],
 };
 const ContainGroup: StyleGroup = {
-  groupName: "Contain Properties",
+  groupName: "Contain",
   propertyNames: [
     "contain",
     "contain-intrinsic-block-size",
@@ -784,7 +779,7 @@ const ContainGroup: StyleGroup = {
   ],
 };
 const ContentGroup: StyleGroup = {
-  groupName: "Content Properties",
+  groupName: "Content",
   propertyNames: ["content", "content-visibility"],
   groups: [
     {
@@ -813,7 +808,7 @@ const ContentGroup: StyleGroup = {
   ],
 };
 const CursorGroup: StyleGroup = {
-  groupName: "Cursor Property",
+  groupName: "Cursor",
   propertyNames: ["cursor"],
   groups: [
     {
@@ -865,7 +860,7 @@ const CursorGroup: StyleGroup = {
   ],
 };
 const DisplayGroup: StyleGroup = {
-  groupName: "Display Properties",
+  groupName: "Display",
   propertyNames: ["appearance", "display", "opacity", "visibility"],
   groups: [
     {
@@ -944,7 +939,7 @@ const DisplayGroup: StyleGroup = {
   ],
 };
 const FlexGroup: StyleGroup = {
-  groupName: "Flex Properties",
+  groupName: "Flex",
   propertyNames: [
     "flex-basis",
     "flex-direction",
@@ -1026,7 +1021,7 @@ const FlexGroup: StyleGroup = {
   ],
 };
 const FloatGroup: StyleGroup = {
-  groupName: "Float Properties",
+  groupName: "Float",
   propertyNames: ["float", "clear"],
   groups: [
     {
@@ -1049,7 +1044,7 @@ const FloatGroup: StyleGroup = {
   ],
 };
 const HeightGroup: StyleGroup = {
-  groupName: "Height Properties",
+  groupName: "Height",
   propertyNames: ["height", "min-height", "max-height"],
   groups: [
     {
@@ -1079,7 +1074,7 @@ const HeightGroup: StyleGroup = {
   ],
 };
 const InlineSizeGroup: StyleGroup = {
-  groupName: "Inline-Size Properties",
+  groupName: "Inline-Size",
   propertyNames: ["inline-size", "min-inline-size", "max-inline-size"],
   groups: [
     {
@@ -1109,7 +1104,7 @@ const InlineSizeGroup: StyleGroup = {
   ],
 };
 const JustifyGroup: StyleGroup = {
-  groupName: "Justify Properties",
+  groupName: "Justify",
   propertyNames: ["justify-content", "justify-items", "justify-self"],
   groups: [
     {
@@ -1198,7 +1193,7 @@ const JustifyGroup: StyleGroup = {
   ],
 };
 const LineGroup: StyleGroup = {
-  groupName: "Line Properties",
+  groupName: "Line",
   propertyNames: ["line-break", "-webkit-line-clamp", "line-height", "line-height-step"],
   groups: [
     {
@@ -1239,7 +1234,7 @@ const LineGroup: StyleGroup = {
   ],
 };
 const ListGroup: StyleGroup = {
-  groupName: "List Properties",
+  groupName: "List",
   propertyNames: ["list-style-image", "list-style-position", "list-style-type"],
   groups: [
     {
@@ -1352,7 +1347,7 @@ const ListGroup: StyleGroup = {
   ],
 };
 const MarginGroup: StyleGroup = {
-  groupName: "Margin Properties",
+  groupName: "Margin",
   propertyNames: [
     "margin-block-end",
     "margin-block-start",
@@ -1431,7 +1426,7 @@ const MarginGroup: StyleGroup = {
   ],
 };
 const OutlineGroup: StyleGroup = {
-  groupName: "Outline Properties",
+  groupName: "Outline",
   propertyNames: ["outline-color", "outline-offset", "outline-style", "outline-width"],
   groups: [
     {
@@ -1481,7 +1476,7 @@ const OutlineGroup: StyleGroup = {
   ],
 };
 const OverflowGroup: StyleGroup = {
-  groupName: "Overflow Properties",
+  groupName: "Overflow",
   propertyNames: [
     "overflow-anchor",
     "overflow-block",
@@ -1554,7 +1549,7 @@ const OverflowGroup: StyleGroup = {
   ],
 };
 const OverscrollGroup: StyleGroup = {
-  groupName: "Overscroll Properties",
+  groupName: "Overscroll",
   propertyNames: [
     "overscroll-behavior-x",
     "overscroll-behavior-y",
@@ -1597,7 +1592,7 @@ const OverscrollGroup: StyleGroup = {
   ],
 };
 const PaddingGroup: StyleGroup = {
-  groupName: "Padding Properties",
+  groupName: "Padding",
   propertyNames: [
     "padding-block-end",
     "padding-block-start",
@@ -1676,7 +1671,7 @@ const PaddingGroup: StyleGroup = {
   ],
 };
 const PlaceGroup: StyleGroup = {
-  groupName: "Place Properties",
+  groupName: "Place",
   propertyNames: ["place-content", "place-items", "place-self"],
   groups: [
     {
@@ -1767,7 +1762,7 @@ const PlaceGroup: StyleGroup = {
   ],
 };
 const PositionGroup: StyleGroup = {
-  groupName: "Position Properties",
+  groupName: "Position",
   propertyNames: ["position", "top", "right", "bottom", "left", "z-index"],
   groups: [
     {
@@ -1821,7 +1816,7 @@ const PositionGroup: StyleGroup = {
   ],
 };
 const ScrollbarGroup: StyleGroup = {
-  groupName: "Scrollbar Properties",
+  groupName: "Scrollbar",
   propertyNames: ["scrollbar-color", "scrollbar-gutter", "scrollbar-width"],
   groups: [
     {
@@ -1851,7 +1846,7 @@ const ScrollbarGroup: StyleGroup = {
   ],
 };
 const TableGroup: StyleGroup = {
-  groupName: "Table Properties",
+  groupName: "Table",
   propertyNames: ["empty-cells", "caption-side", "table-layout"],
   groups: [
     {
@@ -1882,7 +1877,7 @@ const TableGroup: StyleGroup = {
   ],
 };
 const TextGroup: StyleGroup = {
-  groupName: "Text Properties",
+  groupName: "Text",
   propertyNames: [
     "text-align",
     "text-align-last",
@@ -2149,7 +2144,7 @@ const TextGroup: StyleGroup = {
   ],
 };
 const WhiteSpaceGroup: StyleGroup = {
-  groupName: "White Space Properties",
+  groupName: "White Space",
   propertyNames: ["white-space", "white-space-collapse"],
   groups: [
     {
@@ -2187,7 +2182,7 @@ const WhiteSpaceGroup: StyleGroup = {
   ],
 };
 const WidthGroup: StyleGroup = {
-  groupName: "Width Properties",
+  groupName: "Width",
   propertyNames: ["width", "min-width", "max-width"],
   groups: [
     {
@@ -2217,7 +2212,7 @@ const WidthGroup: StyleGroup = {
   ],
 };
 const WordGroup: StyleGroup = {
-  groupName: "Word Properties",
+  groupName: "Word",
   propertyNames: ["word-break", "word-spacing"],
   groups: [
     {
@@ -2246,7 +2241,7 @@ const WordGroup: StyleGroup = {
   ],
 };
 const WritingModeGroup: StyleGroup = {
-  groupName: "Writing Property",
+  groupName: "Writing",
   propertyNames: ["writing-mode"],
   groups: [
     {
@@ -2267,7 +2262,7 @@ const WritingModeGroup: StyleGroup = {
   ],
 };
 const ZoomGroup: StyleGroup = {
-  groupName: "Zoom Property",
+  groupName: "Zoom",
   propertyNames: ["zoom"],
   groups: [
     {
