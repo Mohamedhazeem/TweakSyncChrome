@@ -257,7 +257,7 @@ function StyleInspector() {
     chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
   }
   if (!style) {
-    return <NotFoundInspector inspectorName="Element Inspector" />;
+    return <NotFoundInspector inspectorName="Style Inspector" />;
   }
   return (
     <div className="inspector-container">
