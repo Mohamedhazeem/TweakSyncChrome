@@ -20,6 +20,9 @@ export const Navbar = () => {
       setElementDetails(message.details || null);
     } else if (message.action === "showElementStyles") {
       setElementStyle(message.styles || null);
+    } else if (message.action === "resetInspector") {
+      setElementDetails(message.message);
+      setElementStyle(message.message);
     } else if (message.action === "webSocketConnectionError") {
       toast.error(message.toast);
     } else if (message.action === "webSocketConnectionOpen") {
