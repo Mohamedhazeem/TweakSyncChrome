@@ -107,7 +107,7 @@ function TutorialPage() {
                   {` button to send the updated styles back to VS Code.`}
                 </li>
                 <li>
-                  <strong className="text-red-500">Note: </strong>
+                  <strong className="text-red-700">Note: </strong>
                   {`The `} <strong className="bg-apply px-1 rounded-md">Apply</strong>
                   {`button appears only for watched files in the Element Inspector. In the Style Inspector, it always appears.`}
                 </li>
