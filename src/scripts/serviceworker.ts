@@ -26,6 +26,24 @@ import {
 //     .setPanelBehavior({ openPanelOnActionClick: true })
 //     .catch((error) => console.error(error));
 // }
+chrome.commands.onCommand.addListener((command) => {
+  switch (command) {
+    case "open":
+      OpenSidePanel();
+      break;
+    case "connect":
+      initWebSocket();
+      break;
+    case "start_edit":
+      injectContentScript();
+      break;
+    case "stop_edit":
+      removeContentScript();
+      break;
+    default:
+      console.log("Unknown command:", command);
+  }
+});
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" && tab.active) {
@@ -73,16 +91,7 @@ chrome.windows.onRemoved.addListener((windowId) => {
 });
 
 chrome.action.onClicked.addListener(() => {
-  chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-    if (tabs.length > 0) {
-      const currentTab = tabs[0];
-      chrome.sidePanel.setOptions({
-        tabId: currentTab.id,
-        path: "index.html",
-      });
-      chrome.sidePanel.open({ tabId: currentTab.id || 0 });
-    }
-  });
+  OpenSidePanel();
 });
 
 function update(message: object, sendResponse: (response?: unknown) => void) {
@@ -126,6 +135,18 @@ function apply(tabId: number, sendResponse: (response?: unknown) => void, applyF
       }
     }
   );
+}
+function OpenSidePanel() {
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+    if (tabs.length > 0) {
+      const currentTab = tabs[0];
+      chrome.sidePanel.setOptions({
+        tabId: currentTab.id,
+        path: "index.html",
+      });
+      chrome.sidePanel.open({ tabId: currentTab.id || 0 });
+    }
+  });
 }
 function getUpdatedDetails(
   tabId: number,

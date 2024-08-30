@@ -6,10 +6,9 @@ import { Attribute } from "@/types/attributeTypes";
 import { OutletContext } from "../types/OutletContext";
 import { ELEMENT_SPECIFIC_ATTRIBUTES } from "@/utils/attributes/elementSpecificAttributes";
 import { GLOBAL_ATTRIBUTES } from "@/utils/attributes/globalAttributes";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-const NotFoundInspector = lazy(() => import("./NotFoundInspector"));
-
+import NotFoundInspector from "./NotFoundInspector";
 function ElementInspector() {
   const { element } = useOutletContext<OutletContext>();
   const [attributes, setAttributes] = useState<Attribute[] | undefined>(undefined);
@@ -159,11 +158,7 @@ function ElementInspector() {
   });
 
   if (!element) {
-    return (
-      <Suspense fallback={<div>Loading Inspector...</div>}>
-        <NotFoundInspector inspectorName="Element Inspector" />
-      </Suspense>
-    );
+    return <NotFoundInspector inspectorName="Element Inspector" />;
   }
   return (
     <div className="inspector-container">

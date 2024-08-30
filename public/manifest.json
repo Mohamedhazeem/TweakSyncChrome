@@ -18,11 +18,33 @@
   "host_permissions": ["<all_urls>"],
   "permissions": ["sidePanel", "activeTab", "scripting", "storage"],
   "commands": {
-    "_execute_action": {
+    "open": {
       "suggested_key": {
-        "default": "Ctrl+B",
-        "mac": "Command+B"
-      }
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Open TweakSync"
+    },
+   "connect": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Z",
+        "mac": "Command+Shift+Z"
+      },
+      "description": "Connect to VS Code"
+    },
+    "start_edit": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
+      },
+      "description": "Start editing the selected element"
+    },
+    "stop_edit": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+X",
+        "mac": "Command+Shift+X"
+      },
+      "description": "Stop editing the selected element"
     }
   }
 }

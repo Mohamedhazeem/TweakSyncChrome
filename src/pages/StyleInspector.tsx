@@ -9,9 +9,9 @@ import StyleLayoutParent from "@/components/styles/StyleLayoutParent";
 import { StyleGroup } from "@/types/styleTypes";
 import { STYLE_GROUPS } from "@/utils/styles/globalStyles";
 import { Button } from "@/components/ui/button";
+import NotFoundInspector from "./NotFoundInspector.tsx";
 const VerticalStyleNavbar = lazy(() => import("@/components/VerticalStyleNavbar.tsx"));
 const NoStylesMessage = lazy(() => import("@/components/NoStylesMessage.tsx"));
-const NotFoundInspector = lazy(() => import("./NotFoundInspector.tsx"));
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();
@@ -257,11 +257,7 @@ function StyleInspector() {
     chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
   }
   if (!style) {
-    return (
-      <Suspense fallback={<div>Loading Inspector...</div>}>
-        <NotFoundInspector inspectorName="Element Inspector" />
-      </Suspense>
-    );
+    return <NotFoundInspector inspectorName="Element Inspector" />;
   }
   return (
     <div className="inspector-container">
