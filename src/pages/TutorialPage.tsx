@@ -31,15 +31,38 @@ function TutorialPage() {
           </ul>
         </li>
         <li>
+          <span className="tutorialTitle">Opening TweakSync</span>
+          <ul className="listDisc">
+            <li>
+              <span className="tutorialSubTitle">Open TweakSync:</span>
+              <ul className="listSquare">
+                <li>
+                  {`-> To open the TweakSync Chrome extension, click `}
+                  <strong className="bg-apply rounded-md px-1">TweakSync Icon</strong>
+                  {` from the extensions menu or use the shortcut `}
+                  <strong className="bg-apply rounded-md px-1">Ctrl + Shift + S</strong>
+                  {` for Windows, or `}
+                  <strong className="bg-apply rounded-md px-1">Cmd + Shift + S</strong>
+                  {` for Mac to quickly launch TweakSync.`}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
           <span className="tutorialTitle">Connecting to VSCode</span>
           <ul className="listDisc">
             <li>
               <span className="tutorialSubTitle">Connect Button:</span>
               <ul className="listSquare">
                 <li>
-                  {`-> On the homepage of the TweakSync Chrome extension, click the `}
+                  {`-> On the homepage of the TweakSync Chrome extension, click `}
                   <strong className="bg-connect rounded-md px-1">Connect</strong>
-                  {` button to establish a connection with your VS Code setup.`}
+                  {` button or use the shortcut `}
+                  <strong className="bg-connect rounded-md px-1">Ctrl + Shift + Z</strong>
+                  {` for Windows, or `}
+                  <strong className="bg-connect rounded-md px-1">Cmd + Shift + Z</strong>
+                  {` for Mac to establish a connection with your VS Code setup.`}
                 </li>
               </ul>
             </li>
@@ -54,7 +77,11 @@ function TutorialPage() {
                 <li>
                   {`-> Click the `}
                   <strong className="bg-startEdit rounded-md px-1">Start Edit</strong>
-                  {` button to enable editing mode.`}
+                  {` button or use the shortcut `}
+                  <strong className="bg-startEdit rounded-md px-1">Ctrl + Shift + E</strong>
+                  {` for Windows, or `}
+                  <strong className="bg-startEdit rounded-md px-1">Cmd + Shift + E</strong>
+                  {` for Mac to enable editing mode.`}
                 </li>
               </ul>
             </li>
@@ -64,7 +91,11 @@ function TutorialPage() {
                 <li>
                   {`-> When you want to stop editing, click the `}
                   <strong className="bg-stopEdit rounded-md px-1">Stop Edit</strong>
-                  {` button.`}
+                  {` button or use the shortcut `}
+                  <strong className="bg-stopEdit rounded-md px-1">Ctrl + Shift + X</strong>
+                  {` for Windows, or `}
+                  <strong className="bg-stopEdit rounded-md px-1">Cmd + Shift + X</strong>
+                  {` for Mac to disable editing mode.`}
                 </li>
               </ul>
             </li>
@@ -109,7 +140,7 @@ function TutorialPage() {
                 <li>
                   <strong className="text-red-700">Note: </strong>
                   {`The `} <strong className="bg-apply px-1 rounded-md">Apply</strong>
-                  {`button appears only for watched files in the Element Inspector. In the Style Inspector, it always appears.`}
+                  {` button appears only for watched files in the Element Inspector. In the Style Inspector, it always appears.`}
                 </li>
               </ul>
             </li>
@@ -122,7 +153,7 @@ function TutorialPage() {
                 variant="outline"
                 size="sm"
                 data-tweaksyncui
-                className="bg-[#222831] text-yellow-200 hover:bg-yellow-200 hover:text-[#222831]"
+                // className="bg-[#222831] text-yellow-200 hover:bg-yellow-200 hover:text-[#222831]"
               >
                 Go Back
               </Button>
