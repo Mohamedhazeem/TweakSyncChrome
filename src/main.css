@@ -155,6 +155,7 @@
   @apply flex flex-col gap-2 py-2;
 }
 /* #endregion HomePage*/
+
 /*#region Tutorial*/
 .tutorialContainer {
   @apply w-full h-full px-6 py-5 pb-20 bg-gradient-to-r from-indigo-500 to-red-400;
@@ -163,7 +164,7 @@
   @apply bg-zinc-100 rounded-xl text-sm p-1 w-6 h-6 hover:scale-110;
 }
 .orderedList {
-  @apply text-lg flex flex-col gap-2 justify-center;
+  @apply text-lg  text-center flex flex-col gap-2 justify-center items-center  bg-[#EEEEEE] rounded-lg;
 }
 .tutorialTitle {
   @apply text-black font-bold;
@@ -171,10 +172,37 @@
 .tutorialSubTitle {
   @apply text-darkRed text-base font-semibold underline py-2;
 }
-.listDisc {
+/* .listDisc {
   @apply list-disc pl-4;
-}
+} */
 .listSquare {
-  @apply px-1 text-black text-base text-left font-medium;
+  @apply px-1 text-black text-base text-center font-medium;
 }
 /*#endregion Tutorial*/
+
+/*#region Support*/
+.SupportContainer {
+  @apply flex md:flex-row flex-col gap-7 w-full h-[calc(100vh-65px)] justify-center items-center px-8;
+}
+.supportButton {
+  @apply bg-zinc-100 rounded-xl p-1 w-6 h-6 hover:scale-110 font-medium;
+}
+.contactSupport {
+  @apply bg-[#EEEEEE] flex flex-col gap-3 items-center p-7 py-12 w-2/4 min-w-64 h-3/4 min-h-64 rounded-lg;
+}
+.contactSupportTitle {
+  @apply text-xl text-darkRed font-bold;
+}
+.contactSupportDialogue {
+  @apply text-base text-center font-medium;
+}
+.contactMail {
+  @apply text-base font-semibold text-darkRed hover:text-darkRed hover:underline;
+}
+.socialLinkDialogue {
+  @apply text-base text-justify font-medium;
+}
+.socialMediaIcons {
+  @apply flex gap-2;
+}
+/*#endregion Support*/
