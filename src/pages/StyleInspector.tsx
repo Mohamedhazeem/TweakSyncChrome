@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ElementStyles, ExternalStyles } from "../types/elementTypes";
 import { OutletContext } from "../types/OutletContext";
 import { useOutletContext } from "react-router-dom";
@@ -10,8 +10,8 @@ import { StyleGroup } from "@/types/styleTypes";
 import { STYLE_GROUPS } from "@/utils/styles/globalStyles";
 import { Button } from "@/components/ui/button";
 import NotFoundInspector from "./NotFoundInspector.tsx";
-const VerticalStyleNavbar = lazy(() => import("@/components/VerticalStyleNavbar.tsx"));
-const NoStylesMessage = lazy(() => import("@/components/NoStylesMessage.tsx"));
+import NoStylesMessage from "@/components/NoStylesMessage.tsx";
+import VerticalStyleNavbar from "@/components/VerticalStyleNavbar.tsx";
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();
@@ -220,9 +220,7 @@ function StyleInspector() {
   const renderStyles = (styles: { [key: string]: { [key: string]: string } }) => {
     if (isEmpty(styles)) {
       return;
-      <Suspense fallback={<div>Loading Styles...</div>}>
-        <NoStylesMessage verticalStyleNavbarIndex={verticalStyleNavbarIndex} />;
-      </Suspense>;
+      <NoStylesMessage verticalStyleNavbarIndex={verticalStyleNavbarIndex} />;
     }
     // Group properties by selector
     const groupedStyles = Object.entries(styles).reduce((acc, [selector, properties]) => {
@@ -279,15 +277,13 @@ function StyleInspector() {
           </div>
         </div>
         <div className="inspector-VerticalNavbarAndStylesContainer">
-          <Suspense fallback={<div>Loading...</div>}>
-            <VerticalStyleNavbar
-              verticalStyleNavbarIndex={verticalStyleNavbarIndex}
-              isVerticalStyleNavbarOpen={isVerticalStyleNavbarOpen}
-              handleVerticalStyleNavbarOpen={handleVerticalStyleNavbarOpen}
-              handleVerticalStyleNavbarIndex={handleVerticalStyleNavbarIndex}
-              hasStyles={getHasStyles(styles)}
-            />
-          </Suspense>
+          <VerticalStyleNavbar
+            verticalStyleNavbarIndex={verticalStyleNavbarIndex}
+            isVerticalStyleNavbarOpen={isVerticalStyleNavbarOpen}
+            handleVerticalStyleNavbarOpen={handleVerticalStyleNavbarOpen}
+            handleVerticalStyleNavbarIndex={handleVerticalStyleNavbarIndex}
+            hasStyles={getHasStyles(styles)}
+          />
 
           <div
             className={`styleInspectorTransition-VerticalNavbarOpen ${

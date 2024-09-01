@@ -1,3 +1,4 @@
+import { ContactSupportIcon } from "@/components/Icons/ContactSupportIcon";
 import { TweakSyncIcon } from "@/components/Icons/TweakSyncIcon";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
@@ -37,13 +38,24 @@ function Home() {
 
   return (
     <div className="inspector-container">
-      <div className="w-full flex flex-row justify-end p-3">
+      <div className="w-full flex flex-row gap-1 justify-end p-3">
+        <Link to={"/support"}>
+          <Button
+            variant="outline"
+            size="sm"
+            data-tweaksyncui
+            className="supportButton"
+            title="Support"
+          >
+            <ContactSupportIcon width={"1.2em"} height={"1.2em"} strokeWidth={1} />
+          </Button>
+        </Link>
         <Link to={"/tutorial"}>
           <Button
             variant="outline"
             size="sm"
             data-tweaksyncui
-            className="tutorialButton"
+            className="tutorialButton font-normal"
             title="Tutorial"
           >
             ?
