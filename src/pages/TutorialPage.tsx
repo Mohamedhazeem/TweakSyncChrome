@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 function TutorialPage() {
   return (
     <div className="tutorialContainer">
-      <div className="rounded-xl text-center font-semibold text-xl bg-[#222831] text-yellow-200">
-        TweakSync Tutorial
-      </div>
       <ol className="orderedList inspector-scroll">
         <li>
           <span className="tutorialTitle"> Setting Up</span>
@@ -153,7 +150,7 @@ function TutorialPage() {
                 variant="outline"
                 size="sm"
                 data-tweaksyncui
-                // className="bg-[#222831] text-yellow-200 hover:bg-yellow-200 hover:text-[#222831]"
+                className="bg-[#222831] text-[#EEEEEE] hover:text-yellow-200"
               >
                 Go Back
               </Button>
