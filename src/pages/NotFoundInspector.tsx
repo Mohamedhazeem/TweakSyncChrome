@@ -1,8 +1,10 @@
 import { Info } from "lucide-react";
+import DynamicImportError from "./DynamicImportError";
 type NotFoundInspectorType = {
   inspectorName: string;
+  isError?: boolean;
 };
-function NotFoundInspector({ inspectorName }: NotFoundInspectorType) {
+function NotFoundInspector({ inspectorName, isError }: NotFoundInspectorType) {
   return (
     <div className="inspector-container">
       <div className="inspector-scroll">
@@ -15,13 +17,17 @@ function NotFoundInspector({ inspectorName }: NotFoundInspectorType) {
           <div className="border-4 border-[#EEEEEE] rounded-lg">
             <div className="flex gap-2 items-center font-medium p-2 text-sm">
               <Info size={50} color="red" />
-              <div className="text-justify">
-                Ready to edit? Click
-                <span className="text-base font-semibold px-1 rounded-lg layoutCardHeaderActive">
-                  Start Edit
-                </span>
-                , then click what you want to customize.
-              </div>
+              {isError ? (
+                <DynamicImportError />
+              ) : (
+                <div className="text-justify">
+                  Ready to edit? Click
+                  <span className="text-base font-semibold px-1 rounded-lg layoutCardHeaderActive">
+                    Start Edit
+                  </span>
+                  , then click what you want to customize.
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -6,11 +6,45 @@ import "../app/globals.css";
 import "./main.css";
 import { Navbar } from "./components/Navbar.tsx";
 import { Toaster } from "react-hot-toast";
-
-const Home = lazy(() => import("./pages/Home.tsx"));
-const ElementInspector = lazy(() => import("./pages/ElementInspector.tsx"));
-const StyleInspector = lazy(() => import("./pages/StyleInspector.tsx"));
-const TutorialPage = lazy(() => import("./pages/TutorialPage.tsx"));
+import NotFoundInspector from "./pages/NotFoundInspector.tsx";
+import DynamicImportError from "./pages/DynamicImportError.tsx";
+import Home from "./pages/Home.tsx";
+const ElementInspector = lazy(() =>
+  import("./pages/ElementInspector.tsx")
+    .then((module) => module)
+    .catch(() => {
+      return {
+        default: () => <NotFoundInspector inspectorName="Element Inspector" isError={true} />,
+      };
+    })
+);
+const StyleInspector = lazy(() =>
+  import("./pages/StyleInspector.tsx")
+    .then((module) => module)
+    .catch(() => {
+      return {
+        default: () => <NotFoundInspector inspectorName="Style Inspector" isError={true} />,
+      };
+    })
+);
+const TutorialPage = lazy(() =>
+  import("./pages/TutorialPage.tsx")
+    .then((module) => module)
+    .catch(() => {
+      return {
+        default: () => <DynamicImportError />,
+      };
+    })
+);
+const SupportPage = lazy(() =>
+  import("./pages/SupportPage.tsx")
+    .then((module) => module)
+    .catch(() => {
+      return {
+        default: () => <DynamicImportError />,
+      };
+    })
+);
 
 const router = createHashRouter([
   {
@@ -19,12 +53,7 @@ const router = createHashRouter([
     children: [
       {
         index: true,
-
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <Home />
-          </Suspense>
-        ),
+        element: <Home />,
       },
       {
         path: "/elementInspector",
@@ -47,6 +76,14 @@ const router = createHashRouter([
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <TutorialPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/support",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <SupportPage />
           </Suspense>
         ),
       },
