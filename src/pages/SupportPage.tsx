@@ -1,8 +1,8 @@
-import { FacebookIcon } from "@/components/Icons/socialMediaIcons/FacebookIcon";
 import { ContactSupportIcon } from "../components/Icons/ContactSupportIcon";
-import { InstagramIcon } from "@/components/Icons/socialMediaIcons/InstagramIcon";
-import { RedditIcon } from "@/components/Icons/socialMediaIcons/RedditIcon";
-import { TwitterIcon } from "@/components/Icons/socialMediaIcons/TwitterIcon";
+// import { FacebookIcon } from "@/components/Icons/socialMediaIcons/FacebookIcon";
+// import { InstagramIcon } from "@/components/Icons/socialMediaIcons/InstagramIcon";
+// import { RedditIcon } from "@/components/Icons/socialMediaIcons/RedditIcon";
+// import { TwitterIcon } from "@/components/Icons/socialMediaIcons/TwitterIcon";
 
 function SupportPage() {
   return (
@@ -15,12 +15,11 @@ function SupportPage() {
           <p className="contactSupportDialogue">
             Is there a feature you'd like to see? Let us know!
           </p>
-          <a className="contactMail" href="mailto:insteadbusiness@gmail.com">
-            insteadbusiness@gmail.com
+          <a className="contactMail" href="mailto:support@tweaksync.dev">
+            support@tweaksync.dev
           </a>
-          <p className="socialLinkDialogue">You can also find us here:</p>
+          {/* <p className="socialLinkDialogue">You can also find us here:</p>
           <div className="socialMediaIcons">
-            {/* need to update linke */}
             <a
               href="https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2F"
               title="Facebook"
@@ -45,7 +44,7 @@ function SupportPage() {
             >
               <TwitterIcon />
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

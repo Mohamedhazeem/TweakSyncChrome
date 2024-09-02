@@ -188,7 +188,8 @@
   @apply bg-zinc-100 rounded-xl p-1 w-6 h-6 hover:scale-110 font-medium;
 }
 .contactSupport {
-  @apply bg-[#EEEEEE] flex flex-col gap-3 items-center p-7 py-12 w-2/4 min-w-64 h-3/4 min-h-64 rounded-lg;
+  @apply bg-[#EEEEEE] flex flex-col gap-3 items-center p-7 py-12 w-2/4 min-w-64 rounded-lg;
+  /* h-3/4 min-h-64 */
 }
 .contactSupportTitle {
   @apply text-xl text-darkRed font-bold;
