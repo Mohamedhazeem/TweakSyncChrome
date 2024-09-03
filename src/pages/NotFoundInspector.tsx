@@ -1,5 +1,4 @@
 import { Info } from "lucide-react";
-import DynamicImportError from "./DynamicImportError";
 type NotFoundInspectorType = {
   inspectorName: string;
   isError?: boolean;
@@ -14,11 +13,16 @@ function NotFoundInspector({ inspectorName, isError }: NotFoundInspectorType) {
           </div>
         </div>
         <div className="w-full h-full flex flex-col gap-3 justify-center items-center">
-          <div className="border-4 border-[#EEEEEE] rounded-lg">
+          <div className={`${isError ? "" : "border-4 border-[#EEEEEE] rounded-lg"}`}>
             <div className="flex gap-2 items-center font-medium p-2 text-sm">
-              <Info size={50} color="red" />
+              {!isError && <Info size={50} color="red" />}
               {isError ? (
-                <DynamicImportError />
+                <div className="flex gap-2 items-center font-semibold rounded-lg p-2 text-xl text-darkBlue bg-[#EEEEEE]">
+                  <div className="text-center">
+                    Chrome may close some pages of the extension in the background for efficiency.
+                    If this happens, please close and re-open the extension.
+                  </div>
+                </div>
               ) : (
                 <div className="text-justify">
                   Ready to edit? Click

@@ -25,10 +25,10 @@
   @apply flex flex-row justify-between items-center rounded px-3 h-9 bg-[#222831]; /*bg-gradient-to-r from-indigo-500 to-blue-500*/
 }
 .inspector-title {
-  @apply text-lg font-semibold text-yellow-200;
+  @apply text-lg font-semibold tracking-wider text-yellow-200;
 }
 .inspector-applyButton {
-  @apply bg-[#EEEEEE] py-1 h-7 text-black; /*bg-gradient-to-r from-amber-200 to-yellow-500 */
+  @apply bg-[#EEEEEE] py-1 h-7 text-black text-base tracking-wide font-semibold; /*bg-gradient-to-r from-amber-200 to-yellow-500 */
 }
 .navbarButton {
   @apply bg-[#222831];
@@ -49,7 +49,7 @@
   @apply bg-zinc-400;
 }
 .layoutCardTitle {
-  @apply flex justify-between items-center text-base font-medium w-full;
+  @apply flex justify-between items-center text-base font-medium tracking-wide w-full;
 }
 .layoutHoverCardHolder {
   @apply flex place-items-center gap-1;
@@ -79,10 +79,10 @@
   @apply p-2 rounded bg-[#222831];
 }
 .layoutParentCardContentTitle {
-  @apply flex justify-between items-center text-base font-medium w-full text-[#EEEEEE];
+  @apply flex justify-between items-center text-base font-medium tracking-wider w-full text-[#EEEEEE];
 }
 .layoutParentCardTitle {
-  @apply text-lg text-[#222831] font-bold flex justify-between items-center px-1;
+  @apply text-lg text-[#222831] font-bold tracking-wide flex justify-between items-center px-1;
 }
 .textArea {
   @apply grid w-full gap-2 p-2;
@@ -94,7 +94,7 @@
   @apply bg-green-400 font-bold text-[#222831] hover:text-[#EEEEEE];
 }
 .addStyleProperty {
-  @apply bg-[#faa834] font-bold text-[#222831] hover:text-[#EEEEEE] w-1/2;
+  @apply bg-[#faa834] font-bold text-[#222831] hover:scale-105 w-1/2;
 }
 /* #endregion LayoutStyles */
 
