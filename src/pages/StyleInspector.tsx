@@ -55,15 +55,15 @@ function StyleInspector() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMessage = (message: any) => {
-    if (message.action === "noSelectedCssFiles") {
-      setShowApplyButton(true);
-    } else if (message.action === "appliedStyleSucessfully") {
-      setShowApplyButton(true);
-    } else if (message.action === "failedToApply") {
+    if (
+      message.action === "noSelectedCssFiles" ||
+      message.action === "appliedStyleSucessfully" ||
+      message.action === "failedToApply" ||
+      message.action === "webSocketConnectionError"
+    ) {
       setShowApplyButton(true);
     }
   };
-
   const handleVerticalStyleNavbarOpen = (isopen: boolean) => {
     setIsVerticalStyleNavbarOpen(isopen);
   };

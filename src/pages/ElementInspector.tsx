@@ -75,9 +75,11 @@ function ElementInspector() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMessage = (message: any) => {
-    if (message.action === "appliedElementSucessfully") {
-      setShowApplyButton(true);
-    } else if (message.action === "failedToApply") {
+    if (
+      message.action === "appliedElementSucessfully" ||
+      message.action === "failedToApply" ||
+      message.action === "webSocketConnectionError"
+    ) {
       setShowApplyButton(true);
     }
   };
