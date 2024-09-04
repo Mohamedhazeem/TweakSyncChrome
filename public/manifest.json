@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "TweakSync for Chrome",
+  "name": "TweakSync",
   "version": "0.0.1",
   "description": "TweakSync empowers front-end developers by enabling real-time styling of web elements directly within Chrome. Effortlessly select any element on a webpage, tweak its styles, and sync changes with your VS Code environment for a seamless development experience.",
   "action": {
-    "default_title": "Click to open TweakSync"
+    "default_title": "TweakSync"
   },
   "background": {
     "service_worker": "scripts/serviceworker.js"
@@ -37,14 +37,14 @@
         "default": "Ctrl+Shift+E",
         "mac": "Command+Shift+E"
       },
-      "description": "Start editing the selected element"
+      "description": "Start editing"
     },
     "stop_edit": {
       "suggested_key": {
         "default": "Ctrl+Shift+X",
         "mac": "Command+Shift+X"
       },
-      "description": "Stop editing the selected element"
+      "description": "Stop editing"
     }
   }
 }
