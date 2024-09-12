@@ -520,6 +520,32 @@ const BorderGroup: StyleGroup = {
     "border-collapse",
     "border-end-end-radius",
     "border-end-start-radius",
+    "border-image-outset",
+    "border-image-repeat",
+    "border-image-slice",
+    "border-image-source",
+    "border-image-width",
+    "border-inline-color",
+    "border-inline-style",
+    "border-inline-width",
+    "border-inline-end-color",
+    "border-inline-end-style",
+    "border-inline-end-width",
+    "border-inline-start-color",
+    "border-inline-start-style",
+    "border-inline-start-width",
+    "border-left-color",
+    "border-left-style",
+    "border-left-width",
+    "border-right-color",
+    "border-right-style",
+    "border-right-width",
+    "border-spacing",
+    "border-start-end-radius",
+    "border-start-start-radius",
+    "border-top-color",
+    "border-top-style",
+    "border-top-width",
   ],
   groups: [
     {
@@ -668,6 +694,248 @@ const BorderGroup: StyleGroup = {
       value: "",
       maxOptionCounts: 2,
       options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "border-image-outset",
+      nameForTitle: "Border Image Outset",
+      type: "string",
+      description:
+        "Specifies the amount by which the border image area extends beyond the element's border box. This allows the border image to extend outward from the box's edges.",
+      value: "",
+      maxOptionCounts: 4,
+      options: ["length", "number", ...globalCssOptions],
+    },
+    {
+      name: "border-image-repeat",
+      nameForTitle: "Border Image Repeat",
+      type: "string",
+      description:
+        "Specifies how the border image is repeated, stretched, or spaced along the borders of an element. It controls how the image is applied to fit the border area.",
+      value: "",
+      maxOptionCounts: 2,
+      options: ["stretch", "repeat", "round", "space", ...globalCssOptions],
+    },
+    {
+      name: "border-image-slice",
+      nameForTitle: "Border Image Slice",
+      type: "string",
+      description:
+        "Specifies how to slice the border image into regions to define what part of the image will be used for the element's borders. The slicing happens by defining pixel or percentage values for the top, right, bottom, and left of the image.",
+      value: "",
+      maxOptionCounts: 4,
+      options: ["length", "number", "fill", ...globalCssOptions], // support percentage values only on length
+    },
+    {
+      name: "border-image-source",
+      nameForTitle: "Border Image Source",
+      type: "string",
+      description:
+        "Specifies the image to be used as the border of an element. This property sets the URL of the image or allows the use of gradients, data URIs, or none to indicate that no image should be used.",
+      value: "",
+      options: ["none", ...globalCssOptions], // url(), linear gradient()
+    },
+    {
+      name: "border-image-width",
+      nameForTitle: "Border Image Width",
+      type: "string",
+      description:
+        "Specifies the width of the border image. This defines how much space the border image occupies along the sides of the element, allowing for scaling and adjustments in relation to the border box.",
+      value: "",
+      maxOptionCounts: 4,
+      options: ["auto", "length", "number", ...globalCssOptions],
+    },
+    {
+      name: "border-inline-color",
+      nameForTitle: "Border Inline Color",
+      type: "string",
+      description:
+        "Specifies the color of the inline (start and end) borders. This property defines the color for both the start and end inline borders in a writing-mode-sensitive way.",
+      value: "",
+      maxOptionCounts: 2,
+      options: ["color", ...globalCssOptions],
+    },
+    {
+      name: "border-inline-style",
+      nameForTitle: "Border Inline Style",
+      type: "string",
+      description:
+        "Specifies the style of the inline (start and end) borders. This property controls the line style of the start and end inline borders in a way that respects the writing mode.",
+      value: "",
+      maxOptionCounts: 2,
+      options: [...lineStyle, ...globalCssOptions],
+    },
+    {
+      name: "border-inline-width",
+      nameForTitle: "Border Inline Width",
+      type: "string",
+      description:
+        "Specifies the width of the inline (start and end) borders. This property sets the width of the inline borders, which can differ between the start and end in a writing-mode-sensitive way.",
+      value: "",
+      maxOptionCounts: 2,
+      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
+    },
+    {
+      name: "border-inline-end-color",
+      nameForTitle: "Border Inline End Color",
+      type: "string",
+      description:
+        "Specifies the color of the border at the inline end of the element. This property defines the color of the end side of the inline axis (right in a left-to-right writing mode, left in a right-to-left mode).",
+      value: "",
+      options: ["color", ...globalCssOptions],
+    },
+    {
+      name: "border-inline-end-style",
+      nameForTitle: "Border Inline End Style",
+      type: "string",
+      description:
+        "Specifies the style of the border at the inline end of the element. This property controls the line style of the border on the inline end side (right side in a left-to-right writing mode).",
+      value: "",
+      options: [...lineStyle, ...globalCssOptions],
+    },
+    {
+      name: "border-inline-end-width",
+      nameForTitle: "Border Inline End Width",
+      type: "string",
+      description:
+        "Specifies the width of the border at the inline end of the element. This property sets the thickness of the border on the inline end side, which adjusts according to the element's writing mode.",
+      value: "",
+      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
+    },
+    {
+      name: "border-inline-start-color",
+      nameForTitle: "Border Inline Start Color",
+      type: "string",
+      description:
+        "Specifies the color of the border at the inline start of the element. This property defines the color for the start side of the inline axis, which is sensitive to the writing mode (left side in left-to-right mode, right side in right-to-left mode).",
+      value: "",
+      options: ["color", ...globalCssOptions],
+    },
+    {
+      name: "border-inline-start-style",
+      nameForTitle: "Border Inline Start Style",
+      type: "string",
+      description:
+        "Specifies the style of the border at the inline start of the element. This property defines the line style for the start side of the inline axis (left side in left-to-right writing mode, right side in right-to-left mode).",
+      value: "",
+      options: [...lineStyle, ...globalCssOptions],
+    },
+    {
+      name: "border-inline-start-width",
+      nameForTitle: "Border Inline Start Width",
+      type: "string",
+      description:
+        "Specifies the width of the border at the inline start of the element. This property sets the thickness of the border on the start side of the inline axis, adjusting based on the writing mode.",
+      value: "",
+      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
+    },
+    {
+      name: "border-left-color",
+      nameForTitle: "Border Left Color",
+      type: "string",
+      description:
+        "Specifies the color of the left border of the element. It accepts any valid CSS color value, such as named colors, hexadecimal values, or rgba values.",
+      value: "",
+      options: ["color", ...globalCssOptions],
+    },
+    {
+      name: "border-left-style",
+      nameForTitle: "Border Left Style",
+      type: "string",
+      description:
+        "Defines the style of the left border. It controls how the left border appears, such as solid, dashed, or none.",
+      value: "",
+      options: [...lineStyle, ...globalCssOptions],
+    },
+    {
+      name: "border-left-width",
+      nameForTitle: "Border Left Width",
+      type: "string",
+      description:
+        "Specifies the width of the left border of the element. It accepts values in units like px, em, rem, and keywords such as thin, medium, and thick.",
+      value: "",
+      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
+    },
+    {
+      name: "border-right-color",
+      nameForTitle: "Border Right Color",
+      type: "string",
+      description: "Specifies the color of the right border of the element.",
+      value: "",
+      options: ["color", ...globalCssOptions],
+    },
+    {
+      name: "border-right-style",
+      nameForTitle: "Border Right Style",
+      type: "string",
+      description: "Specifies the style of the right border, such as solid, dashed, or none.",
+      value: "",
+      options: [...lineStyle, ...globalCssOptions],
+    },
+    {
+      name: "border-right-width",
+      nameForTitle: "Border Right Width",
+      type: "string",
+      description: "Specifies the width of the right border of the element.",
+      value: "",
+      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
+    },
+    {
+      name: "border-spacing",
+      nameForTitle: "Border Spacing",
+      type: "string",
+      description:
+        "Sets the distance between the borders of adjacent cells in a table. This property applies to table elements and defines the space between cells in a table layout. It accepts one or two values to set horizontal and vertical spacing.",
+      value: "",
+      maxOptionCounts: 2,
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "border-start-end-radius",
+      nameForTitle: "Border Start End Radius",
+      type: "string",
+      description:
+        "Sets the radius of the border corner at the start and end of the element's inline axis. In left-to-right (LTR) writing modes, this affects the bottom-right corner; in right-to-left (RTL) writing modes, it affects the bottom-left corner. It supports one or more values to set different radii for each corner.",
+      value: "",
+      maxOptionCounts: 2,
+
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "border-start-start-radius",
+      nameForTitle: "Border Start Start Radius",
+      type: "string",
+      description:
+        "Sets the radius of the border corner at the start and start of the element's inline axis. In left-to-right (LTR) writing modes, this affects the top-left corner; in right-to-left (RTL) writing modes, it affects the top-right corner. It supports one or more values to set different radii for each corner.",
+      value: "",
+      maxOptionCounts: 2,
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "border-top-color",
+      nameForTitle: "Border Top Color",
+      type: "string",
+      description:
+        "Specifies the color of the top border of an element. It accepts any valid CSS color value, such as named colors, hexadecimal values, RGB or RGBA values, or the `transparent` keyword.",
+      value: "",
+      options: ["color", ...globalCssOptions],
+    },
+    {
+      name: "border-top-style",
+      nameForTitle: "Border Top Style",
+      type: "string",
+      description:
+        "Defines the style of the top border of an element. It controls how the top border appears and can be solid, dashed, dotted, double, or none.",
+      value: "",
+      options: [...lineStyle, ...globalCssOptions],
+    },
+    {
+      name: "border-top-width",
+      nameForTitle: "Border Top Width",
+      type: "string",
+      description:
+        "Specifies the width of the top border of an element. It accepts values in units like px, em, rem, or keywords like thin, medium, and thick.",
+      value: "",
+      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
     },
   ],
 };
