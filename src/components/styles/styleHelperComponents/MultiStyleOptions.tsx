@@ -15,7 +15,6 @@ import { Style } from "@/types/styleTypes";
 import { ChevronsUpDown } from "lucide-react";
 import { useClearLayoutContext } from "@/utils/elementContext";
 import { sortOptions } from "@/utils/sortOptions";
-
 interface MultiOptionsStyleProps {
   style: Style;
   customOptionsCallback: (newValue: string | boolean) => void;

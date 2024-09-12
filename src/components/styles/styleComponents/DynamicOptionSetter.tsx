@@ -4,7 +4,7 @@ import { IStyleContext } from "@/types/styleTypes";
 import { DynamicOptions } from "../styleHelperComponents/DynamicOptions";
 import StyleLayout from "../StyleLayout";
 import { extractString, extractUnit, extractValue } from "@/utils/styles/extractUnits";
-import { globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
+import { dynamicOptions, globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
 const PopOver = lazy(() => import("../styleHelperComponents/PopOver"));
 
 type DynamicOptionType = {
@@ -34,7 +34,6 @@ export default function DynamicOptionSetter({
       }));
     }
   }, [selector, style, option]);
-  const dynamicOptions = ["text", "length", "number"];
   function getOptionFromValue(value: string): string {
     if (isDoubleQuotesText) {
       return "text";

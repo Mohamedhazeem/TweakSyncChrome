@@ -17,7 +17,7 @@ const MultiStyleOptionSetter = ({ name, isComma }: MultiStyleOptionSetterProps) 
         onChange(selector, style.name, newValue);
         // setAttachment(newValue);
       } else {
-        console.warn("Unexpected boolean value for color interpolation");
+        console.log("Unexpected boolean value for color interpolation");
       }
     }
   };

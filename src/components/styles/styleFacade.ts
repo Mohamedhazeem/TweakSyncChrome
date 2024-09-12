@@ -33,6 +33,7 @@ import WritingMode from "./styleGroup/WritingMode";
 import OverScrollProperties from "./styleGroup/OverScrollProperties";
 import ScrollbarProperties from "./styleGroup/ScrollbarProperties";
 import ZoomProperty from "./styleGroup/ZoomProperty";
+import BorderProperties from "./styleGroup/BorderProperties";
 
 export const styleComponents: {
   [key: string]: React.ComponentType;
@@ -42,6 +43,7 @@ export const styleComponents: {
   "Backface Visibility": BackfaceVisibilityProperty,
   Background: BackgroundProperties,
   "Block-Size": BlockSizeProperties,
+  Border: BorderProperties,
   Box: BoxProperties,
   Break: BreakProperties,
   Color: ColorProperties,
