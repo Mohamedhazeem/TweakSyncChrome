@@ -5,6 +5,7 @@ type NumberInputType = {
   customOptionsCallback: (newValue: string) => void;
   sign?: string;
   isRange?: boolean;
+  isSupportNegativeValue?: boolean;
 };
 export function NumberInput({
   newValue,
@@ -12,7 +13,24 @@ export function NumberInput({
   customOptionsCallback,
   sign,
   isRange,
+  isSupportNegativeValue,
 }: NumberInputType) {
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let inputValue = e.target.value;
+    if (!isSupportNegativeValue && parseFloat(inputValue) < 0) {
+      inputValue = "0";
+    }
+    setNewValue(inputValue);
+    customOptionsCallback(
+      inputValue !== ""
+        ? sign
+          ? isRange
+            ? inputValue + sign
+            : inputValue + sign
+          : inputValue
+        : ""
+    );
+  };
   return (
     <div className="positionAndUnits">
       <Input
@@ -22,20 +40,7 @@ export function NumberInput({
         max={`${isRange ? "1" : undefined}`}
         step={`${isRange ? "0.01" : ""}`}
         value={newValue}
-        onChange={(e) => {
-          setNewValue(e.target.value);
-          customOptionsCallback(
-            `${
-              e.target.value != ""
-                ? sign
-                  ? isRange
-                    ? e.target.value + sign
-                    : e.target.value + sign
-                  : e.target.value
-                : ""
-            }`
-          );
-        }}
+        onChange={handleValueChange}
       />
       {isRange && <p className="rangeCount">{newValue}</p>}
     </div>

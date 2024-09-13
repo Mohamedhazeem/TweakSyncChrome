@@ -11,6 +11,7 @@ type DynamicOptionType = {
   unit: string;
   isRange?: boolean;
   isDoubleQuotesText?: boolean;
+  isSupportNegativeValue?: boolean;
   customOptionsCallback: (newValue: string) => void;
 };
 
@@ -20,6 +21,7 @@ export function DynamicOptions({
   unit,
   isRange,
   isDoubleQuotesText,
+  isSupportNegativeValue,
   customOptionsCallback,
 }: DynamicOptionType) {
   const [newValue, setNewValue] = useState<string>(value);
@@ -78,6 +80,7 @@ export function DynamicOptions({
       setOpen,
       handleUnitSelect,
       isCustomValue,
+      isSupportNegativeValue,
     });
   } else if (optionType === "number" && !clearLayout) {
     return NumberInput({
@@ -85,6 +88,7 @@ export function DynamicOptions({
       setNewValue,
       customOptionsCallback,
       isRange,
+      isSupportNegativeValue,
     });
   } else if (optionType === "text" && !clearLayout) {
     return TextInput({

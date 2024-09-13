@@ -12,6 +12,7 @@ type Length = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   handleUnitSelect: (newValue: string) => void;
   isCustomValue: boolean;
+  isSupportNegativeValue?: boolean;
 };
 export function Length({
   newValue,
@@ -22,13 +23,15 @@ export function Length({
   setOpen,
   handleUnitSelect,
   isCustomValue,
+  isSupportNegativeValue,
 }: Length) {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-1">
       <NumberInput
         newValue={newValue}
         setNewValue={setNewValue}
         customOptionsCallback={customOptionsCallback}
+        isSupportNegativeValue={isSupportNegativeValue}
         sign={currentUnit != "length" ? currentUnit : "px"}
       />
       <Suspense fallback={<div></div>}>
