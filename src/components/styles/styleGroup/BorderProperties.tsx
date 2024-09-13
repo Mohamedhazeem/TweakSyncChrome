@@ -1,5 +1,3 @@
-// "",
-// "border-bottom-right-radius",
 // "border-collapse",
 // "border-end-end-radius",
 // "border-end-start-radius",
@@ -32,6 +30,7 @@
 import Color from "../styleComponents/Color";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
 import DynamicOptionSetter from "../styleComponents/DynamicOptionSetter";
+import MultiDynamicOptionSetter from "../styleComponents/MultiDynamicOptionSetter";
 // "border-top-width",
 function BorderProperties() {
   return (
@@ -48,6 +47,8 @@ function BorderProperties() {
       <Color colorProp="border-bottom-color" />
       <SingleStyleOptionSetter name="border-bottom-style" isCapitalized={true} />
       <DynamicOptionSetter name="border-bottom-width" />
+      <MultiDynamicOptionSetter name="border-bottom-left-radius" isSupportNegativeValue={false} />
+      <MultiDynamicOptionSetter name="border-bottom-right-radius" isSupportNegativeValue={false} />
     </div>
   );
 }
