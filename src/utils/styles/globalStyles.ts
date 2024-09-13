@@ -655,6 +655,10 @@ const BorderGroup: StyleGroup = {
         "Defines the rounding of the bottom-left corner of an element's border. It can be set to create rounded corners on the bottom-left side.",
       value: "",
       maxOptionCounts: 2,
+      labels: [
+        ["All sides"], // For 1 value
+        ["Horizontal", "Vertical"], // For 2 values
+      ],
       options: ["length", ...globalCssOptions],
     },
     {
@@ -665,6 +669,10 @@ const BorderGroup: StyleGroup = {
         "Defines the rounding of the bottom-right corner of an element's border. It can be set to create rounded corners on the bottom-right side.",
       value: "",
       maxOptionCounts: 2,
+      labels: [
+        ["All sides"], // For 1 value
+        ["Horizontal", "Vertical"], // For 2 values
+      ],
       options: ["length", ...globalCssOptions],
     },
     {
