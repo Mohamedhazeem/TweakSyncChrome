@@ -8,7 +8,7 @@ export const customAndGlobalCssOptions = [
   "revert-layer",
   "unset",
 ];
-export const dynamicOptions = ["text", "length", "number"];
+export const dynamicOptions = ["color", "text", "length", "number"];
 export const namedPositions = ["left", "right", "top", "bottom", "center"];
 export const lineStyle = [
   "none",

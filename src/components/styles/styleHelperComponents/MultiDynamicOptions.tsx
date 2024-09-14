@@ -52,7 +52,9 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
     } else if (style?.value) {
       const newStyleValue = style.value.trim();
       if (newStyleValue !== styleValue) {
-        const initialValues = newStyleValue.split(" ");
+        // const initialValues = newStyleValue.split(" ");
+        const initialValues =
+          newStyleValue.match(/(rgba?\(.*?\)|hsla?\(.*?\)|#[0-9a-fA-F]{3,6}|[^\s]+)/g) || [];
         const initialOptions = initialValues.map((val) => getOptionFromValue(val));
 
         setSelectedOptions(initialOptions);
@@ -67,6 +69,15 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
     if (isDoubleQuotesText) {
       return "text";
     }
+    if (
+      value.startsWith("rgb") ||
+      value.startsWith("rgba") ||
+      value.startsWith("hsl") ||
+      value.startsWith("hsla") ||
+      value.startsWith("#")
+    ) {
+      return "color"; // Add this case to handle color values
+    }
     const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
     if (lengthUnitRegex.test(value)) {
       return "length";
@@ -78,6 +89,7 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
     if (globalCssOptions.includes(value)) {
       return value;
     }
+
     return value;
   }
 
@@ -94,7 +106,9 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
     const updatedValues = updatedOptions.map((opt, i) => {
       // Check if the option is dynamic or global CSS value and update accordingly
       if (dynamicOptions.includes(opt)) {
-        if (opt === "length") {
+        if (opt === "color") {
+          return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "#ffffff"; // Keep the color as a whole
+        } else if (opt === "length") {
           return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "0px"; // Default for length
         } else if (opt === "number") {
           return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "0"; // Default for number

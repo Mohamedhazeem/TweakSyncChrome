@@ -4,6 +4,7 @@ import { NumberInput } from "./NumberInput";
 import { Length } from "./Length";
 import { useClearLayoutContext } from "@/utils/elementContext";
 import { TextInput } from "./TextInput";
+import { ColorResult, SketchPicker } from "react-color";
 
 type DynamicOptionType = {
   optionType: string;
@@ -68,8 +69,20 @@ export function DynamicOptions({
     }
     setOpen(false);
   };
+  const handleColorChange = (color: ColorResult) => {
+    const colorValue = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
+    setNewValue(colorValue);
+    customOptionsCallback(colorValue);
+  };
 
   const isCustomValue = !globalCssOptions.includes(currentUnit);
+  if (optionType === "color" && !clearLayout) {
+    return (
+      <div className="w-full">
+        <SketchPicker color={newValue} onChange={handleColorChange} width="w-full" />
+      </div>
+    );
+  }
   if (optionType === "length" && !clearLayout) {
     return Length({
       newValue,

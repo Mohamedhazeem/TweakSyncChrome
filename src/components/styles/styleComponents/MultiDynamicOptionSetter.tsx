@@ -9,7 +9,7 @@ type MultiStyleOptionSetterProps = {
 };
 const MultiDynamicOptionSetter = ({
   name,
-  isSupportNegativeValue,
+  isSupportNegativeValue = true,
 }: MultiStyleOptionSetterProps) => {
   const { selector, group, onChange } = useStyleContext() as IStyleContext;
   const style = group?.groups.find((style) => style.name === name);
