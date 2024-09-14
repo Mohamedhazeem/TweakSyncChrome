@@ -17,6 +17,7 @@ import { useClearLayoutContext } from "@/utils/elementContext";
 import { sortOptions } from "@/utils/sortOptions";
 import { dynamicOptions, globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
 import { DynamicOptions } from "./DynamicOptions";
+import { presetColors } from "@/utils/styles/colorUtils";
 
 interface MultiDynamicOptionsProps {
   style: Style;
@@ -69,12 +70,16 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
     if (isDoubleQuotesText) {
       return "text";
     }
+    const preset = presetColors.find(
+      (preset) => preset.title.toLowerCase() === value.toLowerCase()
+    );
     if (
       value.startsWith("rgb") ||
       value.startsWith("rgba") ||
       value.startsWith("hsl") ||
       value.startsWith("hsla") ||
-      value.startsWith("#")
+      value.startsWith("#") ||
+      preset
     ) {
       return "color"; // Add this case to handle color values
     }
