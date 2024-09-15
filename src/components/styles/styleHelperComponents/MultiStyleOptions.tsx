@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -34,6 +34,10 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
   const options = style.options;
   const maxOptionCounts = style.maxOptionCounts;
 
+  const labels = useMemo(
+    () => (style?.labels && style.labels[optionCount - 1]) || [],
+    [style?.labels, optionCount]
+  );
   useEffect(() => {
     if (clearLayout) {
       setSelectedOptions([]);
@@ -75,6 +79,9 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
     <div className="flex flex-col gap-2">
       {selectedOptions.map((option, index) => (
         <div className="flex flex-col gap-2 items-center">
+          <div className="w-full flex items-center text-start text-sm font-semibold">
+            <div className="flex-1">{labels[index]}</div>{" "}
+          </div>
           <div key={`option-${index}`} className="flex gap-2 items-center w-full">
             <Popover
               open={openPopoverIndex === index}

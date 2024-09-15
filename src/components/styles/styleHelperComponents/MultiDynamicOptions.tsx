@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -18,6 +18,7 @@ import { sortOptions } from "@/utils/sortOptions";
 import { dynamicOptions, globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
 import { DynamicOptions } from "./DynamicOptions";
 import { presetColors } from "@/utils/styles/colorUtils";
+import { longHandDefaults, shorthandMap } from "@/utils/styles/shortHandStyles";
 
 interface MultiDynamicOptionsProps {
   style: Style;
@@ -44,6 +45,11 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
   const nameForTitle = style.nameForTitle;
   const options = style.options;
   const maxOptionCounts = style.maxOptionCounts;
+
+  const labels = useMemo(
+    () => (style?.labels && style.labels[optionCount - 1]) || [],
+    [style?.labels, optionCount]
+  );
   useEffect(() => {
     if (clearLayout) {
       setSelectedOptions([]);
@@ -97,65 +103,120 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
 
     return value;
   }
+  // const handleShorthandProperties = useCallback((options: string[], values: string[]) => {
+  //   // Iterate over shorthand properties and map them to their longhand equivalents
+  //   Object.entries(shorthandMap).forEach(([shorthand, longhands]) => {
+  //     const shorthandIndex = options.indexOf(shorthand);
+  //     if (shorthandIndex !== -1) {
+  //       const shorthandValue = values[shorthandIndex];
+  //       const parts = shorthandValue.split(" "); // Split shorthand value into parts
 
-  const handleSelect = (index: number, newOption: string) => {
-    // Create a copy of the selected options
-    console.log(`index: ${index}`);
-    console.log(`newOption: ${newOption}`);
-    const updatedOptions = [...selectedOptions];
-    console.log(`updatedOptions: ${updatedOptions}`);
-    updatedOptions[index] = newOption;
-    console.log(`updatedOptions add: ${updatedOptions}`);
+  //       // Handle cases where the shorthand value doesn't have enough parts
+  //       if (parts.length < longhands.length) {
+  //         // Fill in missing values with default values
+  //         while (parts.length < longhands.length) {
+  //           parts.push(defaults[longhands[parts.length]] || "");
+  //         }
+  //       }
 
-    // Create a copy of the values to ensure it reflects the updated options
-    const updatedValues = updatedOptions.map((opt, i) => {
-      // Check if the option is dynamic or global CSS value and update accordingly
-      if (dynamicOptions.includes(opt)) {
-        if (opt === "color") {
-          return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "#ffffff"; // Keep the color as a whole
-        } else if (opt === "length") {
-          return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "0px"; // Default for length
-        } else if (opt === "number") {
-          return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "0"; // Default for number
-        } else {
-          return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : ""; // Default for other dynamic options
-        }
-        // Use the existing value or an empty string
-      } else if (globalCssOptions.includes(opt)) {
-        // If it's a global CSS value, we don't want to store it in `values`
-        return opt;
+  //       // Map the shorthand value to its corresponding longhand properties
+  //       longhands.forEach((longhand, i) => {
+  //         const longhandIndex = options.indexOf(longhand);
+  //         if (longhandIndex !== -1) {
+  //           values[longhandIndex] = parts[i] || defaults[longhand] || "";
+  //         }
+  //       });
+  //     }
+  //   });
+  // }, []);
+  const handleShorthandProperties = useCallback((options: string[], values: string[]) => {
+    Object.entries(shorthandMap).forEach(([shorthand, longhands]) => {
+      if (options.includes(shorthand)) {
+        const shorthandIndex = options.indexOf(shorthand);
+        longhands.forEach((longhand, index) => {
+          if (longhand) {
+            values[shorthandIndex * longhands.length + index] =
+              values[shorthandIndex] || longHandDefaults[longhand] || "";
+          }
+        });
       }
-      // Default case: return the option as-is if it's not dynamic or global CSS
-      return opt;
     });
-    console.log(`updatedValues: ${updatedValues}`);
-    // Update state with new options and values
-    setSelectedOptions(updatedOptions);
-    setValues(updatedValues);
+  }, []);
+  const handleSelect = useCallback(
+    (index: number, newOption: string) => {
+      const updatedOptions = [...selectedOptions];
+      updatedOptions[index] = newOption;
 
-    // Close the popover and pass the joined values to the callback
-    setOpenPopoverIndex(null);
-    customOptionsCallback(updatedValues.join(" "));
-  };
+      const updatedValues = updatedOptions.map((opt, i) => {
+        // Check if the option is dynamic or global CSS value and update accordingly
+        if (dynamicOptions.includes(opt)) {
+          if (opt === "color") {
+            if (Array.isArray(options)) {
+              if (options.includes(values[i]) && values[i] != "color") {
+                return "#ffffff";
+              } else {
+                return values[i];
+              }
+            }
+            // return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "#ffffff"; // Keep the color as a whole
+          } else if (opt === "length") {
+            if (Array.isArray(options)) {
+              if (options.includes(values[i]) && values[i] != "length") {
+                return "0px";
+              } else {
+                return values[i];
+              }
+            }
+            // return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "0px"; // Default for length
+          } else if (opt === "number") {
+            if (Array.isArray(options)) {
+              if (options.includes(values[i]) && values[i] != "number") {
+                return "0";
+              } else {
+                return values[i];
+              }
+            }
+            // return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "0"; // Default for number
+          } else {
+            return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : ""; // Default for other dynamic options
+          }
+          // Use the existing value or an empty string
+        } else if (globalCssOptions.includes(opt)) {
+          // If it's a global CSS value, we don't want to store it in `values`
+          return opt;
+        }
+        // Default case: return the option as-is if it's not dynamic or global CSS
+        return opt;
+      });
+      console.log(`updatedValues: ${updatedValues}`);
+      // Update state with new options and values
+      setSelectedOptions(updatedOptions);
+      setValues(updatedValues);
+      handleShorthandProperties(updatedOptions, updatedValues);
+      setOpenPopoverIndex(null);
+      customOptionsCallback(updatedValues.join(" "));
+    },
+    [selectedOptions, values, handleShorthandProperties, customOptionsCallback]
+  );
+  const handleRemoveClick = useCallback(
+    (index: number) => {
+      const updatedOptions = [...selectedOptions];
+      updatedOptions.splice(index, 1);
 
-  const handleRemoveClick = (index: number) => {
-    const updatedOptions = [...selectedOptions];
-    updatedOptions.splice(index, 1);
+      const updatedValues = [...values];
+      updatedValues.splice(index, 1);
 
-    const updatedValues = [...values];
-    updatedValues.splice(index, 1);
+      setSelectedOptions(updatedOptions);
+      setValues(updatedValues);
+      setOptionCount(updatedOptions.length);
+      console.log(updatedOptions);
+      console.log(updatedValues);
+      customOptionsCallback(updatedValues.join(" "));
+    },
+    [selectedOptions, values, customOptionsCallback]
+  );
 
-    setSelectedOptions(updatedOptions);
-    setValues(updatedValues);
-    setOptionCount(updatedOptions.length);
-    console.log(updatedOptions);
-    console.log(updatedValues);
-    customOptionsCallback(updatedValues.join(" "));
-  };
-
-  const handleAddOption = () => {
-    console.log("Before adding:", { selectedOptions, values, optionCount });
-
+  const handleAddOption = useCallback(() => {
     if (!maxOptionCounts || optionCount < maxOptionCounts) {
       // Add empty option and value
       const newOptions = [...selectedOptions, ""];
@@ -164,19 +225,31 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
       setSelectedOptions(newOptions);
       setValues(newValues);
       setOptionCount(newOptions.length);
-
-      console.log("After adding:", { newOptions, newValues });
     }
-  };
+  }, [maxOptionCounts, optionCount, selectedOptions, values]);
 
-  const handleValueChange = (index: number, newValue: string) => {
-    const updatedValues = [...values];
-    updatedValues[index] = newValue;
-    setValues(updatedValues);
+  // const handleValueChange = (index: number, newValue: string) => {
+  //   const updatedValues = [...values];
+  //   updatedValues[index] = newValue;
+  //   setValues(updatedValues);
 
-    customOptionsCallback(updatedValues.join(" "));
-  };
-  const labels = (style?.labels && style.labels[optionCount - 1]) || [];
+  //   customOptionsCallback(updatedValues.join(" "));
+  // };
+
+  const handleValueChange = useCallback(
+    (index: number, newValue: string) => {
+      const updatedValues = [...values];
+      updatedValues[index] = newValue;
+      setValues(updatedValues);
+
+      // Handle shorthand properties
+      handleShorthandProperties(selectedOptions, updatedValues);
+
+      customOptionsCallback(updatedValues.join(" "));
+    },
+    [values, selectedOptions, handleShorthandProperties, customOptionsCallback]
+  );
+  // const labels = (style?.labels && style.labels[optionCount - 1]) || [];
   return (
     <div className="flex flex-col gap-1">
       {selectedOptions.map((option, index) => (
@@ -231,8 +304,16 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
               </Popover>
               <DynamicOptions
                 optionType={selectedOptions[index]}
-                value={extractValue(values[index] || " ")}
-                unit={extractUnit(values[index] || "px")}
+                value={
+                  selectedOptions[index] === "color"
+                    ? values[index] // For color, use the whole value
+                    : extractValue(values[index] || "0") // For other options, extract the value
+                }
+                unit={
+                  selectedOptions[index] === "color"
+                    ? "" // Colors don't need units
+                    : extractUnit(values[index] || "px") // Extract unit for other options
+                }
                 isRange={isRange}
                 isDoubleQuotesText={isDoubleQuotesText}
                 isSupportNegativeValue={isSupportNegativeValue}

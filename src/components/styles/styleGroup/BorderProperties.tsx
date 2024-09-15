@@ -19,9 +19,7 @@
 // "border-top-color",
 // "border-top-style",
 
-import Color from "../styleComponents/Color";
 import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter";
-import DynamicOptionSetter from "../styleComponents/DynamicOptionSetter";
 import MultiDynamicOptionSetter from "../styleComponents/MultiDynamicOptionSetter";
 import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
 // "border-top-width",
@@ -30,17 +28,23 @@ function BorderProperties() {
     <div className="inspector-component">
       {/* <Color colorProp="border-block-color" /> */}
       <MultiDynamicOptionSetter name="border-block-color" />
-      <Color colorProp="border-block-end-color" />
-      <SingleStyleOptionSetter name="border-block-end-style" isCapitalized={true} />
-      <DynamicOptionSetter name="border-block-end-width" />
-      <Color colorProp="border-block-start-color" />
-      <SingleStyleOptionSetter name="border-block-start-style" isCapitalized={true} />
-      <DynamicOptionSetter name="border-block-start-width" />
-      <SingleStyleOptionSetter name="border-block-style" isCapitalized={true} />
-      <DynamicOptionSetter name="border-block-width" />
-      <Color colorProp="border-bottom-color" />
-      <SingleStyleOptionSetter name="border-bottom-style" isCapitalized={true} />
-      <DynamicOptionSetter name="border-bottom-width" />
+      <MultiDynamicOptionSetter name="border-block-style" />
+      <MultiDynamicOptionSetter name="border-block-width" />
+      <MultiDynamicOptionSetter name="border-color" />
+      <MultiDynamicOptionSetter name="border-style" />
+      <MultiDynamicOptionSetter name="border-width" />
+      {/* <MultiDynamicOptionSetter name="border-radius" isSupportNegativeValue={false} /> */}
+      {/* <Color colorProp="border-block-end-color" /> */}
+      {/* <SingleStyleOptionSetter name="border-block-end-style" isCapitalized={true} /> */}
+      {/* <DynamicOptionSetter name="border-block-end-width" /> */}
+      {/* <Color colorProp="border-block-start-color" /> */}
+      {/* <SingleStyleOptionSetter name="border-block-start-style" isCapitalized={true} /> */}
+      {/* <DynamicOptionSetter name="border-block-start-width" /> */}
+      {/* <SingleStyleOptionSetter name="border-block-style" isCapitalized={true} /> */}
+      {/* <DynamicOptionSetter name="border-block-width" /> */}
+      {/* <Color colorProp="border-bottom-color" /> */}
+      {/* <SingleStyleOptionSetter name="border-bottom-style" isCapitalized={true} /> */}
+      {/* <DynamicOptionSetter name="border-bottom-width" /> */}
       <MultiDynamicOptionSetter name="border-bottom-left-radius" isSupportNegativeValue={false} />
       <MultiDynamicOptionSetter name="border-bottom-right-radius" isSupportNegativeValue={false} />
       <SingleStyleOptionSetter name="border-collapse" isCapitalized={true} />
