@@ -63,11 +63,16 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
         // const initialValues = newStyleValue.split(" ");
         const initialValues =
           newStyleValue.match(/(rgba?\(.*?\)|hsla?\(.*?\)|#[0-9a-fA-F]{3,6}|[^\s]+)/g) || [];
-        const initialOptions = initialValues.map((val) => getOptionFromValue(val));
+        const limitedValues =
+          maxOptionCounts && maxOptionCounts > 0
+            ? initialValues.slice(0, maxOptionCounts)
+            : initialValues;
 
+        // Map the values to options
+        const initialOptions = limitedValues.map((val) => getOptionFromValue(val));
         setSelectedOptions(initialOptions);
-        setValues(initialValues);
-        setOptionCount(initialValues.length);
+        setValues(limitedValues);
+        setOptionCount(limitedValues.length);
         setStyleValue(newStyleValue);
       }
     }

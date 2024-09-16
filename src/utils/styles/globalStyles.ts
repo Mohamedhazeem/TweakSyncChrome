@@ -511,8 +511,8 @@ const BorderGroup: StyleGroup = {
     "border-style",
     "border-color",
     "border-radius",
-    "border-bottom-left-radius",
-    "border-bottom-right-radius",
+    // "border-bottom-left-radius",
+    // "border-bottom-right-radius",
     "border-collapse",
     "border-end-end-radius",
     "border-end-start-radius",
@@ -527,8 +527,8 @@ const BorderGroup: StyleGroup = {
     "border-spacing",
     "border-start-end-radius",
     "border-start-start-radius",
-    "border-top-left-radius",
-    "border-top-right-radius",
+    // "border-top-left-radius",
+    // "border-top-right-radius",
   ],
   groups: [
     {
@@ -618,6 +618,7 @@ const BorderGroup: StyleGroup = {
         "The `border-radius` property defines the rounding of the element's corners. It can accept one value to round all corners equally, or four values to round each corner (top-left, top-right, bottom-right, and bottom-left) independently.",
       value: "",
       maxOptionCounts: 4,
+
       options: ["length", ...globalCssOptions],
       labels: [
         ["All Corners Radius"],
@@ -626,34 +627,34 @@ const BorderGroup: StyleGroup = {
         ["Top-Left Radius", "Top-Right Radius", "Bottom-Right Radius", "Bottom-Left Radius"],
       ],
     },
-    {
-      name: "border-bottom-left-radius",
-      nameForTitle: "Border Bottom Left Radius",
-      type: "string",
-      description:
-        "Defines the rounding of the bottom-left corner of an element's border. It can be set to create rounded corners on the bottom-left side.",
-      value: "",
-      maxOptionCounts: 2,
-      labels: [
-        ["All sides"], // For 1 value
-        ["Horizontal", "Vertical"], // For 2 values
-      ],
-      options: ["length", ...globalCssOptions],
-    },
-    {
-      name: "border-bottom-right-radius",
-      nameForTitle: "Border Bottom Right Radius",
-      type: "string",
-      description:
-        "Defines the rounding of the bottom-right corner of an element's border. It can be set to create rounded corners on the bottom-right side.",
-      value: "",
-      maxOptionCounts: 2,
-      labels: [
-        ["All sides"], // For 1 value
-        ["Horizontal", "Vertical"], // For 2 values
-      ],
-      options: ["length", ...globalCssOptions],
-    },
+    // {
+    //   name: "border-bottom-left-radius",
+    //   nameForTitle: "Border Bottom Left Radius",
+    //   type: "string",
+    //   description:
+    //     "Defines the rounding of the bottom-left corner of an element's border. It can be set to create rounded corners on the bottom-left side.",
+    //   value: "",
+    //   maxOptionCounts: 2,
+    //   labels: [
+    //     ["All sides"], // For 1 value
+    //     ["Horizontal", "Vertical"], // For 2 values
+    //   ],
+    //   options: ["length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "border-bottom-right-radius",
+    //   nameForTitle: "Border Bottom Right Radius",
+    //   type: "string",
+    //   description:
+    //     "Defines the rounding of the bottom-right corner of an element's border. It can be set to create rounded corners on the bottom-right side.",
+    //   value: "",
+    //   maxOptionCounts: 2,
+    //   labels: [
+    //     ["All sides"], // For 1 value
+    //     ["Horizontal", "Vertical"], // For 2 values
+    //   ],
+    //   options: ["length", ...globalCssOptions],
+    // },
     {
       name: "border-collapse",
       nameForTitle: "Border Collapse",
@@ -820,34 +821,34 @@ const BorderGroup: StyleGroup = {
       labels: [["All sides"], ["Horizontal", "Vertical"]],
       options: ["length", ...globalCssOptions],
     },
-    {
-      name: "border-top-left-radius",
-      nameForTitle: "Border Top Left Radius",
-      type: "string",
-      description:
-        "Defines the rounding of the top-left corner of an element's border. It can be set to create rounded corners on the top-left side.",
-      value: "",
-      maxOptionCounts: 2,
-      labels: [
-        ["All sides"], // For 1 value
-        ["Horizontal", "Vertical"], // For 2 values
-      ],
-      options: ["length", ...globalCssOptions],
-    },
-    {
-      name: "border-top-right-radius",
-      nameForTitle: "Border Top Right Radius",
-      type: "string",
-      description:
-        "Defines the rounding of the top-right corner of an element's border. It can be set to create rounded corners on the top-right side.",
-      value: "",
-      maxOptionCounts: 2,
-      labels: [
-        ["All sides"], // For 1 value
-        ["Horizontal", "Vertical"], // For 2 values
-      ],
-      options: ["length", ...globalCssOptions],
-    },
+    // {
+    //   name: "border-top-left-radius",
+    //   nameForTitle: "Border Top Left Radius",
+    //   type: "string",
+    //   description:
+    //     "Defines the rounding of the top-left corner of an element's border. It can be set to create rounded corners on the top-left side.",
+    //   value: "",
+    //   maxOptionCounts: 2,
+    //   labels: [
+    //     ["All sides"], // For 1 value
+    //     ["Horizontal", "Vertical"], // For 2 values
+    //   ],
+    //   options: ["length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "border-top-right-radius",
+    //   nameForTitle: "Border Top Right Radius",
+    //   type: "string",
+    //   description:
+    //     "Defines the rounding of the top-right corner of an element's border. It can be set to create rounded corners on the top-right side.",
+    //   value: "",
+    //   maxOptionCounts: 2,
+    //   labels: [
+    //     ["All sides"], // For 1 value
+    //     ["Horizontal", "Vertical"], // For 2 values
+    //   ],
+    //   options: ["length", ...globalCssOptions],
+    // },
   ],
 };
 const BoxGroup: StyleGroup = {
