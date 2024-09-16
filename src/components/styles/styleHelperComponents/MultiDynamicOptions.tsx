@@ -45,7 +45,8 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
   const nameForTitle = style.nameForTitle;
   const options = style.options;
   const maxOptionCounts = style.maxOptionCounts;
-
+  const defaultValue = style.defaultValue;
+  const supportedUnits = style.supportedUnit;
   const labels = useMemo(
     () => (style?.labels && style.labels[optionCount - 1]) || [],
     [style?.labels, optionCount]
@@ -103,32 +104,6 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
 
     return value;
   }
-  // const handleShorthandProperties = useCallback((options: string[], values: string[]) => {
-  //   // Iterate over shorthand properties and map them to their longhand equivalents
-  //   Object.entries(shorthandMap).forEach(([shorthand, longhands]) => {
-  //     const shorthandIndex = options.indexOf(shorthand);
-  //     if (shorthandIndex !== -1) {
-  //       const shorthandValue = values[shorthandIndex];
-  //       const parts = shorthandValue.split(" "); // Split shorthand value into parts
-
-  //       // Handle cases where the shorthand value doesn't have enough parts
-  //       if (parts.length < longhands.length) {
-  //         // Fill in missing values with default values
-  //         while (parts.length < longhands.length) {
-  //           parts.push(defaults[longhands[parts.length]] || "");
-  //         }
-  //       }
-
-  //       // Map the shorthand value to its corresponding longhand properties
-  //       longhands.forEach((longhand, i) => {
-  //         const longhandIndex = options.indexOf(longhand);
-  //         if (longhandIndex !== -1) {
-  //           values[longhandIndex] = parts[i] || defaults[longhand] || "";
-  //         }
-  //       });
-  //     }
-  //   });
-  // }, []);
   const handleShorthandProperties = useCallback((options: string[], values: string[]) => {
     Object.entries(shorthandMap).forEach(([shorthand, longhands]) => {
       if (options.includes(shorthand)) {
@@ -148,48 +123,40 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
       updatedOptions[index] = newOption;
 
       const updatedValues = updatedOptions.map((opt, i) => {
-        // Check if the option is dynamic or global CSS value and update accordingly
         if (dynamicOptions.includes(opt)) {
           if (opt === "color") {
             if (Array.isArray(options)) {
               if (options.includes(values[i]) && values[i] != "color") {
                 return "#ffffff";
               } else {
-                return values[i];
+                return values[i] || "#ffffff";
               }
             }
-            // return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "#ffffff"; // Keep the color as a whole
           } else if (opt === "length") {
             if (Array.isArray(options)) {
               if (options.includes(values[i]) && values[i] != "length") {
-                return "0px";
+                return defaultValue || "0px";
               } else {
-                return values[i];
+                return values[i] || defaultValue || "0px";
               }
             }
-            // return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "0px"; // Default for length
           } else if (opt === "number") {
             if (Array.isArray(options)) {
               if (options.includes(values[i]) && values[i] != "number") {
-                return "0";
+                return defaultValue || "0";
               } else {
-                return values[i];
+                return values[i] || defaultValue || "0";
               }
             }
-            // return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "0"; // Default for number
           } else {
-            return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : ""; // Default for other dynamic options
+            return values[i] && !globalCssOptions.includes(values[i]) ? values[i] : "";
           }
-          // Use the existing value or an empty string
         } else if (globalCssOptions.includes(opt)) {
-          // If it's a global CSS value, we don't want to store it in `values`
           return opt;
         }
-        // Default case: return the option as-is if it's not dynamic or global CSS
         return opt;
       });
-      console.log(`updatedValues: ${updatedValues}`);
-      // Update state with new options and values
+
       setSelectedOptions(updatedOptions);
       setValues(updatedValues);
       handleShorthandProperties(updatedOptions, updatedValues);
@@ -209,8 +176,6 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
       setSelectedOptions(updatedOptions);
       setValues(updatedValues);
       setOptionCount(updatedOptions.length);
-      console.log(updatedOptions);
-      console.log(updatedValues);
       customOptionsCallback(updatedValues.join(" "));
     },
     [selectedOptions, values, customOptionsCallback]
@@ -312,7 +277,7 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
                 unit={
                   selectedOptions[index] === "color"
                     ? "" // Colors don't need units
-                    : extractUnit(values[index] || "px") // Extract unit for other options
+                    : extractUnit(values[index] || supportedUnits || "px") // Extract unit for other options
                 }
                 isRange={isRange}
                 isDoubleQuotesText={isDoubleQuotesText}

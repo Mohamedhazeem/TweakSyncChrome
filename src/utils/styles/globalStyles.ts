@@ -504,12 +504,12 @@ const BlockSizeGroup: StyleGroup = {
 const BorderGroup: StyleGroup = {
   groupName: "Border",
   propertyNames: [
-    "border-block-color",
-    "border-block-style",
     "border-block-width",
-    "border-color",
-    "border-style",
+    "border-block-style",
+    "border-block-color",
     "border-width",
+    "border-style",
+    "border-color",
     "border-radius",
     "border-bottom-left-radius",
     "border-bottom-right-radius",
@@ -524,15 +524,11 @@ const BorderGroup: StyleGroup = {
     "border-inline-color",
     "border-inline-style",
     "border-inline-width",
-    "border-inline-end-color",
-    "border-inline-end-style",
-    "border-inline-end-width",
-    "border-inline-start-color",
-    "border-inline-start-style",
-    "border-inline-start-width",
     "border-spacing",
     "border-start-end-radius",
     "border-start-start-radius",
+    "border-top-left-radius",
+    "border-top-right-radius",
   ],
   groups: [
     {
@@ -614,22 +610,22 @@ const BorderGroup: StyleGroup = {
         ["Top Width", "Right Width", "Bottom Width", "Left Width"],
       ],
     },
-    // {
-    //   name: "border-radius",
-    //   nameForTitle: "Border Radius",
-    //   type: "string",
-    //   description:
-    //     "The `border-radius` property defines the rounding of the element's corners. It can accept one value to round all corners equally, or four values to round each corner (top-left, top-right, bottom-right, and bottom-left) independently.",
-    //   value: "",
-    //   maxOptionCounts: 4,
-    //   options: ["length", ...globalCssOptions],
-    //   labels: [
-    //     ["All Corners Radius"],
-    //     ["Top-Left and Bottom-Right Radius", "Top-Right and Bottom-Left Radius"],
-    //     ["Top-Left Radius", "Top-Right and Bottom-Left", "Bottom-Right Radius"],
-    //     ["Top-Left Radius", "Top-Right Radius", "Bottom-Right Radius", "Bottom-Left Radius"],
-    //   ],
-    // },
+    {
+      name: "border-radius",
+      nameForTitle: "Border Radius",
+      type: "string",
+      description:
+        "The `border-radius` property defines the rounding of the element's corners. It can accept one value to round all corners equally, or four values to round each corner (top-left, top-right, bottom-right, and bottom-left) independently.",
+      value: "",
+      maxOptionCounts: 4,
+      options: ["length", ...globalCssOptions],
+      labels: [
+        ["All Corners Radius"],
+        ["Top-Left and Bottom-Right Radius", "Top-Right and Bottom-Left Radius"],
+        ["Top-Left Radius", "Top-Right and Bottom-Left", "Bottom-Right Radius"],
+        ["Top-Left Radius", "Top-Right Radius", "Bottom-Right Radius", "Bottom-Left Radius"],
+      ],
+    },
     {
       name: "border-bottom-left-radius",
       nameForTitle: "Border Bottom Left Radius",
@@ -721,7 +717,15 @@ const BorderGroup: StyleGroup = {
       description:
         "Specifies how to slice the border image into regions to define what part of the image will be used for the element's borders. The slicing happens by defining pixel or percentage values for the top, right, bottom, and left of the image.",
       value: "",
+      supportedUnit: "%",
+      defaultValue: "100%",
       maxOptionCounts: 4,
+      labels: [
+        ["All Sides Slice"],
+        ["Top and Bottom Slice", "Left and Right Slice"],
+        ["Top Slice", "Left and Right Slice", "Bottom Slice"],
+        ["Top Slice", "Right Slice", "Bottom Slice", "Left Slice"],
+      ],
       options: ["length", "number", "fill", ...globalCssOptions], // support percentage values only on length
     },
     {
@@ -740,7 +744,14 @@ const BorderGroup: StyleGroup = {
       description:
         "Specifies the width of the border image. This defines how much space the border image occupies along the sides of the element, allowing for scaling and adjustments in relation to the border box.",
       value: "",
+      defaultValue: "1",
       maxOptionCounts: 4,
+      labels: [
+        ["All Sides Width"],
+        ["Top and Bottom Width", "Left and Right Width"],
+        ["Top Width", "Left and Right Width", "Bottom Width"],
+        ["Top Width", "Right Width", "Bottom Width", "Left Width"],
+      ],
       options: ["auto", "length", "number", ...globalCssOptions],
     },
     {
@@ -751,7 +762,8 @@ const BorderGroup: StyleGroup = {
         "Specifies the color of the inline (start and end) borders. This property defines the color for both the start and end inline borders in a writing-mode-sensitive way.",
       value: "",
       maxOptionCounts: 2,
-      options: ["color", ...globalCssOptions],
+      labels: [["Start and End Color"], ["Start Color", "End Color"]],
+      options: ["color", "currentcolor", "transparent", ...globalCssOptions],
     },
     {
       name: "border-inline-style",
@@ -761,6 +773,7 @@ const BorderGroup: StyleGroup = {
         "Specifies the style of the inline (start and end) borders. This property controls the line style of the start and end inline borders in a way that respects the writing mode.",
       value: "",
       maxOptionCounts: 2,
+      labels: [["Start and End Style"], ["Start Style", "End Style"]],
       options: [...lineStyle, ...globalCssOptions],
     },
     {
@@ -771,113 +784,9 @@ const BorderGroup: StyleGroup = {
         "Specifies the width of the inline (start and end) borders. This property sets the width of the inline borders, which can differ between the start and end in a writing-mode-sensitive way.",
       value: "",
       maxOptionCounts: 2,
+      labels: [["Start and End Width"], ["Start Width", "End Width"]],
       options: ["thin", "medium", "thick", "length", ...globalCssOptions],
     },
-    {
-      name: "border-inline-end-color",
-      nameForTitle: "Border Inline End Color",
-      type: "string",
-      description:
-        "Specifies the color of the border at the inline end of the element. This property defines the color of the end side of the inline axis (right in a left-to-right writing mode, left in a right-to-left mode).",
-      value: "",
-      options: ["color", ...globalCssOptions],
-    },
-    {
-      name: "border-inline-end-style",
-      nameForTitle: "Border Inline End Style",
-      type: "string",
-      description:
-        "Specifies the style of the border at the inline end of the element. This property controls the line style of the border on the inline end side (right side in a left-to-right writing mode).",
-      value: "",
-      options: [...lineStyle, ...globalCssOptions],
-    },
-    {
-      name: "border-inline-end-width",
-      nameForTitle: "Border Inline End Width",
-      type: "string",
-      description:
-        "Specifies the width of the border at the inline end of the element. This property sets the thickness of the border on the inline end side, which adjusts according to the element's writing mode.",
-      value: "",
-      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
-    },
-    {
-      name: "border-inline-start-color",
-      nameForTitle: "Border Inline Start Color",
-      type: "string",
-      description:
-        "Specifies the color of the border at the inline start of the element. This property defines the color for the start side of the inline axis, which is sensitive to the writing mode (left side in left-to-right mode, right side in right-to-left mode).",
-      value: "",
-      options: ["color", ...globalCssOptions],
-    },
-    {
-      name: "border-inline-start-style",
-      nameForTitle: "Border Inline Start Style",
-      type: "string",
-      description:
-        "Specifies the style of the border at the inline start of the element. This property defines the line style for the start side of the inline axis (left side in left-to-right writing mode, right side in right-to-left mode).",
-      value: "",
-      options: [...lineStyle, ...globalCssOptions],
-    },
-    {
-      name: "border-inline-start-width",
-      nameForTitle: "Border Inline Start Width",
-      type: "string",
-      description:
-        "Specifies the width of the border at the inline start of the element. This property sets the thickness of the border on the start side of the inline axis, adjusting based on the writing mode.",
-      value: "",
-      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
-    },
-    // {
-    //   name: "border-left-color",
-    //   nameForTitle: "Border Left Color",
-    //   type: "string",
-    //   description:
-    //     "Specifies the color of the left border of the element. It accepts any valid CSS color value, such as named colors, hexadecimal values, or rgba values.",
-    //   value: "",
-    //   options: ["color", ...globalCssOptions],
-    // },
-    // {
-    //   name: "border-left-style",
-    //   nameForTitle: "Border Left Style",
-    //   type: "string",
-    //   description:
-    //     "Defines the style of the left border. It controls how the left border appears, such as solid, dashed, or none.",
-    //   value: "",
-    //   options: [...lineStyle, ...globalCssOptions],
-    // },
-    // {
-    //   name: "border-left-width",
-    //   nameForTitle: "Border Left Width",
-    //   type: "string",
-    //   description:
-    //     "Specifies the width of the left border of the element. It accepts values in units like px, em, rem, and keywords such as thin, medium, and thick.",
-    //   value: "",
-    //   options: ["thin", "medium", "thick", "length", ...globalCssOptions],
-    // },
-    // {
-    //   name: "border-right-color",
-    //   nameForTitle: "Border Right Color",
-    //   type: "string",
-    //   description: "Specifies the color of the right border of the element.",
-    //   value: "",
-    //   options: ["color", ...globalCssOptions],
-    // },
-    // {
-    //   name: "border-right-style",
-    //   nameForTitle: "Border Right Style",
-    //   type: "string",
-    //   description: "Specifies the style of the right border, such as solid, dashed, or none.",
-    //   value: "",
-    //   options: [...lineStyle, ...globalCssOptions],
-    // },
-    // {
-    //   name: "border-right-width",
-    //   nameForTitle: "Border Right Width",
-    //   type: "string",
-    //   description: "Specifies the width of the right border of the element.",
-    //   value: "",
-    //   options: ["thin", "medium", "thick", "length", ...globalCssOptions],
-    // },
     {
       name: "border-spacing",
       nameForTitle: "Border Spacing",
@@ -886,6 +795,7 @@ const BorderGroup: StyleGroup = {
         "Sets the distance between the borders of adjacent cells in a table. This property applies to table elements and defines the space between cells in a table layout. It accepts one or two values to set horizontal and vertical spacing.",
       value: "",
       maxOptionCounts: 2,
+      labels: [["All sides"], ["Horizontal", "Vertical"]],
       options: ["length", ...globalCssOptions],
     },
     {
@@ -896,7 +806,7 @@ const BorderGroup: StyleGroup = {
         "Sets the radius of the border corner at the start and end of the element's inline axis. In left-to-right (LTR) writing modes, this affects the bottom-right corner; in right-to-left (RTL) writing modes, it affects the bottom-left corner. It supports one or more values to set different radii for each corner.",
       value: "",
       maxOptionCounts: 2,
-
+      labels: [["All sides"], ["Horizontal", "Vertical"]],
       options: ["length", ...globalCssOptions],
     },
     {
@@ -907,35 +817,37 @@ const BorderGroup: StyleGroup = {
         "Sets the radius of the border corner at the start and start of the element's inline axis. In left-to-right (LTR) writing modes, this affects the top-left corner; in right-to-left (RTL) writing modes, it affects the top-right corner. It supports one or more values to set different radii for each corner.",
       value: "",
       maxOptionCounts: 2,
+      labels: [["All sides"], ["Horizontal", "Vertical"]],
       options: ["length", ...globalCssOptions],
     },
-    // {
-    //   name: "border-top-color",
-    //   nameForTitle: "Border Top Color",
-    //   type: "string",
-    //   description:
-    //     "Specifies the color of the top border of an element. It accepts any valid CSS color value, such as named colors, hexadecimal values, RGB or RGBA values, or the `transparent` keyword.",
-    //   value: "",
-    //   options: ["color", ...globalCssOptions],
-    // },
-    // {
-    //   name: "border-top-style",
-    //   nameForTitle: "Border Top Style",
-    //   type: "string",
-    //   description:
-    //     "Defines the style of the top border of an element. It controls how the top border appears and can be solid, dashed, dotted, double, or none.",
-    //   value: "",
-    //   options: [...lineStyle, ...globalCssOptions],
-    // },
-    // {
-    //   name: "border-top-width",
-    //   nameForTitle: "Border Top Width",
-    //   type: "string",
-    //   description:
-    //     "Specifies the width of the top border of an element. It accepts values in units like px, em, rem, or keywords like thin, medium, and thick.",
-    //   value: "",
-    //   options: ["thin", "medium", "thick", "length", ...globalCssOptions],
-    // },
+    {
+      name: "border-top-left-radius",
+      nameForTitle: "Border Top Left Radius",
+      type: "string",
+      description:
+        "Defines the rounding of the top-left corner of an element's border. It can be set to create rounded corners on the top-left side.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [
+        ["All sides"], // For 1 value
+        ["Horizontal", "Vertical"], // For 2 values
+      ],
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "border-top-right-radius",
+      nameForTitle: "Border Top Right Radius",
+      type: "string",
+      description:
+        "Defines the rounding of the top-right corner of an element's border. It can be set to create rounded corners on the top-right side.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [
+        ["All sides"], // For 1 value
+        ["Horizontal", "Vertical"], // For 2 values
+      ],
+      options: ["length", ...globalCssOptions],
+    },
   ],
 };
 const BoxGroup: StyleGroup = {

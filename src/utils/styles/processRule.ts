@@ -21,46 +21,43 @@ export function processRule({ rule, context }: ProcessRules) {
     const ruleStyles = rule.style;
     const longhandProperties: { [key: string]: string } = {};
 
-    // Collect all longhand properties
     for (let i = 0; i < ruleStyles.length; i++) {
       const property = ruleStyles[i];
       const value = ruleStyles.getPropertyValue(property);
       longhandProperties[property] = value;
     }
 
-    // Iterate over shorthand mappings
     for (const shorthand in shorthandMap) {
       const longhands = shorthandMap[shorthand];
+      const longhandsPresent = longhands.some((prop) => prop in longhandProperties);
+      if (longhandsPresent) {
+        const values = longhands.map(
+          (prop) => longhandProperties[prop] || longHandDefaults[prop] || ""
+        );
 
-      // Set default values for missing longhand properties
-      const values = longhands.map(
-        (prop) => longhandProperties[prop] || longHandDefaults[prop] || ""
-      );
+        // Check if at least one of the longhand properties exists
+        const existingLonghands = values.filter(Boolean);
 
-      // Check if at least one of the longhand properties exists
-      const existingLonghands = values.filter(Boolean);
+        if (existingLonghands.length > 0) {
+          // Construct the shorthand with defaults if needed
+          const uniqueValues = new Set(values);
 
-      if (existingLonghands.length > 0) {
-        // Construct the shorthand with defaults if needed
-        const uniqueValues = new Set(values);
+          if (uniqueValues.size === 1) {
+            // If all values are the same, use the shorthand with a single value
+            context[shorthand] = values[0];
+          } else if (values.some(Boolean)) {
+            // Otherwise, construct the shorthand with the provided values
+            context[shorthand] = values.join(" ");
+          }
+          // context[shorthand] = values.join(" ");
 
-        if (uniqueValues.size === 1) {
-          // If all values are the same, use the shorthand with a single value
-          context[shorthand] = values[0];
-        } else if (values.some(Boolean)) {
-          // Otherwise, construct the shorthand with the provided values
-          context[shorthand] = values.join(" ");
+          // Remove the longhand properties from the context
+          longhands.forEach((prop) => {
+            delete longhandProperties[prop];
+          });
         }
-        // context[shorthand] = values.join(" ");
-
-        // Remove the longhand properties from the context
-        longhands.forEach((prop) => {
-          delete longhandProperties[prop];
-        });
       }
     }
-
-    // Add any remaining longhand properties to the context
     for (const property in longhandProperties) {
       context[property] = longhandProperties[property];
     }

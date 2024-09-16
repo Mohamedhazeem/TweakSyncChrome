@@ -60,6 +60,15 @@ export const shorthandMap: { [key: string]: string[] } = {
     "border-bottom-width",
     "border-left-width",
   ],
+  "border-inline-color": ["border-inline-start-color", "border-inline-end-color"],
+  "border-inline-style": ["border-inline-start-style", "border-inline-end-style"],
+  "border-inline-width": ["border-inline-start-width", "border-inline-end-width"],
+  "border-radius": [
+    "border-top-left-radius",
+    "border-top-right-radius",
+    "border-bottom-right-radius",
+    "border-bottom-left-radius",
+  ],
   // Add other shorthand mappings as needed
 };
 export const longHandDefaults: { [key: string]: string } = {
@@ -87,4 +96,18 @@ export const longHandDefaults: { [key: string]: string } = {
   "border-right-width": "medium",
   "border-bottom-width": "medium",
   "border-left-width": "medium",
+  // border-inline-color
+  "border-inline-start-color": "currentcolor",
+  "border-inline-end-color": "currentcolor",
+  // border-inline-style
+  "border-inline-start-style": "none",
+  "border-inline-end-style": "none",
+  // border-inline-width
+  "border-inline-start-width": "medium",
+  "border-inline-end-width": "medium",
+  // border-radius
+  "border-top-left-radius": "0px",
+  "border-top-right-radius": "0px",
+  "border-bottom-right-radius": "0px",
+  "border-bottom-left-radius": "0px",
 };

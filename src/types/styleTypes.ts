@@ -6,6 +6,8 @@ export interface Style {
   options?: string[] | { [key: string]: string };
   value: string;
   maxOptionCounts?: number;
+  supportedUnit?: string;
+  defaultValue?: string;
   labels?: string[][];
   temporaryId?: string;
   functions?: string[];
