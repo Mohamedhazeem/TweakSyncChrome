@@ -13,7 +13,7 @@
   @apply flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-1;
 }
 .inspector-home {
-  @apply flex flex-col space-y-4 overflow-y-auto h-full w-full pt-20 items-center;
+  @apply flex flex-col space-y-4 overflow-y-auto h-full w-full items-center justify-center;
 }
 .inspector-component {
   @apply flex flex-col gap-1;
