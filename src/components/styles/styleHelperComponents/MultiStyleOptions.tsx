@@ -118,7 +118,7 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
             </Popover>
             <Button
               size="sm"
-              className="bg-red-500 hover:bg-red-600 rounded-full text-xs p-1 w-4 h-4"
+              className="bg-red-500 hover:bg-red-600 rounded-full text-xs p-1.5 w-5 h-5"
               onClick={() => handleRemoveClick(index)}
             >
               X

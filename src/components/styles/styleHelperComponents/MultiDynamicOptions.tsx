@@ -228,7 +228,7 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
             <div className="flex-1">{labels[index]}</div>{" "}
           </div>
           <div
-            className={`flex gap-1 items-center w-full ${
+            className={`flex gap-1 justify-center items-center w-full ${
               dynamicOptions.includes(option) ? "bg-slate-300 rounded-md p-1" : ""
             }`}
           >
@@ -237,18 +237,30 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
                 open={openPopoverIndex === index}
                 onOpenChange={(newOpenState) => setOpenPopoverIndex(newOpenState ? index : null)}
               >
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="default"
-                    className="w-full flex items-center justify-between h-7"
-                  >
-                    <span className="flex-1 text-center">
-                      {option ? capitalizeFirstLetter(option) : `Select ${nameForTitle}`}
-                    </span>
-                    <ChevronsUpDown className="h-4 w-4 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
+                <div className="flex flex-row justify-center items-center w-full gap-1">
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="default"
+                      className="w-full flex items-center justify-between h-7"
+                    >
+                      <span className="flex-1 text-center">
+                        {option ? capitalizeFirstLetter(option) : `Select ${nameForTitle}`}
+                      </span>
+                      <ChevronsUpDown className="h-4 w-4 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  {selectedOptions[index] === "color" && (
+                    <Button
+                      size="sm"
+                      className="bg-red-500 hover:bg-red-600 rounded-full text-xs p-1.5 w-5 h-5 flex items-center justify-center"
+                      onClick={() => handleRemoveClick(index)}
+                    >
+                      <span className="text-white">X</span>
+                    </Button>
+                  )}
+                </div>
+
                 {openPopoverIndex === index && (
                   <PopoverContent className="w-[200px] p-0">
                     <Command>
@@ -290,13 +302,15 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
                 customOptionsCallback={(newValue) => handleValueChange(index, newValue)}
               />
             </div>
-            <Button
-              size="sm"
-              className="bg-red-500 hover:bg-red-600 rounded-full text-xs p-1 w-5 h-5 flex items-center justify-center"
-              onClick={() => handleRemoveClick(index)}
-            >
-              <span className="text-white">X</span>
-            </Button>
+            {selectedOptions[index] !== "color" && (
+              <Button
+                size="sm"
+                className="bg-red-500 hover:bg-red-600 rounded-full text-xs p-1.5 w-5 h-5 flex items-center justify-center"
+                onClick={() => handleRemoveClick(index)}
+              >
+                <span className="text-white">X</span>
+              </Button>
+            )}
           </div>
         </div>
       ))}
