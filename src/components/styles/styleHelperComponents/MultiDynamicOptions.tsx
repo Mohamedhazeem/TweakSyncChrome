@@ -95,7 +95,7 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
     ) {
       return "color"; // Add this case to handle color values
     }
-    const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
+    const lengthUnitRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
     if (lengthUnitRegex.test(value)) {
       return "length";
     }

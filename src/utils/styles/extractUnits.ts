@@ -3,7 +3,7 @@ export const extractUnit = (value: string): string => {
   return match ? match[0] : "";
 };
 export const extractValue = (value: string): string => {
-  const match = value.match(/^[\d.]+/);
+  const match = value.match(/^[+-]?[\d.]+/);
   return match ? match[0] : "";
 };
 export function extractString(input: string): string {

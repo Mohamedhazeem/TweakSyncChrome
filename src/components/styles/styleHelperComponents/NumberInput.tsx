@@ -36,7 +36,7 @@ export function NumberInput({
       <Input
         className={`${isRange ? "p-0" : ""}`}
         type={`${isRange ? "range" : "number"}`}
-        min={`${isRange ? "0" : undefined}`}
+        min={`${isRange && !isSupportNegativeValue ? "0" : undefined}`}
         max={`${isRange ? "1" : undefined}`}
         step={`${isRange ? "0.01" : ""}`}
         value={newValue}
