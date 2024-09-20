@@ -11,11 +11,13 @@ type DynamicOptionType = {
   name: string;
   isRange?: boolean;
   isDoubleQuotesText?: boolean;
+  isSupportNegativeValue?: boolean;
 };
 export default function DynamicOptionSetter({
   name,
   isRange,
   isDoubleQuotesText,
+  isSupportNegativeValue = false,
 }: DynamicOptionType) {
   const { selector, onChange, group } = useStyleContext() as IStyleContext;
 
@@ -104,6 +106,7 @@ export default function DynamicOptionSetter({
                 isRange={isRange}
                 isDoubleQuotesText={isDoubleQuotesText}
                 customOptionsCallback={handleValueChange}
+                isSupportNegativeValue={isSupportNegativeValue}
               />
             }
           </div>
