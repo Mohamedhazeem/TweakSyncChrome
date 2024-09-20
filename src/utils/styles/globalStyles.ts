@@ -1772,7 +1772,7 @@ const MarginGroup: StyleGroup = {
       value: "",
       maxOptionCounts: 2,
       options: ["auto", "length", ...globalCssOptions],
-      labels: [["Block Start and Block End Margin"], ["Block Start Margin", "Block End Margin"]],
+      labels: [["Block Start and End Margin"], ["Block Start Margin", "Block End Margin"]],
     },
     {
       name: "margin-inline",
@@ -1783,10 +1783,7 @@ const MarginGroup: StyleGroup = {
       value: "",
       maxOptionCounts: 2,
       options: ["auto", "length", ...globalCssOptions],
-      labels: [
-        ["Inline Start and Inline End Margin"],
-        ["Inline Start Margin", "Inline End Margin"],
-      ],
+      labels: [["Inline Start and End Margins"], ["Inline Start Margin", "Inline End Margin"]],
     },
     // {
     //   name: "margin-block-end",
@@ -1907,15 +1904,25 @@ const OutlineGroup: StyleGroup = {
 const OverflowGroup: StyleGroup = {
   groupName: "Overflow",
   propertyNames: [
+    "overflow",
     "overflow-anchor",
     "overflow-block",
     "overflow-clip-margin",
     "overflow-inline",
     "overflow-wrap",
-    "overflow-x",
-    "overflow-y",
   ],
   groups: [
+    {
+      name: "overflow",
+      nameForTitle: "Overflow",
+      type: "string",
+      description:
+        "Specifies how to handle content that is too large for its container. You can set the same overflow behavior for both axes, or specify them individually for the x and y axes.",
+      value: "",
+      maxOptionCounts: 2,
+      options: ["auto", "clip", "hidden", "scroll", "visible", ...globalCssOptions],
+      labels: [["Overflow on Both Axes"], ["Overflow X", "Overflow Y"]],
+    },
     {
       name: "overflow-anchor",
       nameForTitle: "Overflow Anchor",
@@ -1957,24 +1964,24 @@ const OverflowGroup: StyleGroup = {
       value: "",
       options: ["normal", "break-word", "anywhere", ...globalCssOptions],
     },
-    {
-      name: "overflow-x",
-      nameForTitle: "Overflow X",
-      type: "string",
-      description:
-        "Specifies what to do with the left/right edges of the content when it overflows the element's content area.",
-      value: "",
-      options: ["auto", "clip", "hidden", "scroll", "visible", ...globalCssOptions],
-    },
-    {
-      name: "overflow-y",
-      nameForTitle: "Overflow Y",
-      type: "string",
-      description:
-        "Specifies what to do with the top/bottom edges of the content when it overflows the element's content area.",
-      value: "",
-      options: ["auto", "clip", "hidden", "scroll", "visible", ...globalCssOptions],
-    },
+    // {
+    //   name: "overflow-x",
+    //   nameForTitle: "Overflow X",
+    //   type: "string",
+    //   description:
+    //     "Specifies what to do with the left/right edges of the content when it overflows the element's content area.",
+    //   value: "",
+    //   options: ["auto", "clip", "hidden", "scroll", "visible", ...globalCssOptions],
+    // },
+    // {
+    //   name: "overflow-y",
+    //   nameForTitle: "Overflow Y",
+    //   type: "string",
+    //   description:
+    //     "Specifies what to do with the top/bottom edges of the content when it overflows the element's content area.",
+    //   value: "",
+    //   options: ["auto", "clip", "hidden", "scroll", "visible", ...globalCssOptions],
+    // },
   ],
 };
 const OverscrollGroup: StyleGroup = {

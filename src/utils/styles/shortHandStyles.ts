@@ -38,6 +38,9 @@ export const shorthandMap: { [key: string]: string[] } = {
   margin: ["margin-top", "margin-right", "margin-bottom", "margin-left"],
   "margin-block": ["margin-block-start", "margin-block-end"],
   "margin-inline": ["margin-inline-start", "margin-inline-end"],
+
+  // overflow
+  overflow: ["overflow-x", "overflow-y"],
 };
 export const longHandDefaults: { [key: string]: string } = {
   // background-position
@@ -94,4 +97,8 @@ export const longHandDefaults: { [key: string]: string } = {
   // margin-inline
   "margin-inline-start": "0px",
   "margin-inline-end": "0px",
+
+  // overflow
+  "overflow-x": "visible",
+  "overflow-y": "visible",
 };
