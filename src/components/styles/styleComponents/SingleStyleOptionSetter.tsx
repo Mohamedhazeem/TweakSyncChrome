@@ -26,8 +26,6 @@ const SingleStyleOptionSetter = ({ name, isCapitalized }: SingleStyleOptionSette
       if (typeof newValue === "string") {
         onChange(selector, style.name, newValue);
         setOption(newValue);
-      } else {
-        console.warn("Unexpected boolean value");
       }
     }
   };
