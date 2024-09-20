@@ -39,6 +39,10 @@ export function resetStyles(): void {
   Object.assign(styles, deepCopy(initialStyles));
 }
 export const shorthandMap: { [key: string]: string[] } = {
+  // background
+  "background-position": ["background-position-x", "background-position-y"],
+
+  // border
   "border-block-color": ["border-block-start-color", "border-block-end-color"],
   "border-block-style": ["border-block-start-style", "border-block-end-style"],
   "border-block-width": ["border-block-start-width", "border-block-end-width"],
@@ -72,6 +76,10 @@ export const shorthandMap: { [key: string]: string[] } = {
   // Add other shorthand mappings as needed
 };
 export const longHandDefaults: { [key: string]: string } = {
+  // background-position
+  "background-position-x": "0%",
+  "background-position-y": "0%",
+
   // border-block-color
   "border-block-start-color": "currentcolor",
   "border-block-end-color": "currentcolor",
