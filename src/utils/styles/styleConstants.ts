@@ -73,7 +73,11 @@ export const shorthandMap: { [key: string]: string[] } = {
     "border-bottom-right-radius",
     "border-bottom-left-radius",
   ],
-  // Add other shorthand mappings as needed
+
+  // margin
+  margin: ["margin-top", "margin-right", "margin-bottom", "margin-left"],
+  "margin-block": ["margin-block-start", "margin-block-end"],
+  "margin-inline": ["margin-inline-start", "margin-inline-end"],
 };
 export const longHandDefaults: { [key: string]: string } = {
   // background-position
@@ -118,4 +122,16 @@ export const longHandDefaults: { [key: string]: string } = {
   "border-top-right-radius": "0px",
   "border-bottom-right-radius": "0px",
   "border-bottom-left-radius": "0px",
+
+  // margin
+  "margin-top": "0px",
+  "margin-right": "0px",
+  "margin-bottom": "0px",
+  "margin-left": "0px",
+  // margin-block
+  "margin-block-start": "0px",
+  "margin-block-end": "0px",
+  // margin-inline
+  "margin-inline-start": "0px",
+  "margin-inline-end": "0px",
 };
