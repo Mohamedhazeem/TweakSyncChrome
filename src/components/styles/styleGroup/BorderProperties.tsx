@@ -10,10 +10,10 @@ import MultiStyleOptionSetter from "../styleComponents/MultiStyleOptionSetter";
 function BorderProperties() {
   return (
     <div className="inspector-component">
-      <MultiDynamicOptionSetter name="border-block-width" />
+      <MultiDynamicOptionSetter name="border-block-width" isSupportNegativeValue={false} />
       <MultiDynamicOptionSetter name="border-block-style" />
       <MultiDynamicOptionSetter name="border-block-color" />
-      <MultiDynamicOptionSetter name="border-width" />
+      <MultiDynamicOptionSetter name="border-width" isSupportNegativeValue={false} />
       <MultiDynamicOptionSetter name="border-style" />
       <MultiDynamicOptionSetter name="border-color" />
       <MultiDynamicOptionSetter name="border-radius" isSupportNegativeValue={false} />
@@ -25,7 +25,7 @@ function BorderProperties() {
       <MultiDynamicOptionSetter name="border-image-width" isSupportNegativeValue={false} />
       <MultiDynamicOptionSetter name="border-inline-color" />
       <MultiDynamicOptionSetter name="border-inline-style" />
-      <MultiDynamicOptionSetter name="border-inline-width" />
+      <MultiDynamicOptionSetter name="border-inline-width" isSupportNegativeValue={false} />
       <MultiDynamicOptionSetter name="border-spacing" isSupportNegativeValue={false} />
       <MultiDynamicOptionSetter name="border-start-start-radius" isSupportNegativeValue={false} />
       <MultiDynamicOptionSetter name="border-start-end-radius" isSupportNegativeValue={false} />
