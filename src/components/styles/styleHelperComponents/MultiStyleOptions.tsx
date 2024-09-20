@@ -7,14 +7,17 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { splitStringToArray } from "@/utils/splitStringToArray";
 import { Style } from "@/types/styleTypes";
-import { ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { useClearLayoutContext } from "@/utils/elementContext";
 import { sortOptions } from "@/utils/sortOptions";
+import { seperateCssOptions } from "@/utils/styles/seperateCssOptions";
+import { cn } from "@/lib/utils";
 interface MultiOptionsStyleProps {
   style: Style;
   customOptionsCallback: (newValue: string | boolean) => void;
@@ -31,7 +34,7 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
   const [optionCount, setOptionCount] = useState<number>(0);
   const clearLayout = useClearLayoutContext();
   const nameForTitle = style.nameForTitle;
-  const options = style.options;
+  // const options = style.options;
   const maxOptionCounts = style.maxOptionCounts;
 
   const labels = useMemo(
@@ -48,6 +51,7 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
       setOptionCount(initialOptions.length);
     }
   }, [style, clearLayout]);
+  const { specificCss, globalCss } = seperateCssOptions(style);
 
   const handleSelect = (index: number, newOption: string) => {
     const updatedOptions = [...selectedOptions];
@@ -99,17 +103,40 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
                     <CommandInput placeholder={`Search Options...`} />
                     <CommandList>
                       <CommandEmpty>No option found.</CommandEmpty>
-                      <CommandGroup>
-                        {Array.isArray(options) &&
-                          sortOptions(options).map((opt) => (
-                            <CommandItem
-                              key={opt}
-                              value={opt}
-                              onSelect={() => handleSelect(index, opt)}
-                            >
-                              {capitalizeFirstLetter(opt)}
-                            </CommandItem>
-                          ))}
+                      <CommandGroup heading={specificCss && `${style?.nameForTitle} Options`}>
+                        {sortOptions(specificCss).map((opt) => (
+                          <CommandItem
+                            key={opt}
+                            value={opt}
+                            onSelect={() => handleSelect(index, opt)}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                opt === option ? "opacity-100" : "opacity-0"
+                              )}
+                            />
+                            {capitalizeFirstLetter(opt)}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                      <CommandSeparator />
+                      <CommandGroup heading={"Global CSS"}>
+                        {sortOptions(globalCss).map((opt) => (
+                          <CommandItem
+                            key={opt}
+                            value={opt}
+                            onSelect={() => handleSelect(index, opt)}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                opt === option ? "opacity-100" : "opacity-0"
+                              )}
+                            />
+                            {capitalizeFirstLetter(opt)}
+                          </CommandItem>
+                        ))}
                       </CommandGroup>
                     </CommandList>
                   </Command>

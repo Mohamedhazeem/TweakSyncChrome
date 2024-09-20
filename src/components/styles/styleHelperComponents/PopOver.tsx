@@ -16,7 +16,7 @@ import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
 import { useClearLayoutContext } from "@/utils/elementContext";
 import { sortOptions } from "@/utils/sortOptions";
-import { globalCssOptions } from "@/utils/styles/globalStyles";
+import { seperateCssOptions } from "@/utils/styles/seperateCssOptions";
 
 type PopOverType = {
   open: boolean;
@@ -39,12 +39,7 @@ export default function PopOver({
   option,
 }: PopOverType) {
   const clearLayout = useClearLayoutContext();
-  const globalCss = (Array.isArray(style?.options) ? style.options : []).filter((opt) =>
-    globalCssOptions.includes(opt)
-  );
-  const specificCss = (Array.isArray(style?.options) ? style.options : []).filter(
-    (opt) => !globalCssOptions.includes(opt)
-  );
+  const { specificCss, globalCss } = seperateCssOptions(style);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -76,10 +71,9 @@ export default function PopOver({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      (ops === "custom" && isCustomValue) || ops === option
-                        ? clearLayout
-                          ? "opacity-0"
-                          : "opacity-100"
+                      // Check if the current option is selected and ensure opacity is always 100 when selected
+                      ops === option || (ops === "custom" && isCustomValue)
+                        ? "opacity-100"
                         : "opacity-0"
                     )}
                   />
@@ -99,10 +93,9 @@ export default function PopOver({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      (ops === "custom" && isCustomValue) || ops === option
-                        ? clearLayout
-                          ? "opacity-0"
-                          : "opacity-100"
+                      // Check if the current option is selected and ensure opacity is always 100 when selected
+                      ops === option || (ops === "custom" && isCustomValue)
+                        ? "opacity-100"
                         : "opacity-0"
                     )}
                   />

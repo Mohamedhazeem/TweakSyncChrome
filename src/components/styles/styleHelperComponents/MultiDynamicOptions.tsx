@@ -7,18 +7,21 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { extractUnit, extractValue } from "@/utils/styles/extractUnits"; // Utility for extracting value and unit
 import { Style } from "@/types/styleTypes";
-import { ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { useClearLayoutContext } from "@/utils/elementContext";
 import { sortOptions } from "@/utils/sortOptions";
 import { dynamicOptions, globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
 import { DynamicOptions } from "./DynamicOptions";
 import { presetColors } from "@/utils/styles/colorUtils";
 import { longHandDefaults, shorthandMap } from "@/utils/styles/shortHandStyles";
+import { seperateCssOptions } from "@/utils/styles/seperateCssOptions";
+import { cn } from "@/lib/utils";
 
 interface MultiDynamicOptionsProps {
   style: Style;
@@ -77,6 +80,7 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
       }
     }
   }, [style?.value, clearLayout, styleValue]);
+  const { specificCss, globalCss } = seperateCssOptions(style);
 
   function getOptionFromValue(value: string): string {
     if (isDoubleQuotesText) {
@@ -267,17 +271,40 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
                       <CommandInput placeholder={`Search Options...`} />
                       <CommandList>
                         <CommandEmpty>No option found.</CommandEmpty>
-                        <CommandGroup>
-                          {Array.isArray(options) &&
-                            sortOptions(options).map((opt) => (
-                              <CommandItem
-                                key={opt}
-                                value={opt}
-                                onSelect={() => handleSelect(index, opt)}
-                              >
-                                {capitalizeFirstLetter(opt)}
-                              </CommandItem>
-                            ))}
+                        <CommandGroup heading={specificCss && `${style?.nameForTitle} Options`}>
+                          {sortOptions(specificCss).map((opt) => (
+                            <CommandItem
+                              key={opt}
+                              value={opt}
+                              onSelect={() => handleSelect(index, opt)}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  opt === option ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {capitalizeFirstLetter(opt)}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                        <CommandSeparator />
+                        <CommandGroup heading={"Global CSS"}>
+                          {sortOptions(globalCss).map((opt) => (
+                            <CommandItem
+                              key={opt}
+                              value={opt}
+                              onSelect={() => handleSelect(index, opt)}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  opt === option ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {capitalizeFirstLetter(opt)}
+                            </CommandItem>
+                          ))}
                         </CommandGroup>
                       </CommandList>
                     </Command>
