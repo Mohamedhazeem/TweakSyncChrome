@@ -15,7 +15,7 @@ function BackgroundProperties() {
       <Color colorProp="background-color" />
       <SingleStyleOptionSetter name="background-image" isCapitalized={true} />
       <SingleStyleOptionSetter name="background-origin" isCapitalized={true} />
-      <MultiDynamicOptionSetter name="background-position" isSupportNegativeValue={false} />
+      <MultiDynamicOptionSetter name="background-position" isSupportNegativeValue={true} />
       {/* <DynamicOptionSetter name="background-position-x" />
       <DynamicOptionSetter name="background-position-y" /> */}
       <MultiStyleOptionSetter name="background-repeat" />
