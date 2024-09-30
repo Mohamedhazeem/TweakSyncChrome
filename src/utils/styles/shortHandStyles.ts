@@ -41,6 +41,9 @@ export const shorthandMap: { [key: string]: string[] } = {
 
   // overflow
   overflow: ["overflow-x", "overflow-y"],
+
+  // overscroll-behavior
+  "overscroll-behavior": ["overscroll-behavior-x", "overscroll-behavior-y"],
 };
 export const longHandDefaults: { [key: string]: string } = {
   // background-position
@@ -101,4 +104,8 @@ export const longHandDefaults: { [key: string]: string } = {
   // overflow
   "overflow-x": "visible",
   "overflow-y": "visible",
+
+  // overscroll-behavior
+  "overscroll-behavior-x": "auto",
+  "overscroll-behavior-y": "auto",
 };

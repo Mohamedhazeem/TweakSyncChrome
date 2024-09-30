@@ -3,7 +3,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 
 function ScrollbarProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       {/* <MultiStyleOptionSetter name="scrollbar-color" /> */}
       <SingleStyleOptionSetter name="scrollbar-gutter" isCapitalized={true} />
       <SingleStyleOptionSetter name="scrollbar-width" isCapitalized={true} />

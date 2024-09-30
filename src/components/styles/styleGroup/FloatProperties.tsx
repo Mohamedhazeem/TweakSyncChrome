@@ -2,7 +2,7 @@ import SingleStyleOptionSetter from "../styleComponents/SingleStyleOptionSetter"
 
 function FloatProperties() {
   return (
-    <div>
+    <div className="inspector-component">
       <SingleStyleOptionSetter name="float" isCapitalized={true} />
       <SingleStyleOptionSetter name="clear" isCapitalized={true} />
     </div>
