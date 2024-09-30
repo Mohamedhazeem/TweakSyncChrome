@@ -44,6 +44,11 @@ export const shorthandMap: { [key: string]: string[] } = {
 
   // overscroll-behavior
   "overscroll-behavior": ["overscroll-behavior-x", "overscroll-behavior-y"],
+
+  // paddding
+  padding: ["padding-top", "padding-right", "padding-bottom", "padding-left"],
+  "padding-block": ["padding-block-start", "padding-block-end"],
+  "padding-inline": ["padding-inline-start", "padding-inline-end"],
 };
 export const longHandDefaults: { [key: string]: string } = {
   // background-position
@@ -108,4 +113,16 @@ export const longHandDefaults: { [key: string]: string } = {
   // overscroll-behavior
   "overscroll-behavior-x": "auto",
   "overscroll-behavior-y": "auto",
+
+  // padding
+  "padding-top": "0px",
+  "padding-right": "0px",
+  "padding-bottom": "0px",
+  "padding-left": "0px",
+  // padding-block
+  "padding-block-start": "0px",
+  "padding-block-end": "0px",
+  // padding-inline
+  "padding-inline-start": "0px",
+  "padding-inline-end": "0px",
 };
