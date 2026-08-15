@@ -6,30 +6,32 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckedState } from "@radix-ui/react-checkbox";
+import { useMessagingPort } from "@/extension/ExtensionProvider";
 
 type PTagTypes = {
   tag: ElementDetails;
 };
 
 function TextContent({ tag }: PTagTypes) {
+  const messaging = useMessagingPort();
   const [textContent, setTextContent] = useState<string | undefined | null>("");
   const [isSpellCheckEnabled, setIsSpellCheckEnabled] = useState(false);
-  const [elementTemporaryId, setElementTemporaryId] = useState();
+  const [elementTemporaryId, setElementTemporaryId] = useState<string | undefined | null>(undefined);
 
   useEffect(() => {
     setTextContent(tag?.textContent);
-    chrome.runtime.sendMessage({ action: "getElementTemporaryId" }, (response) => {
+    messaging.send({ action: "getElementTemporaryId" }).then((response) => {
       if (response) {
-        setElementTemporaryId(response.temporaryId);
+        setElementTemporaryId((response as { temporaryId?: string | null }).temporaryId ?? null);
         if (tag.textContent == null || tag.textContent == undefined) {
-          setTextContent(response.textContent);
+          setTextContent((response as { textContent: string }).textContent);
         }
       }
     });
-  }, [tag?.textContent, tag?.path]);
+  }, [tag?.textContent, tag?.path, messaging]);
   const handleTextContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextContent(e.target.value);
-    chrome.runtime.sendMessage({
+    messaging.send({
       action: "updateTextContent",
       text: e.target.value,
       temporaryId: elementTemporaryId || tag?.temporaryId,
@@ -37,7 +39,7 @@ function TextContent({ tag }: PTagTypes) {
   };
   const handleRemoveClick = () => {
     setTextContent("");
-    chrome.runtime.sendMessage({
+    messaging.send({
       action: "updateTextContent",
       text: "",
       temporaryId: elementTemporaryId || tag?.temporaryId,

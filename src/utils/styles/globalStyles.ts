@@ -2472,7 +2472,7 @@ const TextGroup: StyleGroup = {
       name: "text-rendering",
       nameForTitle: "Text Rendering",
       type: "string",
-      description: "Defines how text should be rendered by the browser.",
+      description: "Defines how text should be rendered by the user agent.",
       value: "",
       options: [
         "auto",

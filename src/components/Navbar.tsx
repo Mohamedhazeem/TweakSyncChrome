@@ -6,9 +6,11 @@ import { toast } from "react-hot-toast";
 import { HomeIcon } from "./Icons/HomeIcon";
 import { HtmlInspectorIcon } from "./Icons/HtmlInspectorIcon";
 import { StyleInspectorIcon } from "./Icons/StyleInspector";
+import { useMessagingPort } from "@/extension/ExtensionProvider";
 export const Navbar = () => {
   const [elementDetails, setElementDetails] = useState<ElementDetails | null>(null);
   const [elementStyle, setElementStyle] = useState<ElementStyles | null>(null);
+  const messaging = useMessagingPort();
 
   const location = useLocation();
   const [activeButton, setActiveButton] = useState(location.pathname);
@@ -49,23 +51,23 @@ export const Navbar = () => {
   };
 
   useEffect(() => {
-    chrome.runtime.onMessage.addListener(handleMessage);
+    const unsubscribe = messaging.onMessage(handleMessage);
     return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
+      unsubscribe();
     };
-  }, []);
+  }, [messaging]);
   const getUpdatedElementDetails = () => {
-    chrome.runtime.sendMessage({ action: "getUpdatedDetails", apply: "element" }, (response) => {
+    messaging.send({ action: "getUpdatedDetails", apply: "element" }).then((response) => {
       if (response) {
-        setElementDetails(response.details || null);
+        setElementDetails((response as { details?: ElementDetails }).details || null);
       }
     });
   };
 
   const getUpdatedStyleDetails = () => {
-    chrome.runtime.sendMessage({ action: "getUpdatedDetails", apply: "styles" }, (response) => {
+    messaging.send({ action: "getUpdatedDetails", apply: "styles" }).then((response) => {
       if (response) {
-        setElementStyle(response.styles || null);
+        setElementStyle((response as { styles?: ElementStyles }).styles || null);
       }
     });
   };

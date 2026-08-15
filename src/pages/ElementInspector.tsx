@@ -9,7 +9,9 @@ import { GLOBAL_ATTRIBUTES } from "@/utils/attributes/globalAttributes";
 import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import NotFoundInspector from "./NotFoundInspector";
+import { useMessagingPort } from "@/extension/ExtensionProvider";
 function ElementInspector() {
+  const messaging = useMessagingPort();
   const { element } = useOutletContext<OutletContext>();
   const [attributes, setAttributes] = useState<Attribute[] | undefined>(undefined);
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
@@ -67,11 +69,11 @@ function ElementInspector() {
     }, 50);
   }, [element]);
   useEffect(() => {
-    chrome.runtime.onMessage.addListener(handleMessage);
+    const unsubscribe = messaging.onMessage(handleMessage);
     return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
+      unsubscribe();
     };
-  }, []);
+  }, [messaging]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMessage = (message: any) => {
@@ -112,7 +114,7 @@ function ElementInspector() {
     // Example: Sending message to background script in Chrome extension
     if (Array.isArray(attributes) && attributes[index]) {
       const updatedAttribute = attributes[index];
-      chrome.runtime.sendMessage({
+      messaging.send({
         action: "updateAttributes",
         name: updatedAttribute.name,
         value: newValue,
@@ -120,7 +122,7 @@ function ElementInspector() {
     }
   };
   const addAttribute = (newAttributeName: string) => {
-    chrome.runtime.sendMessage({
+    messaging.send({
       action: "updateAttributes",
       name: newAttributeName,
       // value: newValue,
@@ -137,7 +139,7 @@ function ElementInspector() {
       // Example: Sending message to background script in Chrome extension
       const removedAttribute = prevAttributes.find((attr) => attr.name === attributeToRemoveName);
       if (removedAttribute) {
-        chrome.runtime.sendMessage({
+        messaging.send({
           action: "updateAttributes",
           name: removedAttribute.name,
           value: "",
@@ -149,7 +151,7 @@ function ElementInspector() {
   };
   function applyElement() {
     setShowApplyButton(false);
-    chrome.runtime.sendMessage({ action: "apply", apply: "element" });
+    messaging.send({ action: "apply", apply: "element" });
   }
   const hasTweakSyncId = attributes?.some((attr) => {
     if (attr.name === "data-*") {

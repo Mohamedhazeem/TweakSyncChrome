@@ -23,6 +23,43 @@ import { longHandDefaults, shorthandMap } from "@/utils/styles/shortHandStyles";
 import { seperateCssOptions } from "@/utils/styles/seperateCssOptions";
 import { cn } from "@/lib/utils";
 
+/** Maps a CSS value to the option tab that edits it. Hoisted so it can be
+ * referenced before its definition inside the component. */
+function getOptionFromValue(
+  value: string,
+  isDoubleQuotesText?: boolean
+): string {
+  if (isDoubleQuotesText) {
+    return "text";
+  }
+  const preset = presetColors.find(
+    (preset) => preset.title.toLowerCase() === value.toLowerCase()
+  );
+  if (
+    value.startsWith("rgb") ||
+    value.startsWith("rgba") ||
+    value.startsWith("hsl") ||
+    value.startsWith("hsla") ||
+    value.startsWith("#") ||
+    preset
+  ) {
+    return "color";
+  }
+  const lengthUnitRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
+  if (lengthUnitRegex.test(value)) {
+    return "length";
+  }
+  const numberRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?$`);
+  if (numberRegex.test(value)) {
+    return "number";
+  }
+  if (globalCssOptions.includes(value)) {
+    return value;
+  }
+
+  return value;
+}
+
 interface MultiDynamicOptionsProps {
   style: Style;
   customOptionsCallback: (newValue: string | boolean) => void;
@@ -72,50 +109,16 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
             : initialValues;
 
         // Map the values to options
-        const initialOptions = limitedValues.map((val) => getOptionFromValue(val));
+        const initialOptions = limitedValues.map((val) => getOptionFromValue(val, isDoubleQuotesText));
         setSelectedOptions(initialOptions);
         setValues(limitedValues);
         setOptionCount(limitedValues.length);
         setStyleValue(newStyleValue);
       }
     }
-  }, [style?.value, clearLayout, styleValue, getOptionFromValue, maxOptionCounts]);
+  }, [style?.value, clearLayout, styleValue, maxOptionCounts, isDoubleQuotesText]);
   const { specificCss, globalCss } = seperateCssOptions(style);
 
-  const getOptionFromValue = useCallback(
-    (value: string): string => {
-      if (isDoubleQuotesText) {
-        return "text";
-      }
-      const preset = presetColors.find(
-        (preset) => preset.title.toLowerCase() === value.toLowerCase()
-      );
-      if (
-        value.startsWith("rgb") ||
-        value.startsWith("rgba") ||
-        value.startsWith("hsl") ||
-        value.startsWith("hsla") ||
-        value.startsWith("#") ||
-        preset
-      ) {
-        return "color"; // Add this case to handle color values
-      }
-      const lengthUnitRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
-      if (lengthUnitRegex.test(value)) {
-        return "length";
-      }
-      const numberRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?$`);
-      if (numberRegex.test(value)) {
-        return "number";
-      }
-      if (globalCssOptions.includes(value)) {
-        return value;
-      }
-
-      return value;
-    },
-    [isDoubleQuotesText]
-  );
   const handleShorthandProperties = useCallback((options: string[], values: string[]) => {
     Object.entries(shorthandMap).forEach(([shorthand, longhands]) => {
       if (options.includes(shorthand)) {

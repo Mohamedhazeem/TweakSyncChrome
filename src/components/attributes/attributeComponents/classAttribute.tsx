@@ -4,9 +4,11 @@ import { Input } from "@/components/ui/input";
 import { useAttributeContext } from "@/utils/elementContext";
 import { splitStringToArray } from "@/utils/splitStringToArray";
 import { ATTRIBUTE_ENUMS } from "@/types/attributeTypes";
+import { useMessagingPort } from "@/extension/ExtensionProvider";
 
 function ClassAttribute(attributeEnum: ATTRIBUTE_ENUMS) {
   const context = useAttributeContext();
+  const messaging = useMessagingPort();
   const [words, setWords] = useState<string[]>([]);
   const [previousWords, setPreviousWords] = useState<string[]>([]);
 
@@ -27,7 +29,7 @@ function ClassAttribute(attributeEnum: ATTRIBUTE_ENUMS) {
     const newWord = newValue.trim();
 
     if (oldWord && oldWord !== newWord) {
-      chrome.runtime.sendMessage({
+      messaging.send({
         action: "renameSelector",
         oldSelector: attributeEnum == ATTRIBUTE_ENUMS.class ? `.${oldWord}` : `#${oldWord}`,
         newSelector: attributeEnum == ATTRIBUTE_ENUMS.class ? `.${newWord}` : `#${newWord}`,
@@ -67,7 +69,7 @@ function ClassAttribute(attributeEnum: ATTRIBUTE_ENUMS) {
     const updatedPreviousWords = [...previousWords];
     updatedPreviousWords[wordIndex] = newWord;
     setPreviousWords(updatedPreviousWords);
-    chrome.runtime.sendMessage({
+    messaging.send({
       action: "addSelector",
       selector: attributeEnum == ATTRIBUTE_ENUMS.class ? `.${newWord}` : `#${newWord}`,
     });

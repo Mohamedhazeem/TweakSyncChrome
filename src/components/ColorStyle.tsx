@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ElementStyles } from "../types/elementTypes";
 import Color from "./Color";
+import { useMessagingPort } from "@/extension/ExtensionProvider";
 
 type ColorTypes = {
   temporaryId: string | null;
@@ -8,6 +9,7 @@ type ColorTypes = {
 };
 
 function ColorStyle({ temporaryId, style }: ColorTypes) {
+  const messaging = useMessagingPort();
   const initialStyles: ElementStyles = {
     inline: {},
     external: {
@@ -71,7 +73,7 @@ function ColorStyle({ temporaryId, style }: ColorTypes) {
           }
         }
       }
-      chrome.runtime.sendMessage({
+      messaging.send({
         action: "updateStyles",
         selector,
         property,

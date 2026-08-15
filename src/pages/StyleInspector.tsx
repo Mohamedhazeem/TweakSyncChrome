@@ -12,8 +12,10 @@ import { Button } from "@/components/ui/button";
 import NotFoundInspector from "./NotFoundInspector.tsx";
 import NoStylesMessage from "@/components/NoStylesMessage.tsx";
 import VerticalStyleNavbar from "@/components/VerticalStyleNavbar.tsx";
+import { useMessagingPort } from "@/extension/ExtensionProvider";
 
 function StyleInspector() {
+  const messaging = useMessagingPort();
   const { style } = useOutletContext<OutletContext>();
   const totalButtonCount = 7;
   const initialStyles: ElementStyles = {
@@ -48,11 +50,11 @@ function StyleInspector() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [style]);
   useEffect(() => {
-    chrome.runtime.onMessage.addListener(handleMessage);
+    const unsubscribe = messaging.onMessage(handleMessage);
     return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
+      unsubscribe();
     };
-  }, []);
+  }, [messaging]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleMessage = (message: any) => {
@@ -140,7 +142,7 @@ function StyleInspector() {
           }
         }
       }
-      chrome.runtime.sendMessage({
+      messaging.send({
         action: "updateStyles",
         selector,
         property,
@@ -153,7 +155,7 @@ function StyleInspector() {
   const addProperty = (selector: string, property: string) => {
     const temporaryId = styles.temporaryId; // Ensure that temporaryId is accessible here
 
-    chrome.runtime.sendMessage({
+    messaging.send({
       action: "updateStyles",
       selector,
       property,
@@ -253,7 +255,7 @@ function StyleInspector() {
 
   function applyStyles() {
     setShowApplyButton(false);
-    chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
+    messaging.send({ action: "apply", apply: "styles" });
   }
   if (!style) {
     return <NotFoundInspector inspectorName="Style Inspector" />;

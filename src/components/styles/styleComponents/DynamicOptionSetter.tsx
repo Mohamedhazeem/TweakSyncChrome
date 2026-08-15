@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState, useCallback } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useStyleContext } from "@/utils/elementContext";
 import { IStyleContext } from "@/types/styleTypes";
 import { DynamicOptions } from "../styleHelperComponents/DynamicOptions";
@@ -6,6 +6,26 @@ import StyleLayout from "../StyleLayout";
 import { extractString, extractUnit, extractValue } from "@/utils/styles/extractUnits";
 import { dynamicOptions, globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
 const PopOver = lazy(() => import("../styleHelperComponents/PopOver"));
+
+/** Maps a CSS value to the option tab that edits it. Hoisted so it can be
+ * referenced before its definition inside the component. */
+function getOptionFromValue(value: string, isDoubleQuotesText?: boolean): string {
+  if (isDoubleQuotesText) {
+    return "text";
+  }
+  const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
+  if (lengthUnitRegex.test(value)) {
+    return "length";
+  }
+  const numberRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?$`);
+  if (numberRegex.test(value)) {
+    return "number";
+  }
+  if (globalCssOptions.includes(value)) {
+    return value;
+  }
+  return value;
+}
 
 type DynamicOptionType = {
   name: string;
@@ -28,31 +48,14 @@ export default function DynamicOptionSetter({
 
   useEffect(() => {
     if (!option && style?.value) {
-      const initialOption = getOptionFromValue(style.value);
+      const initialOption = getOptionFromValue(style.value, isDoubleQuotesText);
       setOption(initialOption);
       setValues((prevValues) => ({
         ...prevValues,
         [initialOption]: style.value,
       }));
     }
-  }, [selector, style, option, getOptionFromValue]);
-  const getOptionFromValue = useCallback((value: string): string => {
-    if (isDoubleQuotesText) {
-      return "text";
-    }
-    const lengthUnitRegex = new RegExp(`^\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
-    if (lengthUnitRegex.test(value)) {
-      return "length";
-    }
-    const numberRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?$`);
-    if (numberRegex.test(value)) {
-      return "number";
-    }
-    if (globalCssOptions.includes(value)) {
-      return value;
-    }
-    return value;
-  }, [isDoubleQuotesText]);
+  }, [selector, style, option, isDoubleQuotesText]);
   const handlePopOverSelect = (newValue: string) => {
     if (style && style.name) {
       if (dynamicOptions.includes(newValue)) {

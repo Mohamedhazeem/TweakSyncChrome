@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { useMessagingPort } from "@/extension/ExtensionProvider";
 function Home() {
+  const messaging = useMessagingPort();
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleMessage = (message: any) => {
@@ -20,21 +22,21 @@ function Home() {
       }
     };
 
-    chrome.runtime.onMessage.addListener(handleMessage);
+    const unsubscribe = messaging.onMessage(handleMessage);
 
     return () => {
-      chrome.runtime.onMessage.removeListener(handleMessage);
+      unsubscribe();
     };
-  }, []);
+  }, [messaging]);
   async function connected() {
-    await chrome.runtime.sendMessage({ action: "connect" });
+    await messaging.send({ action: "connect" });
   }
   function inject() {
     toast.loading("Initializing... Please wait.", { duration: 800 });
-    chrome.runtime.sendMessage({ action: "injectContentScript" });
+    messaging.send({ action: "injectContentScript" });
   }
   function removeInject() {
-    chrome.runtime.sendMessage({ action: "removeContentScript" });
+    messaging.send({ action: "removeContentScript" });
   }
 
   return (
