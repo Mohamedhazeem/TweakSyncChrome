@@ -2,13 +2,13 @@ import {
   injectContentScript,
   reinjectContentScript,
   removeContentScript,
-} from "./contentScriptInjectAndRemove";
+} from "../scripts/contentScriptInjectAndRemove";
 import {
   applyElementToVscode,
   applyStylesToVscode,
   initWebSocket,
   isSocketOpen,
-} from "./websocket";
+} from "../scripts/websocket";
 // chrome.sidePanel
 //   .setPanelBehavior({ openPanelOnActionClick: true })
 //   .then(() => {

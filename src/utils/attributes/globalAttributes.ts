@@ -1,7 +1,7 @@
 import { Attribute, accessKeylists } from "../../types/attributeTypes";
 import { ARIA_ATTRIBUTES } from "./ariaAttributes";
 import { ARIA_ROLES } from "./ariaRoles";
-import { languageTags } from "./lang";
+import { languageTags } from "@/core/element/data/languageTags";
 
 export const GLOBAL_ATTRIBUTES: Attribute[] = [
   ARIA_ROLES,

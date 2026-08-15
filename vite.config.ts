@@ -29,7 +29,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         content: resolve(__dirname, "src/scripts/content.ts"),
-        serviceworker: resolve(__dirname, "src/scripts/serviceworker.ts"),
+        serviceworker: resolve(__dirname, "src/extension/serviceWorker.ts"),
         contentcss: resolve(__dirname, "src/scripts/content.css"),
       },
       output: {
