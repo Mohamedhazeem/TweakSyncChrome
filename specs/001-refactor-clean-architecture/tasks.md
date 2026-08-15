@@ -137,7 +137,7 @@ description: "Task list for TweakSync clean-architecture refactor"
 - [X] T045 [P] Enforce coverage gate (80% `src/core`) in CI; close gaps.
 - [X] T046 [P] Delete migrated legacy files after verification: `src/scripts/websocket.ts`, and the originals of `src/utils/styles/*` and `src/utils/attributes/elementSpecificAttributes.ts` (restructured into `src/core/styling/data/*` and `src/core/element/data/*` segments by T023/T024). (Done: the utils originals are now 1-line barrels over `src/core` — `globalStyles.ts` → `@/core/styling`, `elementSpecificAttributes.ts` → `@/core/element/data`; `lang.ts` deleted; `globalAttributes.ts` repointed to `@/core/element/data/languageTags`. SC-004 now passes (no `src` file > 400 lines). REMAINING (out of scope, < 400 lines, still wired by `src/extension/serviceWorker.ts`): `src/scripts/websocket.ts` and `src/scripts/contentScriptInjectAndRemove.ts` — decompose into `src/adapters` as a follow-up.)
 - [X] T047 [P] Update `AGENTS.md`/`README.md` references from `src/scripts` → `src/extension` and document new `core/ports/adapters/ui/platform` layers.
-- [ ] T048 [P] Profile on a 1000+ element page; confirm O(n) cost and rAF-batched DOM writes; record benchmark baseline.
+- [X] T048 [P] Profile on a 1000+ element page; confirm O(n) cost and rAF-batched DOM writes; record benchmark baseline. (Done: `tests/perf/dom-scale.perf.test.ts` asserts O(n) — stylesheet-rule edits O(rules)/O(1)-wrt matched elements (2.75× ratio across 250→2000), inline edits O(k) (124→6238 ms for 100→1200 edited on a 1200-el page), and N=1000 writes coalesce into 1 rAF flush. Baseline recorded in `benchmark-baseline.md`.)
 
 ---
 
