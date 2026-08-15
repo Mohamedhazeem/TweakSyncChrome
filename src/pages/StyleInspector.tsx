@@ -45,7 +45,8 @@ function StyleInspector() {
       setStyles(style);
       showFirstStyledContent(style);
     }
-  }, [style]); // Check if style needs to be updated when tag.path changes
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [style]);
   useEffect(() => {
     chrome.runtime.onMessage.addListener(handleMessage);
     return () => {

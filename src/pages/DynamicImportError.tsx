@@ -1,6 +1,6 @@
 function DynamicImportError() {
   return (
-    <div className="bg-gradient-to-r from-indigo-500 to-red-400 h-dvh">
+    <div className="bg-linear-to-r from-indigo-500 to-red-400 h-dvh">
       <div className="SupportContainer">
         <div className="flex gap-2 items-center font-semibold rounded-lg p-2 text-xl text-darkBlue bg-[#EEEEEE]">
           <div className="text-center">

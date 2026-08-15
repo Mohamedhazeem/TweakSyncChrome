@@ -6,7 +6,7 @@ import { ContactSupportIcon } from "../components/Icons/ContactSupportIcon";
 
 function SupportPage() {
   return (
-    <div className="bg-gradient-to-r from-indigo-500 to-red-400 h-dvh">
+    <div className="bg-linear-to-r from-indigo-500 to-red-400 h-dvh">
       <div className="SupportContainer">
         <div className="contactSupport">
           <p className="contactSupportTitle">Contact Support</p>

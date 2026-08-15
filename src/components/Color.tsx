@@ -18,7 +18,7 @@ const Color: React.FC<ColorProps> = ({
   const [color, setColor] = useState<string | number>();
   useEffect(() => {
     setColor(convertToHex(value));
-  }, []);
+  }, [convertToHex, value]);
   return (
     <div>
       <span key={`${selector}-${property}`}>

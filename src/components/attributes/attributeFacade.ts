@@ -1,6 +1,6 @@
 export { default as AttributeLayout } from "./AttributeLayout";
 export { default as AddAttribute } from "./attributeComponents/AddAttribute";
-import ClassAttribute from "./attributeComponents/ClassAttribute";
+import ClassAttribute from "./attributeComponents/classAttribute";
 import OptionsAttribute from "./attributeComponents/OptionsAttribute";
 import StringAttribute from "./attributeComponents/StringAttribute";
 import NumberAttribute from "./attributeComponents/NumberAttribute";
@@ -8,7 +8,7 @@ import OptionsObjectAttribute from "./attributeComponents/OptionsObjectAttribute
 import AccessKeyAttribute from "./attributeComponents/AccessKeyAttribute";
 import MultiOptionsAttribute from "./attributeComponents/MultiOptionsAttributes";
 import { ATTRIBUTE_ENUMS } from "@/types/attributeTypes";
-import DataAttribute from "./attributeComponents/DataAttribute";
+import DataAttribute from "./attributeComponents/dataAttribute";
 
 // not add boolean attributes beacuse it only on attribute layout
 

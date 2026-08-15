@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState, useCallback } from "react";
 import { useStyleContext } from "@/utils/elementContext";
 import { IStyleContext } from "@/types/styleTypes";
 import { DynamicOptions } from "../styleHelperComponents/DynamicOptions";
@@ -35,8 +35,8 @@ export default function DynamicOptionSetter({
         [initialOption]: style.value,
       }));
     }
-  }, [selector, style, option]);
-  function getOptionFromValue(value: string): string {
+  }, [selector, style, option, getOptionFromValue]);
+  const getOptionFromValue = useCallback((value: string): string => {
     if (isDoubleQuotesText) {
       return "text";
     }
@@ -52,7 +52,7 @@ export default function DynamicOptionSetter({
       return value;
     }
     return value;
-  }
+  }, [isDoubleQuotesText]);
   const handlePopOverSelect = (newValue: string) => {
     if (style && style.name) {
       if (dynamicOptions.includes(newValue)) {

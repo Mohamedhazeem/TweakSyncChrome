@@ -79,40 +79,43 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
         setStyleValue(newStyleValue);
       }
     }
-  }, [style?.value, clearLayout, styleValue]);
+  }, [style?.value, clearLayout, styleValue, getOptionFromValue, maxOptionCounts]);
   const { specificCss, globalCss } = seperateCssOptions(style);
 
-  function getOptionFromValue(value: string): string {
-    if (isDoubleQuotesText) {
-      return "text";
-    }
-    const preset = presetColors.find(
-      (preset) => preset.title.toLowerCase() === value.toLowerCase()
-    );
-    if (
-      value.startsWith("rgb") ||
-      value.startsWith("rgba") ||
-      value.startsWith("hsl") ||
-      value.startsWith("hsla") ||
-      value.startsWith("#") ||
-      preset
-    ) {
-      return "color"; // Add this case to handle color values
-    }
-    const lengthUnitRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
-    if (lengthUnitRegex.test(value)) {
-      return "length";
-    }
-    const numberRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?$`);
-    if (numberRegex.test(value)) {
-      return "number";
-    }
-    if (globalCssOptions.includes(value)) {
-      return value;
-    }
+  const getOptionFromValue = useCallback(
+    (value: string): string => {
+      if (isDoubleQuotesText) {
+        return "text";
+      }
+      const preset = presetColors.find(
+        (preset) => preset.title.toLowerCase() === value.toLowerCase()
+      );
+      if (
+        value.startsWith("rgb") ||
+        value.startsWith("rgba") ||
+        value.startsWith("hsl") ||
+        value.startsWith("hsla") ||
+        value.startsWith("#") ||
+        preset
+      ) {
+        return "color"; // Add this case to handle color values
+      }
+      const lengthUnitRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?(${lengthUnits.join("|")})$`);
+      if (lengthUnitRegex.test(value)) {
+        return "length";
+      }
+      const numberRegex = new RegExp(`^[+-]?\\d+(\\.\\d+)?$`);
+      if (numberRegex.test(value)) {
+        return "number";
+      }
+      if (globalCssOptions.includes(value)) {
+        return value;
+      }
 
-    return value;
-  }
+      return value;
+    },
+    [isDoubleQuotesText]
+  );
   const handleShorthandProperties = useCallback((options: string[], values: string[]) => {
     Object.entries(shorthandMap).forEach(([shorthand, longhands]) => {
       if (options.includes(shorthand)) {
@@ -172,7 +175,7 @@ const MultiDynamicOptions: React.FC<MultiDynamicOptionsProps> = ({
       setOpenPopoverIndex(null);
       customOptionsCallback(updatedValues.join(" "));
     },
-    [selectedOptions, values, handleShorthandProperties, customOptionsCallback]
+    [selectedOptions, values, handleShorthandProperties, customOptionsCallback, defaultValue, options]
   );
   const handleRemoveClick = useCallback(
     (index: number) => {

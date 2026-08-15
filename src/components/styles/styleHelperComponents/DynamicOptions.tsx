@@ -52,6 +52,7 @@ export function DynamicOptions({
 
   useEffect(() => {
     handleApplyUnitChanges();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleApplyUnitChanges = () => {
