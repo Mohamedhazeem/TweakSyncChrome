@@ -24,11 +24,11 @@ description: "Task list for TweakSync clean-architecture refactor"
 
 **Purpose**: Scaffold the layered structure and tooling required by plan.md.
 
-- [ ] T001 Create directory layout per plan.md: `src/core/{element,styling,language,sync}`, `src/ports`, `src/adapters/{browser,memory}`, `src/ui/{components,pages,hooks}`, `src/platform/dom`, `src/extension`, plus `tests/{unit,integration,fixtures}` (use `mkdir -p`).
-- [ ] T002 Add runtime dependency `webextension-polyfill` (and `@types/webextension-polyfill`) via npm; confirm import works in `src/adapters`.
-- [ ] T003 [P] Add dev dependency `vitest` + `@vitest/coverage-v8` + `@testing-library/react` + `jsdom`; create `vitest.config.ts` with `environment: "jsdom"`, setup file `tests/setup.ts`, and coverage thresholds (80% on `src/core`).
-- [ ] T004 [P] Add npm scripts in `package.json`: `test` (vitest run), `test:watch`, `build:chrome`, `build:edge`, `build:firefox`, `build:all` (targets filled in Phase US3).
-- [ ] T005 [P] Add a CI border-lint script (`scripts/lint-borders.mjs`) that FAILS if `chrome.`/`browser.` appears outside `src/adapters` and `src/extension`; wire into `npm run lint` pipeline.
+- [X] T001 Create directory layout per plan.md: `src/core/{element,styling,language,sync}`, `src/ports`, `src/adapters/{browser,memory}`, `src/ui/{components,pages,hooks}`, `src/platform/dom`, `src/extension`, plus `tests/{unit,integration,fixtures}` (use `mkdir -p`).
+- [X] T002 Add runtime dependency `webextension-polyfill` (and `@types/webextension-polyfill`) via npm; confirm import works in `src/adapters`.
+- [X] T003 [P] Add dev dependency `vitest` + `@vitest/coverage-v8` + `@testing-library/react` + `jsdom`; create `vitest.config.ts` with `environment: "jsdom"`, setup file `tests/setup.ts`, and coverage thresholds (80% on `src/core`).
+- [X] T004 [P] Add npm scripts in `package.json`: `test` (vitest run), `test:watch`, `build:chrome`, `build:edge`, `build:firefox`, `build:all` (targets filled in Phase US3).
+- [X] T005 [P] Add a CI border-lint script (`scripts/lint-borders.mjs`) that FAILS if `chrome.`/`browser.` appears outside `src/adapters` and `src/extension`; wire into `npm run lint` pipeline.
 
 **Checkpoint**: Directories, test runner, and border guard exist.
 
@@ -38,13 +38,13 @@ description: "Task list for TweakSync clean-architecture refactor"
 
 **Purpose**: Port interfaces + test doubles MUST exist before any user story.
 
-- [ ] T006 Create `src/ports/BrowserPort.ts` interface per `contracts/browser-port.md` (storage, scripting, messaging, sidePanel, runtime; all promise-based; returns unsubscribe fns).
-- [ ] T007 [P] Create `src/ports/MessagingPort.ts` per `contracts/messaging.md` (typed `Message` union, `send`, `onMessage` returning unsubscribe).
-- [ ] T008 [P] Create `src/ports/StoragePort.ts` (session + local `get/set/remove`, promise-based).
-- [ ] T009 [P] Create `src/ports/SyncTransportPort.ts` per `contracts/sync-transport.md` (`connect/disconnect/send/onState/onMessage`, `ConnectionState` union).
-- [ ] T010 [P] Create `src/ports/ContentScriptPort.ts` (inject/remove content scripts, promise-based).
-- [ ] T011 [P] Create `src/adapters/memory/MemoryBrowserPort.ts`, `MemoryMessagingPort.ts`, `MemoryStoragePort.ts`, `MemorySyncTransportPort.ts` implementing the ports for unit/integration tests (no real browser APIs).
-- [ ] T012 [P] Create `tests/fixtures/` sample data: `sampleDom.ts` (jsdom element trees), `sampleStyleModel.ts`, and `sampleLanguage.ts` (a stub `StylingLanguage`).
+- [X] T006 Create `src/ports/BrowserPort.ts` interface per `contracts/browser-port.md` (storage, scripting, messaging, sidePanel, runtime; all promise-based; returns unsubscribe fns).
+- [X] T007 [P] Create `src/ports/MessagingPort.ts` per `contracts/messaging.md` (typed `Message` union, `send`, `onMessage` returning unsubscribe).
+- [X] T008 [P] Create `src/ports/StoragePort.ts` (session + local `get/set/remove`, promise-based).
+- [X] T009 [P] Create `src/ports/SyncTransportPort.ts` per `contracts/sync-transport.md` (`connect/disconnect/send/onState/onMessage`, `ConnectionState` union).
+- [X] T010 [P] Create `src/ports/ContentScriptPort.ts` (inject/remove content scripts, promise-based).
+- [X] T011 [P] Create `src/adapters/memory/MemoryBrowserPort.ts`, `MemoryMessagingPort.ts`, `MemoryStoragePort.ts`, `MemorySyncTransportPort.ts` implementing the ports for unit/integration tests (no real browser APIs).
+- [X] T012 [P] Create `tests/fixtures/` sample data: `sampleDom.ts` (jsdom element trees), `sampleStyleModel.ts`, and `sampleLanguage.ts` (a stub `StylingLanguage`).
 
 **Checkpoint**: All ports + memory doubles ready — user stories may begin.
 
@@ -94,17 +94,17 @@ description: "Task list for TweakSync clean-architecture refactor"
 
 ### Tests for User Story 2
 
-- [ ] T031 [P] [US2] Unit test `StylingLanguageRegistry` register/get/list + duplicate-throws in `tests/unit/core/language/registry.test.ts`.
-- [ ] T032 [P] [US2] Unit test `CssLanguage` parse/serialize round-trip in `tests/unit/core/language/css.test.ts`.
-- [ ] T033 [P] [US2] Integration test: register sample language → UI lists it → correct processing path, no core change, in `tests/integration/language-extensibility.test.ts`; also assert that an unregistered/misconfigured language selection fails gracefully with a clear message (US2 AC3).
+- [X] T031 [P] [US2] Unit test `StylingLanguageRegistry` register/get/list + duplicate-throws in `tests/unit/core/language/registry.test.ts`.
+- [X] T032 [P] [US2] Unit test `CssLanguage` parse/serialize round-trip in `tests/unit/core/language/css.test.ts`.
+- [X] T033 [P] [US2] Integration test: register sample language → UI lists it → correct processing path, no core change, in `tests/integration/language-extensibility.test.ts`; also assert that an unregistered/misconfigured language selection fails gracefully with a clear message (US2 AC3).
 
 ### Implementation for User Story 2
 
-- [ ] T034 [US2] Create `src/core/language/StylingLanguage.ts` interface per `contracts/styling-language.md` (`id`, `label`, `parse`, `serialize`, optional `validate`).
-- [ ] T035 [US2] Create `src/core/language/CssLanguage.ts` implementing the interface; move existing CSS parse/serialize logic here.
-- [ ] T036 [US2] Create `src/core/language/StylingLanguageRegistry.ts` (`Map<id,lang>`, O(1) lookup, throws on duplicate `id`).
-- [ ] T037 [US2] Create registration call in `src/extension/composition.ts`: `registry.register(new CssLanguage())`.
-- [ ] T038 [US2] Update `src/ui` language selector to consume `registry.list()` (prop-driven) so selection routes through the registry.
+- [X] T034 [US2] Create `src/core/language/StylingLanguage.ts` interface per `contracts/styling-language.md` (`id`, `label`, `parse`, `serialize`, optional `validate`).
+- [X] T035 [US2] Create `src/core/language/CssLanguage.ts` implementing the interface; move existing CSS parse/serialize logic here.
+- [X] T036 [US2] Create `src/core/language/StylingLanguageRegistry.ts` (`Map<id,lang>`, O(1) lookup, throws on duplicate `id`).
+- [X] T037 [US2] Create registration call in `src/extension/composition.ts`: `registry.register(new CssLanguage())`.
+- [X] T038 [US2] Update `src/ui` language selector to consume `registry.list()` (prop-driven) so selection routes through the registry.
 
 **Checkpoint**: US2 independently functional — extensibility demonstrated without core edits.
 
@@ -118,14 +118,14 @@ description: "Task list for TweakSync clean-architecture refactor"
 
 ### Tests for User Story 3
 
-- [ ] T039 [P] [US3] Integration test `scripts/build-manifest.mjs` in `tests/integration/build-manifest.test.mjs`: asserts Chrome=reference, Edge=Chromium reuse, Firefox=+`browser_specific_settings.gecko`, version matches `package.json`.
+- [X] T039 [P] [US3] Integration test `scripts/build-manifest.mjs` in `tests/integration/build-manifest.test.mjs`: asserts Chrome=reference, Edge=Chromium reuse, Firefox=+`browser_specific_settings.gecko`, version matches `package.json`.
 
 ### Implementation for User Story 3
 
-- [ ] T040 [US3] Normalize all adapter/browser API usage to `webextension-polyfill` `browser.*` (no raw `chrome.*`) across `src/adapters`.
-- [ ] T041 [US3] Create `scripts/build-manifest.mjs` generating `dist/chrome|edge|firefox/manifest.json` from `public/manifest.json` with per-target deltas (Firefox `gecko` id; MV3 background shape preserved).
-- [ ] T042 [US3] Fill npm scripts `build:chrome`, `build:edge`, `build:firefox`, `build:all` (Vite `--outDir dist/<target>` + `build-manifest.mjs`).
-- [ ] T043 [US3] Smoke-load each built package (Chrome/Edge/Firefox) and run spec user scenarios; confirm core styling + sync flows run on all three.
+- [X] T040 [US3] Normalize all adapter/browser API usage to `webextension-polyfill` `browser.*` (no raw `chrome.*`) across `src/adapters`.
+- [X] T041 [US3] Create `scripts/build-manifest.mjs` generating `dist/chrome|edge|firefox/manifest.json` from `public/manifest.json` with per-target deltas (Firefox `gecko` id; MV3 background shape preserved).
+- [X] T042 [US3] Fill npm scripts `build:chrome`, `build:edge`, `build:firefox`, `build:all` (Vite `--outDir dist/<target>` + `build-manifest.mjs`).
+- [X] T043 [US3] Smoke-load each built package (Chrome/Edge/Firefox) and run spec user scenarios; confirm core styling + sync flows run on all three.
 
 **Checkpoint**: US3 independently functional — three browser packages build and load.
 
