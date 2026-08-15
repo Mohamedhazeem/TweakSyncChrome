@@ -58,29 +58,29 @@ description: "Task list for TweakSync clean-architecture refactor"
 
 ### Tests for User Story 1
 
-- [ ] T013 [P] [US1] Unit test `src/core/element/*` pure functions (path/selector/details) in `tests/unit/core/element.test.ts` (no DOM globals).
-- [ ] T014 [P] [US1] Unit test `src/core/styling/*` engine (apply, processRule, shorthand expansion) in `tests/unit/core/styling.test.ts`; assert O(1) Map lookups, no nested loops.
-- [ ] T015 [P] [US1] Unit test `src/platform/dom/*` utilities on injected nodes in `tests/unit/platform/dom.test.ts`.
-- [ ] T016 [P] [US1] Unit test `WebSocketSyncAdapter` in `tests/unit/adapters/websocket.test.ts`: connect() twice → ONE socket; unexpected close → reconnect with increasing backoff; messages sent while connecting flush on open; disconnect() does NOT reconnect.
-- [ ] T017 [P] [US1] Integration test full style-edit → sync flow via `MemorySyncTransportPort` in `tests/integration/sync-flow.test.ts`.
-- [ ] T049 [P] [US1] Unit test the browser adapter implementations (`BrowserPort`/`StoragePort`/`MessagingPort`/`ContentScriptPort`) in `tests/unit/adapters/browser.test.ts` with a mocked `webextension-polyfill`, per Constitution IV (adapters REQUIRE unit tests).
-- [ ] T050 [P] [US1] Integration test the messaging + storage cross-layer contracts in `tests/integration/messaging-storage.test.ts` (round-trip via `MemoryMessagingPort`/`MemoryStoragePort`), per Constitution IV (cross-layer contracts REQUIRE integration tests).
+- [X] T013 [P] [US1] Unit test `src/core/element/*` pure functions (path/selector/details) in `tests/unit/core/element.test.ts` (no DOM globals).
+- [X] T014 [P] [US1] Unit test `src/core/styling/*` engine (apply, processRule, shorthand expansion) in `tests/unit/core/styling.test.ts`; assert O(1) Map lookups, no nested loops.
+- [X] T015 [P] [US1] Unit test `src/platform/dom/*` utilities on injected nodes in `tests/unit/platform/dom.test.ts`.
+- [X] T016 [P] [US1] Unit test `WebSocketSyncAdapter` in `tests/unit/adapters/websocket.test.ts`: connect() twice → ONE socket; unexpected close → reconnect with increasing backoff; messages sent while connecting flush on open; disconnect() does NOT reconnect.
+- [X] T017 [P] [US1] Integration test full style-edit → sync flow via `MemorySyncTransportPort` in `tests/integration/sync-flow.test.ts`.
+- [X] T049 [P] [US1] Unit test the browser adapter implementations (`BrowserPort`/`StoragePort`/`MessagingPort`/`ContentScriptPort`) in `tests/unit/adapters/browser.test.ts` with a mocked `webextension-polyfill`, per Constitution IV (adapters REQUIRE unit tests).
+- [X] T050 [P] [US1] Integration test the messaging + storage cross-layer contracts in `tests/integration/messaging-storage.test.ts` (round-trip via `MemoryMessagingPort`/`MemoryStoragePort`), per Constitution IV (cross-layer contracts REQUIRE integration tests).
 
 ### Implementation for User Story 1
 
-- [ ] T018 [US1] Create `src/core/element/*` by moving pure logic from `src/utils/elementContext.ts`, `getElementPath.ts`, `getElementDetails.ts`, `elementTextContent.ts` (remove global `document`/`chrome` deps).
-- [ ] T019 [P] [US1] Create `src/core/styling/*` from `src/utils/styles/*` (`updateStyles.ts`, `processRule.ts`, `styleHandlers.ts`, `shortHandStyles.ts`, `seperateCssOptions.ts`, `selectorUtilis.ts`, `extractUnits.ts`, `colorUtils.ts`); replace nested element×rule loops with O(n) `Map` keyed access.
-- [ ] T020 [P] [US1] Create `src/platform/dom/*` pure DOM utilities operating on injected nodes (relocate global-`document` usage from content utilities).
-- [ ] T021 [US1] Create `src/adapters/browser/*` implementing `BrowserPort`/`MessagingPort`/`StoragePort`/`ContentScriptPort` via `webextension-polyfill`; MOVE all `chrome.*` calls here from `src/pages/*`, `src/scripts/*`, `src/components/ColorStyle.tsx`.
-- [ ] T022 [US1] Create `src/adapters/browser/WebSocketSyncAdapter.ts` implementing `SyncTransportPort`: idempotent `connect()`, state machine `idle|connecting|connected|reconnecting|error`, single reconnect path on `close`/`error` with exponential backoff+jitter, bounded send queue flushed on open, optional ping/pong, notifications via `onState`/`onMessage` (no direct `chrome.*`). Replaces `src/scripts/websocket.ts`.
-- [ ] T023 [P] [US1] Decompose `src/utils/styles/globalStyles.ts` (~2732 lines) into `src/core/styling/data/<category>.ts` segments (<400 lines each) + thin `globalStyles.ts` accessor with O(1) `Map`.
-- [ ] T024 [P] [US1] Decompose `src/utils/attributes/elementSpecificAttributes.ts` (~2131 lines) into `src/core/element/data/<category>.ts` segments + thin accessor.
-- [ ] T025 [US1] Split oversized UI: refactor `src/pages/StyleInspector.tsx` (334), `src/components/styles/styleHelperComponents/MultiDynamicOptions.tsx` (361), and `src/utils/attributes/ariaAttributes.ts` (390) into focused prop-driven components under `src/ui/components/**`; remove `chrome.runtime.sendMessage` from `src/components/ColorStyle.tsx` and pages.
-- [ ] T026 [US1] Create `src/ui/hooks/*` React bindings (`useMessaging.ts`, `useBrowser.ts`, `useSync.ts`) adapting ports → props, so pages/components never call browser APIs.
-- [ ] T027 [US1] Create `src/extension/composition.ts` DI container binding ports → browser adapters; refactor entry points `src/scripts/serviceworker.ts`, `content.ts`, `contentScriptInjectAndRemove.ts` into `src/extension/*` using composition.
-- [ ] T028 [US1] Update `vite.config.ts` entry points to output `src/extension/serviceworker.ts`, `content.ts`, `contentScriptInjectAndRemove.ts`; ensure manifest `version` equals `package.json` version.
-- [ ] T029 [US1] Batch content-script DOM writes via `requestAnimationFrame`/throttle in `src/platform/dom` + content adapter; keep service worker event-based with no retained large state.
-- [ ] T030 [US1] Run border-lint (`scripts/lint-borders.mjs`): assert ZERO `chrome.`/`browser.` outside `src/adapters` and `src/extension`; fix any violations.
+- [X] T018 [US1] Create `src/core/element/*` by moving pure logic from `src/utils/elementContext.ts`, `getElementPath.ts`, `getElementDetails.ts`, `elementTextContent.ts` (remove global `document`/`chrome` deps).
+- [X] T019 [P] [US1] Create `src/core/styling/*` from `src/utils/styles/*` (`updateStyles.ts`, `processRule.ts`, `styleHandlers.ts`, `shortHandStyles.ts`, `seperateCssOptions.ts`, `selectorUtilis.ts`, `extractUnits.ts`, `colorUtils.ts`); replace nested element×rule loops with O(n) `Map` keyed access.
+- [X] T020 [P] [US1] Create `src/platform/dom/*` pure DOM utilities operating on injected nodes (relocate global-`document` usage from content utilities).
+- [X] T021 [US1] Create `src/adapters/browser/*` implementing `BrowserPort`/`MessagingPort`/`StoragePort`/`ContentScriptPort` via `webextension-polyfill`; MOVE all `chrome.*` calls here from `src/pages/*`, `src/scripts/*`, `src/components/ColorStyle.tsx`.
+- [X] T022 [US1] Create `src/adapters/browser/WebSocketSyncAdapter.ts` implementing `SyncTransportPort`: idempotent `connect()`, state machine `idle|connecting|connected|reconnecting|error`, single reconnect path on `close`/`error` with exponential backoff+jitter, bounded send queue flushed on open, optional ping/pong, notifications via `onState`/`onMessage` (no direct `chrome.*`). Replaces `src/scripts/websocket.ts`.
+- [X] T023 [P] [US1] Decompose `src/utils/styles/globalStyles.ts` (~2732 lines) into `src/core/styling/data/<category>.ts` segments (<400 lines each) + thin `globalStyles.ts` accessor with O(1) `Map`.
+- [X] T024 [P] [US1] Decompose `src/utils/attributes/elementSpecificAttributes.ts` (~2131 lines) into `src/core/element/data/<category>.ts` segments + thin accessor.
+- [X] T025 [US1] Split oversized UI: refactor `src/pages/StyleInspector.tsx` (334), `src/components/styles/styleHelperComponents/MultiDynamicOptions.tsx` (361), and `src/utils/attributes/ariaAttributes.ts` (390) into focused prop-driven components under `src/ui/components/**`; remove `chrome.runtime.sendMessage` from `src/components/ColorStyle.tsx` and pages.
+- [X] T026 [US1] Create `src/ui/hooks/*` React bindings (`useMessaging.ts`, `useBrowser.ts`, `useSync.ts`) adapting ports → props, so pages/components never call browser APIs.
+- [X] T027 [US1] Create `src/extension/composition.ts` DI container binding ports → browser adapters; refactor entry points `src/scripts/serviceworker.ts`, `content.ts`, `contentScriptInjectAndRemove.ts` into `src/extension/*` using composition.
+- [X] T028 [US1] Update `vite.config.ts` entry points to output `src/extension/serviceworker.ts`, `content.ts`, `contentScriptInjectAndRemove.ts`; ensure manifest `version` equals `package.json` version.
+- [X] T029 [US1] Batch content-script DOM writes via `requestAnimationFrame`/throttle in `src/platform/dom` + content adapter; keep service worker event-based with no retained large state.
+- [X] T030 [US1] Run border-lint (`scripts/lint-borders.mjs`): assert ZERO `chrome.`/`browser.` outside `src/adapters` and `src/extension`; fix any violations.
 
 **Checkpoint**: US1 independently functional — MVP. Behavior-preserving refactor + clean boundaries + managed WebSocket proven by tests.
 
@@ -224,3 +224,4 @@ Task T016: tests/unit/adapters/websocket.test.ts
 - Commit after each task or logical group.
 - Stop at any checkpoint to validate a story independently.
 - Avoid: vague tasks, same-file conflicts, cross-story dependencies that break independence.
+
