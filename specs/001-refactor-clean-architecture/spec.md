@@ -4,7 +4,7 @@
 
 **Created**: 2026-08-15
 
-**Status**: Draft
+**Status**: Ready for Implementation
 
 **Input**: User description: "Improve the codebase by refactoring it into a modular, testable, clean architecture. Separate the logic from the user interface to ensure easy extension and maintenance. Ensure the codebase is efficient, adheres to big O notation, and can be easily ported or built into multiple web browsers as extensions, including Edge, Firefox, and Chrome. Use the Chrome manifest as a guide. Split large files into smaller, more manageable ones. Currently, the codebase supports CSS only, but it should be easily extendable to support additional styling languages like Sass, Less, Tailwind and so on later."
 
@@ -95,17 +95,17 @@ A developer produces installable extension packages for Chrome, Edge, and Firefo
 
 ### Measurable Outcomes
 
-- **SC-001**: After refactoring, 100% of previously supported CSS styling and sync user flows behave identically (zero functional regression), confirmed by the acceptance test suite.
+- **SC-001**: FR-001 is satisfied — 100% of previously supported CSS styling and sync user flows behave identically (zero functional regression), confirmed by the unit + integration test suite and per-browser manual acceptance per `quickstart.md` (automated e2e harness is deferred; see plan Testing).
 - **SC-002**: A new styling language is integrated and usable with zero modifications to core modules, demonstrated by adding a sample language module.
-- **SC-003**: One source tree produces installable packages for Chrome, Edge, and Firefox that each load and run the core flows.
-- **SC-004**: No source file exceeds a defined size/responsibility threshold; total module count increases and average file size decreases relative to the pre-refactor baseline.
-- **SC-005**: Operations over large pages (for example 1,000+ elements) remain within an analyzed complexity bound (O(n) or better where n is element/rule count) with no disproportionate slowdown.
+- **SC-003**: FR-004 is satisfied — one source tree produces installable packages for Chrome, Edge, and Firefox that each load and run the core flows (validated by T039–T043).
+- **SC-004**: No source file exceeds the **400-line** size/responsibility threshold (defined in plan Constraints); total module count increases and average file size decreases relative to the pre-refactor baseline (verified by the size/metric check in T044).
+- **SC-005**: FR-006 is satisfied — operations over large pages (1,000+ elements) remain within an analyzed complexity bound (O(n) or better) with no disproportionate slowdown (profiled in T048).
 - **SC-006**: Unit-test coverage of business logic reaches a defined threshold (for example 80%), evidencing testability of the separated core.
 
 ## Assumptions
 
 - The current Chrome extension is the baseline; Edge and Firefox are reached via the WebExtensions standard, with the existing Chrome manifest as the reference.
 - CSS remains the primary, fully supported language; Sass, Less, Tailwind, and others are future extensibility, not required in the initial delivery.
-- The existing editor-sync protocol and connection mechanism are retained (behavior-preserving refactor, not a reimplementation).
+- The existing editor-sync **protocol** (message shapes, payloads) is retained; the WebSocket **connection-management mechanism** (connect/reconnect/backoff) is explicitly reimplemented as a managed `WebSocketSyncAdapter` to fix legacy defects. This is a behavior-preserving refactor of the transport, not a protocol change.
 - No new user-facing features are required beyond the stated extensibility, cross-browser, efficiency, and modularity goals.
 - The existing build and type-checking tooling remains in use; the refactor changes structure, not the toolchain.
