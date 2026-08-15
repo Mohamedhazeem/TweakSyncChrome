@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -7,15 +7,17 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { splitStringToArray } from "@/utils/splitStringToArray";
 import { Style } from "@/types/styleTypes";
-import { ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown } from "lucide-react";
 import { useClearLayoutContext } from "@/utils/elementContext";
 import { sortOptions } from "@/utils/sortOptions";
-
+import { seperateCssOptions } from "@/utils/styles/seperateCssOptions";
+import { cn } from "@/lib/utils";
 interface MultiOptionsStyleProps {
   style: Style;
   customOptionsCallback: (newValue: string | boolean) => void;
@@ -32,9 +34,13 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
   const [optionCount, setOptionCount] = useState<number>(0);
   const clearLayout = useClearLayoutContext();
   const nameForTitle = style.nameForTitle;
-  const options = style.options;
+  // const options = style.options;
   const maxOptionCounts = style.maxOptionCounts;
 
+  const labels = useMemo(
+    () => (style?.labels && style.labels[optionCount - 1]) || [],
+    [style?.labels, optionCount]
+  );
   useEffect(() => {
     if (clearLayout) {
       setSelectedOptions([]);
@@ -45,6 +51,7 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
       setOptionCount(initialOptions.length);
     }
   }, [style, clearLayout]);
+  const { specificCss, globalCss } = seperateCssOptions(style);
 
   const handleSelect = (index: number, newOption: string) => {
     const updatedOptions = [...selectedOptions];
@@ -76,6 +83,9 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
     <div className="flex flex-col gap-2">
       {selectedOptions.map((option, index) => (
         <div className="flex flex-col gap-2 items-center">
+          <div className="w-full flex items-center text-start text-sm font-semibold">
+            <div className="flex-1">{labels[index]}</div>{" "}
+          </div>
           <div key={`option-${index}`} className="flex gap-2 items-center w-full">
             <Popover
               open={openPopoverIndex === index}
@@ -93,17 +103,40 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
                     <CommandInput placeholder={`Search Options...`} />
                     <CommandList>
                       <CommandEmpty>No option found.</CommandEmpty>
-                      <CommandGroup>
-                        {Array.isArray(options) &&
-                          sortOptions(options).map((opt) => (
-                            <CommandItem
-                              key={opt}
-                              value={opt}
-                              onSelect={() => handleSelect(index, opt)}
-                            >
-                              {capitalizeFirstLetter(opt)}
-                            </CommandItem>
-                          ))}
+                      <CommandGroup heading={specificCss && `${style?.nameForTitle} Options`}>
+                        {sortOptions(specificCss).map((opt) => (
+                          <CommandItem
+                            key={opt}
+                            value={opt}
+                            onSelect={() => handleSelect(index, opt)}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                opt === option ? "opacity-100" : "opacity-0"
+                              )}
+                            />
+                            {capitalizeFirstLetter(opt)}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                      <CommandSeparator />
+                      <CommandGroup heading={"Global CSS"}>
+                        {sortOptions(globalCss).map((opt) => (
+                          <CommandItem
+                            key={opt}
+                            value={opt}
+                            onSelect={() => handleSelect(index, opt)}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                opt === option ? "opacity-100" : "opacity-0"
+                              )}
+                            />
+                            {capitalizeFirstLetter(opt)}
+                          </CommandItem>
+                        ))}
                       </CommandGroup>
                     </CommandList>
                   </Command>
@@ -112,7 +145,7 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
             </Popover>
             <Button
               size="sm"
-              className="bg-rose-600 rounded-xl text-xs p-1 w-4 h-4"
+              className="bg-red-500 hover:bg-red-600 rounded-full text-xs p-1.5 w-5 h-5"
               onClick={() => handleRemoveClick(index)}
             >
               X
@@ -120,15 +153,16 @@ const MultiStyleOptions: React.FC<MultiOptionsStyleProps> = ({
           </div>
         </div>
       ))}
-      <Button
-        size="sm"
-        onClick={handleAddOption}
-        className="h-7 self-center"
-        disabled={maxOptionCounts ? optionCount >= maxOptionCounts : false}
-      >
-        {/* Add */}
-        Add {nameForTitle}
-      </Button>
+      <div className="w-full flex items-center justify-center">
+        <Button
+          size="sm"
+          onClick={handleAddOption}
+          className="h-7 self-center addMultiPropertyOrAttribute hover:bg-green-600"
+          disabled={maxOptionCounts ? optionCount >= maxOptionCounts : false}
+        >
+          Add {nameForTitle}
+        </Button>
+      </div>
     </div>
   );
 };

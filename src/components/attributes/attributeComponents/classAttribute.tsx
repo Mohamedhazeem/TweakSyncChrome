@@ -74,7 +74,7 @@ function ClassAttribute(attributeEnum: ATTRIBUTE_ENUMS) {
   };
 
   return (
-    <div key={context?.key} className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       {words.map((word, wordIndex) => (
         <div key={`div-${wordIndex}`} className="flex gap-2 items-center">
           <Input
@@ -83,23 +83,28 @@ function ClassAttribute(attributeEnum: ATTRIBUTE_ENUMS) {
             onKeyDown={handleKeyDown}
             onBlur={() => handleBlur(word, wordIndex)}
             onChange={(e) => handleInputChange(wordIndex, e.target.value)}
-            autoFocus
             spellCheck="false"
           />
           <Button
             size="sm"
-            className="bg-rose-600 rounded-xl text-xs p-1 w-4 h-4"
+            className="bg-red-500 hover:bg-red-600 rounded-full text-xs p-1 w-4 h-4"
             onClick={() => handleRemoveClick(wordIndex)}
           >
             X
           </Button>
         </div>
       ))}
-      {attributeEnum !== ATTRIBUTE_ENUMS.id && (
-        <Button size={"default"} onClick={handleAddWord} className="min-w-32 max-w-48 self-center">
+      {attributeEnum !== ATTRIBUTE_ENUMS.id ? (
+        <Button
+          size={"default"}
+          onClick={handleAddWord}
+          className="self-center addMultiPropertyOrAttribute hover:bg-green-600"
+        >
           Add {context?.attribute?.nameForTitle}
         </Button>
-      )}
+      ) : words.length === 0 ? (
+        (handleAddWord(), null)
+      ) : null}
     </div>
   );
 }

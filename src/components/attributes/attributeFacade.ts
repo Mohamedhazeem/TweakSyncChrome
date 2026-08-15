@@ -1,7 +1,6 @@
 export { default as AttributeLayout } from "./AttributeLayout";
 export { default as AddAttribute } from "./attributeComponents/AddAttribute";
 import ClassAttribute from "./attributeComponents/ClassAttribute";
-import DataAttribute from "./attributeComponents/DataAttribute";
 import OptionsAttribute from "./attributeComponents/OptionsAttribute";
 import StringAttribute from "./attributeComponents/StringAttribute";
 import NumberAttribute from "./attributeComponents/NumberAttribute";
@@ -9,6 +8,7 @@ import OptionsObjectAttribute from "./attributeComponents/OptionsObjectAttribute
 import AccessKeyAttribute from "./attributeComponents/AccessKeyAttribute";
 import MultiOptionsAttribute from "./attributeComponents/MultiOptionsAttributes";
 import { ATTRIBUTE_ENUMS } from "@/types/attributeTypes";
+import DataAttribute from "./attributeComponents/DataAttribute";
 
 // not add boolean attributes beacuse it only on attribute layout
 
@@ -158,8 +158,8 @@ export const attributeComponents: { [key: string]: React.ComponentType<any> } = 
   lang: OptionsObjectAttribute,
   part: ClassAttribute,
   popover: OptionsAttribute,
-  tabindex: OptionsObjectAttribute,
   role: OptionsAttribute,
+  tabindex: OptionsObjectAttribute,
   title: StringAttribute,
   translate: OptionsAttribute,
 };

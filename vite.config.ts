@@ -1,16 +1,28 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import Inspect from "vite-plugin-inspect";
 import path, { resolve } from "path";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    ...(process.env.NODE_ENV === "development"
+      ? [
+          Inspect({
+            build: true,
+            outputDir: ".vite-inspect",
+          }),
+        ]
+      : []),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
   build: {
-    sourcemap: true,
+    // sourcemap: true,
+    // chunkSizeWarningLimit: 1024,
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),

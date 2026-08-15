@@ -1,7 +1,7 @@
 import { generateTemporaryId } from "../utils/generateTemporaryId";
 import { updateStyles } from "../utils/styles/updateStyles";
 import { updateText } from "../utils/elementTextContent";
-import { getElementDetails } from "../utils/getElementDetails";
+import { getElementDetails, getElementTemporaryId } from "../utils/getElementDetails";
 import { getElementStyles } from "../utils/styles/getElementStyles";
 import { updateAttributes } from "../utils/attributes/updateAttributes";
 import {
@@ -16,70 +16,80 @@ import { addSelector, renameSelector } from "@/utils/styles/selectorUtilis";
 let clickedElement: HTMLElement | null = null;
 export let currentElement: HTMLElement | null = null;
 export let lastClickedElement: HTMLElement | null = null;
+let isEditable: boolean;
+let temporaryId: string;
 
 export function isValidChromeRuntime(): boolean {
   return chrome.runtime && !!chrome.runtime.getManifest();
 }
 
-document.addEventListener("click", (event) => {
-  event.preventDefault();
-  const targetElement = event.target as HTMLElement;
-  if (targetElement.hasAttribute("data-TweakSyncUI")) {
-    return;
-  }
-  if (targetElement !== clickedElement) {
-    currentElement = null;
-    clickedElement = targetElement;
-  }
+document.addEventListener(
+  "click",
+  (event) => {
+    if (!isEditable) {
+      return;
+    }
+    event.stopPropagation();
+    event.preventDefault();
+    const targetElement = event.target as HTMLElement;
+    if (targetElement?.hasAttribute("data-tweaksyncui")) {
+      return;
+    }
+    if (targetElement !== clickedElement) {
+      currentElement = null;
+      clickedElement = targetElement;
+    }
 
-  if (!currentElement) {
-    currentElement = targetElement;
-  } else {
-    currentElement = currentElement.parentElement;
-  }
+    if (!currentElement) {
+      currentElement = targetElement;
+    } else {
+      currentElement = currentElement.parentElement;
+    }
 
-  lastClickedElement = clickedElement;
-  console.log("lastClickedElement - ", lastClickedElement);
-  // Ensure the outline element exists
-  if (!outlineElement) {
-    createOutlineElement();
-  }
-  updateOutline(currentElement!);
+    lastClickedElement = clickedElement;
+    // Ensure the outline element exists
+    if (!outlineElement) {
+      createOutlineElement();
+    }
+    updateOutline(currentElement!);
 
-  if (!clickedElement.hasAttribute("data-temporaryid")) {
-    const temporaryId = generateTemporaryId();
-    clickedElement.setAttribute("data-temporaryid", temporaryId);
-  }
-  if (currentElement) {
-    getElementDetails(currentElement).then((details) => {
-      if (isValidChromeRuntime()) {
-        chrome.runtime.sendMessage({ action: "elementClicked", details }, (response) => {
-          if (chrome.runtime.lastError) {
-            console.error("Error sending message:", chrome.runtime.lastError);
-          } else {
-            console.log("Message sent successfully", response);
+    if (!clickedElement.hasAttribute("data-tweaksync-id")) {
+      temporaryId = generateTemporaryId();
+      clickedElement.setAttribute("data-tweaksync-temporaryid", temporaryId);
+    }
+    if (currentElement) {
+      getElementDetails(currentElement).then((details) => {
+        if (isValidChromeRuntime()) {
+          if (details.temporaryId == null) {
+            details.temporaryId = `${temporaryId}`;
           }
-        });
-      }
-    });
-    getElementStyles(currentElement).then((styles) => {
-      if (isValidChromeRuntime()) {
-        chrome.runtime.sendMessage({ action: "styleClicked", styles }, (response) => {
-          if (chrome.runtime.lastError) {
-            console.error("Error sending message:", chrome.runtime.lastError);
-          } else {
-            console.log("Message sent successfully", response);
-          }
-        });
-      }
-    });
-  }
-});
+          chrome.runtime.sendMessage({ action: "elementClicked", details });
+        }
+      });
+      getElementStyles(currentElement).then((styles) => {
+        if (isValidChromeRuntime()) {
+          console.log(styles);
+          chrome.runtime.sendMessage({ action: "styleClicked", styles });
+        }
+      });
+    }
+  },
+  true
+);
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  console.log(message.action);
+  if (message.action === "isContentScriptEditable") {
+    isEditable = message.isEditable;
+    if (!isEditable) {
+      resetContentScript();
+    }
+    sendResponse();
+    return true;
+  }
   if (message.action === "updateTextContent") {
     updateText({ text: message.text, temporaryId: message.temporaryId });
+    sendResponse();
+    return true;
   } else if (message.action === "updateStyles") {
     updateStyles({
       newStyleValue: message.value,
@@ -87,62 +97,85 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       property: message.property,
       temporaryId: message.temporaryId,
     });
+    sendResponse();
+    return true;
   } else if (message.action === "updateAttributes") {
     updateAttributes({ name: message.name, value: message.value });
+    sendResponse();
+    return true;
   } else if (message.action === "addSelector") {
     addSelector(message.selector);
+    sendResponse();
+    return true;
   } else if (message.action === "renameSelector") {
     renameSelector(message.oldSelector, message.newSelector);
-  } else if (message.action === "getUpdatedElement" && lastClickedElement) {
-    getElementDetails(lastClickedElement)
-      .then((details) => {
-        if (isValidChromeRuntime()) {
-          chrome.runtime.sendMessage({ action: "elementClicked", details }, (response) => {
-            if (chrome.runtime.lastError) {
-              console.error("Error sending message:", chrome.runtime.lastError);
-            } else {
-              console.log("Message sent successfully", response);
-            }
-          });
-        }
-        sendResponse(details);
-      })
-      .catch((error) => {
-        console.error("Error getting element details:", error);
-        sendResponse({ status: "error", message: error.message });
-      });
+    sendResponse();
     return true;
-  } else if (message.action === "getUpdatedStyle" && lastClickedElement) {
-    getElementStyles(lastClickedElement)
-      .then((styles) => {
-        if (isValidChromeRuntime()) {
-          chrome.runtime.sendMessage({ action: "styleClicked", styles }, (response) => {
-            if (chrome.runtime.lastError) {
-              console.error("Error sending message:", chrome.runtime.lastError);
-            } else {
-              console.log("Message sent successfully", response);
-            }
-          });
-        }
-        sendResponse(styles);
-      })
-      .catch((error) => {
-        console.error("Error getting element style:", error);
-        sendResponse({ status: "error", message: error.message });
-      });
+  } else if (message.action === "getElementTemporaryId") {
+    if (lastClickedElement) {
+      getElementTemporaryId(lastClickedElement)
+        .then((details) => {
+          sendResponse(details);
+        })
+        .catch((error) => {
+          console.log("Error getting element temporary ID:", error);
+          sendResponse();
+        });
+    } else {
+      sendResponse({ message: "No temporary ID" });
+    }
+    return true;
+  } else if (message.action === "getUpdatedElement") {
+    if (lastClickedElement) {
+      getElementDetails(lastClickedElement)
+        .then((details) => {
+          if (isValidChromeRuntime()) {
+            chrome.runtime.sendMessage({ action: "elementClicked", details });
+          }
+          sendResponse(details);
+        })
+        .catch((error) => {
+          console.log("Error getting element details:", error);
+          sendResponse({ message: "Error getting element details: " + error.message });
+        });
+    } else {
+      sendResponse({ message: "No element selected" });
+    }
+    return true;
+  } else if (message.action === "getUpdatedStyle") {
+    if (lastClickedElement) {
+      getElementStyles(lastClickedElement)
+        .then((styles) => {
+          if (isValidChromeRuntime()) {
+            chrome.runtime.sendMessage({ action: "styleClicked", styles });
+          }
+          sendResponse(styles);
+        })
+        .catch((error) => {
+          console.log("Error getting element style:", error);
+          sendResponse({ message: "Error getting element style: " + error.message });
+        });
+    } else {
+      sendResponse({ message: "No element selected" });
+    }
+    return true;
+  } else {
+    sendResponse({ message: "No element selected or invalid action" });
     return true;
   }
-  return true;
 });
 window.addEventListener("resize", throttledUpdateOutline);
 window.addEventListener("scroll", throttledUpdateOutline);
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
-    if (outlineElement) {
-      outlineElement.remove();
-      outlineElementNull();
-    }
-    currentElement = lastClickedElement = null;
+    resetContentScript();
   }
 });
+const resetContentScript = () => {
+  if (outlineElement) {
+    outlineElement.remove();
+    outlineElementNull();
+  }
+  currentElement = lastClickedElement = null;
+};

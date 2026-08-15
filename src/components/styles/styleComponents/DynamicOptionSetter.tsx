@@ -1,35 +1,41 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useStyleContext } from "@/utils/elementContext";
 import { IStyleContext } from "@/types/styleTypes";
 import { DynamicOptions } from "../styleHelperComponents/DynamicOptions";
-import { PopOver } from "../styleHelperComponents/PopOver";
 import StyleLayout from "../StyleLayout";
 import { extractString, extractUnit, extractValue } from "@/utils/styles/extractUnits";
-import { globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
+import { dynamicOptions, globalCssOptions, lengthUnits } from "@/utils/styles/globalStyles";
+const PopOver = lazy(() => import("../styleHelperComponents/PopOver"));
 
 type DynamicOptionType = {
   name: string;
   isRange?: boolean;
   isDoubleQuotesText?: boolean;
+  isSupportNegativeValue?: boolean;
 };
 export default function DynamicOptionSetter({
   name,
   isRange,
   isDoubleQuotesText,
+  isSupportNegativeValue = false,
 }: DynamicOptionType) {
   const { selector, onChange, group } = useStyleContext() as IStyleContext;
 
   const style = group?.groups.find((style) => style.name === name);
   const [open, setOpen] = useState(false);
   const [option, setOption] = useState("");
+  const [values, setValues] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     if (!option && style?.value) {
       const initialOption = getOptionFromValue(style.value);
       setOption(initialOption);
+      setValues((prevValues) => ({
+        ...prevValues,
+        [initialOption]: style.value,
+      }));
     }
   }, [selector, style, option]);
-
   function getOptionFromValue(value: string): string {
     if (isDoubleQuotesText) {
       return "text";
@@ -42,17 +48,18 @@ export default function DynamicOptionSetter({
     if (numberRegex.test(value)) {
       return "number";
     }
-    // Check if value is in global CSS options
     if (globalCssOptions.includes(value)) {
       return value;
     }
-
-    // Default to an empty string or a default option if needed
     return value;
   }
   const handlePopOverSelect = (newValue: string) => {
     if (style && style.name) {
-      onChange(selector, style.name, newValue);
+      if (dynamicOptions.includes(newValue)) {
+        onChange(selector, style.name, values[newValue] || " ");
+      } else {
+        onChange(selector, style.name, newValue);
+      }
     }
     setOption(newValue);
     setOpen(false);
@@ -61,6 +68,10 @@ export default function DynamicOptionSetter({
     if (style && style.name) {
       console.log(style.name);
       onChange(selector, style.name, newValue);
+      setValues((prevValues) => ({
+        ...prevValues,
+        [option]: newValue,
+      }));
     } else {
       console.log("name");
     }
@@ -75,15 +86,17 @@ export default function DynamicOptionSetter({
         <StyleLayout style={style}>
           <div className="position">
             <div key={`option-${option}`} className="positionAndUnits">
-              <PopOver
-                open={open}
-                setOpen={setOpen}
-                style={style}
-                handleSelect={handlePopOverSelect}
-                isCustomValue={isCustomValue}
-                isCaptilized={true}
-                option={option}
-              />
+              <Suspense fallback={<div></div>}>
+                <PopOver
+                  open={open}
+                  setOpen={setOpen}
+                  style={style}
+                  handleSelect={handlePopOverSelect}
+                  isCustomValue={isCustomValue}
+                  isCaptilized={true}
+                  option={option}
+                />
+              </Suspense>
             </div>
             {
               <DynamicOptions
@@ -93,6 +106,7 @@ export default function DynamicOptionSetter({
                 isRange={isRange}
                 isDoubleQuotesText={isDoubleQuotesText}
                 customOptionsCallback={handleValueChange}
+                isSupportNegativeValue={isSupportNegativeValue}
               />
             }
           </div>

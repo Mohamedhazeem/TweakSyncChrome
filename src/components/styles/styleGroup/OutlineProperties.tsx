@@ -6,7 +6,7 @@ function OutlineProperties() {
   return (
     <div className="inspector-component">
       <Color colorProp="outline-color" />
-      <DynamicOptionSetter name="outline-offset" />
+      <DynamicOptionSetter name="outline-offset" isSupportNegativeValue={true} />
       <SingleStyleOptionSetter name="outline-style" isCapitalized={true} />
       <DynamicOptionSetter name="outline-width" />
     </div>

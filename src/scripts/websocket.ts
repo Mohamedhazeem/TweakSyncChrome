@@ -1,63 +1,153 @@
 import { APPLY_ELEMENT_TO_VSCODE, APPLY_STYLES_TO_VSCODE, URL } from "../utils/constant";
 
 export let ws: WebSocket;
+let reconnectAttempts = 0;
+const maxReconnectAttempts = 5;
+const reconnectInterval = 1000;
+const reconnectResetTimeout = 1000;
 
 export function initWebSocket() {
   if (!ws || ws.readyState === WebSocket.CLOSED) {
-    ws = new WebSocket(URL);
-    ws.addEventListener("error", () => {
-      chrome.runtime.sendMessage({
-        action: "webSocketConnectionError",
-        toast:
-          "Connection error. Please check your connection on both TweakSync VS Code and the TweakSync Chrome extension.",
+    try {
+      ws = new WebSocket(URL);
+
+      ws.addEventListener("error", () => {
+        if (reconnectAttempts == 0) {
+          chrome.runtime.sendMessage({
+            action: "webSocketConnectionError",
+            toast:
+              "Connection error. Please check your connection on both TweakSync VS Code and the TweakSync Chrome extension.",
+          });
+        }
+        reconnectWebSocket();
       });
-    });
-    ws.addEventListener("open", () => {
-      chrome.runtime.sendMessage({
-        action: "webSocketConnectionOpen",
-        toast: "Connection established successfully! TweakSync is now connected with VS Code.",
+
+      ws.addEventListener("open", () => {
+        console.log("TweakSync connection established.");
+        chrome.runtime.sendMessage({
+          action: "webSocketConnectionOpen",
+          toast: "Connection established successfully! TweakSync is now connected with VS Code.",
+        });
+
+        reconnectAttempts = 0; // Reset attempts on successful connection
       });
-    });
-    ws.addEventListener("close", () => {
-      chrome.runtime.sendMessage({
-        action: "webSocketConnectionClose",
-        toast: "Connection Lost. TweakSync is no longer connected with VS Code.",
+
+      ws.addEventListener("message", (event) => {
+        console.log("Received message from WebSocket:", event.data);
+        try {
+          const message = JSON.parse(event.data);
+
+          switch (message.action) {
+            case "noSelectedCssFiles":
+              chrome.runtime.sendMessage({
+                action: "noSelectedCssFiles",
+                toast: message.message,
+              });
+              break;
+            case "appliedElementSucessfully":
+              chrome.runtime.sendMessage({
+                action: "appliedElementSucessfully",
+                toast: message.message,
+              });
+              break;
+            case "appliedStyleSucessfully":
+              chrome.runtime.sendMessage({
+                action: "appliedStyleSucessfully",
+                toast: message.message,
+              });
+              break;
+            case "failedToApply":
+              chrome.runtime.sendMessage({
+                action: "failedToApply",
+                toast: message.message,
+              });
+              break;
+            default:
+          }
+        } catch (error) {
+          console.log("Error processing message from TweakSync for VS Code:", error);
+        }
       });
-    });
-    ws.addEventListener("message", () => {
-      if (ws.readyState !== WebSocket.CLOSED) {
-        console.log("WebSocket connection is open.");
-      } else {
-        console.log("WebSocket connection is not open.");
+
+      if (ws && reconnectAttempts == 0) {
+        ws.onclose = () => {
+          chrome.runtime.sendMessage({
+            action: "webSocketConnectionClose",
+            toast: "Connection Lost. TweakSync is no longer connected with VS Code.",
+          });
+        };
       }
+    } catch (error) {
+      reconnectWebSocket();
+    }
+  } else if (isSocketOpen()) {
+    chrome.runtime.sendMessage({
+      action: "webSocketConnectionOpen",
+      toast: "TweakSync is already connected to VS Code.",
     });
   }
 }
-// function reconnectWebSocket() {
-//   setTimeout(() => {
-//     console.log("Reconnecting WebSocket...");
-//     initWebSocket();
-//   }, 1000);
-// }
-export function isSocketOpen() {
-  if (ws && ws.readyState === WebSocket.OPEN) {
-    return true;
+
+function reconnectWebSocket() {
+  if (reconnectAttempts < maxReconnectAttempts) {
+    reconnectAttempts++;
+    setTimeout(() => {
+      console.log(
+        `Attempting to reconnect WebSocket... (${reconnectAttempts}/${maxReconnectAttempts})`
+      );
+      initWebSocket();
+    }, reconnectInterval);
+  } else {
+    console.log("Max reconnection attempts reached. Giving up.");
+    chrome.runtime.sendMessage({
+      action: "webSocketReconnectionFailed",
+      toast:
+        "Failed to reconnect after multiple attempts. Please check your connection and try again.",
+    });
+
+    // Reset the reconnect attempts after a timeout
+    setTimeout(() => {
+      console.log("Resetting reconnection attempts.");
+      reconnectAttempts = 0;
+    }, reconnectResetTimeout);
   }
-  return false;
 }
+
+// Function to manually reset reconnect attempts
+export function resetReconnectAttempts() {
+  reconnectAttempts = 0;
+  console.log("Reconnection attempts have been manually reset.");
+}
+
+// Check if WebSocket is open
+export function isSocketOpen(): boolean {
+  return ws && ws.readyState === WebSocket.OPEN;
+}
+
+// Send element data to VS Code
 export function applyElementToVscode(response: object) {
-  ws.send(
-    JSON.stringify({
-      action: APPLY_ELEMENT_TO_VSCODE,
-      details: response,
-    })
-  );
+  if (isSocketOpen()) {
+    ws.send(
+      JSON.stringify({
+        action: APPLY_ELEMENT_TO_VSCODE,
+        details: response,
+      })
+    );
+  } else {
+    console.warn("TweakSync Connection is not open. Cannot send element data.");
+  }
 }
+
+// Send style data to VS Code
 export function applyStylesToVscode(response: object) {
-  ws.send(
-    JSON.stringify({
-      action: APPLY_STYLES_TO_VSCODE,
-      styles: response,
-    })
-  );
+  if (isSocketOpen()) {
+    ws.send(
+      JSON.stringify({
+        action: APPLY_STYLES_TO_VSCODE,
+        styles: response,
+      })
+    );
+  } else {
+    console.warn("TweakSync Connection is not open. Cannot send style data.");
+  }
 }

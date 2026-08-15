@@ -33,18 +33,17 @@ function AccessKeyAttribute() {
   };
   const getButtonClassName = (option: string): string => {
     if (option === character) {
-      return "p-2 bg-green-400 text-white border border-green-700 hover:bg-green-500";
+      return "p-2 bg-green-500 text-black font-bold border-2 border-green-700 hover:bg-green-600";
     } else {
-      return "p-2 bg-blue-400 text-white hover:bg-blue-500";
+      return "p-2 bg-blue-500 text-white font-semibold hover:bg-blue-600";
     }
   };
 
   return (
-    <div key={context?.key} className="flex flex-col gap-2">
-      <div key={`div-${context?.key}`} className="flex flex-col gap-2">
-        {/* Numbers */}
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         {numberOptions.length > 0 && (
-          <div className="grid grid-cols-5 gap-2 ">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(45px,1fr))] gap-1">
             {numberOptions.map((option) => (
               <Button
                 key={option}
@@ -58,7 +57,7 @@ function AccessKeyAttribute() {
         )}
         <hr className="border-t-2 border-gray-500" />
         {alphabetOptions.length > 0 && (
-          <div className="grid grid-cols-5 gap-2">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(45px,1fr))] gap-1">
             {alphabetOptions.map((option) => (
               <Button
                 key={option}

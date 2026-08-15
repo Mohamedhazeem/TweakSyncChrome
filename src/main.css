@@ -7,46 +7,49 @@
 } */
 /* #region InspectorStyles */
 .inspector-container {
-  @apply w-full h-[calc(100vh-65px)] flex items-center justify-center;
+  @apply w-full h-[calc(100vh-65px)] flex flex-col items-center justify-center bg-gradient-to-r from-indigo-500 to-red-400;
 }
 .inspector-scroll {
-  @apply flex flex-col space-y-2 overflow-y-auto scroll-smooth h-full w-full p-1;
+  @apply flex flex-col space-y-1 overflow-y-auto scroll-smooth h-full w-full p-1 pb-[6px];
 }
 .inspector-home {
-  @apply flex flex-col space-y-4 overflow-y-auto h-full w-full p-4 items-center justify-center;
+  @apply flex flex-col space-y-4 overflow-y-auto h-full w-full items-center justify-center;
 }
 .inspector-component {
   @apply flex flex-col gap-1;
 }
+.inspector-VerticalNavbarAndStylesContainer {
+  @apply flex flex-row gap-1 w-full;
+}
 .inspector-header {
-  @apply flex flex-row justify-between items-center rounded px-3 h-9 bg-gradient-to-r from-indigo-500 to-blue-500;
+  @apply flex flex-row justify-between items-center rounded px-3 h-9 bg-[#222831]; /*bg-gradient-to-r from-indigo-500 to-blue-500*/
 }
 .inspector-title {
-  @apply text-lg font-semibold;
+  @apply text-lg font-semibold tracking-wider text-yellow-200;
 }
 .inspector-applyButton {
-  @apply bg-gradient-to-r from-amber-200 to-yellow-500 py-1 h-7 text-black;
+  @apply bg-[#EEEEEE] py-1 h-7 text-black text-base tracking-wide font-semibold; /*bg-gradient-to-r from-amber-200 to-yellow-500 */
 }
-.tweak-sync-logo {
-  @apply bg-gradient-to-r from-emerald-300 to-lime-500 rounded-md font-semibold p-2 text-4xl cursor-default;
+.navbarButton {
+  @apply bg-[#222831];
 }
 /* #endregion InspectorStyles */
 
 /* #region LayoutStyles */
 .layoutCard {
-  @apply border-2 border-t-neutral-200;
+  @apply border-0;
 }
 .layoutCardHeader {
-  @apply p-2 py-1 rounded;
+  @apply px-2 py-1;
 }
 .layoutCardHeaderActive {
-  @apply bg-gradient-to-r from-emerald-300 to-lime-500;
+  @apply bg-[#24adf2];
 }
 .layoutCardHeaderInActive {
-  @apply bg-gradient-to-r from-zinc-300 to-slate-500;
+  @apply bg-zinc-400;
 }
 .layoutCardTitle {
-  @apply flex justify-between items-center text-base font-medium w-full;
+  @apply flex justify-between items-center text-base font-medium tracking-wide w-full;
 }
 .layoutHoverCardHolder {
   @apply flex place-items-center gap-1;
@@ -61,25 +64,25 @@
   @apply text-sm;
 }
 .layoutClearButton {
-  @apply bg-red-500 text-xs p-1 h-5 tracking-wider hover:bg-red-600;
+  @apply bg-red-500 text-xs p-1 h-5 tracking-wider;
 }
 .layoutCardContent {
   @apply p-2;
 }
 .layoutParentCardHeader {
-  @apply p-1 rounded bg-gradient-to-r from-pink-500 to-amber-500;
+  @apply p-1 rounded-t-lg bg-[#faa834];
 }
 .layoutParentCardContent {
-  @apply p-0 pb-2 py-1 px-1 m-0 flex flex-col gap-2;
+  @apply py-1 px-1 m-0 flex flex-col gap-2 rounded-b-lg bg-yellow-200;
 }
 .layoutParentCardContentHeader {
-  @apply p-2 rounded bg-gradient-to-r from-purple-400 to-purple-700;
+  @apply p-2 rounded bg-[#222831];
 }
 .layoutParentCardContentTitle {
-  @apply flex justify-between items-center text-base font-medium w-full;
+  @apply flex justify-between items-center text-base font-medium tracking-wider w-full text-[#EEEEEE];
 }
 .layoutParentCardTitle {
-  @apply text-lg font-semibold flex justify-between items-center;
+  @apply text-lg text-[#222831] font-bold tracking-wide flex justify-between items-center px-1;
 }
 .textArea {
   @apply grid w-full gap-2 p-2;
@@ -87,8 +90,11 @@
 .textAreaHolder {
   @apply flex flex-col gap-1;
 }
+.addMultiPropertyOrAttribute {
+  @apply bg-green-400 font-bold text-[#222831] hover:text-[#EEEEEE];
+}
 .addStyleProperty {
-  @apply bg-gradient-to-r from-lime-400 to-lime-500;
+  @apply bg-[#faa834] font-bold text-[#222831] hover:scale-105 w-1/2;
 }
 /* #endregion LayoutStyles */
 
@@ -103,3 +109,101 @@
   @apply w-8 h-6 text-center text-sm border-2;
 }
 /* #endregion PositionComponentStyles */
+
+/* #region VerticalNavbarStyles */
+.verticalNavbarStyleOpenDuration {
+  @apply duration-300;
+}
+.styleInspectorTransition-VerticalNavbarOpen {
+  @apply inspector-component w-full  transition-all verticalNavbarStyleOpenDuration;
+}
+.verticalNavbarContainer {
+  @apply fixed top-0 left-0 flex items-center h-dvh transition-all verticalNavbarStyleOpenDuration;
+}
+.verticalNavbarButtonHolder {
+  @apply bg-slate-400 flex flex-col items-center justify-center gap-2 p-1 rounded-md transition-all verticalNavbarStyleOpenDuration;
+}
+.verticalNavbarStyleTriggerButton {
+  @apply h-16 font-extrabold text-base transition-transform verticalNavbarStyleOpenDuration;
+}
+.verticalNavbarStyleOpen {
+  @apply w-4 bg-green-500 hover:bg-green-600;
+}
+.verticalNavbarStyleClose {
+  @apply w-4 bg-red-500 hover:bg-red-600;
+}
+/* #endregion VerticalNavbarStyles */
+
+/* #region HomePage*/
+
+.connect {
+  /* 2d9c9cd3 */
+  @apply bg-[#1ecaadec] hover:bg-slate-600 min-w-36 min-h-11 text-[#3d0000e5] hover:text-white hover:scale-105 text-lg font-bold;
+}
+.startEdit {
+  /* 0055d491 */
+  @apply bg-[#0055d4bf] min-w-36 min-h-11 text-[#3d0000e5] hover:text-white hover:scale-105 text-lg font-bold;
+}
+.stopEdit {
+  /* fc4747a3 */
+  @apply bg-[#f74848] min-w-36 min-h-11 text-[#3d0000e5] hover:text-white hover:scale-105 text-lg font-bold;
+}
+.tweak-sync-logo {
+  @apply bg-[#101010ae] rounded-md font-semibold py-3 px-7 text-2xl text-white cursor-default flex flex-col gap-2 justify-center items-center;
+}
+.homePageButtons {
+  @apply flex flex-col gap-2 py-2;
+}
+/* #endregion HomePage*/
+
+/*#region Tutorial*/
+.tutorialContainer {
+  @apply w-full h-full px-6 py-5 pb-20 bg-gradient-to-r from-indigo-500 to-red-400;
+}
+.tutorialButton {
+  @apply bg-zinc-100 rounded-xl text-sm p-1 w-6 h-6 hover:scale-110;
+}
+.orderedList {
+  @apply text-lg  text-center flex flex-col gap-2 justify-center items-center  bg-[#EEEEEE] rounded-lg;
+}
+.tutorialTitle {
+  @apply text-black font-bold;
+}
+.tutorialSubTitle {
+  @apply text-darkRed text-base font-semibold underline py-2;
+}
+/* .listDisc {
+  @apply list-disc pl-4;
+} */
+.listSquare {
+  @apply px-1 text-black text-base text-center font-medium;
+}
+/*#endregion Tutorial*/
+
+/*#region Support*/
+.SupportContainer {
+  @apply flex md:flex-row flex-col gap-7 w-full h-[calc(100vh-65px)] justify-center items-center px-8;
+}
+.supportButton {
+  @apply bg-zinc-100 rounded-xl p-1 w-6 h-6 hover:scale-110 font-medium;
+}
+.contactSupport {
+  @apply bg-[#EEEEEE] flex flex-col gap-3 items-center p-7 py-12 w-2/4 min-w-64 rounded-lg;
+  /* h-3/4 min-h-64 */
+}
+.contactSupportTitle {
+  @apply text-xl text-darkRed font-bold;
+}
+.contactSupportDialogue {
+  @apply text-base text-center font-medium;
+}
+.contactMail {
+  @apply text-base font-semibold text-darkRed hover:text-darkRed hover:underline;
+}
+.socialLinkDialogue {
+  @apply text-base text-justify font-medium;
+}
+.socialMediaIcons {
+  @apply flex gap-2;
+}
+/*#endregion Support*/

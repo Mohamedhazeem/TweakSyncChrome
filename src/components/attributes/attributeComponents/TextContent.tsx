@@ -14,15 +14,25 @@ type PTagTypes = {
 function TextContent({ tag }: PTagTypes) {
   const [textContent, setTextContent] = useState<string | undefined | null>("");
   const [isSpellCheckEnabled, setIsSpellCheckEnabled] = useState(false);
+  const [elementTemporaryId, setElementTemporaryId] = useState();
+
   useEffect(() => {
     setTextContent(tag?.textContent);
+    chrome.runtime.sendMessage({ action: "getElementTemporaryId" }, (response) => {
+      if (response) {
+        setElementTemporaryId(response.temporaryId);
+        if (tag.textContent == null || tag.textContent == undefined) {
+          setTextContent(response.textContent);
+        }
+      }
+    });
   }, [tag?.textContent, tag?.path]);
   const handleTextContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextContent(e.target.value);
     chrome.runtime.sendMessage({
       action: "updateTextContent",
       text: e.target.value,
-      temporaryId: tag?.temporaryId,
+      temporaryId: elementTemporaryId || tag?.temporaryId,
     });
   };
   const handleRemoveClick = () => {
@@ -30,7 +40,7 @@ function TextContent({ tag }: PTagTypes) {
     chrome.runtime.sendMessage({
       action: "updateTextContent",
       text: "",
-      temporaryId: tag?.temporaryId,
+      temporaryId: elementTemporaryId || tag?.temporaryId,
     });
   };
   const handleCheckedChange = (checked: CheckedState) => {
@@ -122,12 +132,12 @@ function TextContent({ tag }: PTagTypes) {
         <>
           <Card className="layoutCard">
             <CardHeader
-              className={`layoutCardHeader ${
+              className={`layoutCardHeader rounded-t-md ${
                 textContent ? "layoutCardHeaderActive" : "layoutCardHeaderInActive"
               } `}
             >
               <CardTitle className="layoutCardTitle">
-                Text Content
+                Text
                 <div className="layoutHoverCardHolder">
                   <HoverCard>
                     <HoverCardTrigger asChild>
@@ -145,10 +155,10 @@ function TextContent({ tag }: PTagTypes) {
                     <Button
                       size="sm"
                       variant={"default"}
-                      className="layoutClearButton"
+                      className="layoutClearButton hover:bg-red-600"
                       onClick={() => handleRemoveClick()}
                     >
-                      CLEAR
+                      Clear
                     </Button>
                   )}
                 </div>
@@ -173,7 +183,7 @@ function TextContent({ tag }: PTagTypes) {
                 placeholder="Type your message here."
                 id="message"
                 value={textContent ? textContent : ""}
-                onChange={handleTextContentChange}
+                onChange={(e) => handleTextContentChange(e)}
                 spellCheck={isSpellCheckEnabled}
               />
             </CardContent>

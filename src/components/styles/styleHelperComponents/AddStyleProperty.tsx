@@ -13,6 +13,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 import { ElementStyles } from "@/types/elementTypes";
 import { GLOBAL_STYLES } from "@/utils/styles/globalStyles";
+import { ChevronsUpDown } from "lucide-react";
 
 interface AddStylePropertyProps {
   selector: string;
@@ -77,9 +78,17 @@ function AddStyleProperty({ selector, setStyles, addStyleProperty }: AddStylePro
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="addStyleProperty">
-          Add Style Property
-        </Button>
+        <div className="w-full flex items-center justify-center">
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className="addStyleProperty hover:bg-[#faa834]"
+          >
+            Add Style
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </div>
       </PopoverTrigger>
       <PopoverContent className="w-[250px] p-0">
         <Command>

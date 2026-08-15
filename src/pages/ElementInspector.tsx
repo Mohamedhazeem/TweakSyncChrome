@@ -3,17 +3,17 @@ import TextContent from "@/components/attributes/attributeComponents/TextContent
 import { AddAttribute } from "@/components/attributes/attributeFacade";
 import { Button } from "@/components/ui/button";
 import { Attribute } from "@/types/attributeTypes";
-import { OutletContext } from "@/types/outletContext.ts";
+import { OutletContext } from "../types/OutletContext";
 import { ELEMENT_SPECIFIC_ATTRIBUTES } from "@/utils/attributes/elementSpecificAttributes";
 import { GLOBAL_ATTRIBUTES } from "@/utils/attributes/globalAttributes";
 import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-
+import NotFoundInspector from "./NotFoundInspector";
 function ElementInspector() {
   const { element } = useOutletContext<OutletContext>();
   const [attributes, setAttributes] = useState<Attribute[] | undefined>(undefined);
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
-
+  const [showApplyButton, setShowApplyButton] = useState<boolean>(true);
   useEffect(() => {
     if (!element) return;
     const elementAttributes: Attribute[] = [];
@@ -66,6 +66,23 @@ function ElementInspector() {
       }
     }, 50);
   }, [element]);
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(handleMessage);
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
+  }, []);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleMessage = (message: any) => {
+    if (
+      message.action === "appliedElementSucessfully" ||
+      message.action === "failedToApply" ||
+      message.action === "webSocketConnectionError"
+    ) {
+      setShowApplyButton(true);
+    }
+  };
 
   const handleAttributeChange = (index: number, newValue: string | object) => {
     setAttributes((prevAttributes) => {
@@ -131,10 +148,19 @@ function ElementInspector() {
     });
   };
   function applyElement() {
+    setShowApplyButton(false);
     chrome.runtime.sendMessage({ action: "apply", apply: "element" });
   }
+  const hasTweakSyncId = attributes?.some((attr) => {
+    if (attr.name === "data-*") {
+      // Check if any of the data-* attributes include the `data-tweaksync-id`
+      return Object.keys(attr.value).includes("data-tweaksync-id");
+    }
+    return attr.name === "data-tweaksync-id";
+  });
+
   if (!element) {
-    return <div> Not element selected</div>;
+    return <NotFoundInspector inspectorName="Element Inspector" />;
   }
   return (
     <div className="inspector-container">
@@ -142,23 +168,25 @@ function ElementInspector() {
         <div className="inspector-component">
           <div className="inspector-header">
             <span className="inspector-title">Element Inspector</span>
-            <Button
-              size={"default"}
-              variant={"default"}
-              type="button"
-              id="applyElement"
-              onClick={applyElement}
-              className="inspector-applyButton"
-            >
-              Apply
-            </Button>
+            {hasTweakSyncId && (
+              <Button
+                size={"default"}
+                variant={"default"}
+                type="button"
+                id="applyElement"
+                onClick={applyElement}
+                className="inspector-applyButton hover:bg-[#fbf6f6]"
+                disabled={showApplyButton ? false : true}
+              >
+                {showApplyButton ? "Apply" : "Loading"}
+              </Button>
+            )}
           </div>
           <TextContent tag={element} />
           {attributes?.length ? (
             attributes.map((attribute, index) => (
-              <div>
+              <div key={attribute.name}>
                 <AttributeFactory
-                  key={index}
                   index={index}
                   attribute={attribute}
                   onChange={handleAttributeChange}

@@ -14,10 +14,7 @@ function DataAttribute() {
   const [showAddFields, setShowAddFields] = useState<boolean>(false);
 
   useEffect(() => {
-    if (
-      context?.attribute?.value &&
-      typeof context.attribute.value === "object"
-    ) {
+    if (context?.attribute?.value && typeof context.attribute.value === "object") {
       setAttributes(context.attribute.value as AttributeValue);
     }
   }, [context?.attribute]);
@@ -58,11 +55,11 @@ function DataAttribute() {
   const handleAttrNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputVal = e.target.value;
     if (inputVal.startsWith("data-")) {
-      setNewAttrKey(inputVal);
+      setNewAttrKey(inputVal.toLowerCase());
     }
   };
   return (
-    <div key={context?.key} className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       {Object.entries(attributes).map(([key, value], index) => (
         <div
           key={index}
@@ -70,10 +67,10 @@ function DataAttribute() {
         >
           <div className="flex justify-between px-2">
             <Label htmlFor={key}>{key}</Label>
-            {key !== "data-temporaryid" && (
+            {key !== "data-tweaksync-id" && (
               <Button
                 size="sm"
-                className="bg-rose-600 rounded-xl text-xs p-1 w-4 h-4"
+                className="bg-red-500 hover:bg-red-600 rounded-full text-xs p-1 w-4 h-4"
                 onClick={() => handleRemoveClick(key)}
               >
                 X
@@ -85,7 +82,7 @@ function DataAttribute() {
             id={key}
             value={value}
             onChange={(e) => handleInputChange(key, e.target.value)}
-            disabled={key == "data-temporaryid"}
+            disabled={key == "data-tweaksync-id"}
           />
         </div>
       ))}
@@ -108,11 +105,7 @@ function DataAttribute() {
             <Button
               className="flex-grow"
               onClick={handleAddDataAttribute}
-              disabled={
-                !newAttrKey.startsWith("data-") ||
-                newAttrKey === "data-" ||
-                !newAttrValue
-              }
+              disabled={!newAttrKey.startsWith("data-") || newAttrKey === "data-" || !newAttrValue}
             >
               Add
             </Button>
@@ -123,9 +116,14 @@ function DataAttribute() {
         </div>
       )}
       {!showAddFields && (
-        <Button onClick={() => setShowAddFields(true)}>
-          Add Data Attribute
-        </Button>
+        <div className="w-full flex items-center justify-center">
+          <Button
+            onClick={() => setShowAddFields(true)}
+            className="addMultiPropertyOrAttribute hover:bg-green-600"
+          >
+            Add Data Attribute
+          </Button>
+        </div>
       )}
     </div>
   );

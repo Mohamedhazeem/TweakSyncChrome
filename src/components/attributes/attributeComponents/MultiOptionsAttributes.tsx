@@ -60,7 +60,7 @@ function MultiOptionsAttribute() {
   };
 
   return (
-    <div key={context?.key} className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2">
       {selectedOptions.map((option, index) => (
         <div key={`div-${index}`} className="flex gap-2 items-center">
           <Popover
@@ -98,16 +98,22 @@ function MultiOptionsAttribute() {
           </Popover>
           <Button
             size="sm"
-            className="bg-rose-600 rounded-xl text-xs p-1 w-4 h-4"
+            className="bg-red-500 hover:bg-red-600 rounded-full text-xs p-1 w-4 h-4"
             onClick={() => handleRemoveClick(index)}
           >
             X
           </Button>
         </div>
       ))}
-      <Button size={"default"} onClick={handleAddOption} className="min-w-32 max-w-48 self-center">
-        Add {nameForTitle}
-      </Button>
+      <div className="w-full flex items-center justify-center">
+        <Button
+          size={"default"}
+          onClick={handleAddOption}
+          className="addMultiPropertyOrAttribute hover:bg-green-600 "
+        >
+          Add {nameForTitle}
+        </Button>
+      </div>
     </div>
   );
 }

@@ -13,6 +13,7 @@ type StyleLayoutProps = {
 function StyleLayout({ style, children }: StyleLayoutProps) {
   const { onRemove } = useStyleContext() as IStyleContext;
   const [clearLayout, setClearLayout] = useState(false);
+  const [isOpen, setIsOpen] = useState(style.value ? style.name : undefined);
   useEffect(() => {
     if (style.value == "" || style.value == undefined || style.value == null) {
       setClearLayout(true);
@@ -27,11 +28,16 @@ function StyleLayout({ style, children }: StyleLayoutProps) {
   };
   return (
     <div id={style.name}>
-      <Accordion type="single" defaultValue={style.value ? style.name : undefined} collapsible>
+      <Accordion
+        type="single"
+        defaultValue={style.value ? style.name : undefined}
+        collapsible
+        onValueChange={(value) => setIsOpen(value)}
+      >
         <AccordionItem value={style.name}>
           <Card className="layoutCard">
             <CardHeader
-              className={`layoutCardHeader ${
+              className={`layoutCardHeader ${isOpen ? "rounded-t-md" : "rounded-md"} ${
                 style.value ? "layoutCardHeaderActive" : "layoutCardHeaderInActive"
               } `}
             >
@@ -57,10 +63,10 @@ function StyleLayout({ style, children }: StyleLayoutProps) {
                       <Button
                         size="sm"
                         variant={"default"}
-                        className="layoutClearButton"
+                        className="layoutClearButton hover:bg-red-600"
                         onClick={() => handleRemoveClick()}
                       >
-                        CLEAR
+                        Clear
                       </Button>
                     )}
                   </div>
@@ -68,7 +74,7 @@ function StyleLayout({ style, children }: StyleLayoutProps) {
               </AccordionTrigger>
             </CardHeader>
 
-            <AccordionContent className="AccordionContent">
+            <AccordionContent>
               <CardContent className="layoutCardContent">
                 <ClearLayoutContext.Provider value={clearLayout}>
                   {children}

@@ -1,31 +1,14 @@
 import { IAttributeContext } from "@/types/attributeTypes";
-import {
-  AttributeLayout,
-  attributeComponents,
-  patternComponents,
-} from "./attributeFacade";
+import { AttributeLayout, attributeComponents, patternComponents } from "./attributeFacade";
 
-function AttributeFactory({
-  key,
-  attribute,
-  index,
-  onChange,
-  onRemove,
-}: IAttributeContext) {
+function AttributeFactory({ attribute, index, onChange, onRemove }: IAttributeContext) {
   const SpecificComponent = attributeComponents[attribute.name];
 
-  const AttributeComponent =
-    SpecificComponent || matchAttribute(attribute.name, patternComponents);
+  const AttributeComponent = SpecificComponent || matchAttribute(attribute.name, patternComponents);
 
   return (
     <>
-      <AttributeLayout
-        key={key}
-        attribute={attribute}
-        onChange={onChange!}
-        onRemove={onRemove}
-        index={index}
-      >
+      <AttributeLayout attribute={attribute} onChange={onChange!} onRemove={onRemove} index={index}>
         <AttributeComponent />
       </AttributeLayout>
     </>

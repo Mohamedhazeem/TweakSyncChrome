@@ -21,16 +21,11 @@ export function getCurrentElementText(element: HTMLElement): string {
 //     }
 //   });
 // }
-export function setCurrentElementText(
-  element: HTMLElement | undefined,
-  text: string
-): void {
+export function setCurrentElementText(element: HTMLElement | undefined, text: string): void {
   if (!element) return;
 
   // Check if there's already a text node
-  const textNode = Array.from(element.childNodes).find(
-    (node) => node.nodeType === Node.TEXT_NODE
-  );
+  const textNode = Array.from(element.childNodes).find((node) => node.nodeType === Node.TEXT_NODE);
 
   if (textNode) {
     // If there's a text node, update its content
@@ -47,6 +42,6 @@ export function updateText({ text, temporaryId }: getElementTypes) {
   if (element) {
     setCurrentElementText(element, text!);
   } else {
-    console.error(`Element with temporary ID ${temporaryId} not found`);
+    console.log(`Element with temporary ID ${temporaryId} not found`);
   }
 }

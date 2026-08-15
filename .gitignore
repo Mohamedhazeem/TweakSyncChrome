@@ -11,8 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+*.zip
 
 # Editor directories and files
+.vite-inspect
 .vscode/*
 !.vscode/extensions.json
 .idea

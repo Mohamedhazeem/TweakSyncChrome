@@ -5,6 +5,7 @@ export function createOutlineElement(): void {
   outlineElement = document.createElement("div");
   outlineElement.classList.add("selected-outline");
   document.body.appendChild(outlineElement);
+  observeSizeChanges();
 }
 export function updateOutline(element: HTMLElement): void {
   if (!outlineElement) return;
@@ -35,3 +36,12 @@ export const throttledUpdateOutline = debounce(() => {
 export const outlineElementNull = () => {
   outlineElement = null;
 };
+function observeSizeChanges(): void {
+  if (!lastClickedElement) return;
+
+  const resizeObserver = new ResizeObserver(() => {
+    throttledUpdateOutline();
+  });
+
+  resizeObserver.observe(lastClickedElement);
+}

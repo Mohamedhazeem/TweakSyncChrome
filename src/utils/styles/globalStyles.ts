@@ -8,7 +8,20 @@ export const customAndGlobalCssOptions = [
   "revert-layer",
   "unset",
 ];
+export const dynamicOptions = ["color", "text", "length", "number"];
 export const namedPositions = ["left", "right", "top", "bottom", "center"];
+export const lineStyle = [
+  "none",
+  "hidden",
+  "dotted",
+  "dashed",
+  "solid",
+  "double",
+  "groove",
+  "ridge",
+  "inset",
+  "outset",
+];
 export const lengthUnits = [
   "px",
   "%",
@@ -37,187 +50,187 @@ export const LengthUnit: Style = {
 export const GLOBAL_STYLES: Style[] = [
   {
     name: "align-content",
-    nameForTitle: "Alignment Properties",
+    nameForTitle: "Alignment",
     value: "",
   },
   {
     name: "all",
-    nameForTitle: "All Property",
+    nameForTitle: "All",
     value: "",
   },
   {
     name: "backface-visibility",
-    nameForTitle: "Backface Visibility Property",
+    nameForTitle: "Backface Visibility",
     value: "",
   },
   {
     name: "background-color",
-    nameForTitle: "Background Properties",
+    nameForTitle: "Background",
     value: "",
   },
   {
     name: "block-size",
-    nameForTitle: "Block-Size Properties",
+    nameForTitle: "Block-Size",
+    value: "",
+  },
+  {
+    name: "border-block-color",
+    nameForTitle: "Border",
     value: "",
   },
   {
     name: "box-sizing",
-    nameForTitle: "Box Properties",
+    nameForTitle: "Box",
     value: "",
   },
   {
     name: "break-after",
-    nameForTitle: "Break Properties",
+    nameForTitle: "Break",
     value: "",
   },
   {
     name: "color",
-    nameForTitle: "Color Properties",
+    nameForTitle: "Color",
     value: "",
   },
   {
     name: "column-count",
-    nameForTitle: "Column & Row Properties",
+    nameForTitle: "Column and Row",
     value: "",
   },
   {
     name: "contain",
-    nameForTitle: "Contain Properties",
+    nameForTitle: "Contain",
     value: "",
   },
   {
     name: "content",
-    nameForTitle: "Content Properties",
+    nameForTitle: "Content",
     value: "",
   },
   {
     name: "cursor",
-    nameForTitle: "Cursor Property",
+    nameForTitle: "Cursor",
     value: "",
   },
   {
     name: "display",
-    nameForTitle: "Display Properties",
-    value: "",
-  },
-  {
-    name: "display",
-    nameForTitle: "Display Properties",
+    nameForTitle: "Display",
     value: "",
   },
   {
     name: "flex-basis",
-    nameForTitle: "Flex Properties",
+    nameForTitle: "Flex",
     value: "",
   },
   {
     name: "float",
-    nameForTitle: "Float Properties",
+    nameForTitle: "Float",
     value: "",
   },
   {
     name: "height",
-    nameForTitle: "Height Properties",
+    nameForTitle: "Height",
     value: "",
   },
   {
     name: "inline-size",
-    nameForTitle: "Inline-Size Properties",
+    nameForTitle: "Inline-Size",
     value: "",
   },
   {
     name: "justify-content",
-    nameForTitle: "Justify Properties",
+    nameForTitle: "Justify",
     value: "",
   },
   {
     name: "line-break",
-    nameForTitle: "Line Properties",
+    nameForTitle: "Line",
     value: "",
   },
   {
     name: "list-style-image",
-    nameForTitle: "List Properties",
+    nameForTitle: "List",
     value: "",
   },
   {
-    name: "margin-top",
-    nameForTitle: "Margin Properties",
+    name: "margin",
+    nameForTitle: "Margin",
     value: "",
   },
   {
     name: "outline-color",
-    nameForTitle: "Outline Properties",
+    nameForTitle: "Outline",
     value: "",
   },
   {
     name: "overflow-anchor",
-    nameForTitle: "Overflow Properties",
+    nameForTitle: "Overflow",
     value: "",
   },
   {
-    name: "overscroll-behavior-x",
-    nameForTitle: "Overscroll Properties",
+    name: "overscroll-behavior-block",
+    nameForTitle: "Overscroll",
     value: "",
   },
   {
-    name: "padding-top",
-    nameForTitle: "Padding Properties",
+    name: "padding",
+    nameForTitle: "Padding",
     value: "",
   },
   {
     name: "place-content",
-    nameForTitle: "Place Properties",
+    nameForTitle: "Place",
     value: "",
   },
   {
     name: "position",
-    nameForTitle: "Position Properties",
+    nameForTitle: "Position",
     value: "",
   },
   {
     name: "scrollbar-color",
-    nameForTitle: "Scrollbar Properties",
+    nameForTitle: "Scrollbar",
     value: "",
   },
   {
     name: "empty-cells",
-    nameForTitle: "Table Properties",
+    nameForTitle: "Table",
     value: "",
   },
   {
     name: "text-align",
-    nameForTitle: "Text Properties",
+    nameForTitle: "Text",
     value: "",
   },
   {
     name: "white-space",
-    nameForTitle: "White-Space Properties",
+    nameForTitle: "White-Space",
     value: "",
   },
   {
     name: "width",
-    nameForTitle: "Width Properties",
+    nameForTitle: "Width",
     value: "",
   },
   {
     name: "word-break",
-    nameForTitle: "Word Properties",
+    nameForTitle: "Word",
     value: "",
   },
   {
     name: "writing-mode",
-    nameForTitle: "Writing Property",
+    nameForTitle: "Writing",
     value: "",
   },
   {
     name: "zoom",
-    nameForTitle: "Zoom Property",
+    nameForTitle: "Zoom",
     value: "",
   },
 ];
 const AlignGroup: StyleGroup = {
-  groupName: "Alignment Properties",
+  groupName: "Alignment",
   propertyNames: ["align-content", "align-items", "align-self"],
   groups: [
     {
@@ -302,7 +315,7 @@ const AlignGroup: StyleGroup = {
   ],
 };
 const AllGroup: StyleGroup = {
-  groupName: "All Property",
+  groupName: "All",
   propertyNames: ["all"],
   groups: [
     {
@@ -316,7 +329,7 @@ const AllGroup: StyleGroup = {
   ],
 };
 const BackfaceVisibilityGroup: StyleGroup = {
-  groupName: "Backface Visibility Property",
+  groupName: "Backface Visibility",
   propertyNames: ["backface-visibility"],
   groups: [
     {
@@ -330,7 +343,7 @@ const BackfaceVisibilityGroup: StyleGroup = {
   ],
 };
 const BackgroundGroup: StyleGroup = {
-  groupName: "Background Properties",
+  groupName: "Background",
   propertyNames: [
     "background",
     "background-color",
@@ -340,8 +353,8 @@ const BackgroundGroup: StyleGroup = {
     "background-image",
     "background-origin",
     "background-position",
-    "background-position-x",
-    "background-position-y",
+    // "background-position-x",
+    // "background-position-y",
     "background-repeat",
     "background-size",
   ],
@@ -416,21 +429,36 @@ const BackgroundGroup: StyleGroup = {
       options: ["border-box", "padding-box", "content-box", ...globalCssOptions],
     },
     {
-      name: "background-position-x",
-      nameForTitle: "Background Position X",
+      name: "background-position",
+      nameForTitle: "Background Position",
       type: "string",
-      description: "Specifies the x-coordinate of the background image",
+      description: "Specifies the position of the background image",
       value: "",
-      options: ["left", "center", "right", "length", ...globalCssOptions],
+      options: ["top", "center", "bottom", "left", "right", "length", ...globalCssOptions],
+      labels: [
+        ["All Sides"],
+        ["Horizontal Position", "Vertical Position"],
+        ["Horizontal Position", "Horizontal Offset", "Vertical Position"],
+        ["Horizontal Position", "Horizontal Offset", "Vertical Position", "Vertical Offset"],
+      ],
+      maxOptionCounts: 4,
     },
-    {
-      name: "background-position-y",
-      nameForTitle: "Background Position Y",
-      type: "string",
-      description: "Specifies the y-coordinate of the background image",
-      value: "",
-      options: ["top", "center", "bottom", "length", ...globalCssOptions],
-    },
+    // {
+    //   name: "background-position-x",
+    //   nameForTitle: "Background Position X",
+    //   type: "string",
+    //   description: "Specifies the x-coordinate of the background image",
+    //   value: "",
+    //   options: ["left", "center", "right", "length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "background-position-y",
+    //   nameForTitle: "Background Position Y",
+    //   type: "string",
+    //   description: "Specifies the y-coordinate of the background image",
+    //   value: "",
+    //   options: ["top", "center", "bottom", "length", ...globalCssOptions],
+    // },
     {
       name: "background-repeat",
       nameForTitle: "Background Repeat",
@@ -459,7 +487,7 @@ const BackgroundGroup: StyleGroup = {
   ],
 };
 const BlockSizeGroup: StyleGroup = {
-  groupName: "Block-Size Properties",
+  groupName: "Block-Size",
   propertyNames: ["block-size", "min-block-size", "max-block-size"],
   groups: [
     {
@@ -488,8 +516,360 @@ const BlockSizeGroup: StyleGroup = {
     },
   ],
 };
+const BorderGroup: StyleGroup = {
+  groupName: "Border",
+  propertyNames: [
+    "border-block-width",
+    "border-block-style",
+    "border-block-color",
+    "border-width",
+    "border-style",
+    "border-color",
+    "border-radius",
+    // "border-bottom-left-radius",
+    // "border-bottom-right-radius",
+    "border-collapse",
+    "border-image-outset",
+    "border-image-repeat",
+    "border-image-slice",
+    "border-image-source",
+    "border-image-width",
+    "border-inline-color",
+    "border-inline-style",
+    "border-inline-width",
+    "border-spacing",
+    "border-start-start-radius",
+    "border-start-end-radius",
+    "border-end-start-radius",
+    "border-end-end-radius",
+    // "border-top-left-radius",
+    // "border-top-right-radius",
+  ],
+  groups: [
+    {
+      name: "border-block-color",
+      nameForTitle: "Border Block Color",
+      type: "color",
+      description: "Sets the color of the borders at the start and end of a block.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["Start and End Color"], ["Start Color", "End Color"]],
+      options: ["color", "currentcolor", "transparent", ...globalCssOptions],
+    },
+    {
+      name: "border-block-style",
+      nameForTitle: "Border Block Style",
+      type: "string",
+      description:
+        "Specifies the style of the borders at both the block-start and block-end sides. It can be used in vertical writing modes to control the border appearance along the block axis.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["Start and End Style"], ["Start Style", "End Style"]],
+      options: [...lineStyle, ...globalCssOptions],
+    },
+    {
+      name: "border-block-width",
+      nameForTitle: "Border Block Width",
+      type: "string",
+      description:
+        "Specifies the width of the borders on both the block-start and block-end sides of an element. It is typically used in vertical writing modes to control the thickness of the borders along the block axis.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["Start and End Width"], ["Start Width", "End Width"]],
+      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
+    },
+    {
+      name: "border-color",
+      nameForTitle: "Border Color",
+      type: "string",
+      description: "Specifies the color of the border on all sides of an element.",
+      value: "", // Default value
+      maxOptionCounts: 4,
+      options: ["color", "currentcolor", "transparent", ...globalCssOptions],
+      labels: [
+        ["All Sides Color"],
+        ["Top and Bottom Color", "Left and Right Color"],
+        ["Top Color", "Left and Right Color", "Bottom Color"],
+        ["Top Color", "Right Color", "Bottom Color", "Left Color"],
+      ],
+    },
+    {
+      name: "border-style",
+      nameForTitle: "Border Style",
+      type: "string",
+      description:
+        "Specifies the style of the border for all sides of an element. You can set the same style for all sides, or specify different styles for each side individually (top, right, bottom, and left).",
+      value: "",
+      maxOptionCounts: 4,
+      options: [...lineStyle, ...globalCssOptions],
+      labels: [
+        ["All Sides Style"],
+        ["Top and Bottom Style", "Left and Right Style"],
+        ["Top Style", "Left and Right Style", "Bottom Style"],
+        ["Top Style", "Right Style", "Bottom Style", "Left Style"],
+      ],
+    },
+    {
+      name: "border-width",
+      nameForTitle: "Border Width",
+      type: "string",
+      description:
+        "Specifies the width of the border for all sides of an element. You can set the same width for all sides, or specify different widths for each side individually (top, right, bottom, and left).",
+      value: "",
+      maxOptionCounts: 4,
+      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
+      labels: [
+        ["All Sides Width"],
+        ["Top and Bottom Width", "Left and Right Width"],
+        ["Top Width", "Left and Right Width", "Bottom Width"],
+        ["Top Width", "Right Width", "Bottom Width", "Left Width"],
+      ],
+    },
+    {
+      name: "border-radius",
+      nameForTitle: "Border Radius",
+      type: "string",
+      description:
+        "The `border-radius` property defines the rounding of the element's corners. It can accept one value to round all corners equally, or four values to round each corner (top-left, top-right, bottom-right, and bottom-left) independently.",
+      value: "",
+      maxOptionCounts: 4,
+
+      options: ["length", ...globalCssOptions],
+      labels: [
+        ["All Corners Radius"],
+        ["Top-Left and Bottom-Right Radius", "Top-Right and Bottom-Left Radius"],
+        ["Top-Left Radius", "Top-Right and Bottom-Left", "Bottom-Right Radius"],
+        ["Top-Left Radius", "Top-Right Radius", "Bottom-Right Radius", "Bottom-Left Radius"],
+      ],
+    },
+    // {
+    //   name: "border-bottom-left-radius",
+    //   nameForTitle: "Border Bottom Left Radius",
+    //   type: "string",
+    //   description:
+    //     "Defines the rounding of the bottom-left corner of an element's border. It can be set to create rounded corners on the bottom-left side.",
+    //   value: "",
+    //   maxOptionCounts: 2,
+    //   labels: [
+    //     ["All sides"], // For 1 value
+    //     ["Horizontal", "Vertical"], // For 2 values
+    //   ],
+    //   options: ["length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "border-bottom-right-radius",
+    //   nameForTitle: "Border Bottom Right Radius",
+    //   type: "string",
+    //   description:
+    //     "Defines the rounding of the bottom-right corner of an element's border. It can be set to create rounded corners on the bottom-right side.",
+    //   value: "",
+    //   maxOptionCounts: 2,
+    //   labels: [
+    //     ["All sides"], // For 1 value
+    //     ["Horizontal", "Vertical"], // For 2 values
+    //   ],
+    //   options: ["length", ...globalCssOptions],
+    // },
+    {
+      name: "border-collapse",
+      nameForTitle: "Border Collapse",
+      type: "string",
+      description:
+        "Controls whether table cell borders are collapsed into a single border or separated.",
+      value: "",
+      options: ["collapse", "separate", ...globalCssOptions],
+    },
+    {
+      name: "border-end-end-radius",
+      nameForTitle: "Border End End Radius",
+      type: "string",
+      description:
+        "Defines the rounding of the logical end of the element's border at the end of the block axis, which depends on the element's writing mode and text direction. It rounds the corner where the block-end and inline-end edges meet.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["All sides"], ["Horizontal", "Vertical"]],
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "border-end-start-radius",
+      nameForTitle: "Border End Start Radius",
+      type: "string",
+      description:
+        "Defines the rounding of the logical end of the element's border at the start of the block axis, which depends on the element's writing mode and text direction. It rounds the corner where the block-end and inline-start edges meet.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["All sides"], ["Horizontal", "Vertical"]],
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "border-image-outset",
+      nameForTitle: "Border Image Outset",
+      type: "string",
+      description:
+        "Specifies the amount by which the border image area extends beyond the element's border box. This allows the border image to extend outward from the box's edges.",
+      value: "",
+      maxOptionCounts: 4,
+      labels: [
+        ["All Sides Outset"],
+        ["Top and Bottom Outset", "Left and Right Outset"],
+        ["Top Outset", "Left and Right Outset", "Bottom Outset"],
+        ["Top Outset", "Right Outset", "Bottom Outset", "Left Outset"],
+      ],
+      options: ["length", "number", ...globalCssOptions],
+    },
+    {
+      name: "border-image-repeat",
+      nameForTitle: "Border Image Repeat",
+      type: "string",
+      description:
+        "Specifies how the border image is repeated, stretched, or spaced along the borders of an element. It controls how the image is applied to fit the border area.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["All Sides Repeat"], ["Top and Bottom Repeat", "Left and Right Repeat"]],
+      options: ["stretch", "repeat", "round", "space", ...globalCssOptions],
+    },
+    {
+      name: "border-image-slice",
+      nameForTitle: "Border Image Slice",
+      type: "string",
+      description:
+        "Specifies how to slice the border image into regions to define what part of the image will be used for the element's borders. The slicing happens by defining pixel or percentage values for the top, right, bottom, and left of the image.",
+      value: "",
+      supportedUnit: "%",
+      defaultValue: "100%",
+      maxOptionCounts: 4,
+      labels: [
+        ["All Sides Slice"],
+        ["Top and Bottom Slice", "Left and Right Slice"],
+        ["Top Slice", "Left and Right Slice", "Bottom Slice"],
+        ["Top Slice", "Right Slice", "Bottom Slice", "Left Slice"],
+      ],
+      options: ["length", "number", "fill", ...globalCssOptions], // support percentage values only on length
+    },
+    {
+      name: "border-image-source",
+      nameForTitle: "Border Image Source",
+      type: "string",
+      description:
+        "Specifies the image to be used as the border of an element. This property sets the URL of the image or allows the use of gradients, data URIs, or none to indicate that no image should be used.",
+      value: "",
+      options: ["none", ...globalCssOptions], // url(), linear gradient()
+    },
+    {
+      name: "border-image-width",
+      nameForTitle: "Border Image Width",
+      type: "string",
+      description:
+        "Specifies the width of the border image. This defines how much space the border image occupies along the sides of the element, allowing for scaling and adjustments in relation to the border box.",
+      value: "",
+      defaultValue: "1",
+      maxOptionCounts: 4,
+      labels: [
+        ["All Sides Width"],
+        ["Top and Bottom Width", "Left and Right Width"],
+        ["Top Width", "Left and Right Width", "Bottom Width"],
+        ["Top Width", "Right Width", "Bottom Width", "Left Width"],
+      ],
+      options: ["auto", "length", "number", ...globalCssOptions],
+    },
+    {
+      name: "border-inline-color",
+      nameForTitle: "Border Inline Color",
+      type: "string",
+      description:
+        "Specifies the color of the inline (start and end) borders. This property defines the color for both the start and end inline borders in a writing-mode-sensitive way.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["Start and End Color"], ["Start Color", "End Color"]],
+      options: ["color", "currentcolor", "transparent", ...globalCssOptions],
+    },
+    {
+      name: "border-inline-style",
+      nameForTitle: "Border Inline Style",
+      type: "string",
+      description:
+        "Specifies the style of the inline (start and end) borders. This property controls the line style of the start and end inline borders in a way that respects the writing mode.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["Start and End Style"], ["Start Style", "End Style"]],
+      options: [...lineStyle, ...globalCssOptions],
+    },
+    {
+      name: "border-inline-width",
+      nameForTitle: "Border Inline Width",
+      type: "string",
+      description:
+        "Specifies the width of the inline (start and end) borders. This property sets the width of the inline borders, which can differ between the start and end in a writing-mode-sensitive way.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["Start and End Width"], ["Start Width", "End Width"]],
+      options: ["thin", "medium", "thick", "length", ...globalCssOptions],
+    },
+    {
+      name: "border-spacing",
+      nameForTitle: "Border Spacing",
+      type: "string",
+      description:
+        "Sets the distance between the borders of adjacent cells in a table. This property applies to table elements and defines the space between cells in a table layout. It accepts one or two values to set horizontal and vertical spacing.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["All sides"], ["Horizontal", "Vertical"]],
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "border-start-end-radius",
+      nameForTitle: "Border Start End Radius",
+      type: "string",
+      description:
+        "Sets the radius of the border corner at the start and end of the element's inline axis. In left-to-right (LTR) writing modes, this affects the bottom-right corner; in right-to-left (RTL) writing modes, it affects the bottom-left corner. It supports one or more values to set different radii for each corner.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["All sides"], ["Horizontal", "Vertical"]],
+      options: ["length", ...globalCssOptions],
+    },
+    {
+      name: "border-start-start-radius",
+      nameForTitle: "Border Start Start Radius",
+      type: "string",
+      description:
+        "Sets the radius of the border corner at the start and start of the element's inline axis. In left-to-right (LTR) writing modes, this affects the top-left corner; in right-to-left (RTL) writing modes, it affects the top-right corner. It supports one or more values to set different radii for each corner.",
+      value: "",
+      maxOptionCounts: 2,
+      labels: [["All sides"], ["Horizontal", "Vertical"]],
+      options: ["length", ...globalCssOptions],
+    },
+    // {
+    //   name: "border-top-left-radius",
+    //   nameForTitle: "Border Top Left Radius",
+    //   type: "string",
+    //   description:
+    //     "Defines the rounding of the top-left corner of an element's border. It can be set to create rounded corners on the top-left side.",
+    //   value: "",
+    //   maxOptionCounts: 2,
+    //   labels: [
+    //     ["All sides"], // For 1 value
+    //     ["Horizontal", "Vertical"], // For 2 values
+    //   ],
+    //   options: ["length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "border-top-right-radius",
+    //   nameForTitle: "Border Top Right Radius",
+    //   type: "string",
+    //   description:
+    //     "Defines the rounding of the top-right corner of an element's border. It can be set to create rounded corners on the top-right side.",
+    //   value: "",
+    //   maxOptionCounts: 2,
+    //   labels: [
+    //     ["All sides"], // For 1 value
+    //     ["Horizontal", "Vertical"], // For 2 values
+    //   ],
+    //   options: ["length", ...globalCssOptions],
+    // },
+  ],
+};
 const BoxGroup: StyleGroup = {
-  groupName: "Box Properties",
+  groupName: "Box",
   propertyNames: ["-webkit-box-decoration-break", "box-shadow", "box-sizing"],
   groups: [
     {
@@ -520,7 +900,7 @@ const BoxGroup: StyleGroup = {
   ],
 };
 const BreakGroup: StyleGroup = {
-  groupName: "Break Properties",
+  groupName: "Break",
   propertyNames: ["break-after", "break-before", "break-inside"],
   groups: [
     {
@@ -582,7 +962,7 @@ const BreakGroup: StyleGroup = {
   ],
 };
 const ColorGroup: StyleGroup = {
-  groupName: "Color Properties",
+  groupName: "Color",
   propertyNames: ["accent-color", "caret-color", "color", "color-scheme"],
   groups: [
     {
@@ -622,7 +1002,7 @@ const ColorGroup: StyleGroup = {
   ],
 };
 const ColumnGroup: StyleGroup = {
-  groupName: "Column-Row Properties",
+  groupName: "Column and Row",
   propertyNames: [
     "column-count",
     "column-fill",
@@ -722,7 +1102,7 @@ const ColumnGroup: StyleGroup = {
   ],
 };
 const ContainGroup: StyleGroup = {
-  groupName: "Contain Properties",
+  groupName: "Contain",
   propertyNames: [
     "contain",
     "contain-intrinsic-block-size",
@@ -784,7 +1164,7 @@ const ContainGroup: StyleGroup = {
   ],
 };
 const ContentGroup: StyleGroup = {
-  groupName: "Content Properties",
+  groupName: "Content",
   propertyNames: ["content", "content-visibility"],
   groups: [
     {
@@ -813,7 +1193,7 @@ const ContentGroup: StyleGroup = {
   ],
 };
 const CursorGroup: StyleGroup = {
-  groupName: "Cursor Property",
+  groupName: "Cursor",
   propertyNames: ["cursor"],
   groups: [
     {
@@ -865,7 +1245,7 @@ const CursorGroup: StyleGroup = {
   ],
 };
 const DisplayGroup: StyleGroup = {
-  groupName: "Display Properties",
+  groupName: "Display",
   propertyNames: ["appearance", "display", "opacity", "visibility"],
   groups: [
     {
@@ -944,7 +1324,7 @@ const DisplayGroup: StyleGroup = {
   ],
 };
 const FlexGroup: StyleGroup = {
-  groupName: "Flex Properties",
+  groupName: "Flex",
   propertyNames: [
     "flex-basis",
     "flex-direction",
@@ -1026,7 +1406,7 @@ const FlexGroup: StyleGroup = {
   ],
 };
 const FloatGroup: StyleGroup = {
-  groupName: "Float Properties",
+  groupName: "Float",
   propertyNames: ["float", "clear"],
   groups: [
     {
@@ -1049,7 +1429,7 @@ const FloatGroup: StyleGroup = {
   ],
 };
 const HeightGroup: StyleGroup = {
-  groupName: "Height Properties",
+  groupName: "Height",
   propertyNames: ["height", "min-height", "max-height"],
   groups: [
     {
@@ -1079,7 +1459,7 @@ const HeightGroup: StyleGroup = {
   ],
 };
 const InlineSizeGroup: StyleGroup = {
-  groupName: "Inline-Size Properties",
+  groupName: "Inline-Size",
   propertyNames: ["inline-size", "min-inline-size", "max-inline-size"],
   groups: [
     {
@@ -1109,7 +1489,7 @@ const InlineSizeGroup: StyleGroup = {
   ],
 };
 const JustifyGroup: StyleGroup = {
-  groupName: "Justify Properties",
+  groupName: "Justify",
   propertyNames: ["justify-content", "justify-items", "justify-self"],
   groups: [
     {
@@ -1198,7 +1578,7 @@ const JustifyGroup: StyleGroup = {
   ],
 };
 const LineGroup: StyleGroup = {
-  groupName: "Line Properties",
+  groupName: "Line",
   propertyNames: ["line-break", "-webkit-line-clamp", "line-height", "line-height-step"],
   groups: [
     {
@@ -1239,7 +1619,7 @@ const LineGroup: StyleGroup = {
   ],
 };
 const ListGroup: StyleGroup = {
-  groupName: "List Properties",
+  groupName: "List",
   propertyNames: ["list-style-image", "list-style-position", "list-style-type"],
   groups: [
     {
@@ -1352,86 +1732,127 @@ const ListGroup: StyleGroup = {
   ],
 };
 const MarginGroup: StyleGroup = {
-  groupName: "Margin Properties",
+  groupName: "Margin",
   propertyNames: [
-    "margin-block-end",
-    "margin-block-start",
-    "margin-bottom",
-    "margin-inline-end",
-    "margin-inline-start",
-    "margin-left",
-    "margin-right",
-    "margin-top",
+    "margin",
+    "margin-block",
+    "margin-inline",
+    // "margin-block-end",
+    // "margin-block-start",
+    // "margin-bottom",
+    // "margin-inline-end",
+    // "margin-inline-start",
+    // "margin-left",
+    // "margin-right",
+    // "margin-top",
   ],
   groups: [
     {
-      name: "margin-block-end",
-      nameForTitle: "Margin Block End",
+      name: "margin",
+      nameForTitle: "Margin",
       type: "string",
-      description: "Defines the logical block-end margin of an element.",
+      description:
+        "Specifies the margin for all sides of an element. You can set the same margin for all sides, or specify different margins for each side individually (top, right, bottom, and left).",
       value: "",
+      maxOptionCounts: 4,
       options: ["auto", "length", ...globalCssOptions],
+      labels: [
+        ["All Sides Margin"],
+        ["Top and Bottom Margin", "Left and Right Margin"],
+        ["Top Margin", "Left and Right Margin", "Bottom Margin"],
+        ["Top Margin", "Right Margin", "Bottom Margin", "Left Margin"],
+      ],
     },
     {
-      name: "margin-block-start",
-      nameForTitle: "Margin Block Start",
+      name: "margin-block",
+      nameForTitle: "Margin Block",
       type: "string",
-      description: "Defines the logical block-start margin of an element.",
+      description:
+        "Specifies the margin for the block start and block end of an element, depending on the writing mode. You can set the same margin for both, or specify them individually.",
       value: "",
+      maxOptionCounts: 2,
       options: ["auto", "length", ...globalCssOptions],
+      labels: [["Block Start and End Margin"], ["Block Start Margin", "Block End Margin"]],
     },
     {
-      name: "margin-bottom",
-      nameForTitle: "Margin Bottom",
+      name: "margin-inline",
+      nameForTitle: "Margin Inline",
       type: "string",
-      description: "Sets the margin area on the bottom of an element.",
+      description:
+        "Specifies the margin for the inline start and inline end of an element, depending on the writing mode. You can set the same margin for both, or specify them individually.",
       value: "",
+      maxOptionCounts: 2,
       options: ["auto", "length", ...globalCssOptions],
+      labels: [["Inline Start and End Margins"], ["Inline Start Margin", "Inline End Margin"]],
     },
-    {
-      name: "margin-inline-end",
-      nameForTitle: "Margin Inline End",
-      type: "string",
-      description: "Defines the logical inline-end margin of an element.",
-      value: "",
-      options: ["auto", "length", ...globalCssOptions],
-    },
-    {
-      name: "margin-inline-start",
-      nameForTitle: "Margin Inline Start",
-      type: "string",
-      description: "Defines the logical inline-start margin of an element.",
-      value: "",
-      options: ["auto", "length", ...globalCssOptions],
-    },
-    {
-      name: "margin-left",
-      nameForTitle: "Margin Left",
-      type: "string",
-      description: "Sets the margin area on the left side of an element.",
-      value: "",
-      options: ["auto", "length", ...globalCssOptions],
-    },
-    {
-      name: "margin-right",
-      nameForTitle: "Margin Right",
-      type: "string",
-      description: "Sets the margin area on the right side of an element.",
-      value: "",
-      options: ["auto", "length", ...globalCssOptions],
-    },
-    {
-      name: "margin-top",
-      nameForTitle: "Margin Top",
-      type: "string",
-      description: "Sets the margin area on the top of an element.",
-      value: "",
-      options: ["auto", "length", ...globalCssOptions],
-    },
+    // {
+    //   name: "margin-block-end",
+    //   nameForTitle: "Margin Block End",
+    //   type: "string",
+    //   description: "Defines the logical block-end margin of an element.",
+    //   value: "",
+    //   options: ["auto", "length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "margin-block-start",
+    //   nameForTitle: "Margin Block Start",
+    //   type: "string",
+    //   description: "Defines the logical block-start margin of an element.",
+    //   value: "",
+    //   options: ["auto", "length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "margin-bottom",
+    //   nameForTitle: "Margin Bottom",
+    //   type: "string",
+    //   description: "Sets the margin area on the bottom of an element.",
+    //   value: "",
+    //   options: ["auto", "length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "margin-inline-end",
+    //   nameForTitle: "Margin Inline End",
+    //   type: "string",
+    //   description: "Defines the logical inline-end margin of an element.",
+    //   value: "",
+    //   options: ["auto", "length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "margin-inline-start",
+    //   nameForTitle: "Margin Inline Start",
+    //   type: "string",
+    //   description: "Defines the logical inline-start margin of an element.",
+    //   value: "",
+    //   options: ["auto", "length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "margin-left",
+    //   nameForTitle: "Margin Left",
+    //   type: "string",
+    //   description: "Sets the margin area on the left side of an element.",
+    //   value: "",
+    //   options: ["auto", "length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "margin-right",
+    //   nameForTitle: "Margin Right",
+    //   type: "string",
+    //   description: "Sets the margin area on the right side of an element.",
+    //   value: "",
+    //   options: ["auto", "length", ...globalCssOptions],
+    // },
+    // {
+    //   name: "margin-top",
+    //   nameForTitle: "Margin Top",
+    //   type: "string",
+    //   description: "Sets the margin area on the top of an element.",
+    //   value: "",
+    //   options: ["auto", "length", ...globalCssOptions],
+    // },
   ],
 };
 const OutlineGroup: StyleGroup = {
-  groupName: "Outline Properties",
+  groupName: "Outline",
   propertyNames: ["outline-color", "outline-offset", "outline-style", "outline-width"],
   groups: [
     {
@@ -1481,17 +1902,27 @@ const OutlineGroup: StyleGroup = {
   ],
 };
 const OverflowGroup: StyleGroup = {
-  groupName: "Overflow Properties",
+  groupName: "Overflow",
   propertyNames: [
+    "overflow",
     "overflow-anchor",
     "overflow-block",
     "overflow-clip-margin",
     "overflow-inline",
     "overflow-wrap",
-    "overflow-x",
-    "overflow-y",
   ],
   groups: [
+    {
+      name: "overflow",
+      nameForTitle: "Overflow",
+      type: "string",
+      description:
+        "Specifies how to handle content that is too large for its container. You can set the same overflow behavior for both axes, or specify them individually for the x and y axes.",
+      value: "",
+      maxOptionCounts: 2,
+      options: ["auto", "clip", "hidden", "scroll", "visible", ...globalCssOptions],
+      labels: [["Overflow on Both Axes"], ["Overflow X", "Overflow Y"]],
+    },
     {
       name: "overflow-anchor",
       nameForTitle: "Overflow Anchor",
@@ -1533,51 +1964,66 @@ const OverflowGroup: StyleGroup = {
       value: "",
       options: ["normal", "break-word", "anywhere", ...globalCssOptions],
     },
-    {
-      name: "overflow-x",
-      nameForTitle: "Overflow X",
-      type: "string",
-      description:
-        "Specifies what to do with the left/right edges of the content when it overflows the element's content area.",
-      value: "",
-      options: ["auto", "clip", "hidden", "scroll", "visible", ...globalCssOptions],
-    },
-    {
-      name: "overflow-y",
-      nameForTitle: "Overflow Y",
-      type: "string",
-      description:
-        "Specifies what to do with the top/bottom edges of the content when it overflows the element's content area.",
-      value: "",
-      options: ["auto", "clip", "hidden", "scroll", "visible", ...globalCssOptions],
-    },
+    // {
+    //   name: "overflow-x",
+    //   nameForTitle: "Overflow X",
+    //   type: "string",
+    //   description:
+    //     "Specifies what to do with the left/right edges of the content when it overflows the element's content area.",
+    //   value: "",
+    //   options: ["auto", "clip", "hidden", "scroll", "visible", ...globalCssOptions],
+    // },
+    // {
+    //   name: "overflow-y",
+    //   nameForTitle: "Overflow Y",
+    //   type: "string",
+    //   description:
+    //     "Specifies what to do with the top/bottom edges of the content when it overflows the element's content area.",
+    //   value: "",
+    //   options: ["auto", "clip", "hidden", "scroll", "visible", ...globalCssOptions],
+    // },
   ],
 };
 const OverscrollGroup: StyleGroup = {
-  groupName: "Overscroll Properties",
+  groupName: "Overscroll",
   propertyNames: [
-    "overscroll-behavior-x",
-    "overscroll-behavior-y",
+    "overscroll-behavior",
+    // "overscroll-behavior-x",
+    // "overscroll-behavior-y",
     "overscroll-behavior-block",
     "overscroll-behavior-inline",
   ],
   groups: [
     {
-      name: "overscroll-behavior-x",
-      nameForTitle: "Overscroll Behavior X",
+      name: "overscroll-behavior",
+      nameForTitle: "Overscroll Behavior",
       type: "string",
-      description: "Specifies the overscroll behavior for the x-axis.",
+      description:
+        "Specifies the behavior when the user reaches the boundary of a scrollable area. You can set the same overscroll behavior for both axes, or specify them individually for the x and y axes.",
       value: "",
+      maxOptionCounts: 2,
       options: ["auto", "contain", "none", ...globalCssOptions],
+      labels: [
+        ["Overscroll Behavior on Both Axes"],
+        ["Overscroll Behavior X", "Overscroll Behavior Y"],
+      ],
     },
-    {
-      name: "overscroll-behavior-y",
-      nameForTitle: "Overscroll Behavior Y",
-      type: "string",
-      description: "Specifies the overscroll behavior for the y-axis.",
-      value: "",
-      options: ["auto", "contain", "none", ...globalCssOptions],
-    },
+    // {
+    //   name: "overscroll-behavior-x",
+    //   nameForTitle: "Overscroll Behavior X",
+    //   type: "string",
+    //   description: "Specifies the overscroll behavior for the x-axis.",
+    //   value: "",
+    //   options: ["auto", "contain", "none", ...globalCssOptions],
+    // },
+    // {
+    //   name: "overscroll-behavior-y",
+    //   nameForTitle: "Overscroll Behavior Y",
+    //   type: "string",
+    //   description: "Specifies the overscroll behavior for the y-axis.",
+    //   value: "",
+    //   options: ["auto", "contain", "none", ...globalCssOptions],
+    // },
     {
       name: "overscroll-behavior-block",
       nameForTitle: "Overscroll Behavior Block",
@@ -1597,86 +2043,51 @@ const OverscrollGroup: StyleGroup = {
   ],
 };
 const PaddingGroup: StyleGroup = {
-  groupName: "Padding Properties",
-  propertyNames: [
-    "padding-block-end",
-    "padding-block-start",
-    "padding-bottom",
-    "padding-inline-end",
-    "padding-inline-start",
-    "padding-left",
-    "padding-right",
-    "padding-top",
-  ],
+  groupName: "Padding",
+  propertyNames: ["padding", "padding-block", "padding-inline"],
   groups: [
     {
-      name: "padding-block-end",
-      nameForTitle: "Padding Block End",
+      name: "padding",
+      nameForTitle: "Padding",
       type: "string",
-      description: "Defines the logical block-end padding of an element.",
+      description:
+        "Specifies the padding inside the element. You can set the same padding for all four sides, or specify them individually for top, right, bottom, and left.",
       value: "",
+      maxOptionCounts: 4,
       options: ["length", ...globalCssOptions],
+      labels: [
+        ["All Sides Padding"],
+        ["Top and Bottom Padding", "Left and Right Padding"],
+        ["Top Padding", "Left and Right Padding", "Bottom Padding"],
+        ["Top Padding", "Right Padding", "Bottom Padding", "Left Padding"],
+      ],
     },
     {
-      name: "padding-block-start",
-      nameForTitle: "Padding Block Start",
+      name: "padding-block",
+      nameForTitle: "Padding Block",
       type: "string",
-      description: "Defines the logical block-start padding of an element.",
+      description:
+        "Specifies the padding for the block start and block end of an element, depending on the writing mode. You can set the same padding for both, or specify them individually.",
       value: "",
+      maxOptionCounts: 2,
       options: ["length", ...globalCssOptions],
+      labels: [["Block Start and End Padding"], ["Block Start Padding", "Block End Padding"]],
     },
     {
-      name: "padding-bottom",
-      nameForTitle: "Padding Bottom",
+      name: "padding-inline",
+      nameForTitle: "Padding Inline",
       type: "string",
-      description: "Sets the padding area on the bottom of an element.",
+      description:
+        "Specifies the padding for the inline start and inline end of an element, depending on the writing mode. You can set the same padding for both, or specify them individually.",
       value: "",
+      maxOptionCounts: 2,
       options: ["length", ...globalCssOptions],
-    },
-    {
-      name: "padding-inline-end",
-      nameForTitle: "Padding Inline End",
-      type: "string",
-      description: "Defines the logical inline-end padding of an element.",
-      value: "",
-      options: ["length", ...globalCssOptions],
-    },
-    {
-      name: "padding-inline-start",
-      nameForTitle: "Padding Inline Start",
-      type: "string",
-      description: "Defines the logical inline-start padding of an element.",
-      value: "",
-      options: ["length", ...globalCssOptions],
-    },
-    {
-      name: "padding-left",
-      nameForTitle: "Padding Left",
-      type: "string",
-      description: "Sets the padding area on the left side of an element.",
-      value: "",
-      options: ["length", ...globalCssOptions],
-    },
-    {
-      name: "padding-right",
-      nameForTitle: "Padding Right",
-      type: "string",
-      description: "Sets the padding area on the right side of an element.",
-      value: "",
-      options: ["length", ...globalCssOptions],
-    },
-    {
-      name: "padding-top",
-      nameForTitle: "Padding Top",
-      type: "string",
-      description: "Sets the padding area on the top of an element.",
-      value: "",
-      options: ["length", ...globalCssOptions],
+      labels: [["Inline Start and End Padding"], ["Inline Start Padding", "Inline End Padding"]],
     },
   ],
 };
 const PlaceGroup: StyleGroup = {
-  groupName: "Place Properties",
+  groupName: "Place",
   propertyNames: ["place-content", "place-items", "place-self"],
   groups: [
     {
@@ -1767,7 +2178,7 @@ const PlaceGroup: StyleGroup = {
   ],
 };
 const PositionGroup: StyleGroup = {
-  groupName: "Position Properties",
+  groupName: "Position",
   propertyNames: ["position", "top", "right", "bottom", "left", "z-index"],
   groups: [
     {
@@ -1821,7 +2232,7 @@ const PositionGroup: StyleGroup = {
   ],
 };
 const ScrollbarGroup: StyleGroup = {
-  groupName: "Scrollbar Properties",
+  groupName: "Scrollbar",
   propertyNames: ["scrollbar-color", "scrollbar-gutter", "scrollbar-width"],
   groups: [
     {
@@ -1851,7 +2262,7 @@ const ScrollbarGroup: StyleGroup = {
   ],
 };
 const TableGroup: StyleGroup = {
-  groupName: "Table Properties",
+  groupName: "Table",
   propertyNames: ["empty-cells", "caption-side", "table-layout"],
   groups: [
     {
@@ -1882,7 +2293,7 @@ const TableGroup: StyleGroup = {
   ],
 };
 const TextGroup: StyleGroup = {
-  groupName: "Text Properties",
+  groupName: "Text",
   propertyNames: [
     "text-align",
     "text-align-last",
@@ -2103,15 +2514,7 @@ const TextGroup: StyleGroup = {
       type: "string",
       description: "Defines how text should be transformed, such as uppercase or lowercase.",
       value: "",
-      options: [
-        "none",
-        "capitalize",
-        "uppercase",
-        "lowercase",
-        "full-width",
-        "full-size-kana",
-        ...globalCssOptions,
-      ],
+      options: ["none", "capitalize", "uppercase", "lowercase", ...globalCssOptions],
     },
     {
       name: "text-underline-offset",
@@ -2157,7 +2560,7 @@ const TextGroup: StyleGroup = {
   ],
 };
 const WhiteSpaceGroup: StyleGroup = {
-  groupName: "White Space Properties",
+  groupName: "White Space",
   propertyNames: ["white-space", "white-space-collapse"],
   groups: [
     {
@@ -2195,7 +2598,7 @@ const WhiteSpaceGroup: StyleGroup = {
   ],
 };
 const WidthGroup: StyleGroup = {
-  groupName: "Width Properties",
+  groupName: "Width",
   propertyNames: ["width", "min-width", "max-width"],
   groups: [
     {
@@ -2225,7 +2628,7 @@ const WidthGroup: StyleGroup = {
   ],
 };
 const WordGroup: StyleGroup = {
-  groupName: "Word Properties",
+  groupName: "Word",
   propertyNames: ["word-break", "word-spacing"],
   groups: [
     {
@@ -2254,7 +2657,7 @@ const WordGroup: StyleGroup = {
   ],
 };
 const WritingModeGroup: StyleGroup = {
-  groupName: "Writing Property",
+  groupName: "Writing",
   propertyNames: ["writing-mode"],
   groups: [
     {
@@ -2275,7 +2678,7 @@ const WritingModeGroup: StyleGroup = {
   ],
 };
 const ZoomGroup: StyleGroup = {
-  groupName: "Zoom Property",
+  groupName: "Zoom",
   propertyNames: ["zoom"],
   groups: [
     {
@@ -2295,6 +2698,7 @@ export const STYLE_GROUPS: StyleGroup[] = [
   BackfaceVisibilityGroup,
   BackgroundGroup,
   BlockSizeGroup,
+  BorderGroup,
   BoxGroup,
   BreakGroup,
   ColorGroup,

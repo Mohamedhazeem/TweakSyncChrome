@@ -161,7 +161,6 @@ function ColorStyle({ temporaryId, style }: ColorTypes) {
           {/* {renderAtRules(styles.external.atRules)} */}
           {styles.external.atRules &&
             Object.entries(styles.external.atRules).map(
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               ([, nestedSelectors]) =>
                 Object.entries(nestedSelectors).map(([selector, properties]) =>
                   renderColorStyles({ [selector]: properties })

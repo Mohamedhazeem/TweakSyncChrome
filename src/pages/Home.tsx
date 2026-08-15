@@ -1,6 +1,9 @@
+import { ContactSupportIcon } from "@/components/Icons/ContactSupportIcon";
+import { TweakSyncIcon } from "@/components/Icons/TweakSyncIcon";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 function Home() {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,7 +27,6 @@ function Home() {
     };
   }, []);
   async function connected() {
-    console.log("initWebSocket");
     await chrome.runtime.sendMessage({ action: "connect" });
   }
   function inject() {
@@ -34,54 +36,72 @@ function Home() {
   function removeInject() {
     chrome.runtime.sendMessage({ action: "removeContentScript" });
   }
-  function applyElement() {
-    chrome.runtime.sendMessage({ action: "apply", apply: "element" });
-  }
-  function applyStyles() {
-    chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
-  }
 
   return (
     <div className="inspector-container">
+      <div className="w-full flex flex-row gap-1 justify-end p-3">
+        <Link to={"/support"}>
+          <Button
+            variant="outline"
+            size="sm"
+            data-tweaksyncui
+            className="supportButton"
+            title="Support"
+          >
+            <ContactSupportIcon width={"1.2em"} height={"1.2em"} strokeWidth={1} />
+          </Button>
+        </Link>
+        <Link to={"/tutorial"}>
+          <Button
+            variant="outline"
+            size="sm"
+            data-tweaksyncui
+            className="tutorialButton font-normal"
+            title="Tutorial"
+          >
+            ?
+          </Button>
+        </Link>
+      </div>
+
       <div className="inspector-home">
-        <span className="tweak-sync-logo">Tweak Sync</span>
+        <span className="tweak-sync-logo">
+          <TweakSyncIcon />
+          TweakSync
+        </span>
+        <div className="homePageButtons">
+          <Button
+            size={"lg"}
+            variant={"default"}
+            type="button"
+            className="connect hover:bg-[#1ecaadec]"
+            id="connect"
+            onClick={connected}
+          >
+            Connect
+          </Button>
 
-        <Button size={"lg"} variant={"default"} type="button" id="connect" onClick={connected}>
-          Connect
-        </Button>
-
-        <>
-          <Button size={"lg"} variant={"default"} type="button" id="inject" onClick={inject}>
-            Inject
+          <Button
+            size={"lg"}
+            variant={"default"}
+            type="button"
+            className="startEdit hover:bg-[#0055d4bf]"
+            id="inject"
+            onClick={inject}
+          >
+            Start Edit
           </Button>
           <Button
             size={"lg"}
             variant={"default"}
             type="button"
+            className="stopEdit hover:bg-[#f74848]"
             id="remove_inject"
             onClick={removeInject}
           >
-            Remove Inject
+            Stop Edit
           </Button>
-          <Button
-            size={"lg"}
-            variant={"default"}
-            type="button"
-            id="applyElement"
-            onClick={applyElement}
-          >
-            Apply Element
-          </Button>
-          <Button
-            size={"lg"}
-            variant={"default"}
-            type="button"
-            id="applyStyles"
-            onClick={applyStyles}
-          >
-            Apply styles
-          </Button>
-        </>
+        </div>
       </div>
     </div>
   );

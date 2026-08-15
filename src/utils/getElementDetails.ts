@@ -1,22 +1,17 @@
-import { ElementDetails } from "../types/elementTypes";
+import { ElementDetails, TemporaryElementDetails } from "../types/elementTypes";
 import { getCurrentElementText } from "./elementTextContent";
 import { getElementPath } from "./getElementPath";
 
-export function getElementDetails(
-  element: HTMLElement
-): Promise<ElementDetails> {
+export function getElementDetails(element: HTMLElement): Promise<ElementDetails> {
   return new Promise((resolve, reject) => {
     if (!element) {
-      console.error("Element is null");
+      console.log("Element is null");
       reject(new Error("Element is null"));
       return;
     }
     type AttributeValue = string | number;
 
-    function parseAttributeValue(
-      attrName: string,
-      attrValue: string
-    ): [string, AttributeValue] {
+    function parseAttributeValue(attrName: string, attrValue: string): [string, AttributeValue] {
       const typeMap: { [key: string]: string } = {
         minlength: "number",
         maxlength: "number",
@@ -48,15 +43,26 @@ export function getElementDetails(
       className: element.className,
       textContent: getCurrentElementText(element),
       attributes: Object.fromEntries(
-        [...element.attributes].map((attr) =>
-          parseAttributeValue(attr.name, attr.value)
-        )
+        [...element.attributes].map((attr) => parseAttributeValue(attr.name, attr.value))
       ),
-      temporaryId: element.getAttribute("data-temporaryid") || null,
+      temporaryId: element.getAttribute("data-tweaksync-id") || null,
       path: getElementPath(element),
     };
-
-    console.log("Element details resolved:", details);
+    // console.log("Element details resolved:", details);
+    resolve(details);
+  });
+}
+export function getElementTemporaryId(element: HTMLElement): Promise<TemporaryElementDetails> {
+  return new Promise((resolve, reject) => {
+    if (!element) {
+      console.log("Element is null");
+      reject(new Error("Element is null"));
+      return;
+    }
+    const details = {
+      temporaryId: element.getAttribute("data-tweaksync-temporaryid") || null,
+      textContent: getCurrentElementText(element),
+    };
     resolve(details);
   });
 }

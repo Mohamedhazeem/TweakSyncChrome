@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { ElementStyles, ExternalStyles } from "../types/elementTypes";
-import { OutletContext } from "@/types/outletContext";
+import { OutletContext } from "../types/OutletContext";
 import { useOutletContext } from "react-router-dom";
 // import StyleFactory from "@/components/styles/StyleFactory";
 // import { StyleContext } from "@/utils/elementContext";
@@ -9,9 +9,13 @@ import StyleLayoutParent from "@/components/styles/StyleLayoutParent";
 import { StyleGroup } from "@/types/styleTypes";
 import { STYLE_GROUPS } from "@/utils/styles/globalStyles";
 import { Button } from "@/components/ui/button";
+import NotFoundInspector from "./NotFoundInspector.tsx";
+import NoStylesMessage from "@/components/NoStylesMessage.tsx";
+import VerticalStyleNavbar from "@/components/VerticalStyleNavbar.tsx";
 
 function StyleInspector() {
   const { style } = useOutletContext<OutletContext>();
+  const totalButtonCount = 7;
   const initialStyles: ElementStyles = {
     inline: {},
     external: {
@@ -28,19 +32,55 @@ function StyleInspector() {
   };
 
   const [styles, setStyles] = useState<ElementStyles>(initialStyles);
+  const [isVerticalStyleNavbarOpen, setIsVerticalStyleNavbarOpen] = useState<boolean>(true);
+  const [verticalStyleNavbarIndex, setVerticalStyleNavbarIndex] = useState<number>(0);
+  const [showApplyButton, setShowApplyButton] = useState<boolean>(true);
 
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (style) {
       console.log("Received style:", style);
-
+      setIsVerticalStyleNavbarOpen(true);
       setStyles(style);
+      showFirstStyledContent(style);
     }
   }, [style]); // Check if style needs to be updated when tag.path changes
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(handleMessage);
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessage);
+    };
+  }, []);
 
-  console.log("Rendering ColorStyle with styles:", styles);
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleMessage = (message: any) => {
+    if (
+      message.action === "noSelectedCssFiles" ||
+      message.action === "appliedStyleSucessfully" ||
+      message.action === "failedToApply" ||
+      message.action === "webSocketConnectionError"
+    ) {
+      setShowApplyButton(true);
+    }
+  };
+  const handleVerticalStyleNavbarOpen = (isopen: boolean) => {
+    setIsVerticalStyleNavbarOpen(isopen);
+  };
+  const handleVerticalStyleNavbarIndex = (index: number) => {
+    setVerticalStyleNavbarIndex(index);
+  };
+  const showFirstStyledContent = (styles: ElementStyles) => {
+    let i = 0;
+    while (i < totalButtonCount) {
+      if (getHasStyles(styles)[i]) {
+        handleVerticalStyleNavbarIndex(i);
+        return;
+      } else {
+        i++;
+      }
+    }
+  };
   const handleStyleChange = (selector: string, property: string, newValue: string | null) => {
     setStyles((prevStyles) => {
       const updatedStyles = { ...prevStyles };
@@ -158,7 +198,30 @@ function StyleInspector() {
 
     return groupedStyles;
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isEmpty = (obj: { [key: string]: any }): boolean => {
+    return Object.keys(obj).length === 0;
+  };
+  const getHasStyles = (styles: ElementStyles): { [key: number]: boolean } => {
+    return {
+      0: styles.external.classes && Object.keys(styles.external.classes).length > 0,
+      1: styles.external.ids && Object.keys(styles.external.ids).length > 0,
+      2: styles.external.tags && Object.keys(styles.external.tags).length > 0,
+      3: styles.external.attribute && Object.keys(styles.external.attribute).length > 0,
+      4: styles.external.descendant && Object.keys(styles.external.descendant).length > 0,
+      5:
+        styles.external.pseudoElementStyles &&
+        Object.keys(styles.external.pseudoElementStyles).length > 0,
+      6:
+        styles.external.pseudoClassStyles &&
+        Object.keys(styles.external.pseudoClassStyles).length > 0,
+    };
+  };
   const renderStyles = (styles: { [key: string]: { [key: string]: string } }) => {
+    if (isEmpty(styles)) {
+      return;
+      <NoStylesMessage verticalStyleNavbarIndex={verticalStyleNavbarIndex} />;
+    }
     // Group properties by selector
     const groupedStyles = Object.entries(styles).reduce((acc, [selector, properties]) => {
       acc[selector] = acc[selector] || [];
@@ -186,11 +249,13 @@ function StyleInspector() {
       );
     });
   };
+
   function applyStyles() {
+    setShowApplyButton(false);
     chrome.runtime.sendMessage({ action: "apply", apply: "styles" });
   }
   if (!style) {
-    return null;
+    return <NotFoundInspector inspectorName="Style Inspector" />;
   }
   return (
     <div className="inspector-container">
@@ -204,13 +269,28 @@ function StyleInspector() {
               type="button"
               id="applyElement"
               onClick={applyStyles}
-              className="inspector-applyButton"
+              className="inspector-applyButton hover:bg-[#fbf6f6]"
+              disabled={showApplyButton ? false : true}
             >
-              Apply
+              {showApplyButton ? "Apply" : "Loading"}
             </Button>
           </div>
         </div>
-        {/* {styles.inline &&
+        <div className="inspector-VerticalNavbarAndStylesContainer">
+          <VerticalStyleNavbar
+            verticalStyleNavbarIndex={verticalStyleNavbarIndex}
+            isVerticalStyleNavbarOpen={isVerticalStyleNavbarOpen}
+            handleVerticalStyleNavbarOpen={handleVerticalStyleNavbarOpen}
+            handleVerticalStyleNavbarIndex={handleVerticalStyleNavbarIndex}
+            hasStyles={getHasStyles(styles)}
+          />
+
+          <div
+            className={`styleInspectorTransition-VerticalNavbarOpen ${
+              isVerticalStyleNavbarOpen ? "ml-[70px]" : "ml-3"
+            }`}
+          >
+            {/* {styles.inline &&
         Object.entries(styles.inline).map(([property, value]) =>
           property === "color" ? (
             <Color
@@ -223,17 +303,17 @@ function StyleInspector() {
             />
           ) : null
         )} */}
-        {styles.external && (
-          <>
-            {renderStyles(styles.external.classes)}
-            {renderStyles(styles.external.ids)}
-            {renderStyles(styles.external.tags)}
-            {renderStyles(styles.external.attribute)}
-            {renderStyles(styles.external.descendant)}
-            {renderStyles(styles.external.pseudoElementStyles)}
-            {renderStyles(styles.external.pseudoClassStyles)}
-            {/* {renderAtRules(styles.external.atRules)} */}
-            {/* {styles.external.atRules &&
+            {styles.external && (
+              <>
+                {verticalStyleNavbarIndex == 0 && renderStyles(styles.external.classes)}
+                {verticalStyleNavbarIndex == 1 && renderStyles(styles.external.ids)}
+                {verticalStyleNavbarIndex == 2 && renderStyles(styles.external.tags)}
+                {verticalStyleNavbarIndex == 3 && renderStyles(styles.external.attribute)}
+                {verticalStyleNavbarIndex == 4 && renderStyles(styles.external.descendant)}
+                {verticalStyleNavbarIndex == 5 && renderStyles(styles.external.pseudoElementStyles)}
+                {verticalStyleNavbarIndex == 6 && renderStyles(styles.external.pseudoClassStyles)}
+                {/* {renderAtRules(styles.external.atRules)} */}
+                {/* {styles.external.atRules &&
             Object.entries(styles.external.atRules).map(
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
               ([, nestedSelectors]) =>
@@ -241,8 +321,10 @@ function StyleInspector() {
                   renderStyles({ [selector]: properties })
                 )
             )} */}
-          </>
-        )}
+              </>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

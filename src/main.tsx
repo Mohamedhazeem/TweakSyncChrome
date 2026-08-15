@@ -1,13 +1,51 @@
-import React from "react";
+/* eslint-disable react-refresh/only-export-components */
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home.tsx";
 import "../app/globals.css";
 import "./main.css";
 import { Navbar } from "./components/Navbar.tsx";
-import ElementInspector from "./pages/ElementInspector.tsx";
-import StyleInspector from "./pages/StyleInspector.tsx";
 import { Toaster } from "react-hot-toast";
+import NotFoundInspector from "./pages/NotFoundInspector.tsx";
+import DynamicImportError from "./pages/DynamicImportError.tsx";
+import Home from "./pages/Home.tsx";
+const ElementInspector = lazy(() =>
+  import("./pages/ElementInspector.tsx")
+    .then((module) => module)
+    .catch(() => {
+      return {
+        default: () => <NotFoundInspector inspectorName="Element Inspector" isError={true} />,
+      };
+    })
+);
+const StyleInspector = lazy(() =>
+  import("./pages/StyleInspector.tsx")
+    .then((module) => module)
+    .catch(() => {
+      return {
+        default: () => <NotFoundInspector inspectorName="Style Inspector" isError={true} />,
+      };
+    })
+);
+const TutorialPage = lazy(() =>
+  import("./pages/TutorialPage.tsx")
+    .then((module) => module)
+    .catch(() => {
+      return {
+        default: () => <DynamicImportError />,
+      };
+    })
+);
+const SupportPage = lazy(() =>
+  import("./pages/SupportPage.tsx")
+    .then((module) => module)
+    .catch(() => {
+      return {
+        default: () => <DynamicImportError />,
+      };
+    })
+);
+
 const router = createHashRouter([
   {
     path: "/",
@@ -15,16 +53,39 @@ const router = createHashRouter([
     children: [
       {
         index: true,
-
         element: <Home />,
       },
       {
         path: "/elementInspector",
-        element: <ElementInspector />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <ElementInspector />
+          </Suspense>
+        ),
       },
       {
         path: "/styleInspector",
-        element: <StyleInspector />,
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <StyleInspector />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/tutorial",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <TutorialPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/support",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <SupportPage />
+          </Suspense>
+        ),
       },
     ],
   },
@@ -33,15 +94,11 @@ const router = createHashRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-    <Toaster position="top-center" />
+    <Toaster
+      position="top-center"
+      toastOptions={{
+        duration: 1500, // Default duration for all toasts
+      }}
+    />
   </React.StrictMode>
 );
-
-// {
-//   path: "/searchresults",
-//   element: <SearchResults />,
-// },
-// {
-//   path: "/details/:mediaType/:id",
-//   element: <Details />,
-// },

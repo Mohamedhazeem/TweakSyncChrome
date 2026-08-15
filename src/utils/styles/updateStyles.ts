@@ -11,7 +11,7 @@ export function updateStyles({ newStyleValue, selector, property, temporaryId }:
   }
   if (selector === "inline") {
     // Update the style directly on the element with the provided temporaryId
-    const element = document.querySelector(`[data-temporaryid="${temporaryId}"]`) as HTMLElement;
+    const element = document.querySelector(`[data-tweaksync-id="${temporaryId}"]`) as HTMLElement;
     if (element) {
       const previousStyle = element.style.cssText; // Get existing styles
 

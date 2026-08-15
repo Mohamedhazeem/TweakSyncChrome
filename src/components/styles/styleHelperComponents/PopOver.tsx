@@ -8,6 +8,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Style } from "@/types/styleTypes";
@@ -15,6 +16,7 @@ import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { getButtonText } from "@/utils/styles/getButtonTextForPopver";
 import { useClearLayoutContext } from "@/utils/elementContext";
 import { sortOptions } from "@/utils/sortOptions";
+import { seperateCssOptions } from "@/utils/styles/seperateCssOptions";
 
 type PopOverType = {
   open: boolean;
@@ -26,7 +28,7 @@ type PopOverType = {
   option: string;
 };
 
-export function PopOver({
+export default function PopOver({
   open,
   setOpen,
 
@@ -37,6 +39,7 @@ export function PopOver({
   option,
 }: PopOverType) {
   const clearLayout = useClearLayoutContext();
+  const { specificCss, globalCss } = seperateCssOptions(style);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -58,30 +61,47 @@ export function PopOver({
           <CommandInput placeholder="Search Options..." />
           <CommandList>
             <CommandEmpty>No option found.</CommandEmpty>
-            <CommandGroup>
-              {style &&
-                style.options &&
-                Array.isArray(style.options) &&
-                sortOptions(style?.options).map((ops) => (
-                  <CommandItem
-                    key={ops}
-                    value={ops}
-                    onSelect={(currentValue) => handleSelect(currentValue)}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        (ops === "custom" && isCustomValue) || ops === option
-                          ? clearLayout
-                            ? "opacity-0"
-                            : "opacity-100"
-                          : "opacity-0"
-                      )}
-                    />
+            <CommandGroup heading={specificCss && `${style?.nameForTitle} Options`}>
+              {sortOptions(specificCss).map((ops) => (
+                <CommandItem
+                  key={ops}
+                  value={ops}
+                  onSelect={(currentValue) => handleSelect(currentValue)}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      // Check if the current option is selected and ensure opacity is always 100 when selected
+                      ops === option || (ops === "custom" && isCustomValue)
+                        ? "opacity-100"
+                        : "opacity-0"
+                    )}
+                  />
+                  {isCaptilized ? capitalizeFirstLetter(ops) : ops}
+                </CommandItem>
+              ))}
+            </CommandGroup>
 
-                    {isCaptilized ? capitalizeFirstLetter(ops) : ops}
-                  </CommandItem>
-                ))}
+            <CommandSeparator />
+            <CommandGroup heading="Global CSS">
+              {sortOptions(globalCss).map((ops) => (
+                <CommandItem
+                  key={ops}
+                  value={ops}
+                  onSelect={(currentValue) => handleSelect(currentValue)}
+                >
+                  <Check
+                    className={cn(
+                      "mr-2 h-4 w-4",
+                      // Check if the current option is selected and ensure opacity is always 100 when selected
+                      ops === option || (ops === "custom" && isCustomValue)
+                        ? "opacity-100"
+                        : "opacity-0"
+                    )}
+                  />
+                  {isCaptilized ? capitalizeFirstLetter(ops) : ops}
+                </CommandItem>
+              ))}
             </CommandGroup>
           </CommandList>
         </Command>

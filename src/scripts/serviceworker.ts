@@ -9,19 +9,41 @@ import {
   initWebSocket,
   isSocketOpen,
 } from "./websocket";
+// chrome.sidePanel
+//   .setPanelBehavior({ openPanelOnActionClick: true })
+//   .then(() => {
+//     if (ws) {
+//       console.log("WebSocket-0");
+//       initWebSocket();
+//     } else {
+//       console.log("WebSocket-1");
+//     }
+//   })
+//   .catch((error) => console.error(error));
 
-function toggleSidePanel() {
-  chrome.sidePanel
-    .getOptions({})
-    .then((options) => {
-      const newState = !options.enabled;
-      chrome.sidePanel.setOptions({ enabled: newState }).catch((error) => console.error(error));
-    })
-    .catch((error) => console.error(error));
-}
-function closeSidePanel(tabId: number) {
-  chrome.sidePanel.setOptions({ enabled: false, tabId }).catch((error) => console.error(error));
-}
+// function closeSidePanel() {
+//   chrome.sidePanel
+//     .setPanelBehavior({ openPanelOnActionClick: true })
+//     .catch((error) => console.error(error));
+// }
+chrome.commands.onCommand.addListener((command) => {
+  switch (command) {
+    case "open":
+      OpenSidePanel();
+      break;
+    case "connect":
+      initWebSocket();
+      break;
+    case "start_edit":
+      injectContentScript();
+      break;
+    case "stop_edit":
+      removeContentScript();
+      break;
+    default:
+      console.log("Unknown command:", command);
+  }
+});
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === "complete" && tab.active) {
@@ -31,18 +53,27 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       .getOptions({ tabId })
       .then((options) => {
         if (options.enabled) {
-          closeSidePanel(tabId);
+          // closeSidePanel();
+
+          chrome.runtime
+            .sendMessage({
+              action: "resetInspector",
+              message: null,
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
       })
       .catch((error) => {
-        console.error("Error getting side panel options:", error);
+        console.log("Error getting side panel:", error);
       });
   }
 });
 chrome.tabs.onRemoved.addListener((tabId) => {
-  chrome.storage.local.get([`contentScriptInjected_${tabId}`], (result) => {
+  chrome.storage.session.get([`contentScriptInjected_${tabId}`], (result) => {
     if (result[`contentScriptInjected_${tabId}`]) {
-      chrome.storage.local.remove([`contentScriptInjected_${tabId}`]);
+      chrome.storage.session.remove([`contentScriptInjected_${tabId}`]);
     }
   });
 });
@@ -50,9 +81,9 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 chrome.windows.onRemoved.addListener((windowId) => {
   chrome.tabs.query({ windowId: windowId }, (tabs) => {
     tabs.forEach((tab) => {
-      chrome.storage.local.get([`contentScriptInjected_${tab.id}`], (result) => {
+      chrome.storage.session.get([`contentScriptInjected_${tab.id}`], (result) => {
         if (result[`contentScriptInjected_${tab.id}`]) {
-          chrome.storage.local.remove([`contentScriptInjected_${tab.id}`]);
+          chrome.storage.session.remove([`contentScriptInjected_${tab.id}`]);
         }
       });
     });
@@ -60,17 +91,9 @@ chrome.windows.onRemoved.addListener((windowId) => {
 });
 
 chrome.action.onClicked.addListener(() => {
-  chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-    if (tabs.length > 0) {
-      const currentTab = tabs[0];
-      chrome.sidePanel.setOptions({
-        tabId: currentTab.id,
-        path: "index.html",
-        enabled: true,
-      });
-    }
-  });
+  OpenSidePanel();
 });
+
 function update(message: object, sendResponse: (response?: unknown) => void) {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     if (tabs[0]?.id) {
@@ -86,28 +109,21 @@ function apply(tabId: number, sendResponse: (response?: unknown) => void, applyF
     tabId,
     { action: applyFor === "styles" ? "getUpdatedStyle" : "getUpdatedElement" },
     (response) => {
-      if (chrome.runtime.lastError) {
-        console.error("Error sending message to content script:", chrome.runtime.lastError.message);
-        sendResponse({
-          status: "error",
-          message: chrome.runtime.lastError.message,
-        });
-        return;
-      }
-
-      console.log("Response from content script:", response);
-
       if (response && response.status !== "error") {
         if (isSocketOpen()) {
-          console.log("Sending applyStylesToVscode");
           console.log(response);
           applyFor === "styles" ? applyStylesToVscode(response) : applyElementToVscode(response);
           sendResponse({ status: "success" });
         } else {
-          console.error("WebSocket is not open");
+          console.log("Connection is not open");
+          chrome.runtime.sendMessage({
+            action: "webSocketConnectionError",
+            toast:
+              "Connection error. Please check your connection on both TweakSync VS Code and the TweakSync Chrome extension before apply.",
+          });
           sendResponse({
             status: "error",
-            message: "WebSocket is not open",
+            message: "Connection is not open",
           });
         }
       } else {
@@ -120,6 +136,18 @@ function apply(tabId: number, sendResponse: (response?: unknown) => void, applyF
     }
   );
 }
+function OpenSidePanel() {
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+    if (tabs.length > 0) {
+      const currentTab = tabs[0];
+      chrome.sidePanel.setOptions({
+        tabId: currentTab.id,
+        path: "index.html",
+      });
+      chrome.sidePanel.open({ tabId: currentTab.id || 0 });
+    }
+  });
+}
 function getUpdatedDetails(
   tabId: number,
   sendResponse: (response?: unknown) => void,
@@ -131,60 +159,59 @@ function getUpdatedDetails(
     (response) => {
       if (chrome.runtime.lastError) {
         sendResponse({
-          status: "error",
-          message: chrome.runtime.lastError.message,
+          message: "Runtime error",
         });
         return;
       }
-      if (response && response.status !== "error") {
-        console.log("response.details:", response.details);
-        sendResponse({
-          status: "success",
-          ...(applyFor === "styles" ? { styles: response.styles } : { details: response.details }),
-        });
+      if (response) {
+        if (response.status !== "error") {
+          sendResponse({
+            status: "success",
+            ...(applyFor === "styles"
+              ? { styles: response.styles }
+              : { details: response.details }),
+          });
+        } else {
+          sendResponse({
+            message: "Error occurred: " + response.message,
+          });
+        }
       } else {
-        console.error("No response received for getUpdatedDetails or an error occurred:", response);
         sendResponse({
-          status: "error",
-          message: "No response received or an error occurred",
+          message: "No response received",
         });
       }
     }
   );
 }
-chrome.commands.onCommand.addListener((command) => {
-  if (command === "toggle_side_panel") {
-    chrome.runtime.sendMessage({ action: "toggleSidePanel" });
-  }
-});
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  if (message.action === "toggleSidePanel") {
-    toggleSidePanel();
-  }
   if (message.action === "connect") {
     initWebSocket();
-    console.log("Web socket connected");
+    sendResponse();
+    return true;
   } else if (message.action === "elementClicked") {
-    console.log("Clicked element details:", message.details);
-
     chrome.runtime.sendMessage({
       action: "showElementDetails",
       details: message.details,
     });
-    sendResponse({ status: "element details received" });
+    sendResponse();
+    return true;
   } else if (message.action === "styleClicked") {
     console.log("Clicked element styles:", message.styles);
-
     chrome.runtime.sendMessage({
       action: "showElementStyles",
       styles: message.styles,
     });
     sendResponse({ status: message.styles });
+    return true;
   } else if (message.action === "injectContentScript") {
     injectContentScript();
-    console.log("Injecting content script");
+    sendResponse();
+    return true;
   } else if (message.action === "removeContentScript") {
     removeContentScript();
+    sendResponse();
+    return true;
   } else if (message.action === "addSelector") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.tabs.sendMessage(tabs[0].id!, {
@@ -192,6 +219,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         selector: message.selector,
       });
     });
+    sendResponse();
+    return true;
   } else if (message.action === "renameSelector") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       chrome.tabs.sendMessage(tabs[0].id!, {
@@ -200,18 +229,21 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         newSelector: message.newSelector,
       });
     });
+    sendResponse();
+    return true;
   } else if (
     message.action === "updateTextContent" ||
     message.action === "updateStyles" ||
     message.action === "updateAttributes"
   ) {
-    console.log(message.name);
     if (message.name === "data-*") {
       Object.entries(message.value).map(([key, value], index) =>
         console.log(`key: ${key}, value: ${value} and index: ${index}`)
       );
     }
     update(message, sendResponse);
+    sendResponse();
+    return true;
   } else if (message.action === "apply") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs.length === 0) {
@@ -219,6 +251,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       }
       apply(tabs[0].id!, sendResponse, message.apply);
     });
+    sendResponse();
     return true;
   } else if (message.action === "getUpdatedDetails") {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -226,6 +259,20 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         return;
       }
       getUpdatedDetails(tabs[0].id!, sendResponse, message.apply);
+    });
+    sendResponse();
+    return true;
+  } else if (message.action === "getElementTemporaryId") {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(
+        tabs[0].id!,
+        {
+          action: "getElementTemporaryId",
+        },
+        (response) => {
+          sendResponse({ temporaryId: response.temporaryId, textContent: response.textContent });
+        }
+      );
     });
     return true;
   }
