@@ -6,6 +6,7 @@ import "../app/globals.css";
 import "./main.css";
 import { Navbar } from "./components/Navbar.tsx";
 import { Toaster } from "react-hot-toast";
+import { ExtensionProvider } from "./extension/ExtensionProvider";
 import NotFoundInspector from "./pages/NotFoundInspector.tsx";
 import DynamicImportError from "./pages/DynamicImportError.tsx";
 import Home from "./pages/Home.tsx";
@@ -93,12 +94,14 @@ const router = createHashRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    <Toaster
-      position="top-center"
-      toastOptions={{
-        duration: 1500, // Default duration for all toasts
-      }}
-    />
+    <ExtensionProvider>
+      <RouterProvider router={router} />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 1500, // Default duration for all toasts
+        }}
+      />
+    </ExtensionProvider>
   </React.StrictMode>
 );
