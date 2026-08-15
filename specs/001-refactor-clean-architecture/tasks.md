@@ -133,10 +133,10 @@ description: "Task list for TweakSync clean-architecture refactor"
 
 ## Phase 6: Polish & Cross-Cutting Concerns
 
-- [ ] T044 [P] Run `quickstart.md` validation end-to-end (border grep, `npm test`, extensibility, perf, cross-browser build, per-browser manual); include a size/metric check asserting no `src` file exceeds 400 lines and module count increased / average file size decreased vs. baseline (SC-004).
-- [ ] T045 [P] Enforce coverage gate (80% `src/core`) in CI; close gaps.
+- [X] T044 [P] Run `quickstart.md` validation end-to-end (border grep, `npm test`, extensibility, perf, cross-browser build, per-browser manual); include a size/metric check asserting no `src` file exceeds 400 lines and module count increased / average file size decreased vs. baseline (SC-004).
+- [X] T045 [P] Enforce coverage gate (80% `src/core`) in CI; close gaps.
 - [ ] T046 [P] Delete migrated legacy files after verification: `src/scripts/websocket.ts`, and the originals of `src/utils/styles/*` and `src/utils/attributes/elementSpecificAttributes.ts` (restructured into `src/core/styling/data/*` and `src/core/element/data/*` segments by T023/T024).
-- [ ] T047 [P] Update `AGENTS.md`/`README.md` references from `src/scripts` → `src/extension` and document new `core/ports/adapters/ui/platform` layers.
+- [X] T047 [P] Update `AGENTS.md`/`README.md` references from `src/scripts` → `src/extension` and document new `core/ports/adapters/ui/platform` layers.
 - [ ] T048 [P] Profile on a 1000+ element page; confirm O(n) cost and rAF-batched DOM writes; record benchmark baseline.
 
 ---

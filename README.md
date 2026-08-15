@@ -61,6 +61,30 @@ Built for front-end developers and web designers, TweakSync removes the friction
 
 ---
 
+## 🏗️ Architecture
+
+TweakSync uses a layered clean architecture so the styling and sync logic stays
+independent of the browser runtime and the UI:
+
+- **`src/core`** — framework-agnostic domain logic and use cases (element model,
+  styling engine, `SyncService`, `StylingLanguage` registry). No React, no `chrome.*`.
+- **`src/ports`** — TypeScript contracts consumed by `core`/`ui` and implemented by
+  adapters: `BrowserPort`, `MessagingPort`, `StoragePort`, `ContentScriptPort`, `SyncTransportPort`.
+- **`src/adapters`** — the only layer that touches browser APIs:
+  - `adapters/browser` — Chrome/Edge/Firefox implementations behind `webextension-polyfill`
+    (including `WebSocketSyncAdapter` for VS Code sync).
+  - `adapters/memory` — in-memory test doubles used by unit/integration tests.
+- **`src/ui`** — platform-independent React components, pages, and hooks. They receive
+  browser capabilities through injected ports and never call `chrome.*` directly.
+- **`src/platform`** — platform-independent reusable script modules (e.g. pure DOM utilities).
+- **`src/extension`** — the composition root (`composition.ts`) that wires ports → adapters.
+
+Two CI gates protect these boundaries: a border-lint rule fails the build if
+`chrome.`/`browser.` leaks outside `src/adapters` and `src/extension`, and the
+test suite enforces an 80% coverage threshold on `src/core`.
+
+---
+
 ## 📌 Summary
 
 TweakSync bridges the gap between Chrome and VS Code, giving you a real-time, synchronized styling experience that feels natural, fast, and efficient.

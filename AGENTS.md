@@ -53,6 +53,24 @@ Run from the repo root:
 After `npm run build`, the loadable extension lives in `dist/`. Output entry files:
 `scripts/serviceworker.js`, `scripts/content.js`, `scripts/contentcss.js`, plus hashed UI chunks.
 
+## Source Layout
+
+The codebase follows a layered clean architecture. Browser APIs live **only** in
+`adapters`/`extension`; `core` and `ui` stay framework-agnostic and import via `@/...`.
+
+| Layer | Path | Responsibility |
+|-------|------|----------------|
+| Domain / core | `src/core` (`element`, `styling`, `language`, `sync`) | Pure domain logic + use cases. No React, no `chrome.*`. |
+| Contracts | `src/ports` | TypeScript interfaces: `BrowserPort`, `MessagingPort`, `StoragePort`, `ContentScriptPort`, `SyncTransportPort`. |
+| Adapters | `src/adapters/browser`, `src/adapters/memory` | Only place browser APIs are used (via `webextension-polyfill`); `memory` holds in-memory test doubles. |
+| UI | `src/ui` (`components`, `pages`, `hooks`) | Platform-independent React; receives capabilities via injected ports, never calls browser APIs directly. |
+| Platform scripts | `src/platform` (`dom`) | Reusable pure script modules (e.g. DOM utilities that operate on injected nodes). |
+| Composition root | `src/extension` (`composition.ts`) | Wires ports → adapters and binds the side-panel / service-worker runtime. |
+
+**CI gates (enforced by `npm run lint` and `npm test`):**
+- `scripts/lint-borders.mjs` fails the build if `chrome.`/`browser.` appears outside `src/adapters` and `src/extension`.
+- Vitest enforces an 80% coverage threshold on `src/core`.
+
 ## Detailed Instructions
 
 - [Architecture & Layering](.kilo/instructions/architecture.md)
