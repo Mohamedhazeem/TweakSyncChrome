@@ -1,8 +1,0 @@
-/* content.css */
-.selected-outline {
-  position: absolute;
-  pointer-events: none;
-  border: 2px solid red; /* Or any other style you prefer */
-  border-radius: 5px;
-  z-index: 9999;
-}

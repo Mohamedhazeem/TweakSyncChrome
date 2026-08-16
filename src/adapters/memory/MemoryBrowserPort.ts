@@ -27,8 +27,13 @@ export class MemoryBrowserPort implements BrowserPort {
   readonly storage: StoragePort = new MemoryStoragePort();
   readonly scripting: ContentScriptPort = new MemoryContentScriptPort();
   readonly messaging: MessagingPort = new MemoryMessagingPort();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  readonly sidePanel = { open: async (_tabId?: number): Promise<void> => {} };
+  readonly sidePanel = {
+    open: async (): Promise<void> => {},
+    async getOptions(): Promise<{ enabled?: boolean }> {
+      return {};
+    },
+    async setOptions(): Promise<void> {},
+  };
   readonly tabs = {
     async queryActive() {
       return undefined;
@@ -41,6 +46,9 @@ export class MemoryBrowserPort implements BrowserPort {
     },
     async open() {
       return undefined;
+    },
+    async queryByWindow() {
+      return [];
     },
     onUpdated: (
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -59,6 +67,12 @@ export class MemoryBrowserPort implements BrowserPort {
     onFocusChanged: (
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       _cb: unknown
+    ): (() => void) => () => {},
+  };
+  readonly action = {
+    onClicked: (
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      _cb: () => void
     ): (() => void) => () => {},
   };
   readonly runtime = {

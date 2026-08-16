@@ -23,9 +23,16 @@ export interface BrowserPort {
   storage: StoragePort;
   scripting: ContentScriptPort;
   messaging: MessagingPort;
-  sidePanel: { open(tabId?: number): Promise<void> };
+  sidePanel: {
+    open(tabId?: number): Promise<void>;
+    getOptions(tabId: number): Promise<{ enabled?: boolean }>;
+    setOptions(options: { tabId?: number; path?: string }): Promise<void>;
+  };
   tabs: TabsPort;
   windows: WindowsPort;
+  action: {
+    onClicked(cb: () => void): () => void;
+  };
   runtime: {
     getManifest(): Manifest;
     onCommand(cb: (command: string) => void): () => void;

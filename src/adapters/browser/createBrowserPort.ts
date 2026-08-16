@@ -27,6 +27,13 @@ export function createBrowserPort(
     ),
     tabs: createTabsPort(api.tabs as unknown),
     windows: createWindowsPort(api.windows as unknown),
+    action: {
+      onClicked(cb: () => void): () => void {
+        const listener = () => cb();
+        api.action.onClicked.addListener(listener);
+        return () => api.action.onClicked.removeListener(listener);
+      },
+    },
     runtime: {
       getManifest(): { name: string; version: string; manifest_version: number } {
         return api.runtime.getManifest() as {

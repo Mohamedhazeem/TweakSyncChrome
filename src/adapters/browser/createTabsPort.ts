@@ -37,6 +37,10 @@ export function createTabsPort(tabs: unknown = browser.tabs): TabsPort {
       api.onRemoved.addListener(listener);
       return () => api.onRemoved.removeListener(listener);
     },
+    async queryByWindow(windowId: number) {
+      const tabs = await api.query({ windowId });
+      return tabs as Array<{ id?: number }>;
+    },
   };
 }
 

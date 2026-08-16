@@ -33,7 +33,7 @@ export interface WebSocketSyncAdapterOptions {
 }
 
 interface QueuedMessage {
-  payload: SyncPayload;
+  payload: unknown;
   queuedAt: number;
 }
 
@@ -215,6 +215,26 @@ export class WebSocketSyncAdapter {
       this.queue.shift();
     }
     this.queue.push({ payload, queuedAt: now });
+  }
+
+  /**
+   * Sends an already-serialisable message object through the managed socket.
+   *
+   * Used by the service worker to forward the legacy VS Code wire protocol
+   * (`{ action, styles | details }`) without changing the clean `SyncPayload`
+   * contract used by `SyncService`. Queued while disconnected, flushed on open.
+   */
+  async sendRaw(message: unknown): Promise<void> {
+    if (this.socket && this.socket.readyState === SOCKET_STATES.OPEN) {
+      this.socket.send(JSON.stringify(message));
+      return;
+    }
+
+    const now = this.options.now ? this.options.now() : Date.now();
+    if (this.queue.length >= (this.options.queueLimit ?? 1000)) {
+      this.queue.shift();
+    }
+    this.queue.push({ payload: message, queuedAt: now });
   }
 
   onState(cb: (state: ConnectionState) => void): () => void {

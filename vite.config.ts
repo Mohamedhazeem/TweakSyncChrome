@@ -28,15 +28,12 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
-        content: resolve(__dirname, "src/scripts/content.ts"),
+        content: resolve(__dirname, "src/extension/content.ts"),
         serviceworker: resolve(__dirname, "src/extension/serviceWorker.ts"),
-        contentcss: resolve(__dirname, "src/scripts/content.css"),
       },
       output: {
         entryFileNames: (chunk) => {
-          return chunk.name === "serviceworker" ||
-            chunk.name === "content" ||
-            chunk.name === "contentcss"
+          return chunk.name === "serviceworker" || chunk.name === "content"
             ? "scripts/[name].js" // Output filename for service worker
             : "[name].[hash].js"; // Output filename for other chunks
         },

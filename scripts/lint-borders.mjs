@@ -2,7 +2,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const SRC_ROOT = "src";
-const ALLOWED_PREFIXES = ["src/adapters", "src/extension", "src/scripts"];
+const ALLOWED_PREFIXES = ["src/adapters", "src/extension"];
 
 function walk(dir, files = []) {
   for (const entry of readdirSync(dir)) {

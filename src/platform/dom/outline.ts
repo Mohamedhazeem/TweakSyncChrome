@@ -19,6 +19,9 @@ export class OutlineOverlay {
     node.className = OUTLINE_CLASS;
     node.style.position = "absolute";
     node.style.pointerEvents = "none";
+    node.style.border = "2px solid red";
+    node.style.borderRadius = "5px";
+    node.style.zIndex = "9999";
     node.style.width = "0px";
     node.style.height = "0px";
     node.setAttribute(TWEAKSYNC_ID, "outline");

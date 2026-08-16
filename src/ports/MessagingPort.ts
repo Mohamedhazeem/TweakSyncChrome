@@ -10,7 +10,7 @@ export type Message =
 export interface MessagingPort {
   send(message: Message): Promise<unknown>;
   onMessage(
-    handler: (message: Message, reply?: (response: unknown) => void) => void
+    handler: (message: Message, reply?: (response?: unknown) => void) => void
   ): () => void;
   getLastError(): { message?: string } | undefined;
 }

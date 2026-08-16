@@ -5,6 +5,7 @@ export interface TabsPort {
   open(url: string): Promise<{ id: number } | undefined>;
   onUpdated(cb: (tabId: number, changeInfo: unknown, tab: unknown) => void): () => void;
   onRemoved(cb: (tabId: number) => void): () => void;
+  queryByWindow(windowId: number): Promise<Array<{ id?: number }>>;
 }
 
 export interface WindowsPort {

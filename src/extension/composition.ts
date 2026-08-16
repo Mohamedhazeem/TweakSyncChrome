@@ -3,11 +3,10 @@ import { WebSocketSyncAdapter } from "@/adapters/browser/WebSocketSyncAdapter";
 import { SyncService } from "@/core/sync/SyncService";
 import { SYNC_URL } from "@/core/sync/syncActions";
 import type { BrowserPort } from "@/ports/BrowserPort";
-import type { SyncTransportPort } from "@/ports/SyncTransportPort";
 
 export interface ExtensionComposition {
   browser: BrowserPort;
-  syncTransport: SyncTransportPort;
+  syncTransport: WebSocketSyncAdapter;
   syncService: SyncService;
   dispose: () => void;
 }
